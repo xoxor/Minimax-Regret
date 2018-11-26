@@ -1,0 +1,31 @@
+== Meeting 1
+
+*13/11/2018 - Paolo, Stefano, Olivier, Remzi, Beatrice*
+
+=== Minimax regret over incomplete preferences
+* Paolo presented Lu and Boutlier's work [1]
+
+=== Goal
+Extend this approach to a setting where both *preferences* and *rule* are unknown
+
+=== Steps
+. Optimization
+** How to complete profiles 
+** Maximize weights 
+** What happens when weights are not separable?
+
+. Elicitation 
+** Which is the next question to ask? 
+** Implies: Who to ask the next question?
+*** committee: question of the type w1-w2>k(w2-w3)
+*** one of the agents: question of the type a>b
+**** which agent?
+
+=== Next
+* Meeting scheduled on the pass:q[<del>26th November at 10:30</del>] 7th December at 14:00
+
+=== References 
+1. https://www.cs.toronto.edu/~cebly/Papers/BPPS-aij06.pdf[C. Boutilier, R. Patrascu, P. Poupart, and D. Schuurmans. Constraint-based Optimization and Utility Elicitation using the Minimax Decision Criterion. Artifical Intelligence, 170(8–9):686–713, 2006.]
+2. https://www.cs.toronto.edu/~cebly/Papers/LuBoutilier_Elicitation_ijcai11.pdf[Tyler Lu and Craig Boutilier. Robust approximation and incremental elicitation in voting protocols. In Proceedings of IJCAI 2011, pages 287–293, 2011.]
+3. https://www.sciencedirect.com/science/article/pii/0377221794902054[William E. Stein, Philip J. Mizzi, and Roger C. Pfaffenberger. A stochastic dominance analysis of ranked voting systems with scoring. European Journal of Operational Research, 74(1):78 – 85, 1994.]
+4. https://www.researchgate.net/publication/327563042_Positional_Scoring_Rules_with_Uncertain_Weights_12th_International_Conference_SUM_2018_Milan_Italy_October_3-5_2018_Proceedings[Paolo Viappiani. Positional scoring rules with uncertain weights. In Scalable Uncertainty Management - 12th International Conference, SUM 2018, Milan, Italy, October 3-5, 2018, Proceedings, pages 306–320, 2018.]
