@@ -66,9 +66,9 @@ $\pref_i$ denotes the ``real'' preference relation of agent $i$.
 The set $(\pref_1,\ldots,\pref_n)$ is known in the social choice literature as the {\em preference  profile}.
 The profile is equivalently represented by $\textbf{v}=(v_1,\ldots,v_n)$ where $v_i(j)$ denotes the rank (position) of alternative $j$ in the preference order $\pref_i$. 
 With a little abuse of notation, we will use the term profile to refer to either $\textbf{v}$ or to the preference relations, depending on the context.
-Let $V$ the set of possible preference profiles (the cartesian product of $n$ linear orders).
+Let $V$ be the set of possible preference profiles (the cartesian product of $n$ linear orders).
 
-A social choice funtion $f : V \rightarrow A$ associates a profile with one winner (or multiple winners in some cases).
+A social choice function $f : V \rightarrow A$ associates a profile with one winner (or multiple winners in some cases).
 Among the many possible social choice functions, we consider those rules that are based on a numerical score that is decomposable voter-wise.
 %the score $s(a; v)$ of alternative $a$ is additive decomposable if it can be computed as $s(a; v) = \sum_{i} s(a; v_{i})$.
 In particular positional scoring rules attach weights to positions;
@@ -78,7 +78,7 @@ an alternative obtains a score that depends on the rank obtained in each of the 
 
 where the vector $(w_1,\ldots,w_m)$ is called the scoring vector;
 %A positional scoring rule attach weights to positions; 
- it is usually assumed that the weights constitute a monotonic sequence: $w_{1} \geq w_{2} \geq \ldots \geq w_{n}$.
+ it is usually assumed that the weights constitute a monotonic sequence: $w_{1} \geq w_{2} \geq \ldots \geq w_{m}$.
 
 \medskip
 We want to reason about partial preference information.
@@ -98,8 +98,8 @@ We use $W$ to denote the set of feasible weight vector.
 Without loss of generality, we assume $w_1=0$ and $w_m=0$.
 The preferences of the chair are encoded with linear constraints, for instance one may state
 that $w_2>0.5$.
-A specific kind of preference may require the sequence of the weights to be convex, that means
-that the difference of between the weight of the first position and the weight of the second position is at least as much as the difference between the weights of the second and third position, etc. 
+A specific kind of preference may require the weights sequence to be convex, that means
+that the difference between the weight of the first position and the weight of the second position is at least as much as the difference between the weights of the second and third positions, etc. 
 \[ \forall i \in \{1,\ldots,n\} \;\; w_i - w_{i+1} \geq w_{i+1}-w_{i+2} \iff  w_i - 2 w_{i+1} + w_{i+2} \geq 0 \]
 This is a constraint often used when aggregating rankings in sport competitions.
 
@@ -107,7 +107,7 @@ This is a constraint often used when aggregating rankings in sport competitions.
 
 \paragraph{Uncertain scoring rules}
 A number of works have dealt with the problem of reasoning with incompletely specified aggregation functions.
-In particular, when considering positional scoring rules, it is possible to derive dominance relations (akin to sthochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \cite{Stein1994}.
+In particular, when considering positional scoring rules, it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \cite{Stein1994}.
 More recently the characterization of methods for aggregating the uncertainty over the scoring vectors has been studied in \cite{Viappiani2018}.
 We also note that the elicitation methods based on minimax regret described in \cite{Boutilier2006} (and in many other recent papers), while not specifically targeted to scoring rules, can be easily adapted (from a technical point of view) to elicit the scoring vector from a committee.
 
@@ -138,8 +138,8 @@ The computation of max regret is facilitated by the fact the score is decomposab
 {\bf Perhaps it could me made more general considering not only scoring rules, but all rules based on a score (as in Boutilier's paper)}
 
 In this draft, we consider a setting where both the voters' preferences and the preferences of the chair about the voting rule are incomplete.
-We write the score as $s(x; v,w)$ to underline the depency of the score on the preference profile and on the weight vector. Let $s(x;v,w)$ denote the score of alternative $x$ in profile $\textbf{v}$ with weights $\textbf{w}$:
-\[ s(x;\textbf{v},\textbf{w}) = \sum_{i=1}^{m} w_{\rank_i(x)} \]
+We write the score as $s(x; v,w)$ to underline the dependency of the score on the preference profile and on the weight vector. Let $s(x;v,w)$ denote the score of alternative $x$ in profile $\textbf{v}$ with weights $\textbf{w}$:
+\[ s(x;\textbf{v},\textbf{w}) = \sum_{i=1}^{n} w_{\rank_i(x)} \]
 
 %By using decomposition, we can compute the vote-wise regret...
 
@@ -161,7 +161,7 @@ x^{*}(\pprofile,W) & \in \arg\min_{x \in A} \MR(x;\pprofile,W)
 
 \begin{itemize}
  \item $\PMR(x,y;\pprofile,W)$ denotes the pairwise max regret of $x$ relative to $y$ given partial profile $\pprofile$ and the space of weights $W$, that is the worst-case loss under all possible realizations of the full profile {\em and} all possible instantiations of the weights.
- \item Max regret $\MR(x;\pprofile,W)$ is the worst-case loss of $x$. It is the loss occured by an adversarial selection of a complete profile $\profile$ extending $\pprofile$ and a selection of $\w \in W$ to maximize the loss between $x$ and the true winner under $\profile$ and $w$.
+ \item Max regret $\MR(x;\pprofile,W)$ is the worst-case loss of $x$. It is the loss occurred by an adversarial selection of a complete profile $\profile$ extending $\pprofile$ and a selection of $\w \in W$ to maximize the loss between $x$ and the true winner under $\profile$ and $w$.
  \item Minimax regret $\MMR(\pprofile,W)$ is the minimum of max regret obtained when choosing $x^*$
 \end{itemize}
 By recommending the alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation).
@@ -181,20 +181,20 @@ Exploiting the decomposition of the score in terms of votes we cam rewrite $\PMR
 {\bf \em This is just sketchy TODO: reason about the optimization and complete section}
 
 In many cases the inner maximization can be made regardless of the outer max.
-Part of the optimization can be made voter-wise: for each of the agent,s we compute the extend the partial preference into a linear order that makes the gap between y and x as wide as possible.
+Part of the optimization can be made voter-wise: for each agent we extend the partial preference into a linear order that makes the gap between y and x as wide as possible.
 However, in some cases the choice of how to complete the profiles may depend on the choice of weights, therefore it may be quite complicated...  (need to use integer variables???)
 \medskip
  {\em Explain why convex sequences do not pose any problem}
 In the case of convex sequences, the optimization can be done without integer variables.
-Let $\hat{v}_k$ be the linear order extending $p_k$ according to the procedure descibed in \cite{Lu2011}.
+Let $\hat{v}_k$ be the linear order extending $p_k$ according to the procedure described in \cite{Lu2011}.
 \begin{align*}
 \max_{\w \in W} \sum_{j=1}^{n}  [w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)}]
 \end{align*}
-Therefore the pairwsie maximum regret can be computed with a linear program.
+Therefore the pairwise maximum regret can be computed with a linear program.
 
 
 \paragraph{Interactive Elicitation}
-Srtarting from some intial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
+Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While this is of course possible by doing one elicitation after another one, we propose an interleaved approach.
 We adopt an interactive  protocol for simultaneously eliciting the preferences of the chair about the voting rule and the voters' preferences about the alternatives.
 Indeed, it can be beneficial to interleave questions asked to the committee and questions asked to voters, depending on which is estimated to be more informative.
@@ -214,7 +214,7 @@ bound queries, comparison queries.
 \item In the experiments we want to compare the interleaved approach with a baseline challenger, a method  that elicits the preferences of the voters first and then the voting rule (or the other way around)
 \end{itemize}
 
-{\em Some ideas: decompose the regret into two components, one due to $\w$ and one due to $\pprofile$, and ask a question to the chair / or to one of the agens depending on which is highest}
+{\em Some ideas: decompose the regret into two components, one due to $\w$ and one due to $\pprofile$, and ask a question to the chair / or to one of the agents depending on which is highest}
 
 
 %{\small
