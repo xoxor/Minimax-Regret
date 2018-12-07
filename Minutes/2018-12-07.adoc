@@ -1,7 +1,22 @@
 == Meeting 2
 
-*07/12/2018 - Olivier, Remzi, Paolo, Stefano, Beatrice*
+*07/12/2018 - Olivier, Paolo, Stefano, Beatrice*
 
 === Agenda
-* 
+* Overview of minimax regret computation with fixed scoring vector with and without convex sequence assumption
+
+=== Profile completion 
+* We have a set of U~k~ alternatives for each voter. How an adversary can find a clever way to complete the profile and and choose a feasible assignment for weights?
+** The weights assignment is dependent on the preference of all voters
+
+=== Elicitation
+Remaining in the convex assumption: 
+* Which kind of questions ask
+** to voters?
+*** who is your best? who is your next best? and so on
+*** pairwise questions 
+** to the jury?
+*** lambda difference ( w1-w2>λ(w2-w3) )
+
+ 
 
