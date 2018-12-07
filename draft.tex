@@ -7,6 +7,7 @@
 \usepackage{amsmath,amssymb,theorem,enumerate}
 \usepackage{hyperref}
 \usepackage{mathrsfs}
+\usepackage{algorithm, algpseudocode}
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 \newcommand{\denselist}{\itemsep -2pt\topsep-6pt\partopsep-6pt}
@@ -28,6 +29,9 @@
 \DeclareMathOperator{\PMR}{PMR}
 \DeclareMathOperator{\MR}{MR}
 \DeclareMathOperator{\MMR}{MMR}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
 \title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
 %\author{}
@@ -220,6 +224,66 @@ We introduce a set integer variables $I^i$, one for each position $i$.
 \end{itemize}
 
 
+\subsubsection{Minimax Computation under Convex Assumption \cite{Lu2011}}
+The goal is to choose as a winner the alternative $x^*$ whose worst case loss is minimal under all possible realizations of the full profile and all possible choices of weights. Assume hereinafter the selected weights sequence $\w \in W$ to be convex. In order to compute the minimal max regret $\MMR(\pprofile)$ under partial profile $\pprofile$ we need to compute the pairwise max regret between all pairs of alternatives $(x,y)$, where $x$ is a proposed winner and $y$ is the ``adversary'' alternative. Indeed, the construction of $\PMR(x,y,\pprofile,\w)$ can be viewed as an adversary's attempt to maximize the regret of choosing $x$ instead of $y$. For doing this, he can choose a completion $\profile_k \in C(\pprofile_k)$ of the partial profile and a (feasible) scoring vector $\w$ that maximize the contribution of the voter $k$ to $\PMR(x,y,\pprofile,\w)$. Let us now analyze how it could be done depending on the relation between alternatives $x$ and $y$ in $\pprofile_k$. 
+\begin{itemize}
+	\item $x \succ_k^\pprofile y$
+	\newline If we know $x$ is preferred to $y$ and we choose $x$ as a winner, $\pprofile_k$ contribution to $\PMR(x,y,\pprofile,\w)$ must be negative. In this situation, our adversary can only try to minimize this advantage by minimizing the positional gap between the two alternatives. To achieve that, he can arbitrary place all the alternatives preferred to $x$ above $x$, together with all the ones with unknown relation to $x$. Moreover, he can place all the alternatives less preferred to $x$ and with unknown relation to $y$ below $y$. We can summarize it for each $q \in A$ as follows:
+	\begin{align*}
+	q \succ_k^\pprofile x \vee q \ ?_k^\pprofile \ x \ & \Rightarrow \ \uparrow_x \\
+	x \succ_k^\pprofile q \wedge q \ ?_k^\pprofile \ y \ & \Rightarrow \ \downarrow_y \\
+	x \succ_k^\pprofile q \succ_k^\pprofile y \ & \Rightarrow \ \text{in between} \\
+	\end{align*}
+	It is worth noting that when the relation between $q$ and $x$ is not known in the partial profile, the adversary takes advantage by placing $q$ above $x$ only under the assumption of convex weight sequences.
+	\item $y \succ_k^\pprofile x$
+	\newline If $y$ is preferred to $x$ the construction proceeds similarly to the previous case, but now the adversary takes advantage by maximizing the gap between $x$ and $y$ placing as much alternatives as he can between the two. We can summarize the procedure for each $q \in A$ as follows:
+	\begin{align*}
+	q \succ_k^\pprofile y \ & \Rightarrow \ \uparrow_y \\
+	x \succ_k^\pprofile q \ & \Rightarrow \ \downarrow_x \\
+	(y \succ_k^\pprofile q \vee y \ ?_k^\pprofile \ q) \wedge (q \succ_k^\pprofile x \vee q \ ?_k^\pprofile \ x) \ & \Rightarrow \ \text{in between} \\
+	\end{align*}
+	\item $x \ ?_k^\pprofile \ y$
+	\newline If the partial profile $\pprofile_k$ does not specify the relation between $x$ and $y$, the advantage is maximized by ordering $y$ over $x$ and maximizing the gap between them following the procedure for the case $y \succ_k^\pprofile x$.
+\end{itemize}
+
+\subsubsection{Dropping the Convex Assumption}
+What if the sequence of weights is not convex? When $y \succ_k^\pprofile x$ or $x \ ?_k^\pprofile \ y$ weights do not influence the arbitrary placement of alternatives. Please remind we are working under the assumption that weights constitute a monotonic non-increasing sequence. Thus, there is no way for the adversary to take advantage from the weights distribution in order to increase the gap between $y$ and $x$ besides placing as much alternatives as he can between the two. The only case in which weights can influence the positional gap between $x$ and $y$ is when $x \succ_k^\pprofile y$ and $q \ ?_k^\pprofile \ x$. For convex sequences we place such alternatives $q$ above $x$, but it is not obvious that this is the best option for other sequences. For example, suppose $x$ and $y$ are ranked respectively in first and second position in the partial profile and we wonder where to place an alternative $q$ with unknown relation to $x$ (and thus to $y$). Suppose also that in the weight sequence the distance between the first and second positions is much lower than the one between the second and the third ones. In this case, placing $q$ above $x$ does not minimize the gap between $x$ and $y$ but we want, instead, to place $q$ below $y$.
+\newline Since weights are not totally specified, one solution could rely on choosing a completion for them so as to have a convex sequence and then reason under the convex assumption as described before. Nevertheless, this is not always possible because of the constraints existence. Indeed, may be the case that no feasible scoring vector forms a convex sequence. In this case we need to analyze the particular sequence of weights in order to decide how to maximize the adversary advantage. Before going into details, let us define $A$ as the set of alternatives (if any) preferred to $x$, $B$ as the set of alternatives preferred to $y$ but not to $x$, and $U$ the set of those with unknown relation to both $x$ and $y$. The idea is to determine the positions that minimize $x$'s advantage over $y$ and then place some of the alternatives in $U$ above $x$ and some below $y$ in order to get that desired ranking. Since we cannot change the order of the alternatives in the set $B$ we know that $x$ and $y$ are separated exactly by $|B|$ positions (the adversary would not take any advantage by adding alternatives between them). So, starting from the position of $x$ in the partial completion of $\pprofile_k$ computed so far ($\hat{\profile}_k$), we find the two positions separated by $|B|$ alternatives whose weights difference is the lowest. Note that we can only add $|U|$ alternatives so we can check only until the position $\hat{\profile}_k(x)+|U|$. Algorithm \ref{alg:splittingU} shows the procedure described.
+
+It is easy to see that we check at most $|U|$ positions. In the worst case the size of $U$ is equal to $m-2$, thus the procedure can be computed in $O(m)$ time. This cost does not affect the minimax regret computation time complexity that remains $O(nm^3)$.
+
+\begin{algorithm}[h] 
+	\caption{Placing alternatives in $U$ without Convex Assumption}
+	\label{alg:splittingU} 
+	\begin{algorithmic}
+		\Require $x$, $y$, $\hat{\profile}_k$, $\w$, $U$, $B$
+		\Ensure $\profile_k \in C(\pprofile)$
+		\Statex
+		\State $ j \gets 0$;
+		\State $ i \gets \hat{\profile}_k(x)$;
+		\State $ \mathit{posmin} \gets i$;
+		\State $ \mathit{min} \gets \w(i) - \w(i+1+|B|)$;
+		\While {$( j \leq |U| )$}
+		\If{ $(\w(i+j)-\w(i+1+|B|+j) < \mathit{min})$ }
+		\State $ \mathit{min} \gets \w(i+j) - \w(i+1+|B|+j)$;
+		\State $ \mathit{posmin} \gets i+j$;
+		\EndIf
+		\EndWhile
+		
+		\State $U_{\mathit{abovex}} \gets (i-\mathit{posmin}) \text{ alternatives} \in U $;
+		\State $U_{\mathit{belowy}} \gets U \setminus U_{\mathit{above}}$;
+		\Statex
+		\State $\profile_k \gets place(\pprofile_k,U_{\mathit{abovex}},U_{\mathit{belowy}})$;
+		\Statex \Return $\profile_k$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+\subsubsection{Nondecomposable rules} 
+TODO ?
+
+\pagebreak
 \subsection{Interactive Elicitation}
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While it is of course possible doing full elicitation of the weights and afterwards elicit the agents' preferences (or the other way around) we propose an interleaved approach.
