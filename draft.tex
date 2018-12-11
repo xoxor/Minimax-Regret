@@ -59,9 +59,6 @@ In this draft we provide a method for approximate winner determination and an in
 
 \section{Background}
 
-{\bf We have to decide whether we want to focus only scoring rules, or on a larger class of rules based on a score.}
-
-
 We assume that there is a set $A$ of $m$ alternatives and $n$ agents (voters); each agent is associated to a preference order.
 %The set of preference orders is called profile and it is denoted by $v$.
 The preferences of the agents are supposed to be linear orders (connected, transitive, asymmetric relations) involving the alternatives;
@@ -71,38 +68,34 @@ The profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_
 With a little abuse of notation, we will use the term profile to refer to either $\profile$ or to the preference relations, depending on the context.
 Let $V$ be the set of possible preference profiles (the cartesian product of $n$ linear orders).
 
-A social choice function $f : V \rightarrow A$ associates a profile with one winner (or multiple winners in some cases).
-Among the many possible social choice functions, we consider those rules that are based on a numerical score that is decomposable voter-wise.
-%the score $s(a; v)$ of alternative $a$ is additive decomposable if it can be computed as $s(a; v) = \sum_{i} s(a; v_{i})$.
-In particular {\em positional scoring rules} attach weights to positions; an alternative obtains a score that depends on the rank obtained in each of the preference orders:
+A social choice function $f : V \rightarrow 2^A$ associates a profile with a set of winners.
+Among the many possible social choice functions, we consider {\em positional scoring rules}, which attach weights to positions; an alternative obtains a score that depends on the rank obtained in each of the preference orders:
 
-\[ s(x) = \sum_{i=1}^{n} w_{v_i(x)}. \]
+\[ s(x; \profile, \w) = \sum_{i=1}^{n} w_{v_i(x)}. \]
 
-where the vector $(w_1,\ldots,w_m)$ is called the scoring vector;
-%A positional scoring rule attach weights to positions; 
- it is usually assumed that the weights constitute a monotonic sequence: $w_{1} \geq w_{2} \geq \ldots \geq w_{m}$.
+where the vector $(w_1,\ldots,w_m)$ is called the scoring vector. We assume that the weights constitute a monotonic sequence: $w_{1} \geq w_{2} \geq \ldots \geq w_{m}$.
 
 \medskip
 We want to reason about partial preference information.
-A partial preference  is encoded by a partial order $\ppref_k$  of voter $k$;
-we assume that preference information is truthful, i.e. $a \ppref_k b \implies a \pref_k b$.
+A partial preference  is encoded by a partial order $\ppref_i$  of voter $i$;
+we assume that preference information is truthful, i.e. $a \ppref_i b \implies a \pref_i b$.
 
-A completion of $\ppref_k$ is any linear order $\pref_k$ that extends $\ppref_k$.
-Let $C(\ppref_k)$ be the set of completions of $\ppref_k$, that is the set of all complete rankings that extend $\ppref_k$.
+A completion of $\ppref_i$ is any linear order $\pref_i$ that extends $\ppref_i$.
+Let $C(\ppref_i)$ be the set of completions of $\ppref_i$, that is the set of all complete rankings that extend $\ppref_i$.
 An incomplete profile is a set of partial votes %$\textbf{p}=(p_1,\ldots,p_n)$.
 $\textbf{p}=(\ppref_1,\ldots,\ppref_n)$.
 
 We let $C(\textbf{p})=C(\ppref_1)\times \ldots \times C(\ppref_n)$ be the set of complete profiles extending $p$.
 
 \medskip
-We also assume that the weights of the scoring rules are only partially specified.
-We use $W$ to denote the set of feasible weight vector.
-Without loss of generality, we assume $w_1=0$ and $w_m=0$.
+We also assume that the weights of the scoring rule are only partially specified.
+Without loss of generality, we assume $w_1=1$ and $w_m=0$.
 The preferences of the chair are encoded with linear constraints, for instance one may state
 that $w_2>0.5$.
-A specific kind of preference may require the weight sequence to be convex, that means that the difference between the weight of the first position and the weight of the second position is at least as much as the difference between the weights of the second and third positions, etc. 
+We assume the weight sequence to be convex, that means that the difference between the weight of the first position and the weight of the second position is at least as much as the difference between the weights of the second and third positions, etc. 
 \[ \forall i \in \{1,\ldots,n\} \;\; w_i - w_{i+1} \geq w_{i+1}-w_{i+2} \iff  w_i - 2 w_{i+1} + w_{i+2} \geq 0 \]
 This is a constraint often used when aggregating rankings in sport competitions.
+We use $\mathcal{W}$ to denote the set of convex weight vectors.
 
 \section{Related works}
 
@@ -136,14 +129,10 @@ The computation of max regret is facilitated by the fact the score is decomposab
 % \end{align*}
 %Max regret and minimax regret can be computed using independent completion of partial votes for non-decomposable scoring rules. 
 
-\section{Incomplete profiles and partial information about the scoring rule}
+\section{Minimax regret under partial profile and weight information}
 In this draft, we consider a setting where both the voters' preferences and the preferences of the chair about the voting rule are incomplete.
-Let $s(x;\profile,\w)$ denote the score of alternative $x$ in profile $\profile$ with weights $\w$.
-Assuming positional scoring rules, the score of alternative $x$ is the sum of the points obtained 
-\[ s(x;\profile,\w) = \sum_{i=1}^{n} w_{\rank_i(x)}. \]
-We write the score as $s(x;\profile,\textbf{w})$ to underline the dependency of the score on the preference profile and on the weight vector. 
 
-The weights of a scoring rule can model different preferences for the committee; However in general it can be difficult to set the weights in an appropriate way.
+The weights of a scoring rule can model different preferences for the committee; however in general it can be difficult to set the weights in an appropriate way.
 
 
 The quality of an alternative can be quantified by considering the maximum regret with respect to an adversary that can choose the instantiation of both a complete profile (extending the known preferences of the agents) and of the scoring vectors (associated to the preferences of the committee).
@@ -151,7 +140,7 @@ The quality of an alternative can be quantified by considering the maximum regre
 %The adversary can choose the instantiation of the weights and preferences of the agents so to maximize the loss.
 
 We propose to use minimax regret to identify the alternative to declare as the approximate winner, extending the work of \cite{Lu2011} to the simultaneous presence of uncertainty in the agents' preferences and uncertainty in the weights.
-The maximum regret is considered by assuming an adversary can choose both 1) to extend the partial profile into a complete profile 2) can instantiate the weights choosing among any feasible weight vector in $W$.
+The maximum regret is considered by assuming an adversary can choose both 1) to extend the partial profile into a complete profile 2) can instantiate the weights choosing among any feasible weight vector in $W \subseteq \mathcal{W}$.
 
 \begin{align*}
 \PMR(x,y; \pprofile, W) &= \max_{\w \in W} \max_{\profile \in C(p)} s(y; \profile,\w) - s(x; \profile,\w)\\
@@ -165,126 +154,45 @@ x^{*}(\pprofile,W) & \in \arg\min_{x \in A} \MR(x;\pprofile,W)
  \item Max regret $\MR(x;\pprofile,W)$ is the worst-case loss of $x$. It is the loss occurred by an adversarial selection of a complete profile $\profile$ extending $\pprofile$ and a selection of $\w \in W$ to maximize the loss between $x$ and the true winner under $\profile$ and $w$.
  \item Minimax regret $\MMR(\pprofile,W)$ is the minimum of max regret obtained when choosing $x^*$
 \end{itemize}
-By recommending the alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation).
+By recommending the alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation). 
+
+We want to design a questioning strategy to minimize the worst regret in the long run. A questioning strategy indicates, given a partial profile and a set of feasible weights, which question to ask next. A question is either a query to the voter $i$ about her preference relation $\succ_i$ or a query to the committee about the feasible weights. 
+
+In order to design this strategy we first evaluate how to compute the current regret.
 
 \subsection{Computation of minimax regret}
-{\bf \em TODO: reason about the optimization and complete section}
 
-In order to compute pairwise maximum regret and therefore minimax regret, we adapt the reasoning from \cite{Lu2011} so that we decompose the PMR into the contributions that is associated to each agent.
+In order to compute pairwise maximum regret and therefore minimax regret, we adapt the reasoning from \cite{Lu2011} so that we decompose the $\PMR$ into the contributions that is associated to each agent.
 The settings is however more challenging due to the presence of uncertainty in the weights.
 
 Let $s(x; v_j,\w)=w_{v_j(x)}$ be the number of points $x$ obtains in the ranking $v_j$, that is the weight of the position $v_j(x)$.
-Exploiting the decomposition of the score in terms of votes we cam rewrite $\PMR$ as follows:
+Exploiting the decomposition of the score in terms of votes we can rewrite $\PMR$ as follows:
 \begin{align*}
 \PMR(x,y; \pprofile, W) &= \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] = \\
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [s(y; v_j,\w) - s(x; v_j,\w)]=\\
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}] \\
 \end{align*}
 %Computing PMR may be challenging since in principle the inner maximization can depend on the outer maximization.
-Let $A^+$ be the set of agents for which we know that $y$ is preferred to $x$ (positive contribution to pairwise regret), $A^+$ 
-be the set of agents for wich we  know that $x$ is preferred to $y$ (negative contribution) and $A^?$ the remaining case, where the preference between $x$ and $y$ is not known.
+Let $A^+=\{ i \ | \ y \succ_i^\pprofile x\}$ be the set of agents for which we know that $y$ is preferred to $x$ (positive contribution to pairwise regret), $A^-=\{ i \ | \ x \succ_i^\pprofile y\}$ 
+be the set of agents for wich we  know that $x$ is preferred to $y$ (negative contribution) and $A^?=\{ i \ | \ x \ T_i^\pprofile \ y\}$ the remaining case, where the preference between $x$ and $y$ is not known.
 Consider how the adversary will complete the partial orders:
 \begin{itemize}
- \item $j \in A^+$: If we know that agent $j$ prefers $y$ to $x$ then the adversary will complete the partial order of agent $j$ by placing as many as possible alternatives between $y$ and $x$.
- The way the partial order is completed in independent on the choice of the weights.
+ \item $j \in A^+$: If we know that agent $j$ prefers $y$ to $x$ then the adversary will complete the partial order of agent $j$ by placing as many alternatives as possible between $y$ and $x$.
+ The way the partial order is completed does not depend on the weights.
 
- \item $j \in A^-$: If we know that agent $j$ prefers $x$ to $y$ then the adversary will place as few as possible alternatives between $x$ and $y$.
- There is some dependecy between the weights and the completion of the partial order.
- This concerns the set of alternatives $U$ that are currently incomparable with $x$ and $y$.
- 
- \item $j \in A^?$: If we do not know whether $x$ or $y$ is preferred by agent $j$ then the adversary will place $y$ before $x$ in the linear order and this case reduce to the first case; therefore also in this case the completion of the partial order can be done independently of the choice of $w$.
+ \item $j \in A^?$: If we do not know whether $x$ or $y$ is preferred by agent $j$ then the adversary will place $y$ before $x$ in the linear order and this case reduce to the first one; therefore also in this case the completion of the partial order can be done independently of the choice of $w$.
+
+ \item $j \in A^-$: If we know that agent $j$ prefers $x$ to $y$ then the adversary will place as few alternatives as possible between $x$ and $y$.
+ We define $U$ as the set of alternatives that are incomparable with $x$ and $y$ according to $\ppref_i$. Since weights are assumed to be convex, the adversary will place all alternatives in $U$ as better than $x$.
 \end{itemize}
 
-Let $\hat{v}_k$ be the linear order extending $p_k$ according to the above procedure (described in \cite{Lu2011}).
-
-
-Then PMR can be written as follows:
-\[ \PMR(x,y; \pprofile, W) = \max_{\w \in W} \Big \{ \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]  + \sum_{j \in A^+, j \in A^?} [w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)}] \Big \} \] 
-
-
-\begin{itemize}
- \item Case of convex sequences:
-  %{\em Explain why convex sequences do not pose any problem}
-In the case of convex sequences, the optimization can be done without integer variables, since the case $A^-$ can be easily dealt with, and alternatives in $U$ can be indifferently be placed either to the top or to the bottom.
-\begin{align*}
-\max_{\w} & \sum_{j=1}^{n}  [w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)}] \\
-\text{s.t.} & \w \in W
-\end{align*}
+ 
 The space of feasible weights $W$ is encoded with linear constraints that model the preferences of the committee.
 Therefore the pairwise maximum regret can be computed with a linear program.
  
- \item General case:
-{\bf \em TODO: still have to find out exactly how to do it}
-We introduce a set integer variables $I^i$, one for each position $i$.
- Let $U^j$ be, for the agents in $A^-$, the alternatives that, in the partial order $\succ^p_j$ of some agent $j \in A^-$, are incomparable with $x$ and $y$.
- \[ \sum_{l=1}^n I^j_l w_l \]
-  Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
-  
-  Use linearization techniques to handle the multiplication...
-\end{itemize}
 
 
-\subsubsection{Minimax Computation under Convex Assumption \cite{Lu2011}}
-The goal is to choose as a winner the alternative $x^*$ whose worst case loss is minimal under all possible realizations of the full profile and all possible choices of weights. Assume hereinafter the selected weights sequence $\w \in W$ to be convex. In order to compute the minimal max regret $\MMR(\pprofile)$ under partial profile $\pprofile$ we need to compute the pairwise max regret between all pairs of alternatives $(x,y)$, where $x$ is a proposed winner and $y$ is the ``adversary'' alternative. Indeed, the construction of $\PMR(x,y,\pprofile,\w)$ can be viewed as an adversary's attempt to maximize the regret of choosing $x$ instead of $y$. For doing this, he can choose a completion $\profile_k \in C(\pprofile_k)$ of the partial profile and a (feasible) scoring vector $\w$ that maximize the contribution of the voter $k$ to $\PMR(x,y,\pprofile,\w)$. Let us now analyze how it could be done depending on the relation between alternatives $x$ and $y$ in $\pprofile_k$. 
-\begin{itemize}
-	\item $x \succ_k^\pprofile y$
-	\newline If we know $x$ is preferred to $y$ and we choose $x$ as a winner, $\pprofile_k$ contribution to $\PMR(x,y,\pprofile,\w)$ must be negative. In this situation, our adversary can only try to minimize this advantage by minimizing the positional gap between the two alternatives. To achieve that, he can arbitrary place all the alternatives preferred to $x$ above $x$, together with all the ones with unknown relation to $x$. Moreover, he can place all the alternatives less preferred to $x$ and with unknown relation to $y$ below $y$. We can summarize it for each $q \in A$ as follows:
-	\begin{align*}
-	q \succ_k^\pprofile x \vee q \ ?_k^\pprofile \ x \ & \Rightarrow \ \uparrow_x \\
-	x \succ_k^\pprofile q \wedge q \ ?_k^\pprofile \ y \ & \Rightarrow \ \downarrow_y \\
-	x \succ_k^\pprofile q \succ_k^\pprofile y \ & \Rightarrow \ \text{in between} \\
-	\end{align*}
-	It is worth noting that when the relation between $q$ and $x$ is not known in the partial profile, the adversary takes advantage by placing $q$ above $x$ only under the assumption of convex weight sequences.
-	\item $y \succ_k^\pprofile x$
-	\newline If $y$ is preferred to $x$ the construction proceeds similarly to the previous case, but now the adversary takes advantage by maximizing the gap between $x$ and $y$ placing as much alternatives as he can between the two. We can summarize the procedure for each $q \in A$ as follows:
-	\begin{align*}
-	q \succ_k^\pprofile y \ & \Rightarrow \ \uparrow_y \\
-	x \succ_k^\pprofile q \ & \Rightarrow \ \downarrow_x \\
-	(y \succ_k^\pprofile q \vee y \ ?_k^\pprofile \ q) \wedge (q \succ_k^\pprofile x \vee q \ ?_k^\pprofile \ x) \ & \Rightarrow \ \text{in between} \\
-	\end{align*}
-	\item $x \ ?_k^\pprofile \ y$
-	\newline If the partial profile $\pprofile_k$ does not specify the relation between $x$ and $y$, the advantage is maximized by ordering $y$ over $x$ and maximizing the gap between them following the procedure for the case $y \succ_k^\pprofile x$.
-\end{itemize}
-
-\subsubsection{Dropping the Convex Assumption}
-What if the sequence of weights is not convex? When $y \succ_k^\pprofile x$ or $x \ ?_k^\pprofile \ y$ weights do not influence the arbitrary placement of alternatives. Please remind we are working under the assumption that weights constitute a monotonic non-increasing sequence. Thus, there is no way for the adversary to take advantage from the weights distribution in order to increase the gap between $y$ and $x$ besides placing as much alternatives as he can between the two. The only case in which weights can influence the positional gap between $x$ and $y$ is when $x \succ_k^\pprofile y$ and $q \ ?_k^\pprofile \ x$. For convex sequences we place such alternatives $q$ above $x$, but it is not obvious that this is the best option for other sequences. For example, suppose $x$ and $y$ are ranked respectively in first and second position in the partial profile and we wonder where to place an alternative $q$ with unknown relation to $x$ (and thus to $y$). Suppose also that in the weight sequence the distance between the first and second positions is much lower than the one between the second and the third ones. In this case, placing $q$ above $x$ does not minimize the gap between $x$ and $y$ but we want, instead, to place $q$ below $y$.
-\newline Since weights are not totally specified, one solution could rely on choosing a completion for them so as to have a convex sequence and then reason under the convex assumption as described before. Nevertheless, this is not always possible because of the constraints existence. Indeed, may be the case that no feasible scoring vector forms a convex sequence. In this case we need to analyze the particular sequence of weights in order to decide how to maximize the adversary advantage. Before going into details, let us define $A$ as the set of alternatives (if any) preferred to $x$, $B$ as the set of alternatives preferred to $y$ but not to $x$, and $U$ the set of those with unknown relation to both $x$ and $y$. The idea is to determine the positions that minimize $x$'s advantage over $y$ and then place some of the alternatives in $U$ above $x$ and some below $y$ in order to get that desired ranking. Since we cannot change the order of the alternatives in the set $B$ we know that $x$ and $y$ are separated exactly by $|B|$ positions (the adversary would not take any advantage by adding alternatives between them). So, starting from the position of $x$ in the partial completion of $\pprofile_k$ computed so far ($\hat{\profile}_k$), we find the two positions separated by $|B|$ alternatives whose weights difference is the lowest. Note that we can only add $|U|$ alternatives so we can check only until the position $\hat{\profile}_k(x)+|U|$. Algorithm \ref{alg:splittingU} shows the procedure described.
-
-It is easy to see that we check at most $|U|$ positions. In the worst case the size of $U$ is equal to $m-2$, thus the procedure can be computed in $O(m)$ time. This cost does not affect the minimax regret computation time complexity that remains $O(nm^3)$.
-
-\begin{algorithm}[h] 
-	\caption{Placing alternatives in $U$ without Convex Assumption}
-	\label{alg:splittingU} 
-	\begin{algorithmic}
-		\Require $x$, $y$, $\hat{\profile}_k$, $\w$, $U$, $B$
-		\Ensure $\profile_k \in C(\pprofile)$
-		\Statex
-		\State $ j \gets 0$;
-		\State $ i \gets \hat{\profile}_k(x)$;
-		\State $ \mathit{posmin} \gets i$;
-		\State $ \mathit{min} \gets \w(i) - \w(i+1+|B|)$;
-		\While {$( j \leq |U| )$}
-		\If{ $(\w(i+j)-\w(i+1+|B|+j) < \mathit{min})$ }
-		\State $ \mathit{min} \gets \w(i+j) - \w(i+1+|B|+j)$;
-		\State $ \mathit{posmin} \gets i+j$;
-		\EndIf
-		\EndWhile
-		
-		\State $U_{\mathit{abovex}} \gets (i-\mathit{posmin}) \text{ alternatives} \in U $;
-		\State $U_{\mathit{belowy}} \gets U \setminus U_{\mathit{above}}$;
-		\Statex
-		\State $\profile_k \gets place(\pprofile_k,U_{\mathit{abovex}},U_{\mathit{belowy}})$;
-		\Statex \Return $\profile_k$
-		
-	\end{algorithmic}
-\end{algorithm}
-
-
-\subsubsection{Nondecomposable rules} 
-TODO ?
-
-\pagebreak
-\subsection{Interactive Elicitation}
+\section{Interactive Elicitation}
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While it is of course possible doing full elicitation of the weights and afterwards elicit the agents' preferences (or the other way around) we propose an interleaved approach.
 In our interactive  protocol for simultaneously eliciting the preferences of the chair about the voting rule and the voters' preferences about the alternatives.
@@ -293,18 +201,10 @@ Indeed, it can be beneficial to interleave questions asked to the committee and 
 Answers given by the committee about the scoring rule refine our knowledge of the weights $w_1,\ldots,w_n$, while
 answers given by one of the agents refine our knowledge about the agent's preferences.
 
+At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular). We can ask comparison queries to the agents and questions comparing the differences of weights to the committee. 
 
-\begin{itemize}
-\item At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular). 
+In the experiments we want to compare the interleaved approach with a baseline challenger, a method  that elicits the preferences of the voters first and then the voting rule (or the other way around)
 
-
-\item We can consider different types of questions: asking to compare a pair of alternatives, asking about top-k alternatives.
-
-Type of questions that we can ask to the chair:
-bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
-
-\item In the experiments we want to compare the interleaved approach with a baseline challenger, a method  that elicits the preferences of the voters first and then the voting rule (or the other way around)
-\end{itemize}
 
 
 
@@ -348,10 +248,90 @@ Make one test assuming convex sequences of weights, and others without this assu
 
 Comparison between our interleaved strategy and a strategy, still based on minimax regret  but that is not interleaved; also compare to some heuristic baselines.
 
-
 %{\small
 \bibliography{biblio}
 \bibliographystyle{plain} 
 %}
+
+\pagebreak
+\appendix
+\section{Minimax Computation under Convex Assumption \cite{Lu2011}}
+The goal is to choose as a winner the alternative $x^*$ whose worst case loss is minimal under all possible realizations of the full profile and all possible choices of weights. Assume hereinafter the selected weights sequence $\w \in W$ to be convex. In order to compute the minimal max regret $\MMR(\pprofile)$ under partial profile $\pprofile$ we need to compute the pairwise max regret between all pairs of alternatives $(x,y)$, where $x$ is a proposed winner and $y$ is the ``adversary'' alternative. Indeed, the construction of $\PMR(x,y,\pprofile,\w)$ can be viewed as an adversary's attempt to maximize the regret of choosing $x$ instead of $y$. For doing this, he can choose a completion $\profile_i \in C(\pprofile_i)$ of the partial profile and a (feasible) scoring vector $\w$ that maximize the contribution of the voter $i$ to $\PMR(x,y,\pprofile,\w)$. Let us now analyze how it could be done depending on the relation between alternatives $x$ and $y$ in $\pprofile_i$. 
+\begin{itemize}
+	\item $x \succ_i^\pprofile y$
+	\newline If we know $x$ is preferred to $y$ and we choose $x$ as a winner, $\pprofile_i$ contribution to $\PMR(x,y,\pprofile,\w)$ must be negative. In this situation, our adversary can only try to minimize this advantage by minimizing the positional gap between the two alternatives. To achieve that, he can arbitrary place all the alternatives preferred to $x$ above $x$, together with all the ones with unknown relation to $x$. Moreover, he can place all the alternatives less preferred to $x$ and with unknown relation to $y$ below $y$. We can summarize it for each $q \in A$ as follows:
+	\begin{align*}
+	q \succ_i^\pprofile x \vee q \ ?_i^\pprofile \ x \ & \Rightarrow \ \uparrow_x \\
+	x \succ_i^\pprofile q \wedge ( q \ ?_i^\pprofile \ y \vee y \succ_i^\pprofile q) \ & \Rightarrow \ \downarrow_y \\
+	x \succ_i^\pprofile q \succ_i^\pprofile y \ & \Rightarrow \ \text{in between} \\
+	\end{align*}
+	It is worth noting that when the relation between $q$ and $x$ is not known in the partial profile, the adversary takes advantage by placing $q$ above $x$ only under the assumption of convex weight sequences.
+	\item $y \succ_i^\pprofile x$
+	\newline If $y$ is preferred to $x$ the construction proceeds similarly to the previous case, but now the adversary takes advantage by maximizing the gap between $x$ and $y$ placing as much alternatives as he can between the two. We can summarize the procedure for each $q \in A$ as follows:
+	\begin{align*}
+	q \succ_i^\pprofile y \ & \Rightarrow \ \uparrow_y \\
+	x \succ_i^\pprofile q \ & \Rightarrow \ \downarrow_x \\
+	(y \succ_i^\pprofile q \vee y \ ?_i^\pprofile \ q) \wedge (q \succ_i^\pprofile x \vee q \ ?_i^\pprofile \ x) \ & \Rightarrow \ \text{in between} \\
+	\end{align*}
+	\item $x \ ?_i^\pprofile \ y$
+	\newline If the partial profile $\pprofile_i$ does not specify the relation between $x$ and $y$, the advantage is maximized by ordering $y$ over $x$ and maximizing the gap between them following the procedure for the case $y \succ_i^\pprofile x$.
+\end{itemize}
+
+\section{Dropping the Convex Assumption}
+\subsection{Profile completion}
+What if the sequence of weights is not convex? When $y \succ_i^\pprofile x$ or $x \ ?_i^\pprofile \ y$ weights do not influence the arbitrary placement of alternatives. Please remind we are working under the assumption that weights constitute a monotonic non-increasing sequence. Thus, there is no way for the adversary to take advantage from the weights distribution in order to increase the gap between $y$ and $x$ besides placing as much alternatives as he can between the two. The only case in which weights can influence the positional gap between $x$ and $y$ is when $x \succ_i^\pprofile y$ and $q \ ?_i^\pprofile \ x$. For convex sequences we place such alternatives $q$ above $x$, but it is not obvious that this is the best option for other sequences. For example, suppose $x$ and $y$ are ranked respectively in first and second position in the partial profile and we wonder where to place an alternative $q$ with unknown relation to $x$ (and thus to $y$). Suppose also that in the weight sequence the distance between the first and second positions is much lower than the one between the second and the third ones. In this case, placing $q$ above $x$ does not minimize the gap between $x$ and $y$ but we want, instead, to place $q$ below $y$.
+\newline The constraints expressed by the chair may result in a set of feasible vectors such that none of them forms a convex sequence. In this case we need to analyze the particular sequence of weights in order to decide how to maximize the adversary advantage. Before going into details, let us define $A$ as the set of alternatives (if any) preferred to $x$, $B$ as the set of alternatives preferred to $y$ but not to $x$, and $U$ the set of those with unknown relation to both $x$ and $y$. The idea is to determine the positions that minimize $x$'s advantage over $y$ and then place some of the alternatives in $U$ above $x$ and some below $y$ in order to get that desired ranking. Since we cannot change the order of the alternatives in the set $B$ we know that $x$ and $y$ are separated exactly by $|B|$ positions (the adversary would not take any advantage by adding alternatives between them). So, starting from the position of $x$ in the partial completion of $\pprofile_i$ computed so far ($\hat{\profile}_i$), we find the two positions separated by $|B|$ alternatives whose weights difference is the lowest. Note that we can only add $|U|$ alternatives so we can check only until the position $\hat{\profile}_i(x)+|U|$. Algorithm \ref{alg:splittingU} shows the procedure described.
+
+It is easy to see that we check at most $|U|$ positions. In the worst case the size of $U$ is equal to $m-2$, thus the procedure can be computed in $O(m)$ time. This cost does not affect the minimax regret computation time complexity that remains $O(nm^3)$.
+
+\begin{algorithm}[h] 
+	\caption{Placing alternatives in $U$ without Convex Assumption}
+	\label{alg:splittingU} 
+	\begin{algorithmic}
+		\Require $x$, $y$, $\hat{\profile}_i$, $\w$, $U$, $B$
+		\Ensure $\profile_i \in C(\pprofile)$
+		\Statex
+		\State $ j \gets 0$;
+		\State $ i \gets \hat{\profile}_i(x)$;
+		\State $ \mathit{posmin} \gets i$;
+		\State $ \mathit{min} \gets \w(i) - \w(i+1+|B|)$;
+		\While {$( j \leq |U| )$}
+		\If{ $(\w(i+j)-\w(i+1+|B|+j) < \mathit{min})$ }
+		\State $ \mathit{min} \gets \w(i+j) - \w(i+1+|B|+j)$;
+		\State $ \mathit{posmin} \gets i+j$;
+		\EndIf
+		\EndWhile
+		
+		\State $U_{\mathit{abovex}} \gets (i-\mathit{posmin}) \text{ alternatives} \in U $;
+		\State $U_{\mathit{belowy}} \gets U \setminus U_{\mathit{above}}$;
+		\Statex
+		\State $\profile_i \gets place(\pprofile_i,U_{\mathit{abovex}},U_{\mathit{belowy}})$;
+		\Statex \Return $\profile_i$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\subsection{Profile completion, again}
+ {\bf \em TODO: still have to find out exactly how to do it}
+ We introduce a set integer variables $I^i$, one for each position $i$.
+ Let $U^j$ be, for the agents in $A^-$, the alternatives that, in the partial order $\succ^p_j$ of some agent $j \in A^-$, are incomparable with $x$ and $y$.
+ \[ \sum_{l=1}^n I^j_l w_l \]
+ Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
+ 
+ Use linearization techniques to handle the multiplication...
+
+\section{To discuss}
+Let $\hat{v}_i$ be the linear order extending $p_i$ according to the above procedure (described in \cite{Lu2011}).
+
+
+Then PMR can be written as follows:
+\[ \PMR(x,y; \pprofile, W) = \max_{\w \in W} \Big \{ \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]  + \sum_{j \in A^+, j \in A^?} [w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)}] \Big \} \]
+
+\section{Even more fun}
+We can consider different types of questions: asking to compare a pair of alternatives, asking about top-k alternatives.
+
+Type of questions that we can ask to the chair:
+bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
+
 
 \end{document}  
