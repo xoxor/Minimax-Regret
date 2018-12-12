@@ -217,15 +217,22 @@ In the experiments we want to compare the interleaved approach with a baseline c
 %Define a score associated to each potential query that we may ask.
 
 \begin{itemize}
-\item Current solution strategy: consider the solution of the minimax regret game, 
+\item \textbf{Current solution strategy}: consider the solution of the minimax regret game, 
  $(x,y,w^{a},\profile^{a})$, where $x$ is the minimax regret optimal alternative, $y$ the adversarial choice, $w^{a}$ the weights, and $\profile^{a}$ the profile completed by the adversary.
-
-\item Non-iterleaved regret method: comparison with a method based on minimax regret, but not interleaved. 
-
- \item One possibility is to consider the MMR {\em a posteriori}.
-Assume that the different answers to a query induce the possible sets to be $(\pprofile_1,W_1)$ and $(\pprofile_2,W_2)$, then the score according to worst-case maximum regret is:
+ 
+ \item One possibility is to consider the MMR {\em a posteriori}. Assume that the different answers to a query induce the possible sets to be $(\pprofile_1,W_1)$ and $(\pprofile_2,W_2)$, then the score according to worst-case maximum regret is:
 \[\SCORE(x)= \max_{i=1,2} \MMR(\pprofile_i,W_i) \]
 In this case, the query with least value is chosen.
+
+What is the complexity of this strategy? Let's define $Q$ as the set of all possible queries we can address to the agents and to the committee. The worst case is represented by the situation in which we do not have any information about both the agents' preferences and the weights constraints. In this case we can address $\binom{m}{2}=\frac{m(m-1)}{2}$ questions to each agent. Moreover, we need to ask at least $m$ questions to the committee. Then, each question induces two possible pairs of $(\pprofile,W)$ for each of which we compute the $\MMR$, whose worst case complexity is $O(nm^3)$. Thus, the cardinality of $Q$ in the worst case is $\approx n \cdot \frac{m(m-1)}{2} + \lambda m$, and the worst case time complexity of the strategy is $O(n^2m^5)$.
+
+\item Non-interleaved regret method: comparison with a method based on minimax regret, but not interleaved. 
+
+\item Non-interleaved non-regret strategies (useful as benchmarks).	
+	\begin{itemize}
+		\item Random strategy: randomly chooses an agent $i$ and a comparison query such that $x \ T_i^\pprofile \ y$.
+		\item Volumetric strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
+	\end{itemize}
 \end{itemize}
 
 \section{Empirical Evaluation}
