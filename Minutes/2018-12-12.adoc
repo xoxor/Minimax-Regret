@@ -3,5 +3,24 @@
 *12/12/2018 - Olivier, Paolo, Beatrice*
 
 === Agenda
-* 
+* Changed the draft in order to have a more clear view about the goal and the desiderata 
+* Dropped the case in which the weights sequence is not convex (for now)
+** Paolo has in mind a way to complete the preference profile in such cases 
+
+=== Query evaluation 
+* Consider the MMR a posteriori:
+** consider a set of queries, compute their score, pick the one with the least value;
+* Use some sort of heuristic to guide the decision whether ask a question to the voters or to the committee:
+** decompose the regret into two components:
+*** the regret associated to the choice of the weights  Δ^w^ = PMR(x^\*^,x^a^,v^a^,w^a^) - min~w~ [ s(x^a^,v^a^,w) - s(x^\*^,v^a^,w)]
+*** the regret associated to the completion of the profiles  Δ^v^ = PMR(x^\*^,x^a^,v^a^,w^a^) - min~v~ [ s(x^a^,v,w^a^) - s(x^\*^,v,w^a^)]
+** if (Δ^w^ > φ Δ^v^) 
+	then ask a question to the chair
+   else ask a question to the voters
+** How to choose φ?
+*** queries to the committee can be more informative than the one asked to voters
+**** Remarks by Ulle: 
+***** informativeness may depend on when the query is asked;
+***** asking a question to the chair or to the voters may not have the same cost.
+
 
