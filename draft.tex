@@ -8,22 +8,40 @@
 \usepackage{hyperref}
 \usepackage{mathrsfs}
 \usepackage{algorithm, algpseudocode}
+\usepackage{bm}
+\usepackage{cleveref}
+\usepackage{xcolor}
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 \newcommand{\denselist}{\itemsep -2pt\topsep-6pt\partopsep-6pt}
+\newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 
 %\newcommand{\rank}{\text{rank}}
 \newcommand{\rank}{v}
 \newcommand{\preflarge}{\boldsymbol{\succeq}^\textbf{r}}%real, complete pref
 %\newcommand{\pref}{\boldsymbol{\succ}^\textbf{r}}%real, connected pref, strict
-\newcommand{\pref}{{\succ}}%real, connected pref, strict
-\newcommand{\prefr}{{\succ}^{r}}%real, connected pref, strict
+\newcommand{\pref}{\succ}%real, connected pref, strict
+\newcommand{\prefr}{{\succ}^\text{r}}%real, connected pref, strict
 \newcommand{\ppreflarge}{\succeq^\text{p}}%partial pref
 \newcommand{\ppref}{\succ^\text{p}}%partial pref
+%Thanks to https://tex.stackexchange.com/q/154549
+\makeatletter
+\newcommand{\newrelation}[2]{% #1 = control sequence, #2 = replacement text
+  \@ifdefinable{#1}{%
+    \def#1{%
+    \@ifnextchar_{\csname\string#1\endcsname}{\mathrel{#2}}%
+    }%
+    \@namedef{\string#1}##1##2{\mathrel{#2_{##2}}}%
+  }%
+}
+\makeatother
 
-\newcommand{\profile}{\textbf{v}}%(complete) prorile
-\newcommand{\pprofile}{\textbf{p}}%partial prorile
-\newcommand{\w}{\textbf{w}}%partial prorile
+\newrelation{\myRgood}{R^X}
+\newrelation{\pinc}{Q^\text{p}}%partial pref, complement (incomparable)
+
+\newcommand{\profile}{\textbf{v}}%(complete) profile
+\newcommand{\pprofile}{\textbf{p}}%partial profile
+\newcommand{\w}{\textbf{w}}%partial profile
 
 \DeclareMathOperator{\SCORE}{Score}
 \DeclareMathOperator{\PMR}{PMR}
@@ -172,9 +190,11 @@ Exploiting the decomposition of the score in terms of votes we can rewrite $\PMR
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [s(y; v_j,\w) - s(x; v_j,\w)]=\\
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}] \\
 \end{align*}
-%Computing PMR may be challenging since in principle the inner maximization can depend on the outer maximization.
-Let $A^+=\{ i \ | \ y \succ_i^\pprofile x\}$ be the set of agents for which we know that $y$ is preferred to $x$ (positive contribution to pairwise regret), $A^-=\{ i \ | \ x \succ_i^\pprofile y\}$ 
-be the set of agents for wich we  know that $x$ is preferred to $y$ (negative contribution) and $A^?=\{ i \ | \ x \ T_i^\pprofile \ y\}$ the remaining case, where the preference between $x$ and $y$ is not known.
+
+Given our hypothesis, for all pairs of alternatives, there exists completions of the partial preferences $\ppref$ that maximize the PMR and that do not depend on the weights. That is, we can exhibit, for each voter $j$, a completion $v_j$ such that $\forall \w, \forall v'_j \in C(\ppref_j): [w_{v_j(y)} - w_{v_j(x)}] \geq [w_{v'_j(y)} - w_{v'_j(x)}]$.
+
+Let $A^+=\{ i \ | \ y \ppref_i x\}$ be the set of agents for which we know that $y$ is preferred to $x$ (positive contribution to pairwise regret), $A^-=\{ i \mid x \ppref_i y\}$ 
+be the set of agents for wich we  know that $x$ is preferred to $y$ (negative contribution) and $A^?=\{ i \mid x \pinc_i y\}$ the remaining case, where the preference between $x$ and $y$ is not known.
 Consider how the adversary will complete the partial orders:
 \begin{itemize}
  \item $j \in A^+$: If we know that agent $j$ prefers $y$ to $x$ then the adversary will complete the partial order of agent $j$ by placing as many alternatives as possible between $y$ and $x$.
@@ -185,13 +205,11 @@ Consider how the adversary will complete the partial orders:
  \item $j \in A^-$: If we know that agent $j$ prefers $x$ to $y$ then the adversary will place as few alternatives as possible between $x$ and $y$.
  We define $U$ as the set of alternatives that are incomparable with $x$ and $y$ according to $\ppref_i$. Since weights are assumed to be convex, the adversary will place all alternatives in $U$ as better than $x$.
 \end{itemize}
+In summary, some best completion $\pref$ satisfies two properties: (1) for all $c \pinc x$, $c \pref x$; and (2) for all $c \pinc y$, if not $c \pref x \pref y$ then $y \pref c$. These two properties are intuitively understandable by observing that maximizing the PMR requires placing $x$ as low as possible (hence the first property) and $y$ as high as possible (hence the second property, with the exception that sometimes it is not possible to satisfy both desires and noting that the first desire is more important by convexity of the weights). A proof that this reasoning is correct is in \cref{sec:prfCompl}.
 
- 
 The space of feasible weights $W$ is encoded with linear constraints that model the preferences of the committee.
 Therefore the pairwise maximum regret can be computed with a linear program.
  
-
-
 \section{Interactive Elicitation}
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While it is of course possible doing full elicitation of the weights and afterwards elicit the agents' preferences (or the other way around) we propose an interleaved approach.
@@ -230,7 +248,7 @@ What is the complexity of this strategy? Let's define $Q$ as the set of all poss
 
 \item Non-interleaved non-regret strategies (useful as benchmarks).	
 	\begin{itemize}
-		\item Random strategy: randomly chooses an agent $i$ and a comparison query such that $x \ T_i^\pprofile \ y$.
+		\item Random strategy: randomly chooses an agent $i$ and a comparison query such that $x \pinc_i y$.
 		\item Volumetric strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 	\end{itemize}
 \end{itemize}
@@ -340,5 +358,18 @@ We can consider different types of questions: asking to compare a pair of altern
 Type of questions that we can ask to the chair:
 bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
 
+\section{Proof of completion}
+\label{sec:prfCompl}
+Given $w$ and ${\pref} \in C(\ppref)$, let $w[\pref]$ denote $w_{|\pref(y)|} - w_{|\pref(x)|}$. \commentOC{Changing the notation to slightly to reduce the number of symbols, to be discussed.} Define ${\pref} \in m_w$ iff ${\pref} \in C(\ppref)$ and $\forall {\pref'} \in C(\ppref): w[\pref] \geq w[\pref']$.
 
+Given $w$ and $\pref$ an element of $C(\ppref)$. Consider $C = \{c \pinc x \land x \pref c\}$. Define $\pref^1$ as $\pref$ except that the elements in $C$ come just above $x$ in $\pref^1$, respecting in $\pref^1$ their internal ordering in $\pref$. We show that $\pref^1$ is an element of $C(\ppref)$; and that $w[\pref^1] \geq w[\pref]$. 
+
+It is an element of $C(\ppref)$ as it does not contradict $\ppref$. To show this, recall first that $\pref$ does not contradict $\ppref$. Left to show is that $\forall c \in C, d \notin C: x \pref d \pref c \Rightarrow d \pinc c$ (thus any element $d$ whose relation with $c$ has changed from $\pref$ to $\pref^1$ were incomparable with $c$ in $\ppref$). Consider any such pair $c, d$. As $d \notin C$, $\lnot(d \pinc x)$ or $d \pref x$. From the hypothesis, $d \pref x$ is excluded. 
+As $\pref$ extends $\ppref$, $\lnot(d \ppref x)$ and $\lnot (c \ppref d)$. Because $\lnot (d \pinc x)$, $x \ppref d$. Thus, $\lnot (d \ppref c)$, otherwise by transitivity $x \ppref c$. The conclusion now follows from $\lnot (c \ppref d)$ and $\lnot (d \ppref c)$.
+
+In $\pref^1$, compared to $\pref$, $x$ is $|C|$ positions lower, and $y$ is at most $|C|$ positions lower, depending on where $y$ was in $\pref$. Hence, by convexity of the weights, $w[\pref^1] \geq w[\pref]$.
+
+Now define $\pref^2$ as $\pref^1$ except that the elements from $C' = \{c \pinc y \land \lnot (c \pref^1 x \pref^1 y) \land c \pref^1 y\}$ move just below $y$, respecting in $\pref^2$ their internal ordering in $\pref^1$. Observe that this move keeps property (1), that was satisfied by construction in $\pref^1$, intact, and satisfies property (2). The rest of the reasoning is similar to the previous move, as the situations are symmetric. (To be checked?) Hence, $\pref^2 \in C(\pref)$ and it satisfies both properties.
+
+Given any $x, y, w$, as $C(\pref)$ has an element maximizing $w[.]$ (by finiteness of the set), the above reasoning shows that some element in $C(\pref)$ satisfies both properties and maximizes $w[.]$. And any element in $C(\pref)$ satisfying both properties attribute the same positions to $x$ and $y$, thus, maximizes $w[.]$.
 \end{document}  
