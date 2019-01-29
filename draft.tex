@@ -262,7 +262,7 @@ Consider how the adversary will complete the partial orders:
  \item $j \in A^-$: If we know that agent $j$ prefers $x$ to $y$ then the adversary will place as few alternatives as possible between $x$ and $y$.
  We define $U$ as the set of alternatives that are incomparable with $x$ and $y$ according to $\ppref_i$. Since weights are assumed to be convex, the adversary will place all alternatives in $U$ as better than $x$.
 \end{itemize}
-In summary, some best completion $\pref$ satisfies two properties: (1) for all $c \pinc x$, $c \pref x$; and (2) for all $c \pinc y$, if not $c \pref x \pref y$ then $y \pref c$. These two properties are intuitively understandable by observing that maximizing the PMR requires placing $x$ as low as possible (hence the first property) and $y$ as high as possible (hence the second property, with the exception that sometimes it is not possible to satisfy both desires and noting that the first desire is more important by convexity of the weights). A proof that this reasoning is correct is in \cref{sec:prfCompl}.
+In summary, some best completion $\pref$ satisfies two properties: (1) for all $c \pinc x$, $c \pref x$; and (2) for all $c \pinc y$, if not $c \pref x \pref y$ then $y \pref c$. These two properties are intuitively understandable by observing that maximizing the PMR requires placing $x$ as low as possible, hence the first property; and $y$ as high as possible, hence the second property, with the exception that sometimes it is not possible to satisfy both desires and noting that the first desire is more important by convexity of the weights. A proof that this reasoning is correct is in \cref{sec:prfCompl}.
 
 The space of feasible weights $W$ is encoded with linear constraints that model the preferences of the committee.
 Therefore the pairwise maximum regret can be computed with a linear program.
@@ -312,7 +312,7 @@ Since the objective is to maximize pairwise regret
 
 To impose the desired behavior:
 \begin{align*} 
-V_{l}^{j} \leq I^j \\
+V_{l}^{j} \leq I^j \\
 V_{l}^{j} \leq w_l
 \end{align*}
 The expression $I^j_l w_l$ evaluates to $w_l$ if $I^j_l = 1$, and to $0$ otherwise.
@@ -323,9 +323,9 @@ We write $w \in W$ as a shourtcut to represent the constraints that the weights 
 \begin{align}
 \max & \sum_{l=1}^m  V_{l}^{j,+} - V_{l}^{j,-}\\
 \text{ s.t. } & \\
-& V_{l}^{j} \leq I^j \\
+& V_{l}^{j} \leq I^j \\
 & V_{l}^{j} \leq w_l \\
-& V_{l}^{j} \leq I^j \\
+& V_{l}^{j} \leq I^j \\
 & V_{l}^{j} \leq w_l 
 \end{align} 
  
