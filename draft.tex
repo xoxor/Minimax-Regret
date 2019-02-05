@@ -58,7 +58,7 @@
 
 \title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
 %\author{}
-%\author{Paolo Viappiani} \affil{LIP6\\\email{paolo.viappiani@lip6.fr}}
+\author{Olivier Cailloux \and Stefano Moretti \and Beatrice Napolitano \and Paolo Viappiani} %\affil{LIP6\\\email{paolo.viappiani@lip6.fr}
 %\author{Olivier Cailloux} 
 %\author{Stefano Moretti}%\affil{LAMSADE}
 %\author{Beatrice Napolitano}\affil{LAMSADE}
@@ -96,13 +96,34 @@ In this draft we provide a method for approximate winner determination and an in
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 
+The traditional approach to social choice assumes that both the social function and the full preference orderings of the voters are expressed beforehand. 
+As noted by several authors requiring voters to express full preference orderings can be onerous (especially for large sets of alternatives) 
+
+% Given partial information about voter preferences, how does one choose a suitable approximate winner? 
+Scoring rules are a particularly common methods used to aggregate rankings and determine  a winner.
+The score can be seen as a utility for the society...
+
+%and often captures more information than is needed to determine the winner
+We develop methods for computing the minimax- optimal alternative for scoring rules with partial preference information and partial information about the weights.
+
+%which queries to ask of which voters. 
+We discuss  heuristics that allow us to determine queries that quickly allow one to reduce minimax regret.
+
+
+ Our experimental results on randomly generated and real world data sets show...
+
 In this paper we propose an interactive adaptive protocol for eliciting both the voters preferences and the voting rule.
 At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular).
 %We want to design a questioning strategy to minimize the worst regret in the long run. A questioning strategy indicates, given a partial profile and a set of feasible weights, which question to ask next. A question is either a query to the voter $i$ about her preference relation $\succ_i$ or a query to the committee about the feasible weights. 
 
 %The voting scheme selects the winner (a consensus option).
 %Incremental elicitation 
-% The paper is organized as follows.
+\medskip
+The paper is organized as follows.
+In Section \ref{sec:background} we provide the necessary background.
+We introduce the minimax criterion and in Section \ref{sec:mmr}.
+In Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minima regret; finally in Section 
+\ref{sec:conclusions} we provide some final thoughts.
 
 \subsection{Related works}
 
@@ -123,8 +144,9 @@ The computation of max regret is facilitated by the fact the score is decomposab
 
 
 
-\section{Background}
+\section{Background}\label{sec:background}
 
+We introduce the basic concepts.
 We assume that there is a set $A$ of $m$ alternatives (for instance products, restaurants, movies, public projects, job candidates, etc.) and $n$ agents (voters); each agent is associated to a preference order.
 The goal of the voters is to make a consensus choice, that is to select a ``winner'' given voter rankings.
 
@@ -184,6 +206,8 @@ We use $\mathcal{W}$ to denote the set of convex weight vectors.
 %Max regret and minimax regret can be computed using independent completion of partial votes for non-decomposable scoring rules. 
 
 \section[Minimax regret under partial profile and weight information]{Minimax regret under partial profile and weight \\ information}
+\label{sec:mmr}
+
 
 %The regret-minimizing alternative may not be a possible winner for some voting rules.
 The weights of a scoring rule can model different preferences of the committee. 
@@ -237,6 +261,7 @@ The settings is however more challenging due to the presence of uncertainty in t
 
 A scoring rule associates each alternative to a score that is given by the sum of points obtained for each voter.
 
+Scoring rules are additively decomposable.
 Let $s(x; v_j,\w)=w_{v_j(x)}$ be the number of points that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}), that is the weight of position $v_j(x)$.
 Obviously we have 
 \[ s(x; \profile, \w) = \sum_{j=1}^n s(x; v_j,\w). \]
@@ -334,7 +359,7 @@ We write $w \in W$ as a shourtcut to represent the constraints that the weights 
 & V_{l}^{j} \leq w_l 
 \end{align} 
  
-\section{Interactive Elicitation}
+\section{Interactive Elicitation} \label{sec:elicit}
 
 \begin{itemize}
 	\item Minimax regret can be used to guide the elicitation process
@@ -391,7 +416,7 @@ Then use minimax regret as in Lu and Boutilier.
 	\end{itemize}
 \end{itemize}
 
-\section{Empirical Evaluation}
+\section{Empirical Evaluation} \label{sec:experiments}
 
 % We can stop elicitation when minimax regret is sufficiently small.
 We evaluate the proposed method using the following simulated protocol.
@@ -411,10 +436,12 @@ Make one test assuming convex sequences of weights, and others without this assu
 
 Comparison between our interleaved strategy and a strategy, still based on minimax regret  but that is not interleaved; also compare to some heuristic baselines.
 
-% Conclusions
-% summary of contribution, more comments, future works.
+\section{Conclusions}  \label{sec:conclusions}
+%  Possible future works: manipulation, 
 
+This is an awesome paper, it should be accepted right away and win a prize.
 
+% Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 %{\small
 \bibliography{biblio}
 \bibliographystyle{plain} 
