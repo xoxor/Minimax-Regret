@@ -90,7 +90,7 @@ In this draft we provide a method for approximate winner determination and an in
 \item Incremental elicitation of preferences can help mitigating the cognitive and communication costs
 \item Novelty of the proposed method
 \item Structure of the paper
-\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}
+\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, \cite{Xia2008}
 \end{itemize}
 
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
@@ -253,8 +253,6 @@ x^{*}(\pprofile,W) & \in \arg\min_{x \in A} \MR(x;\pprofile,W)
 By recommending the alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation). 
 
 % Add some general remarks about using minimax regret
-
-
 \subsection{Computation of minimax regret}
 In order to compute pairwise maximum regret and therefore minimax regret, we adapt the reasoning from \cite{Lu2011} so that we decompose the $\PMR$ into the contributions that is associated to each agent.
 The settings is however more challenging due to the presence of uncertainty in the weights.
@@ -266,8 +264,7 @@ Let $s(x; v_j,\w)=w_{v_j(x)}$ be the number of points that $x$ obtains in the ra
 Obviously we have 
 \[ s(x; \profile, \w) = \sum_{j=1}^n s(x; v_j,\w). \]
 
-We now  exploit the decomposition of the score in terms of votes.
-The actual regret of choosing $x$ instead of $y$ can be written as:
+By exploiting the decomposition of the score in terms of votes, we write the actual regret of choosing $x$ instead of $y$ as:
 \[
 s(y; \profile,\w) - s(x; \profile, \w) = [\sum_{j=1}^n s(y; v_j,\w) - s(x; v_j,\w)]
 \]
@@ -277,7 +274,7 @@ and  can rewrite $\PMR$ as follows:
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [s(y; v_j,\w) - s(x; v_j,\w)]=\\
 &=  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}] \\
 \end{align*}
-Given our hypothesis, for all pairs of alternatives, there exists completions of the partial preferences $\ppref$ that maximize the PMR and that do not depend on the weights. 
+Given our hypothesis, for all pairs of alternatives, there exist completions of the partial preferences $\ppref$ that maximize the PMR and that do not depend on the weights. 
 That is, we can exhibit, for each voter $j$, a completion $v_j$ such that $\forall \w, \forall v'_j \in C(\ppref_j): [w_{v_j(y)} - w_{v_j(x)}] \geq [w_{v'_j(y)} - w_{v'_j(x)}]$.
 
 Let $A^+=\{ i \ | \ y \ppref_i x\}$ be the set of agents for which we know that $y$ is preferred to $x$ (positive contribution to pairwise regret), $A^-=\{ i \mid x \ppref_i y\}$ 
@@ -299,7 +296,7 @@ Therefore the pairwise maximum regret can be computed with a linear program.
 
 \subsection{Linear program under the convex assumption}
 
-By solving a sequence of pairwise max regret computation is possible to determine the minimax regret solution.
+By solving a sequence of pairwise max regret computations is possible to determine the minimax regret solution.
 Each PMR is computed using a linear program.
 The decision variables correspond to the weights attached to the different positions.
 Constraints are on the feasible parameters (the ``weights'' of the scoring rules); contraints represent the preferences of the chair about the scoring rule.
@@ -319,8 +316,9 @@ The linear program is then the following:
 
 \subsection{Minimax regret without the convex assumption}
 
-\begin{itemize}
- 	\item Mixed integer program to solve minimax regret without the convexity
+\begin{itemize}	
+	\item (will probably go to a later section, or to the appendix)
+	\item Mixed integer program to solve minimax regret without the convexity
  	\item Approximations ?
 \end{itemize}
 
@@ -332,7 +330,7 @@ Then PMR can be written as follows:
 We compute pairwise maximum regret by considering binary variables to represent optimization choices related to where to position the alternatives.
 We also have numerical variables to represent the weights of the scoring rule.
 
-Since the objective is to maximize pairwise regret
+Since the objective is to maximize pairwise regret...
  
  The objective function can be written as:
  \[ \max \sum_{l=1}^n I^j_l w_l -  I^j_l w_l \]
@@ -349,18 +347,22 @@ The expression $I^j_l w_l$ evaluates to $w_l$ if $I^j_l = 1$, and to $0$ otherwi
   
 We write $w \in W$ as a shourtcut to represent the constraints that the weights are chosen to be in the feasible set.
 %Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
- 
+ Finally, the following is the optimization problem that compute the value $\PMR$.
+ The variables are $w$, $V$, $I$,...
 \begin{align}
 \max & \sum_{l=1}^m  V_{l}^{j,+} - V_{l}^{j,-}\\
-\text{ s.t. } & \\
-& V_{l}^{j} \leq I^j \\
-& V_{l}^{j} \leq w_l \\
-& V_{l}^{j} \leq I^j \\
-& V_{l}^{j} \leq w_l 
+\text{ s.t. } & w \in W  \\
+& \sum_{l} I^{j}_{l} = 1 & \forall j \\
+& V_{l}^{j,+} \leq I^j  & \forall l,j \\
+& V_{l}^{j,+} \leq w_l & \forall l,j \\
+& V_{l}^{j,-} \geq w + I^j - 1 & \forall l,j \\
+& V_{l}^{j,-} \geq 0 & \forall l,j\\
 \end{align} 
+The optimization program can be solved by any suitable MILP solver.
  
 \section{Interactive Elicitation} \label{sec:elicit}
 
+%regret-based incremental elicitation method
 \begin{itemize}
 	\item Minimax regret can be used to guide the elicitation process
 	\item As termination condition of elicitation, we can check whether minimax regret is lower than a threshold. If optimality is derived, we can perform elicitation until minimax regret drops to zero.
