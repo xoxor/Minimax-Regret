@@ -58,7 +58,7 @@
 
 \title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
 %\author{}
-\author{Olivier Cailloux \and Stefano Moretti \and Beatrice Napolitano \and Paolo Viappiani} %\affil{LIP6\\\email{paolo.viappiani@lip6.fr}
+\author{Olivier Cailloux  \and Beatrice Napolitano \and Paolo Viappiani} %\affil{LIP6\\\email{paolo.viappiani@lip6.fr}
 %\author{Olivier Cailloux} 
 %\author{Stefano Moretti}%\affil{LAMSADE}
 %\author{Beatrice Napolitano}\affil{LAMSADE}
@@ -89,31 +89,34 @@ In this draft we provide a method for approximate winner determination and an in
 \item Robust decision criterion: minimax regret
 \item Incremental elicitation of preferences can help mitigating the cognitive and communication costs
 \item Novelty of the proposed method
-\item Structure of the paper
-\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, \cite{Xia2008}
+\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, relation to necessary and possible winners \cite{Xia2008}
 \end{itemize}
 
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 
 The traditional approach to social choice assumes that both the social function and the full preference orderings of the voters are expressed beforehand. 
-As noted by several authors requiring voters to express full preference orderings can be onerous (especially for large sets of alternatives) 
+As noted by several authors requiring voters to express full preference orderings can be onerous (especially for 
+large sets of alternatives).
+Acquiring the necessary preference information may require a high cognitive and communication cost.
 
-% Given partial information about voter preferences, how does one choose a suitable approximate winner? 
-Scoring rules are a particularly common methods used to aggregate rankings and determine  a winner.
-The score can be seen as a utility for the society...
 
-%and often captures more information than is needed to determine the winner
+ In many real situations, however, it may be necessary to reason with partial preferences, as some prefer- ences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
+This observation has motivated a number of recent works on
+
+In this paper we relax the traditional assumptions.
 We develop methods for computing the minimax- optimal alternative for scoring rules with partial preference information and partial information about the weights.
 
-%which queries to ask of which voters. 
-We discuss  heuristics that allow us to determine queries that quickly allow one to reduce minimax regret.
+We an adaptive utility elicitation 
 
+We focus on positional scoring rules, that  are a particularly common methods used to aggregate rankings and determine  a winner.
+We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information.%The score can be seen as a utility for the society.
+%and often captures more information than is needed to determine the winner
+We discuss  heuristics that allow us to determine queries that quickly allow to reduce minimax regret.
 
- Our experimental results on randomly generated and real world data sets show...
+%In this paper we propose an interactive adaptive protocol for eliciting both the voters preferences and the voting rule.
+%At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular).
 
-In this paper we propose an interactive adaptive protocol for eliciting both the voters preferences and the voting rule.
-At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular).
 %We want to design a questioning strategy to minimize the worst regret in the long run. A questioning strategy indicates, given a partial profile and a set of feasible weights, which question to ask next. A question is either a query to the voter $i$ about her preference relation $\succ_i$ or a query to the committee about the feasible weights. 
 
 %The voting scheme selects the winner (a consensus option).
@@ -125,8 +128,7 @@ We introduce the minimax criterion and in Section \ref{sec:mmr}.
 In Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minima regret; finally in Section 
 \ref{sec:conclusions} we provide some final thoughts.
 
-\subsection{Related works}
-
+%\subsection{Related works}
 \paragraph{Uncertain scoring rules}
 A number of works have dealt with the problem of reasoning with incompletely specified aggregation functions.
 In particular, when considering positional scoring rules, it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \cite{Stein1994}.
@@ -160,7 +162,9 @@ With a little abuse of notation, we will use the term profile to refer to either
 Let $V$ be the set of possible preference profiles (the cartesian product of $n$ linear orders).
 
 A social choice function $f : V \rightarrow 2^A$ associates a profile with a set of winners.
-Among the many possible social choice functions, we consider {\em positional scoring rules}, which attach weights to positions; an alternative obtains a score that depends on the rank obtained in each of the preference orders:
+Among the many possible social choice functions, we consider {\em positional scoring rules}, which attach weights to positions; 
+%A scoring rule associates each alternative to a score that is given by the sum of points obtained for each voter.
+an alternative obtains a score that depends on the rank obtained in each of the preference orders:
 \begin{align}
 s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 = \sum_{i=1}^{m} \alpha_i w_i . \label{eq:srule}
@@ -212,7 +216,6 @@ We use $\mathcal{W}$ to denote the set of convex weight vectors.
 %The regret-minimizing alternative may not be a possible winner for some voting rules.
 The weights of a scoring rule can model different preferences of the committee. 
 For instance, the weights can control the inclination to favour ``extreme'' alternatives (often at either the top or the bottom of the rankings) at the expenses of ``moderate'' alternatives (that are more consistently in the middle part of the rankings).
-
 However in general it can be difficult to set the weights in an appropriate way.
 
 In this paper, we consider a setting where both the voters' preferences and the preferences of the chair about the voting rule are incomplete.
@@ -222,8 +225,8 @@ In this paper, we consider a setting where both the voters' preferences and the 
 The quality of an alternative can be quantified by considering the maximum regret with respect to an adversary that can choose the instantiation of both a complete profile (extending the known preferences of the agents) and of the scoring vectors (associated to the preferences of the committee).
 
 We propose to use the minimax regret as a decision criterion to determine a winner.
-Minimax regret [ref] has been used for making decisions under utility uncertainty and for preference elicitation [ref].
-Lu and Boutilier \cite{Lu2011} have adopted minimax regret ; 
+Minimax regret \cite{Boutilier2006} has been used for making decisions under utility uncertainty and for preference elicitation.
+%Lu and Boutilier \cite{Lu2011} have adopted minimax regret. 
 
 This paper extends the work of  to the simultaneous presence of uncertainty in the agents' preferences and uncertainty in the weights.
 
@@ -257,9 +260,9 @@ By recommending the alternative associated with minimax regret, we can provide a
 In order to compute pairwise maximum regret and therefore minimax regret, we adapt the reasoning from \cite{Lu2011} so that we decompose the $\PMR$ into the contributions that is associated to each agent.
 The settings is however more challenging due to the presence of uncertainty in the weights.
 
-A scoring rule associates each alternative to a score that is given by the sum of points obtained for each voter.
 
 Scoring rules are additively decomposable.
+%A scoring rule associates each alternative to a score that is given by the sum of points obtained for each voter.
 Let $s(x; v_j,\w)=w_{v_j(x)}$ be the number of points that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}), that is the weight of position $v_j(x)$.
 Obviously we have 
 \[ s(x; \profile, \w) = \sum_{j=1}^n s(x; v_j,\w). \]
@@ -329,18 +332,18 @@ Then PMR can be written as follows:
 
 We compute pairwise maximum regret by considering binary variables to represent optimization choices related to where to position the alternatives.
 We also have numerical variables to represent the weights of the scoring rule.
+%Since the objective is to maximize pairwise regret...
 
-Since the objective is to maximize pairwise regret...
- 
  The objective function can be written as:
- \[ \max \sum_{l=1}^n I^j_l w_l -  I^j_l w_l \]
- 
- We replace the multiplicative terms by new variables..
-\[ V_{l}^{j} \sim I^j_l w_l  \]
+ \[ \max \sum_{l=1}^n B^j_l w_l -  B^j_l w_l \]
+
+We use enconding trick in order to solve the problem.
+We replace the multiplicative terms by new variables.
+\[ V_{l}^{j} \sim B^j_l w_l  \]
 
 To impose the desired behavior:
 \begin{align*} 
-V_{l}^{j} \leq I^j \\
+V_{l}^{j} \leq B^j \\
 V_{l}^{j} \leq w_l
 \end{align*}
 The expression $I^j_l w_l$ evaluates to $w_l$ if $I^j_l = 1$, and to $0$ otherwise.
@@ -348,30 +351,33 @@ The expression $I^j_l w_l$ evaluates to $w_l$ if $I^j_l = 1$, and to $0$ otherwi
 We write $w \in W$ as a shourtcut to represent the constraints that the weights are chosen to be in the feasible set.
 %Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
  Finally, the following is the optimization problem that compute the value $\PMR$.
- The variables are $w$, $V$, $I$,...
+ The variables are $w$, $V$, $B$,...
 \begin{align}
-\max & \sum_{l=1}^m  V_{l}^{j,+} - V_{l}^{j,-}\\
+Z := \max & \sum_{l=1}^m  V_{l}^{j,+} - V_{l}^{j,-}\\
 \text{ s.t. } & w \in W  \\
-& \sum_{l} I^{j}_{l} = 1 & \forall j \\
-& V_{l}^{j,+} \leq I^j  & \forall l,j \\
+& \sum_{B=i_{1}}^{i_{2}} I^{j}_{l} = 1 & \forall j \\
+& V_{l}^{j,+} \leq B^j_{l}  & \forall l,j \\
 & V_{l}^{j,+} \leq w_l & \forall l,j \\
-& V_{l}^{j,-} \geq w + I^j - 1 & \forall l,j \\
+& V_{l}^{j,-} \geq w + B_{l}^j - 1 & \forall l,j \\
 & V_{l}^{j,-} \geq 0 & \forall l,j\\
 \end{align} 
 The optimization program can be solved by any suitable MILP solver.
+
+\begin{claim}
+The $\PMR$ is computed using the above optimization problem.
+\end{claim}
+
  
 \section{Interactive Elicitation} \label{sec:elicit}
 
 %regret-based incremental elicitation method
 \begin{itemize}
 	\item Minimax regret can be used to guide the elicitation process
-	\item As termination condition of elicitation, we can check whether minimax regret is lower than a threshold. If optimality is derived, we can perform elicitation until minimax regret drops to zero.
-	\item At each step, the system need to decide whether to ask a question to one of the agents or ask a question to the chair about the voting rule
+	\item As termination condition of elicitation, we can check whether minimax regret is lower than a threshold. If we wish optimality, we can perform elicitation until minimax regret drops to zero.
+	\item At each step, the system needs to decide whether to ask a question to one of the agents or ask a question to the chair about the voting rule
 	\item Type of questions that we can ask to the chair:
 	bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
 \end{itemize}
-
-
 
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While it is of course possible doing full elicitation of the weights and afterwards elicit the agents' preferences (or the other way around) we propose an interleaved approach.
@@ -385,8 +391,16 @@ At each step we need to decide whether we want to ask a question to the committe
 
 In the experiments we want to compare the interleaved approach with a baseline challenger, a method  that elicits the preferences of the voters first and then the voting rule (or the other way around)
 
-\paragraph{Query methods}
+\paragraph{Query types}
 
+Questions to the voters: it is natural to consider comparison queries asking to compare two alternatives
+
+Questions to the committee: we consider questions that refine our knowledge about the weighting vectors $w$.
+
+
+
+\paragraph{Query methods}
+We consider different strategies to determine the next question to ask given the current information.
 %{\em Some ideas: decompose the regret into two components, one due to $\w$ and one due to $\pprofile$, and ask a question to the chair / or to one of the agents depending on which is highest}
 
 %We consider strategies of the following form
@@ -398,6 +412,9 @@ In the experiments we want to compare the interleaved approach with a baseline c
  $(x,y,\w^{a},\profile^{a})$, where $x$ is the minimax regret optimal alternative, $y$ the adversarial choice, $\w^{a}$ the weights, and $\profile^{a}$ the profile completed by the adversary.
 
 Ask a question to compare $x$ with $y$ to an agent.
+
+% Determine the part of ``regret'' due to uncertainty in $w$
+% Determine the part of ``regret' due to uncertainty in $p$
  
  \item One possibility is to consider the MMR {\em a posteriori}. Assume that the different answers to a query induce the possible sets to be $(\pprofile_1,W_1)$ and $(\pprofile_2,W_2)$, then the score according to worst-case maximum regret is:
 \[\SCORE(x)= \max_{i=1,2} \MMR(\pprofile_i,W_i) \]
@@ -421,9 +438,8 @@ Then use minimax regret as in Lu and Boutilier.
 \section{Empirical Evaluation} \label{sec:experiments}
 
 % We can stop elicitation when minimax regret is sufficiently small.
+We test the elicitation protocols in randomly generated datasets and real datasets. % (sushi and iris).
 We evaluate the proposed method using the following simulated protocol.
-
-We test the elicitation protocols in randomly generated datasets and real datasets (sushi and iris).
 
 \begin{itemize}
  \item Randomly generate the true preferences of the users (i.e. the linear orders) and the weights associated with the committee's preferences on the scoring rule
@@ -440,8 +456,10 @@ Comparison between our interleaved strategy and a strategy, still based on minim
 
 \section{Conclusions}  \label{sec:conclusions}
 %  Possible future works: manipulation, 
+We have proposed the use of minimax regret as a way to determine a winner in a robust way when considering uncertainty on both the voting rule and the voters' preferences.
 
-This is an awesome paper, it should be accepted right away and win a prize.
+Our experimental results on randomly generated and real world data sets show that regret-based elicitation is effective and allow to find a near optimal consensus choice in a limited number of steps.
+%Our interactive elicitation methods are shown to be effective in simulations.
 
 % Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 %{\small
@@ -512,21 +530,21 @@ It is easy to see that we check at most $|U|$ positions. In the worst case the s
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Profile completion, again}
- %{\bf \em TODO: still have to find out exactly how to do it}
- 
- We introduce a set integer variables $I^i$, one for each position $i$.
- Let $U^j$ be, for the agents in $A^-$, the alternatives that, in the partial order $\succ^p_j$ of some agent $j \in A^-$, are incomparable with $x$ and $y$.
- \[ \sum_{l=1}^n I^j_l w_l \]
- Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
- 
- We provide the following MIP (mixed integer linear program).
- 
-% Use linearization techniques to handle the multiplications...
-
-
-%\section{Even more fun}
-%We can consider different types of questions: asking to compare a pair of alternatives, asking about top-k alternatives.
+%\subsection{Profile completion, again}
+% %{\bf \em TODO: still have to find out exactly how to do it}
+% 
+% We introduce a set integer variables $I^i$, one for each position $i$.
+% Let $U^j$ be, for the agents in $A^-$, the alternatives that, in the partial order $\succ^p_j$ of some agent $j \in A^-$, are incomparable with $x$ and $y$.
+% \[ \sum_{l=1}^n I^j_l w_l \]
+% Variable $I^j$ associated with the constraint $0 \leq I \leq |U^j|$.
+% 
+% We provide the following MIP (mixed integer linear program).
+% 
+%% Use linearization techniques to handle the multiplications...
+%
+%
+%%\section{Even more fun}
+%%We can consider different types of questions: asking to compare a pair of alternatives, asking about top-k alternatives.
 %
 
 \section{Proof of completion}
