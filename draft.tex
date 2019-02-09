@@ -84,14 +84,10 @@ In this draft we provide a method for approximate winner determination and an in
 \section{Introduction}
 
 \begin{itemize}
-\item General motivation: need to deal with partially specified preferences and as well partially specified voting rules
-\item Focus on positional scoring rules
-\item Robust decision criterion: minimax regret
-\item Incremental elicitation of preferences can help mitigating the cognitive and communication costs
-\item Novelty of the proposed method
 \item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, relation to necessary and possible winners \cite{Xia2008}
 \end{itemize}
 
+%General motivation: need to deal with partially specified preferences and as well partially specified voting rules
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 
@@ -105,10 +101,14 @@ Acquiring the necessary preference information may require a high cognitive and 
 This observation has motivated a number of recent works on
 
 In this paper we relax the traditional assumptions.
+
+%Robust decision criterion: minimax regret
 We develop methods for computing the minimax- optimal alternative for scoring rules with partial preference information and partial information about the weights.
 
-We an adaptive utility elicitation 
+%Incremental elicitation of preferences can help mitigating the cognitive and communication costs
+We adopt an adaptive utility elicitation framrwork
 
+%Focus on positional scoring rules
 We focus on positional scoring rules, that  are a particularly common methods used to aggregate rankings and determine  a winner.
 We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information.%The score can be seen as a utility for the society.
 %and often captures more information than is needed to determine the winner
@@ -457,10 +457,9 @@ Comparison between our interleaved strategy and a strategy, still based on minim
 \section{Conclusions}  \label{sec:conclusions}
 %  Possible future works: manipulation, 
 We have proposed the use of minimax regret as a way to determine a winner in a robust way when considering uncertainty on both the voting rule and the voters' preferences.
-
 Our experimental results on randomly generated and real world data sets show that regret-based elicitation is effective and allow to find a near optimal consensus choice in a limited number of steps.
-%Our interactive elicitation methods are shown to be effective in simulations.
 
+Future works include considering the effect of strategic agents, and considering probabilistic methods.
 % Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 %{\small
 \bibliography{biblio}
