@@ -71,21 +71,29 @@
 %Given a partial profile: use techniques of Lu and Boutilier (2011).
 \begin{abstract}
 Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
-In the classical setting, the social choice rule is fixed beforehand; indeed many works analyze the properties of different rules (including axiomatic treatments) in order to justify the choice of specific social choice functions. 
-Moreover, it is usually assumed that the preferences of the voters are known completely. 
+In the classical setting, the voting rule is fixed beforehand, and the full preference information is provided by the voters. 
 
-%We argue that it is possible that the committee wants to precise some preferences about the aggregation.
-In this draft we depart from the classic view by considering that both preferences and the social choice rule can be only partially specified.
-We note that previous works have considered either partial preferences or a partially specified aggregation, but we do not know of any work considering both sources of uncertainty at the same time.
+As social choice moves to the web, the
+
+the need for relaxing the assumptions 
+
+
+
+In this paper we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
+
+We then show how minimax regret can be used to drive the elicitation
+
+
+We develop several query strategies that  focus simultaneously on reduction of relevant preference and voting rule uncertainty.
+
 %We consider that the committee wants to express preferences for some voting rules
-In this draft we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
+
 \end{abstract}
 
 \section{Introduction}
+% indeed many works analyze the properties of different rules (including axiomatic treatments) in order to justify the choice of specific social choice functions. 
+%Moreover, it is usually assumed that the preferences of the voters are known completely. 
 
-\begin{itemize}
-\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, relation to necessary and possible winners \cite{Xia2008}
-\end{itemize}
 
 %General motivation: need to deal with partially specified preferences and as well partially specified voting rules
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
@@ -96,23 +104,39 @@ As noted by several authors requiring voters to express full preference ordering
 large sets of alternatives).
 Acquiring the necessary preference information may require a high cognitive and communication cost.
 
+In many real situations, however, it may be necessary to reason with partial preferences, as some preferences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
 
- In many real situations, however, it may be necessary to reason with partial preferences, as some prefer- ences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
-This observation has motivated a number of recent works on
 
-In this paper we relax the traditional assumptions.
+In this paper we depart from the classic view by considering that both preferences and the social choice rule can be only partially specified.
 
-%Robust decision criterion: minimax regret
+
+This observation has motivated a number of recent works on preference elicitation, including several works on social choice with partial profiles.
+
 We develop methods for computing the minimax- optimal alternative for scoring rules with partial preference information and partial information about the weights.
 
+%We argue that it is possible that the committee wants to precise some preferences about the aggregation.s
+% Incremental elicitation of preferences is critical to easing the cognitive and communication cost for users 
+%In this paper we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
+%In this paper we relax the traditional assumptions.
+
+
+
 %Incremental elicitation of preferences can help mitigating the cognitive and communication costs
-We adopt an adaptive utility elicitation framrwork
+%We adopt an adaptive utility elicitation framrwork
 
 %Focus on positional scoring rules
 We focus on positional scoring rules, that  are a particularly common methods used to aggregate rankings and determine  a winner.
 We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information.%The score can be seen as a utility for the society.
 %and often captures more information than is needed to determine the winner
 We discuss  heuristics that allow us to determine queries that quickly allow to reduce minimax regret.
+
+
+Possible and necessary winner determination: in typical settings, there will be no necessary winner and too many possible winners.
+
+
+While previous works have considered either partial preferences or a partially specified aggregation, but we do not know of any work considering both sources of uncertainty at the same time.
+
+% We must engage in simultaneous elictation of the rule and of the preferences.
 
 %In this paper we propose an interactive adaptive protocol for eliciting both the voters preferences and the voting rule.
 %At each step we need to decide whether we want to ask a question to the committee or to one of the agents (and to which agent in particular).
@@ -127,6 +151,11 @@ In Section \ref{sec:background} we provide the necessary background.
 We introduce the minimax criterion and in Section \ref{sec:mmr}.
 In Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minima regret; finally in Section 
 \ref{sec:conclusions} we provide some final thoughts.
+
+\begin{itemize}
+\item References: \cite{Cailloux2014}, \cite{Llamazares2013}, \cite{Konczak05}, \cite{Kalech2011}, \cite{Pini2009}, relation to necessary and possible winners \cite{Xia2008}.
+Also this reference: \cite{Naamani-Dery2015}.
+\end{itemize}
 
 %\subsection{Related works}
 \paragraph{Uncertain scoring rules}
@@ -194,6 +223,7 @@ We assume the weight sequence to be convex, that means that the difference betwe
 This is a constraint often used when aggregating rankings in sport competitions.
 We use $\mathcal{W}$ to denote the set of convex weight vectors.
 
+% Theoretical complexity of partial completition
 
 % We are given  $\ppref_i $,  a partial preference.
 % The maximum regret is considered by assuming an adversary can choose the profile
@@ -209,11 +239,17 @@ We use $\mathcal{W}$ to denote the set of convex weight vectors.
 % \end{align*}
 %Max regret and minimax regret can be computed using independent completion of partial votes for non-decomposable scoring rules. 
 
-\section[Minimax regret under partial profile and weight information]{Minimax regret under partial profile and weight \\ information}
+\section[Minimax regret under partial profile and weight information]{Minimax regret under partial profile and weight information}
 \label{sec:mmr}
 
+%Robust decision criterion: minimax regret
+Minimax regret \cite{Savage1954} is a decision criterion that has been used for robust optimization under data uncertainty \cite{Kouvelis1997} and as well in decision-making with uncertain utility values  \cite{Salo2001,Boutilier2006}.
 
+% we use max regret to measure the quality
+
+% This leads to interesting tradeoffs in elicitation
 %The regret-minimizing alternative may not be a possible winner for some voting rules.
+% the value of certain preference information is often not worth the cost of obtaining it.
 The weights of a scoring rule can model different preferences of the committee. 
 For instance, the weights can control the inclination to favour ``extreme'' alternatives (often at either the top or the bottom of the rankings) at the expenses of ``moderate'' alternatives (that are more consistently in the middle part of the rankings).
 However in general it can be difficult to set the weights in an appropriate way.
@@ -229,6 +265,9 @@ Minimax regret \cite{Boutilier2006} has been used for making decisions under uti
 %Lu and Boutilier \cite{Lu2011} have adopted minimax regret. 
 
 This paper extends the work of  to the simultaneous presence of uncertainty in the agents' preferences and uncertainty in the weights.
+
+
+Intuitively, the quality of a proposed alternative $a$ is how far from optimal $a$  could be in the worst case, given the current knowledge about the voting rule and about the voters' preferences.
 
 The maximum regret is considered by assuming an adversary can choose both 1) to extend the partial profile into a complete profile 2) can instantiate the weights choosing among any feasible weight vector in $W \subseteq \mathcal{W}$.
 
@@ -254,6 +293,8 @@ Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ a
 x^{*}(\pprofile,W) & \in \arg\min_{x \in A} \MR(x;\pprofile,W) 
 \end{align*}
 By recommending the alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation). 
+
+Notice that if $MMR(\pprofile, W)=0$, then $x^{*}(\pprofile,W)$  is a necessary co-winner.
 
 % Add some general remarks about using minimax regret
 \subsection{Computation of minimax regret}
@@ -370,15 +411,22 @@ The $\PMR$ is computed using the above optimization problem.
  
 \section{Interactive Elicitation} \label{sec:elicit}
 
-%regret-based incremental elicitation method
-\begin{itemize}
-	\item Minimax regret can be used to guide the elicitation process
-	\item As termination condition of elicitation, we can check whether minimax regret is lower than a threshold. If we wish optimality, we can perform elicitation until minimax regret drops to zero.
-	\item At each step, the system needs to decide whether to ask a question to one of the agents or ask a question to the chair about the voting rule
-	\item Type of questions that we can ask to the chair:
-	bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
-\end{itemize}
+If the available information is too limited, the potential error associated with the robust winner (i.e., its max regret) may be unacceptable.
 
+Minimax regret can be used to guide the elicitation process.
+As termination condition of elicitation, we can check whether minimax regret is lower than a threshold. If we wish optimality, we can perform elicitation until minimax regret drops to zero.
+
+At each step, the system needs to decide whether to ask a question to one of the agents or ask a question to the chair about the voting rule
+
+In this Section, we describe different strategies to determine informative queries to ask next, with the goal of reducing $\MMR(\pprofile,W)$ quickly.
+
+We propose an regret-based incremental elicitation method...
+
+\paragraph{Query types}
+
+\paragraph{Strategies}
+
+We develop some elicitation strategies for simultaneous elicitation of voters' preferences and of the scoring rule.
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
 While it is of course possible doing full elicitation of the weights and afterwards elicit the agents' preferences (or the other way around) we propose an interleaved approach.
 In our interactive  protocol for simultaneously eliciting the preferences of the chair about the voting rule and the voters' preferences about the alternatives.
@@ -391,6 +439,9 @@ At each step we need to decide whether we want to ask a question to the committe
 
 In the experiments we want to compare the interleaved approach with a baseline challenger, a method  that elicits the preferences of the voters first and then the voting rule (or the other way around)
 
+%Type of questions that we can ask to the chair:	bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
+
+% we discuss the different forms of queries and develop several query strategies 
 \paragraph{Query types}
 
 Questions to the voters: it is natural to consider comparison queries asking to compare two alternatives
@@ -455,11 +506,21 @@ Make one test assuming convex sequences of weights, and others without this assu
 Comparison between our interleaved strategy and a strategy, still based on minimax regret  but that is not interleaved; also compare to some heuristic baselines.
 
 \section{Conclusions}  \label{sec:conclusions}
-%  Possible future works: manipulation, 
-We have proposed the use of minimax regret as a way to determine a winner in a robust way when considering uncertainty on both the voting rule and the voters' preferences.
-Our experimental results on randomly generated and real world data sets show that regret-based elicitation is effective and allow to find a near optimal consensus choice in a limited number of steps.
+%  We have proposed the use of minimax regret as a means of robust winner determination to support the informational approximation of voting rules, as well as to guide the process of incremental elicitation of voter preferences.
+%In this paper we have proposed the use of minimax regret as a way to determine a winner in a robust way when considering uncertainty on both the voting rule and the voters' preferences.
 
-Future works include considering the effect of strategic agents, and considering probabilistic methods.
+In this paper we have considered a  social choice setting with partial  information about the voter's  
+preferences and as well a partially specified voting rule.
+We have proposed the use of minimax regret as a means of robust winner determination in this setting, and as well as to guide the process of incremental elicitation of voter preferences.
+Our experimental results on randomly generated and real world data sets show that regret-based elicitation is effective and allow to find a near-optimal consensus choice in a limited number of steps.
+%Regret-based elicitation allows to determine near-optimal winners using only few information about the voters' preferences.
+We mention some  important directions for future works.
+First of all, further development of elicitation strategies, considering alternative heuristics, is an important direction. 
+Second, we are interested in extending elicitation of voting rules going beyond scoring rules.
+A third direction is that of considering probabilistic methods for elicitation.
+Finally, we are interested in studying the effect of strategic agents, that may not report their true preferences.
+% distribution-free heuristics
+
 % Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 %{\small
 \bibliography{biblio}
