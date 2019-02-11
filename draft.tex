@@ -94,20 +94,20 @@ and develop several query strategies that interleave questions to the chair and 
 %General motivation: need to deal with partially specified preferences and as well partially specified voting rules
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
+It is natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
 
 The traditional approach to social choice assumes that both the social function and the full preference orderings of the voters are expressed beforehand. 
-As noted by several authors requiring voters to express full preference orderings can be onerous (especially for 
-large sets of alternatives).
-Acquiring the necessary preference information may require a high cognitive and communication cost.
+As noted by several authors requiring voters to express full preference orderings can be prohibitively costly (in term of cognitive and communication cost), especially for  large sets of alternatives.
+This observation has motivated a number of recent works \cite{Xia2008,Kalech2011,Lu2011,Naamani-Dery2015} on preference elicitation in a voting context. % including several works on social choice with partial profiles.
 
 %Recently, the assumption of full a has been questioned by a number of researchers
-In many real situations, however, it may be necessary to reason with partial preferences, as some preferences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
-This observation has motivated a number of recent works on preference elicitation, including several works on social choice with partial profiles.
+%In many real situations, however, it may be necessary to reason with partial preferences, as some preferences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
 
-We argue that it is possible that the committee wants to precise some preferences about the aggregation.s
+In a similar way,  Cailloux and Endriss \cite{Cailloux2014} have argued that it might not always be realistic to assume that a voting rule is known precisely.
+Indeed, it is possible that the chair may have some preferences over the desired aggregation method, but may still be not able to formalize the voting rule upfront.
 
+%We argue that it is possible that the committee wants to precise some preferences about the aggregations.
 In this paper we depart from the classic view by considering that both preferences and the social choice rule can be only partially specified.
-
 We develop methods for computing the minimax-optimal alternative for scoring rules with partial preference information and partial information about the weights.
 
 %
