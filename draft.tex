@@ -71,22 +71,19 @@
 %Given a partial profile: use techniques of Lu and Boutilier (2011).
 \begin{abstract}
 Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
-In the classical setting, the voting rule is fixed beforehand, and the full preference information is provided by the voters. 
+In the classical setting, the voting rule is fixed beforehand and full preference information is provided by the voters. 
+Recently, the assumption of full preference information has been questioned by a number of researchers and 
+number of frameworks for vote elicitation have been proposed.
 
-%As social choice moves to the web, the
-%the need for relaxing the assumptions of classical social choice
+In this paper we go one step further and we assume that both the voting rule and the voters preferences are partially specified.
+Focusing on positional scoring rules, we assume that the chair %is not able to give the definition of the rule but 
+is able to answer simple questions  requiring to pick a winner from a specific  example profile.
+Moreover, the preferences of the voters are incrementally acquired by asking comparison queries.
 
-
-
-In this paper we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
-
-We then show how minimax regret can be used to drive the elicitation in order to ask informative queries in order to 
-
-
-We develop several query strategies that  focus simultaneously on reduction of relevant preference and voting rule uncertainty.
-
-%We consider that the committee wants to express preferences for some voting rules
-
+We propose a method  for robust approximate winner determination in this setting with minimax regret. 
+We then provide an interactive elicitation protocol based on minimax regret
+%We then show how minimax regret can be used to drive the elicitation in order to ask informative queries in order to a
+and develop several query strategies that interleave questions to the chair and questions to the voters in order to acquire the most relevant information about the preferences and voting rule.
 \end{abstract}
 
 \section{Introduction}
@@ -103,17 +100,17 @@ As noted by several authors requiring voters to express full preference ordering
 large sets of alternatives).
 Acquiring the necessary preference information may require a high cognitive and communication cost.
 
+%Recently, the assumption of full a has been questioned by a number of researchers
 In many real situations, however, it may be necessary to reason with partial preferences, as some preferences are not available and too expensive to obtain (with respect to a cognitive or economic cost). 
+This observation has motivated a number of recent works on preference elicitation, including several works on social choice with partial profiles.
 
+We argue that it is possible that the committee wants to precise some preferences about the aggregation.s
 
 In this paper we depart from the classic view by considering that both preferences and the social choice rule can be only partially specified.
 
+We develop methods for computing the minimax-optimal alternative for scoring rules with partial preference information and partial information about the weights.
 
-This observation has motivated a number of recent works on preference elicitation, including several works on social choice with partial profiles.
-
-We develop methods for computing the minimax- optimal alternative for scoring rules with partial preference information and partial information about the weights.
-
-%We argue that it is possible that the committee wants to precise some preferences about the aggregation.s
+%
 % Incremental elicitation of preferences is critical to easing the cognitive and communication cost for users 
 %In this paper we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
 %In this paper we relax the traditional assumptions.
@@ -135,6 +132,9 @@ Possible and necessary winner determination: in typical settings, there will be 
 
 While previous works have considered either partial preferences or a partially specified aggregation, but we do not know of any work considering both sources of uncertainty at the same time.
 
+%We consider that the committee wants to express preferences for some voting rules
+
+We develop several query strategies that  focus simultaneously on reduction of relevant preference and voting rule uncertainty.
 % We must engage in simultaneous elictation of the rule and of the preferences.
 
 %In this paper we propose an interactive adaptive protocol for eliciting both the voters preferences and the voting rule.
@@ -144,7 +144,6 @@ While previous works have considered either partial preferences or a partially s
 
 %The voting scheme selects the winner (a consensus option).
 %Incremental elicitation 
-\medskip
 The paper is organized as follows.
 In Section \ref{sec:background} we provide the necessary background.
 We introduce the minimax criterion and in Section \ref{sec:mmr}.
@@ -178,8 +177,7 @@ The computation of max regret is facilitated by the fact the score is decomposab
 
 We introduce the basic concepts.
 We assume that there is a set $A$ of $m$ alternatives (for instance products, restaurants, movies, public projects, job candidates, etc.) and $n$ agents (voters); each agent is associated to a preference order.
-The goal of the voters is to make a consensus choice, that is to select a ``winner'' given voter rankings.
-
+The goal of the voters is to make a consensus choice, to select a ``winner'' given voter rankings.
 
 %The set of preference orders is called profile and it is denoted by $v$.
 The preferences of the agents are supposed to be linear orders (connected, transitive, asymmetric relations) involving the alternatives;
