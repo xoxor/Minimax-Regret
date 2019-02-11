@@ -73,15 +73,14 @@
 Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
 In the classical setting, the voting rule is fixed beforehand, and the full preference information is provided by the voters. 
 
-As social choice moves to the web, the
-
-the need for relaxing the assumptions 
+%As social choice moves to the web, the
+%the need for relaxing the assumptions of classical social choice
 
 
 
 In this paper we provide a method for approximate winner determination and an incremental elicitation protocol based on minimax regret. 
 
-We then show how minimax regret can be used to drive the elicitation
+We then show how minimax regret can be used to drive the elicitation in order to ask informative queries in order to 
 
 
 We develop several query strategies that  focus simultaneously on reduction of relevant preference and voting rule uncertainty.
@@ -423,8 +422,19 @@ In this Section, we describe different strategies to determine informative queri
 We propose an regret-based incremental elicitation method...
 
 \paragraph{Query types}
+We distinguish between queries asked to the voters and questions asked to the chair.
 
-\paragraph{Strategies}
+Questions to the voters: it is natural to consider comparison queries asking to compare two alternatives
+
+Another common type or queries are {\em top-k}, asking to each voter his $k$ most alternatives.
+
+
+Questions to the committee: we consider questions that refine our knowledge about the weighting vectors $w$.
+
+In particular, we want to acquire constraints of the type:
+\[ w_{i} - w_{+1i} \geq \lambda (w_{i+1} - w_{i+2}) \]
+
+\paragraph{Elicitation strategies}
 
 We develop some elicitation strategies for simultaneous elicitation of voters' preferences and of the scoring rule.
 Starting from some initial partial knowledge, our goal is to learn both the scoring rule function and the agents' preferences.
@@ -442,11 +452,7 @@ In the experiments we want to compare the interleaved approach with a baseline c
 %Type of questions that we can ask to the chair:	bound queries (Is this alternative among your top-k most preferred items?), comparison queries (do you prefer alternative x or alternative y?).
 
 % we discuss the different forms of queries and develop several query strategies 
-\paragraph{Query types}
 
-Questions to the voters: it is natural to consider comparison queries asking to compare two alternatives
-
-Questions to the committee: we consider questions that refine our knowledge about the weighting vectors $w$.
 
 
 
