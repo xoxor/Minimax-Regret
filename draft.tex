@@ -370,12 +370,11 @@ The PMR can be written as:
 \[ \PMR(x,y; \pprofile, W) = \sum_{j=1}^n w_{\hat{v}_i(y)} - w_{\hat{v}_i(x)} 
 = \sum_{i=1}^m (\alpha_{i}^{y} - \alpha_{i}^{x}) w_i \]
 where the coefficient $ (\alpha_{i}^{y} - \alpha_{i}^{x})$ is the number of times $y$ is in position $i$ minus the number of times $x$ is the in position $i$ in the rankings of the completed profile $\hat{v}$:
-$\alpha_{i}^{x} = \sum_{j=1}^{n}  I[\hat{v}_{j}(x)=i]$.
+$\alpha_{i}^{x} = \sum_{j=1}^{n}  I[\hat{v}_{j}(x)=i]$ where $I$ is the indicator function.
 %\[ \alpha_{i} = \sum_{j=1}^{n}  I[\hat{v}_{j}(y)=i] - I[\hat{v}_{j}(x)=i]\]
-where $I$ is the indicator function.
 Then, what we have to to compute pairwise max regret is to compute the solution of the following linear program :
 \begin{align*}
-\PMR(x,y; \pprofile,W) = \max_{\w} & \sum_{i=1}^m \alpha_i w_{i}\\
+\PMR(x,y; \pprofile,W) = \max_{\w} & \sum_{i=1}^m (\alpha_{i}^{y} - \alpha_{i}^{x}) w_{i}\\
 \text{ s.t. } & \w \in W \\
 & \text{Equation } (\ref{eq:convexity})
 \end{align*}
@@ -391,24 +390,35 @@ Then PMR can be written as follows:
  &\PMR(x,y; \pprofile, W) =\\ 
  &\max_{\w \in W} \Big \{ \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} \!-\! w_{v_j(x)}]  \!+\!	 \sum_{j \in A^+ \cup  A^?} [w_{\hat{v}_j(y)} \!-\! w_{\hat{v}_j(x)}] \Big \} 
  \end{align*}
-
+%Note that the second addendum inside the max do not depend on the choice of $\w$.
+Consider the two addendum inside the outer ``max''. 
+The first addendum is concern with positioning of alternatives $x$ and $y$ for voters in $A^{-}$for which we know that $x$ is preferred to $y$.
+The second addendum is concerned with voters in $A^{+}$ and $A^{?}$.
+We rewrite the second addendum as:
+\begin{align*}
+\sum_{j \in A^+ \cup  A^?} [w_{\hat{v}_j(y)} \!-\! w_{\hat{v}_j(x)}] 
+= \sum_{i = 1}^{m} (\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i}
+\end{align*}
+where $\hat{\alpha}_{i}^{x}$ is the number of times that $x$ is ranked  in position $i$  considering the profile $\hat{v}$ of voters in $A^+ \cup  A^?$.
 %We compute pairwise maximum regret by considering binary variables $\{ B_{i} \}_{i=1,\ldots,m}$ to represent optimization choices related to where to position the alternatives.
-We introduce two set of binary variables $B^{+}_{i,j}$ and $B^{-}_{i,j}$  for each voter $i$ and each position $j$.
-The variable $B_{i,j}^{+}$ encodes the fact that the alternative $y$ is placed in position $j$ in the ranking of agent $i$; while  $B_{i,j}^{-}$ encodes the position of the alternative $x$.
+
+We now show how to optimize $\PMR$.
+In addition to variables $\{ w_{j} \}_{j=1,\ldots,m}$ (one for each position) we need to employ several additional decision variables.
+We introduce two set of binary variables $B^{+}_{i,j}$ and $B^{-}_{i,j}$  for each position $i$ and for each voter $j$.
+Variable $B_{i,j}^{+}$ encodes the fact that the alternative $y$ is placed in position $i$ in the ranking of agent $j$; while  $B_{i,j}^{-}$ encodes the same thing for alternative $x$.
 
 We also have numerical variables to represent the weights of the scoring rule.
 Since each alternative needs to be placed exactly in one place for each agent, we adopt the constraints
 $\sum_{i=1}^{m} B_{i,j}^{+} = 1$ and $\sum_{i=1}^{m} B_{i,j}^{-} = 1$.
 %Since the objective is to maximize pairwise regret...
 
-The score of alternative $y$ can be written as $\sum_{i=1}^{n} \sum_{j=1}^{m} w_{j} B_{i,j}^{+}$.
-Our objective function is now:
- \[ \max \sum_{i=1}^{n} \sum_{j=1}^{m} B_{i,j}^{+} w_j- B_{i,j}^{-}  w_j \]
+The score of alternative $y$ can be written as $\sum_{i = 1}^{m} \hat{\alpha}_{i}^{y} + \sum_{i=1}^{n} \sum_{j=1}^{m} w_{j} B_{i,j}^{+}$.
+The objective function is now:
+ \[ \max \sum_{i = 1}^{m} (\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i}  \sum_{i=1}^{n} \sum_{j=1}^{m} B_{i,j}^{+} w_j- B_{i,j}^{-}  w_j \]
 
 We use integer programming enconding tricks in order to linearize the problem formulation.
 We introduce yet another set of variables  $V_{i,j}^{+} $  and $V_{i,j}^{-}$ % the multiplicative terms by new variables.
-and we introduce constraints so that $V_{i,j}^{+} = B^{+}_{i,j} w_j$.
-To impose the desired behavior, we set $V_{l}^{j} \leq B^j $ and $V_{l}^{j} \leq w_l$.
+and we enforce that $V_{i,j}^{+} = B^{+}_{i,j} w_j$ by setting constraints $V_{l}^{j} \leq B^j $ and $V_{l}^{j} \leq w_l$.
 %\begin{align*} 
 %V_{l}^{j} \leq B^j \\
 %V_{l}^{j} \leq w_l
@@ -422,9 +432,11 @@ To impose the desired behavior, we set $V_{l}^{j} \leq B^j $ and $V_{l}^{j} \leq
  
 We therefore obtain the following mixed integer linear program:
 \begin{align}
-\max & \sum_{i=1}^n  \sum_{j=1}^m  V_{i,j}^{+} - V_{i,j}^{-}\\
-\text{ s.t. } & w \in W  \\
+\max & \sum_{i=1}^m  [(\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i}] +
+ \sum_{i=1}^m \sum_{j=1}^n  [V_{i,j}^{+} - V_{i,j}^{-}]\\
+\text{ s.t. } & \w \in W  \\
 & \sum_{i=t_{1}}^{t_{2}} B_{i,j}^{+} = 1 & \forall j \\
+& \sum_{i=t_{1}}^{t_{2}} B_{i,j}^{-} = 1 & \forall j \\
 & V_{i,j}^{+} \leq B_{i,j}^{+}  & \forall i,j \\
 & V_{i,j}^{+} \leq w_j & \forall i,j \\
 & V_{i,j}^{-} \geq w + B_{i,j}^{-} - 1 & \forall i,j \\
@@ -465,10 +477,11 @@ a response to a query gives us a constraint on the weighting vectors $w$.
 
 In particular, we want to acquire constraints of the type:
 \[ w_{j} - w_{j+1} \geq \lambda (w_{j+1} - w_{j+2}) \] 
-for $j \in \{1,\ldots,m-2\}$.
-This constraint relates the difference between the importance of positions $i$ and $i+1$ with the difference between positions $i+1$ and $i+2$.
-While perhaps in some cases the decision maker may be able to state pferences of this kind, we argue that a more concrete way is better.
-Notice that the constraint above is equivalent to $w_{i} - (\lambda+1) w_{i+1} + \alpha w_{i+2} \geq 0$.
+for $j \in \{1,\ldots,m-2\}$, relating the difference between the importance of positions $i$ and $i+1$ with the difference between positions $i+1$ and $i+2$.
+While perhaps in some cases the decision maker may be able to state preferences of this kind, we argue that a more concrete way is better.
+Notice that the constraint above is equivalent to 
+$w_{i} - (\lambda+1) w_{i+1} + \lambda w_{i+2} \geq 0$
+and to $w_{i} + \lambda w_{i+2} \geq  (\lambda+1) w_{i+1}$.
 %We conjecture that preferences of this kind are relatively easy to state
 %(``do you think that the difference between the importance of position $i$ and $i+1$ is at least the difference between positions $i+1$ and $i+2$ ?'').
 We present them a profile representing the situation described by the query and then deduce its answer from the selected winner. 
@@ -481,6 +494,10 @@ in position $i+2$ and another fictitious alternative, $b$, is ranked $\lambda+1$
 To have a valid profile, we need to include other alternatives.
 We add other alternatives in such a way that they are dominated by $a$ or $b$. 
 (if the chair answers an alternative that is either $a$ or $b$ this is a signale that the model is incorrect).
+
+\vspace{1cm}
+{\bf Complete section:} give a precise algorithm for completing the profile
+\vspace{1cm}
 
 \begin{example}
 Suppose our query strategy suggests us to ask the committee the following query:
@@ -539,10 +556,7 @@ d& 1& 2& 4& 6 \\
 \]
 \end{example}
 
-\vspace{1cm}
-{\bf Complete section}
-\vspace{1cm}
-***
+
 
 \paragraph{Elicitation strategies}
 
@@ -616,7 +630,6 @@ Then use minimax regret as in Lu and Boutilier.
 
 % We can stop elicitation when minimax regret is sufficiently small.
 We test the elicitation protocols in randomly generated datasets and real datasets. % (sushi and iris).
-
 We evaluate the proposed method using the following simulated protocol.
 First of all, we randomly generate the true preferences of the users (i.e. the linear orders) and the weights associated with the committee's scoring rule.
 For each of the elicitation strategy, we simulate an elicitation session.
