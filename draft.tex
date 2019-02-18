@@ -415,8 +415,8 @@ Variable $B_{i,j}^{+}$ encodes the fact that the alternative $y$ is placed in po
 %We also have numerical variables to represent the weights of the scoring rule.
 Since each alternative needs to be placed exactly in one place for each agent, we adopt the constraints
 $\sum_{i=t_{1}(j)}^{t_{2}(j)} B_{i,j}^{+} = 1$.
-Since we know that $x$ and $y$ are ranked $\gamma{j}$ positions apart, we set the constraint:
-$B_{i+\gamma{j},j}^{-} \geq B_{i,j}^{+}$,  for $i = \{ t_{1}(j), \ldots, t_{2}(j)\}$.
+Since we know that $x$ and $y$ are ranked $\gamma_{j}$ positions apart, we set the constraint:
+$B_{i+\gamma_{j},j}^{-} \geq B_{i,j}^{+}$,  for $i = \{ t_{1}(j), \ldots, t_{2}(j)\}$.
 
 % and $\sum_{i=1}^{m} B_{i,j}^{-} = 1$.
 %Since the objective is to maximize pairwise regret...
