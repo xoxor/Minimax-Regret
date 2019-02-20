@@ -215,14 +215,14 @@ Intuitively, the quality of a proposed alternative $a$ is how far from optimal $
 The maximum regret is considered by assuming that an adversary both 1) can extend the partial profile $\pprofile$ into a complete profile, and 2) can instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
 
 We formalize the notion of minimax regret in multiple steps.
-First of all, denote by $s^*_{\profile, \w} = \max_{y \in A} s(y; \profile, \w)$ the score achieved by winning alternatives under $\profile$ and using weights $\w$. Now define $\Regret(x, \profile, \w)$ as the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
-\[\Regret(x, \profile, \w) = s^*_{\profile, \w} - s(x; \profile, \w).\]
+First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
+\[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
 
-%The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
-%is the worst-case loss under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
-%\begin{align}
-%\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
-%\end{align}
+The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
+is the worst-case loss under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
+\begin{align}
+\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
+\end{align}
 
 Max regret $\MR(x;\pprofile,W)$ is the worst-case loss of $x$. It is the loss occurred by an adversarial selection of a complete profile $\profile$ extending $\pprofile$ and a selection of $\w \in W$ to maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
 \begin{align}
