@@ -25,6 +25,8 @@
 %¬ Not Sign
 \DeclareUnicodeCharacter{00AC}{\ifmmode\lnot\else\textlnot\fi}
 \newunicodechar{⇔}{\Leftrightarrow}
+\newcommand{\N}{ℕ}
+\newunicodechar{ℕ}{\mathbb{N}}
 \usepackage{algorithm, algpseudocode}
 \usepackage{amsmath,amssymb,enumerate,amsthm}
 \usepackage{natbib}
@@ -68,6 +70,7 @@
 \newcommand{\profile}{\bm{v}}%(complete) profile
 \newcommand{\pprofile}{{\bm{p}}}%partial profile
 \newcommand{\w}{\bm{w}}
+\newcommand{\W}{\mathcal{W}}
 \newcommand{\pw}{W}%our knowledge about the weights
 \newcommand{\powersetz}[1]{\mathscr{P}^*(#1)}
 
@@ -151,12 +154,12 @@ In Section \ref{sec:elicit} we provide an interactive elicitation protocol based
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We assume defined a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters); each agent $j$ is associated to her “real” preference order $\pref_j$.
+We assume defined a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters); each agent $j$ is associated to her “real” preference order $\pref_j$. The agents come from an infinite set $\N$ of potential voters.
 The real preferences of the agents are elements of $\linors$, the linear orders (connected, transitive, asymmetric relations) over the alternatives.
-Following the social choice nomenclature, we call {\em profile} the association of a preference to each voter, denoted by $(\pref_1,\ldots,\pref_n)$.
-The profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
+Following the social choice nomenclature, we call {\em profile} the association of a preference to each voter, considering a subset of voters from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
+A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
-Let $V$ be the set of possible preference profiles (the $n$-fold cartesian product of the linear orders over the alternatives).
+Let $V$ be the set of possible preference profiles (the union for any integer $n$ of the $n$-fold cartesian product of the linear orders over the alternatives).
 A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the emptyset. (Sets are used for tied winners.)
 Among the many possible social choice functions, we consider {\em positional scoring rules}, which attach weights to positions according to  the vector $(w_1, \ldots, w_m)$ (also called the scoring vector).
 %A scoring rule associates each alternative to a score that is given by the sum of points obtained for each voter.
@@ -202,12 +205,12 @@ An important class of scoring rule is the one composed of weights that are a con
 \forall r \in \{1,\ldots,m-2\}: w_r - w_{r+1} \geq w_{r+1}-w_{r+2}.
 \end{equation}
 The constraint above is often used when aggregating rankings in sport competitions.
-We use $\mathcal{W}$ to denote the set of convex weight vectors.
+We use $\W$ to denote the set of convex weight vectors.
 
 In general it can be difficult to set the weights in an appropriate way.
 We assume that in addition of basic requirements (monotonicity and convexity), the chair (the person or the organization that is supervising the voting process) is able to specify additional preferences about how the social choice function should behave.
 In this work we assume that preferences of the chair are encoded with linear constraints about the vector $\w$, relating the value of the weights of different positions.
-We use $\pw \subseteq \mathcal{W}$ to denote the set of weight vectors compatible with the preferences expressed by the chair about the scoring vector, and $C_W$ to denote the set of linear constraints expressed by the chair.
+We use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the preferences expressed by the chair about the scoring vector, and $C_W$ to denote the set of linear constraints expressed by the chair.
 
 Of course it may be difficult for real decision makers to state preferences about the voting rule in such an abstract way.
 These additional preferences can be elicited by asking questions about concrete profiles, for instance, by showing a complete profile of a small synthetic election and asking who should be elected in this case, as shown in Section \ref{sec:elicit}.
@@ -297,7 +300,7 @@ y \pref_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \ppref_j y) ∨ (x \ppref_j a)).
 
 We just sketched a proof of the following claim, and leave the rest of the proof to the reader.
 \begin{claim}
-	There exists one completion ${\pref_j} \in C(\ppref_j)$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile), {\pref_j} \in \profile} [ s(y; \profile,\w) - s(x; \profile,\w) ]$ and that satisfies \ref{eq:compl}.
+	There exists a completion ${\pref_j} \in C(\ppref_j)$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile), {\pref_j} \in \profile} [ s(y; \profile,\w) - s(x; \profile,\w) ]$ and that satisfies \ref{eq:compl}.
 \end{claim}
 In this claim, we abuse notation by writing ${\pref_j} \in \profile$ to mean that the preference ordering corresponding to agent $j$ in $\profile$ is $\pref_j$.
 
@@ -404,32 +407,28 @@ If voter $j$ answers a comparison query stating that alternative $a$ is preferre
 A bit more discussion is needed about {\em questions asked to the chair}.
 Such a question aims at refining our knowledge about the scoring rule;
 a response gives us a constraint on the weight vector $\w$.
-
 In particular, we want to acquire constraints of the type:
 \[ w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2}) \] 
 for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of ranks $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
-As we assume the scores constitute the utility components of the chair, it might be reasonable to assume that the chair is able to answer such abstract questions in our setting. However, it is important to make sure that the question can also, in principle, be asked in a more concrete way, in terms of winners of example profiles. This permits to test whether the chair understands the question as we do; this permits to relate the preference of the chair as we understand it to her choice behavior in the economic sense; and this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 
-Notice that the constraint above is equivalent to 
-$w_{i} - (\lambda+1) w_{i+1} + \lambda w_{i+2} \geq 0$
-and to $w_{i} + \lambda w_{i+2} \geq  (\lambda+1) w_{i+1}$.
-%We conjecture that preferences of this kind are relatively easy to state
-%(``do you think that the difference between the importance of position $i$ and $i+1$ is at least the difference between positions $i+1$ and $i+2$ ?'').
-We present them a profile representing the situation described by the query and then deduce its answer from the selected winner. 
-%We argue that it may be cognitively easier to ask to pick a winner from a profile, rather than answering an abstract question.
-Therefore we generate profiles specifically in such a way that user answers gives us the kind of constraint that we want to acquire.
-We provide a systematic way to construct such profiles.  %that reflects the situation outlined by the query for two alternatives and the others are not better than them.
+\paragraph{Building concrete questions for the chair}
+As we assume the weights constitute the utility components of the chair, it might be reasonable to assume, as we do here, that the chair is able to answer such abstract questions in our setting. However, it is important to make sure that the question can also, in principle, be asked in a more concrete way, in terms of winners of example profiles. This permits to test whether the chair understands the question as we do; this permits to relate the preference of the chair as we understand it to her choice behavior in the economic sense; and this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
+Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
+We assume that $\lambda$ is rational, and define $\lambda = p/q$.
 
-We consider a profile where a fictious alternative $a$ is $1$ time in position $i$, and $\lambda$ times 
-in position $i+2$ and another fictitious alternative, $b$, is ranked $\lambda+1$ times in position $i+1$.
-To have a valid profile, we need to include other alternatives.
-We add other alternatives in such a way that they are dominated by $a$ or $b$. 
-(if the chair picks an alternative that is either $a$ or $b$ this is a signale that the model is incorrect).
+Observe that the question may be defined equivalently as whether $q w_{r} + p w_{r+2} ≥ (p + q) w_{r+1}$, where $p, q$ are natural numbers. As a first attempt to make this question concrete, let us define a profile $P$ containing $p+q$ voters. Define an alternative $a$ that receives $q$ times the rank $r$ and $p$ times the rank $r+2$ and an alternative $b$ that receives $p+q$ times the rank $r+1$. Observing that the score of $a$ in that profile is exactly the left hand side of the question, and that the score of $b$ is the right hand side, intuition suggests that observing whether the chair picks $a$ or $b$ as winner will let us determine which side is greater; equality occurring when the chair declares $a$ and $b$ as tied for the victory. However, we still need to complete the profile, thus, come up with other $m-2$ alternatives defined so that each voter in the resulting profile has given each rank once. And we must ensure, doing this, that these other alternatives are not better than $a$ or $b$. For if the chair picks a different alternative $c$, it only tells us that the chair prefers $c$ to both $a$ and $b$, but it generally does not answer the question we are interested in. Taking $p = q = 1$, $m=4$, $r=2$, we see that such a completion may be impossible. Luckily, this problem can be worked around, at the price of increasing the number of voters. 
 
-\vspace{1cm}
-{\em {\bf TODO:} complete section and give a precise algorithm for completing the profile}
-\vspace{1cm}
+First build a temporary profile $P$ of $p+q$ voters with $a$ and $b$ ranked as just described. Complete it with $m-2$ alternatives ranked in arbitrary orders so that the resulting profile has complete strict rankings for each of the $p+q$ voter. Now we will make the other alternatives as bad as desired by adding voters to $P$ that appreciate $a$ and $b$ more than the other alternatives, thus building a profile $P'$ in which, whatever the weights, $c$ may not have a better score than $a$. Observe that if we add $\delta$ voters (with $\delta$ a natural number) that put $a$ at first rank and $b$ at second rank, and $\delta$ voters that put $b$ at first rank and $a$ at second rank, we do not change the difference of the scores of $a$ and $b$, and thus, observing the chair choosing $a$ or $b$ still answers the question. Choose arbitrarily a matching of the remaining $m-2$ alternatives to the ranks $3$ to $m$, say, $c \mapsto 3$, $d \mapsto 4$, and so on. The first $\delta$ supplementary voters, who rank $a$ first and $b$ second, rank the other alternatives as the just defined mapping suggests. The other $\delta$ supplementary voters, who rank $b$ first and $a$ second, use the opposite ranking for the remaining alternatives, say, $c \mapsto m$, $d \mapsto m-1$, and so on. We can now prove that, for $\delta = p+q$, and whatever the weight vector $w \in \W$, no alternative, except possibly $b$, has a better score than $a$. (In fact, as the construction will exhibit, they are all worst than both $a$ and $b$, but the weaker fact is enough for our claim.)
 
+Pick any alternative $c$ that is not $a$ or $b$. 
+%Let $c_t$ denote the number of times $c$ reaches rank $t$ or better in $P$. Note that $c_m = p+q$ and $c_t ≤ p + q, 1 ≤ t ≤ m$. Define $a_t$ similarly, for the alternative $a$. By construction, $a_r = q$, $a_{r+2} = q+p = a_m$. 
+Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ voters voting in profile $P$. By our construction, the two times $\delta$ new voters of $P'$ give to $c$ the ranks $(3, m)$, or $(4, m-1)$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$ (it is even strictly higher, thanks to the strict inequality). This concludes the proof of the following claim.
+
+\begin{claim}
+	Given a rational $\lambda$ and a rank $r$ between $1$ and $m - 2$, the profile named $P'$ in the foregoing description is such that, for any weight vector $\w \in \W$, $a \in f(P')$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P')$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
+\end{claim}
+
+\commentOC{I suppose we have, unfortunately, to get rid of this useful example, for reason of space. (If we manage to keep it, I’ll need to rework it a bit so that it follows the strategy in the proof.)}
 \begin{example}
 Suppose our query strategy suggests us to ask the chair the following query:
 \[ w_{2} - w_{3} \geq 2(w_{3} - w_{4}) \]
