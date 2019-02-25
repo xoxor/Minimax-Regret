@@ -1,5 +1,5 @@
 \newif\ifappendix
-\appendixtrue %COMMENT to remove appendix % UNCOMMENT to add apendix
+%\appendixtrue %COMMENT to remove appendix % UNCOMMENT to add apendix
 \input{ijcai_preamble} 
 \author{Beatrice Napolitano$^1$\and Olivier Cailloux$^1$	\and  Paolo Viappiani$^{2}$
 	\affiliations $^1$ LAMSADE, UMR 7243, CNRS and Universit\'e Paris Dauphine, PSL Research University, Paris, France\\ $^2$ LIP6, UMR 7606, CNRS and Sorbonne Universit\'e, Paris, France
@@ -120,7 +120,7 @@ and develop several query strategies that interleave questions to the chair and 
 \end{abstract}
 
 \section{Introduction}
-\commentOC{Do we agree that we should talk systematically about agents (or systematically about voters)? Currently we talk about voters in first section, then agents.}
+%\commentOC{Do we agree that we should talk systematically about agents (or systematically about voters)? Currently we talk about voters in first section, then agents.}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
@@ -187,12 +187,14 @@ We let $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ be the set of com
 \medskip
 We also assume that the weights of the scoring rule are only partially specified.
 Therefore the vector $(w_1,\ldots,w_m)$  is not known but we are given a set of constraints restraining the possible values that weights can take.
-We consider a decreasing sequence of weights:
+We consider a decreasing sequence of weights\footnote{We assume all positions from $1$ to $m-1$ may contribute positively to the score of an alternative. The case where it is known that only the first $k<m-1$ positions matter can be easily dealt with by specifying $w_r = 0$ for $r > k$ as constraints. }:
+% If the chair considers that, for example, “only the first ten positions matter” (so that $w_r = 0$ for $r > 10$), then we simply assume the chair is able to express this constraint at the start of the querying process, thus, that this information is known, and approximate the problem by considering that it is only about the first ten alternatives, thus, set $m=10$.}
 \begin{align}
 1=w_{1} > w_{2} > \ldots > w_{m}=0. \label{eq:monotone}
 \end{align}
 This is a natural assumption, as it is better to be ranked first than second, second than third, etc. 
-Without loss of generality, we consider that $w_1=1$ and $w_m=0$. \commentOC{I suggest we say no more than this to justify this assumption. Otherwise, we might say something like the following. If the chair considers that, for example, “only the first ten positions matter” (so that $w_r = 0$ for $r > 10$), then we simply assume the chair is able to express this constraint at the start of the querying process, thus, that this information is known, and approximate the problem by considering that it is only about the first ten alternatives, thus, set $m=10$.}
+Without loss of generality, we consider that $w_1=1$ and $w_m=0$. 
+%\commentOC{I suggest we say no more than this to justify this assumption. Otherwise, we might say something like the following. 
 
 The weights of a scoring rule can model different preferences of the chair. 
 For instance, the weights can control the inclination to favor ``extreme'' alternatives (often at either the top or the bottom of the input rankings) at the expenses of ``moderate'' alternatives (that are more consistently in the middle part of the input rankings).
@@ -295,11 +297,13 @@ To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as m
 Sometimes these two objectives conflict: when an alternative should go above $x$ according to the first objective and below $y$ according to the second one (because $¬(x \ppref_j a) ∧ ¬(a \ppref_j y)$), and $x$ is known to be better than $y$ (thus $x \ppref_j y$). 
 In this case, the first objective should take priority, and $a$ should be put above $x$, which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
 This maximizes the adversary’s interests: because the weight vector is convex, the difference in scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of score is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
-To summarize:\commentOC{TODO only one number here} 
+To summarize:
 \begin{align} 
 \label{eq:compl}
+\begin{split}
 a \pref_j x &⇔ ¬(x \ppref_j a)\\
 y \pref_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \ppref_j y) ∨ (x \ppref_j a)).
+\end{split}
 \end{align} 
 We just sketched a proof of the following claim, and leave the rest of the proof to the reader.
 \begin{claim}
@@ -357,13 +361,12 @@ Let $\hat{\profile}$ be the profile computed according to the above procedure, a
 %A proof that this reasoning is correct is in \cref{sec:prfCompl}.
 
 \begin{claim}
-%Assume convex weights.
 The $\PMR$ can be written as:
 \begin{align} 
-\PMR(x,y; \pprofile, W) =  
-\max_{w \in W} s(y; \hat{\profile}, \w) - s(y; \hat{\profile}, \w)\\
-=\max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} =
-\max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i 
+\PMR(x,y; \pprofile, W)  
+%\max_{w \in W} s(y; \hat{\profile}, \w) - s(y; \hat{\profile}, \w)\\
+& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} = \\ 
+& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 \end{align}
 where the coefficient $ (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x})$ is the number of times $y$ is at rank $r$ minus the number of times $x$ is at rank $r$ in the rankings of the completed profile $\hat{\profile}$.
 %$\hat{\alpha}_{i}^{x} = \sum_{j=1}^{n}  I[\hat{v}_{j}(x)=i]$ where $I$ is the indicator function.
@@ -430,7 +433,7 @@ Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and de
 	Given a rational $\lambda$ and a rank $r$ between $1$ and $m - 2$, the profile named $P'$ in the foregoing description is such that, for any weight vector $\w \in \W$, $a \in f(P')$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P')$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
 \end{claim}
 
-\commentOC{I suppose we have, unfortunately, to get rid of this useful example, for reason of space. (If we manage to keep it, I’ll need to rework it a bit so that it follows the strategy in the proof.)}
+%\commentOC{I suppose we have, unfortunately, to get rid of this useful example, for reason of space. (If we manage to keep it, I’ll need to rework it a bit so that it follows the strategy in the proof.)}
 \begin{example}
 Suppose our query strategy suggests us to ask the chair the following query: $w_{2} - w_{3} \geq 2(w_{3} - w_{4})$.
 In order to impose this constraints,
