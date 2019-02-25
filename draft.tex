@@ -244,7 +244,7 @@ We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
 \[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
 The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
+is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
 \begin{align}
 \PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
 \end{align}
@@ -393,7 +393,7 @@ Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variabl
 %Finally the minimax regret solution $\MMR(\pprofile, W)$ is determined by solving a sequence of pairwise max regret computations, solving the above linear program for every different pair $(x,y) \in A^{2}$.
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with each other alternative in $A$.
 The optimal alternative w.r.t. minimax regret is the one with least max regret. 
-Notice that, whenever the PMR of an alternative $x$ (against some other alternative) exceeds the best MR value found so far, we don't need to further evaluate $x$. 
+Notice that, whenever the PMR of an alternative $x$ (against some other alternative) exceeds the best MR value found so far, we don't need to further evaluate $x$, as it can't be optimal. 
 This idea can be exploited further by adopting a minimax-search tree (see \cite{Braziunas2011}).
 %The computation can be made faster by adopting an efficient scheme of evaluation of PMR where .
 
