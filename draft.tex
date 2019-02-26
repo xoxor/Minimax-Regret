@@ -11,7 +11,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{newunicodechar}
-\newunicodechar{±}{\ensuremath{\pm}}
+\usepackage{textcomp}
 \newunicodechar{⇒}{\implies}
 \newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{≤}{\leq}
@@ -30,6 +30,7 @@
 \usepackage{algorithm, algpseudocode}
 \usepackage{amsmath,amssymb,enumerate,amsthm}
 \usepackage{natbib}
+\usepackage[strict]{siunitx}
 \usepackage{hyperref}
 \usepackage{mathrsfs}
 
@@ -415,14 +416,15 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 \section{Empirical Evaluation} 
 \label{sec:experiments}
 
+\sisetup{round-mode=places, round-precision=1, table-figures-integer=1, table-figures-decimal=1}
 \begin{table}
 	\begin{center}
-		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
+		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
+			{k} & {Rnd} & {sd} & {T. ph.} & {sd} & {Pes.} & {sd} & {Pes.} & {sd} \\
 			\midrule
-			0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0\\
-			5 & 3.40 & 0.40 & 3.86 & 0.13 & 2.63 & 0.28\\
+			0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0\\
+			5 & 3.40 & 0.40 & 3.86 & 0.13 & 2.63 & 0.28 & 2.63 & 0.28\\
 			10 & 2.59 & 0.75 & 2.63 & 0.39 & 1.29 & 0.50\\
 			15 & 2.37 & 0.33 & 0.92 & 0.76 & 0.43 & 0.50\\
 			20 & 1.23 & 1.04 & 0.15 & 0.23 & 0.09 & 0.27\\
@@ -437,9 +439,9 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 
 \begin{table}
 	\begin{center}
-		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
+		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
+			{k} & {Rnd} & {sd} & {T. ph.} & {sd} & {Pes.} & {sd} & {Pes.} & {sd} \\
 			\midrule
 			0 & 5.0 & 0 & 5.0 & 0 & 5.0 & 0\\
 			5 & 4.93 & 0.16 & 4.98 & 0.01 & 4.15 & 0.32\\
@@ -457,9 +459,9 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 
 \begin{table}
 	\begin{center}
-		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
+		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
+			{k} & {Rnd} & {sd} & {T. ph.} & {sd} & {Pes.} & {sd} & {Pes.} & {sd} \\
 			\midrule
 			0 & 6.0 &  &  &  &  & \\
 			5 &  &  &  &  &  & \\
@@ -481,7 +483,7 @@ Our goal is to see how much we gain with an interleaved elicitation approach mix
 We use the following protocol.
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the selected strategy, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained. Then we compute the resulting $\MMR$. We repeat this whole experiment 10 times, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation.
 
-The results are displayed in \cref{fig:xp1,fig:xp2,fig:xp3}. In these tables, the strategies are designated by Rnd for Random, Two ph. for Two phases, and Pess. for Pessimistic. 
+The results are displayed in \cref{fig:xp1,fig:xp2,fig:xp3}. In these tables, the strategies are designated by Rnd for Random, T. ph. for Two phases, EC for Extreme completions, and Pes. for Pessimistic.
 
 \section{Conclusions}  
 \label{sec:conclusions}
