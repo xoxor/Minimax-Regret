@@ -94,14 +94,13 @@
 \DeclarePairedDelimiter\card{\lvert}{\rvert}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
-%TODO remove this before submission
-	\tolerance=2000
-	%Accept overfull hbox up to...
-	\hfuzz=1cm
-	%Reduces verbosity about the bad line breaks.
-	\hbadness 10000
-	%Reduces verbosity about the underful vboxes.
-	\vbadness=10000
+%	\tolerance=2000
+%	%Accept overfull hbox up to...
+%	\hfuzz=1cm
+%	%Reduces verbosity about the bad line breaks.
+%	\hbadness 10000
+%	%Reduces verbosity about the underful vboxes.
+%	\vbadness=10000
 
 \title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
 
@@ -231,7 +230,7 @@ We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
 \[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
 The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
+is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
 \begin{align}
 \PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
 \end{align}
@@ -325,7 +324,7 @@ Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variabl
 
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with each other alternative in $A$.
 Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
-Notice that, whenever the PMR of an alternative $x$ (against some other alternative) exceeds the best MR value found so far, we don't need to further evaluate $x$. 
+Notice that, whenever the PMR of an alternative $x$ (against some other alternative) exceeds the best MR value found so far, we don't need to further evaluate $x$, as it can't be optimal. 
 This idea can be exploited further by adopting a minimax-search tree \citep{Braziunas2011}.
 
 \section{Interactive Elicitation} 
@@ -372,7 +371,7 @@ First build a temporary profile $P$ of $p+q$ agents with $a$ and $b$ ranked as j
 
 Pick any alternative $c$ that is not $a$ or $b$. 
 %Let $c_t$ denote the number of times $c$ reaches rank $t$ or better in $P$. Note that $c_m = p+q$ and $c_t ≤ p + q, 1 ≤ t ≤ m$. Define $a_t$ similarly, for the alternative $a$. By construction, $a_r = q$, $a_{r+2} = q+p = a_m$. 
-Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ agents voting in profile $P$. By our construction, the two times $\delta$ new agents of $P'$ give to $c$ the ranks $(3, m)$, or $(4, m-1)$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$ (it is even strictly higher, thanks to the strict inequality).
+Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ agents voting in profile $P$. By our construction, the  $2 \delta$ new agents of $P'$ give to $c$ the ranks $(3, m)$, or $(4, m-1)$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$ (it is even strictly higher, thanks to the strict inequality).
 
 This concludes the proof of the following claim. 
 \begin{claim}
@@ -420,7 +419,7 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 	\begin{center}
 		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
 			\toprule
-			k & Random & sd & Two phases & sd & Pess & sd \\
+			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
 			\midrule
 			0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0\\
 			5 & 3.40 & 0.40 & 3.86 & 0.13 & 2.63 & 0.28\\
@@ -440,7 +439,7 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 	\begin{center}
 		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
 			\toprule
-			k & Random & sd & Two phases & sd & Pess & sd \\
+			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
 			\midrule
 			0 & 5.0 & 0 & 5.0 & 0 & 5.0 & 0\\
 			5 & 4.93 & 0.16 & 4.98 & 0.01 & 4.15 & 0.32\\
@@ -460,7 +459,7 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 	\begin{center}
 		\begin{tabular}{rr@{ ± }lr@{ ± }lr@{ ± }l}
 			\toprule
-			k & Random & sd & Two phases & sd & Pess & sd \\
+			k & Rnd & sd & Two ph. & sd & Pess. & sd \\
 			\midrule
 			0 & 6.0 &  &  &  &  & \\
 			5 &  &  &  &  &  & \\
@@ -476,7 +475,7 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 	\label{fig:xp3}
 \end{table}
 
-We test the elicitation protocols in randomly generated datasets. %TODO and real datasets. (sushi and iris).
+We test our strategies using randomly generated datasets. %TODO and real datasets. (sushi and iris).
 Our goal is to see how much we gain with an interleaved elicitation approach mixing questions to the chair and questions asked to the agents compared to performing a partial elicitation of the rule first and then eliciting the agents preferences. We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
 We use the following protocol.
