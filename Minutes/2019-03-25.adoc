@@ -1,0 +1,33 @@
+== Meeting
+
+*25/03/2019 - Olivier, Paolo, Beatrice*
+
+=== Extreme Completion, reasoning on τs:
+* The experiments show τ_1 positive and τ_2 negative
+* Can τ_2 be positive?
+** Req: s(ybar)>s(x*) ∀ v using wbar
+** Req: ybar ≥ x* "on average"
+** Let consider τ_2i i∈N using wbar and vbar except for i for which we minimize over v_i
+*** It is negative and we like it.
+* Can τ_1 be negative?
+** Req: s(x*)>s(ybar) ∀ wbar using v
+** Does x* need to dominate ybar ? 
+*** example picture: x*=a=2*r1; ybar=b=5*r2. MR(a)=0.5; MR(b)=2.
+
+=== Differences between Extreme Completion and Pessimistic strategy
+* EC considers sets of questions at a time and then chooses among the set
+* EC fixes x* and ybar
+
+=== Strategies to test (Given (m,n))
+* Strat_w 		: only asks about w
+* Strat_v 		: only asks to voters
+* Strat_(w1,v1) 	: asks 	1 question about w and 1 to voters
+* Strat_(w10,v10) 	: 	10 	\\
+* Strat_(w50,v50) 	: 	50 	\\
+* Strat_(v1,w1) 	: asks 	1 question to voters and 1 about weights
+* Strat_(v10,w10) 	: 	10	\\
+* Strat_(v50,w50) 	: 	50	\\
+
+=== For the next time:
+* Present an example with (5,4) or (4,4)
+
