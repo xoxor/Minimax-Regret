@@ -2,7 +2,7 @@
 \documentclass[a4paper,twoside]{article}
 \usepackage{rfia2000}
 \usepackage[T1]{fontenc}
-\usepackage{babel}
+\usepackage[english]{babel}
 \usepackage{times}
 
 %\author{ID: 2696}
@@ -139,7 +139,7 @@ ${}^2$        LIP6, UMR 7606, CNRS and Sorbonne Universit\'e, Paris, France
 
 \subsection*{Abstract}
 {\em
-	Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters). In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided. In this paper we go one step further and we assume that both the voting rule and the agents preferences are partially specified. In this setting, we provide an interactive elicitation protocol based on minimax regret and develop several query strategies that interleave questions to the chair and questions to the agents in order to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
+	Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters). In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided. \commentOC{This “we go one step further” sounds odd here. I suggest one more sentence about the normal elicitation setting with only the agents preferences partially specified.} In this paper we go one step further and we assume that both the voting rule and the agents preferences are partially specified. In this setting, we provide an interactive elicitation protocol based on minimax regret and develop \commentOC{I’d say “present”, because they are not precisely specified in the text.} several query strategies that interleave questions to the chair and questions to the agents in order to \commentOC{attempt to} acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
 }
 \subsection*{Keywords}
 Computational Social Choice, uncertainty in AI, preference elicitation, minimax regret.
@@ -147,10 +147,10 @@ Computational Social Choice, uncertainty in AI, preference elicitation, minimax 
 \section{Introduction}
 %Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc) whose final goal is to find a consensus choice.
 %In this contexts, a natural approach consists in looking at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
-In a traditional social choice setting both the social function and the full preference orderings of the agents are expressed beforehand. Nevertheless, sometimes requiring agents to express full preference orderings can be prohibitively costly (in term of cognitive and communication cost), especially for decisions with large sets of alternatives.
+In a traditional social choice setting, both the social function and the full preference orderings of the agents are expressed beforehand. Nevertheless, requiring agents to express full preference orderings can be prohibitively costly (in term of cognitive and communication cost), especially for decisions with large sets of alternatives.
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. 
 Furthermore, several situations for which it may not be easy to precisely define the voting rule exist.
-Indeed, it is possible that the chair has some preferences over the desired aggregation method, but it is still not able to formalize the voting rule upfront.
+Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
 The work of Cailloux and Endriss \citep{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
 In this paper we consider that both the agents’ preferences and the social choice rule are partially specified.
@@ -165,13 +165,13 @@ A {\em profile} is the association of a preference to each agent and it is equiv
 A social choice function associates a profile with a set of winners; we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the scoring vector $(w_1, \ldots, w_m)$.
 An alternative obtains a score that depends on the rank obtained in each of the preference orders and the winners are the alternatives with highest scores.
 
-In this work we assume fixed, but unknown, a profile $\profile^*$ and a weight vector $\w^*$.
-Our knowledge at a given time of the preference of agent $j$ is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$; we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
+In this work \commentOC{Any idea why the paragraph beginnings are not distinguished by either a separation from the left margin or a wider vertical space? (As it should be for typographical correctness.) If because of rjcia style, either we leave it like this (“their mistake”), or we correct it for them.} we assume fixed, but unknown, a profile $\profile^* = (\pref^*_j, j \in \{1, \ldots, n\})$ and a weight vector $\w^*$.
+Our knowledge at a given time of the preference of agent $j$ is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$; we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$ \commentOC{Or simply ${\ppref_j} \subseteq {\pref_j^*}$, if you need to save space}.
 %We use $\pinc$ to denote incomparability, that is $a \pinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
 An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent to a partial preference. A completion of $\ppref_j$ is any linear order $\pref$ that extends $\ppref_j$ and we indicate with $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ the set of possible completions of $\ppref_i$.
 %We let $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ be the set of complete profiles extending $p$. Note that $\profile^* \in C(\pprofile)$.
 
-Our knowledge regarding the weights of the scoring rule is, instead, represented by
+Our knowledge regarding the weights of the scoring rule is represented by
 %We also assume that the weights of the scoring rule are only partially specified.
 %Therefore the vector $(w_1,\ldots,w_m)$  is not known but we are given 
 a set of constraints restraining the possible values that they can take. We consider a convex sequence of weights and we assume that 
@@ -181,21 +181,21 @@ a set of constraints restraining the possible values that they can take. We cons
 %\forall r \in \{1,\ldots,m-2\}: w_r - w_{r+1} \geq w_{r+1}-w_{r+2}.
 %\end{equation}
 %We assume that in addition of basic requirements (monotonicity and convexity), 
-the chair is able to specify additional preferences about how the social choice function should behave. Of course it may be difficult for real decision makers to state these preferences, thus we can elicit them, for instance, by showing a complete profile of a small synthetic election and asking who should be elected in this case.
-Such requirements are encoded with linear constraints about the vector $\w$ and the set of these constraints is denoted by $\Co_W$. We use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the preferences expressed by the chair.
+the chair is able to specify additional preferences about how the social choice function should behave. Of course it may be difficult for real decision makers to state these preferences, thus we can elicit them, for instance, by showing a complete profile of a small synthetic election and asking who should be elected in this case. \commentOC{Not entirely true as stated here. This works only in a subset of the case. So this remark should be dropped or amended, to say that we worked on this problem and it is still a work in progress to come up with an elicitation procedure that uses only questions that can effectively be asked using such a small synthetic election, and that it is not discussed further in this short article for lack of space. Also I’d remove “Of course”, it’s not obviously true.}
+Such requirements are encoded with linear constraints about the vector $\w$ and the set of these constraints is denoted by $\Co_W$. We use $\pw \subseteq \W$ \commentOC{Not defined, I believe (maybe it’s not absolutely necessary to define it, but then the symbol must not be used).} to denote the set of weight vectors compatible with the preferences expressed by the chair.
 
 \section[Minimax regret under partial profile and weight information]{
 Robust winner determination}
 \label{sec:mmr}
-As a decision criterion to determine a winner, we propose to use minimax regret \citep{Savage1954} . 
+As a decision criterion to determine a winner, we propose to use minimax regret \citep{Savage1954}. 
 %Minimax regret \citep{Savage1954} is a decision criterion that has been used for robust optimization under data uncertainty \citep{Kouvelis1997} as well as in decision-making with uncertain utility values \citep{Salo2001,Boutilier2006}.
 %\citet{Lu2011} have adopted minimax regret for winner determination in social choice with
 %the preferences of the agents that are only partially known, while the social choice function is predetermined and known.
 %In this work we consider the simultaneous presence of uncertainty in the agents' preferences and uncertainty in the weights.
 We use {\em maximum regret} to quantify the worst-case error, which measures, intuitively, how far an alternative is from the optimal one given current knowledge.
 % about the voting rule and the agents' preferences.
-The alternative that minimize this error is selected as winner, providing us with a form of robust optimization.
-The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete one, and 2) instantiate the weights choosing among any weight vector in $\pw$.
+The alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
+The maximum regret, given our current knowledge and an alternative $x$, is the highest possible difference between the score of $x$ and the score achievable by any alternative in any state compatible with our current knowledge. \commentOC{Added a sentence because we need to explain what this adversary represents, otherwise the reader might not understand that it is a fictitious way of choosing the worst possible scenario, not a real adversary.} It is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete one, and 2) instantiate the weights choosing among any weight vector in $\pw$.
 We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
 \[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
@@ -234,8 +234,8 @@ As termination condition of elicitation, we can check whether minimax regret is 
 
 \paragraph{Question types}
 We distinguish between questions asked to the agents and questions asked to the chair.
-For the first we consider comparison queries that ask a particular agent to compare two alternatives. Then, the partial profile $\pprofile$ is augmented on the bases of the agent's answer.
-The latter, instead, aim at refining our knowledge about the scoring rule; in particular, we want to acquire constraints of the type:
+For the first we consider comparison queries that ask a particular agent to compare two alternatives. Then, the partial profile $\pprofile$ is augmented on the basis of the agent's answer.
+The latter, instead, aims at refining our knowledge about the scoring rule; in particular, we assume we can acquire constraints of the type:
 \[ w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2}) \] 
 for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of consecutive ranks.
 % $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
@@ -255,7 +255,7 @@ The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$
 \label{sec:conclusions}
 In this paper we have considered a social choice setting with partial information and we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 
-The next step is to test our strategies in order to compare the performance of our interleaved elicitation approach that mix questions to the chair and to the agents, to a more classical approach that elicit the rule first and then the agents preferences (or vice-versa). 
+The next step is to test our strategies in order to compare the performance of our interleaved elicitation approach that mixes questions to the chair and to the agents, to a more classical approach that elicits the rule first and then the agents preferences (or vice-versa). 
 
 Further development of elicitation strategies, considering alternative heuristics, is also an important direction for future works together with the extension of the approach to voting rules beyond scoring rules.
 

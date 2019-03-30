@@ -44,8 +44,9 @@
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 
 \newcommand{\pref}{\succ}%real, connected pref, strict
+\newcommand{\prefeq}{\succeq}%real, connected pref, strict
 \newcommand{\prefr}{{\succ}^\text{r}}%real, connected pref, strict
-\newcommand{\ppreflarge}{\succeq^\text{p}}%partial pref
+\newcommand{\pprefeq}{\succeq^\text{p}}%partial pref
 \newcommand{\ppref}{\succ^\text{p}}%partial pref
 \newcommand{\pprefinv}{\prec^\text{p}}%partial pref
 \newcommand{\nppref}{\nsucc^\text{p}}%negated partial pref
@@ -65,8 +66,9 @@
 }
 \makeatother
 
-\newrelation{\pinc}{\!\parallel\!}%partial pref, complement (incomparable)
-%\newrelation{\pinc}{Q^\text{p}}%partial pref, complement (incomparable)
+\newrelation{\prefinc}{\!\parallel\!}%partial pref, complement (incomparable)
+\newrelation{\pinc}{\bowtie^\text{p}}
+%\newrelation{\prefinc}{Q^\text{p}}%partial pref, complement (incomparable)
 
 \newcommand{\profile}{\bm{v}}%(complete) profile
 \newcommand{\pprofile}{{\bm{p}}}%partial profile
@@ -173,7 +175,7 @@ The winners are the alternatives with highest scores.
 In this work we assume fixed, but unknown, a profile $\profile^*$ (and corresponding agents preferences $\pref_j^*$) and a weight vector $\w^*$, and we want to reason about partial preference information concerning those objects.
 Our knowledge at a given time of the preference of agent $j$ is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
 In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
-We use $\pinc$ to denote incomparability, that is $a \pinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
+%We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
 An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent to a partial preference.
 
 A completion of $\ppref_j$ is any linear order $\pref$ that extends $\ppref_j$.
@@ -281,16 +283,16 @@ As we will show, this procedure can also be used in our case of uncertain weight
 We are interested in computing $\PMR(x, y; \pprofile, W)$. This represents the “worst” difference of score, thus the difference of score between $y$ and $x$ under the worst case preferences compatible with $\pprofile$ and $W$, where the worst case is the one that maximizes this difference of score.
 Consider our knowledge $\ppref_j$ of the preference of an agent $j$. 
 The adversary has to make the score of $y$ as high as possible, and the score of $x$ as low as possible. 
-To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \ppref_j a$); and similarly, put below $y$ all the alternatives he can, thus, put above $y$ only those $a$ such that $a \ppref_j y$. 
-Sometimes these two objectives conflict: when an alternative should go above $x$ according to the first objective and below $y$ according to the second one (because $¬(x \ppref_j a) ∧ ¬(a \ppref_j y)$), and $x$ is known to be better than $y$ (thus $x \ppref_j y$). 
+To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, put below $y$ all the alternatives he can, thus, put above $y$ only those $a$ such that $a \ppref_j y$. 
+Sometimes these two objectives conflict: when an alternative should go above $x$ according to the first objective and below $y$ according to the second one (because $¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$). 
 In this case, the first objective should take priority, and $a$ should be put above $x$, which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
 This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
 To summarize:
 \begin{align} 
 \label{eq:compl}
 \begin{split}
-a \pref_j x &⇔ ¬(x \ppref_j a)\\
-y \pref_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \ppref_j y) ∨ (x \ppref_j a)).
+a \pref_j x &⇔ ¬(x \pprefeq_j a)\\
+y \prefeq_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \pprefeq_j y) ∨ (x \pprefeq_j a)).
 \end{split}
 \end{align} 
 We just sketched a proof of the following claim, and leave the rest of the proof to the reader.
@@ -298,7 +300,7 @@ We just sketched a proof of the following claim, and leave the rest of the proof
 There exists a completion $\hat{\profile} \in C(\pprofile)$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies (\ref{eq:compl}).
 \end{claim}
 It follows that $\hat{v}_{j}(x)$, the rank of $x$ in the PMR-maximizing linear order of agent $j$, 
-is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\ppref_j}(x)}$, where ${\ppref_j}(x)$ designates the set of alternatives that are less good than $x$ according to $\ppref_j$, and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\beta$, where $\beta = \card{A} - \card{{\ppref_j}(x)}$ if $(x \ppref_j y)$ and $\beta = 0$ otherwise.
+is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, where ${\pprefeq_j}(x)$ designates the set of alternatives that are less good than $x$ according to $\pprefeq_j$ (thus including $x$ itself), and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\beta$, where $\beta = \card{{\pinc_j}(x)}$ if $(x \pprefeq_j y)$ and $\beta = 0$ otherwise and with ${\pinc_j}(x)$ designating the alternatives incomparable with $x$ in $\pprefeq_j$.
 
 %Proof: Define $\pref$ as just $\ppref_j$ with the arcs added to minimally satisfy the above. Thus, add the following arcs: when $x ? a$, add $a > x$. When $a ? y ∧ x \ppref_j y ∧ ¬(x \ppref_j a)$, add $a \pref y$. When $a ? y ∧ [¬(x \ppref_j y) ∨ (x \ppref_j a)]$, add $y \pref a$. Observe that $\ppref_j \subseteq \pref$. We have to show that it is acyclic. (Then we take its transitive closure to make it a partial order, and it’s done.) Note that if there is a cycle in $\pref$, it’s because of some new arcs, as $\ppref_j$ is acyclic. Thus, the cycle must go through one of these new arcs. …
 
@@ -483,7 +485,7 @@ Our goal is to see how much we gain with an interleaved elicitation approach mix
 We use the following protocol.
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the selected strategy, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained. Then we compute the resulting $\MMR$. We repeat this whole experiment 10 times, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation.
 
-The results are displayed in \cref{fig:xp1,fig:xp2,fig:xp3}. In these tables, the strategies are designated by Rnd for Random, T. ph. for Two phases, EC for Extreme completions, and Pes. for Pessimistic.
+The results are displayed in \cref{fig:xp1,fig:xp2,fig:xp3}, where strategies are designated by Rnd for Random, T. ph. for Two phases, EC for Extreme completions, and Pes. for Pessimistic.
 
 \section{Conclusions}  
 \label{sec:conclusions}
@@ -593,7 +595,7 @@ where $\hat{\alpha}_{i}^{x}$ is the number of times that $x$ is ranked  in posit
 
 We now address the agents in $A^{-}$
 For a given $j$, let $\beta$ be the number of alternatives that are incomparable with $x$ and $y$:
-\[ \beta_{j} = \mid \{ c : c \pinc_{j} y \wedge c \pinc_{j} x \} \mid \]
+\[ \beta_{j} = \mid \{ c : c \prefinc_{j} y \wedge c \prefinc_{j} x \} \mid \]
 $x$ can be ranked between $t_{1}(j)=\mid \{ c \in A : c \ppref_{j} y \wedge x \nppref_{j} c \} \mid $ and position $t_{2}(j)=t_{1}(j)+\beta_{j}$.
 The completion for agent $j$ is such that the positions of $x$ and $y$ differ of exactly $\gamma_{j} =
 \mid \{ c \in A : x \ppref c \ppref y \} \mid$ positions.
