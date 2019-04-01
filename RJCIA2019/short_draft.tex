@@ -150,7 +150,7 @@ Computational Social Choice, uncertainty in AI, preference elicitation, minimax 
 \section{Introduction}
 %Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc) whose final goal is to find a consensus choice.
 %In this contexts, a natural approach consists in looking at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
-In a traditional social choice setting, both the social function and the full preference orderings of the agents are expressed beforehand. Nevertheless, requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost), especially for decisions with large sets of alternatives.
+In a traditional social choice setting, both the social choice function and the full preference orderings of the agents are expressed beforehand. Nevertheless, requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost), especially for decisions with large sets of alternatives.
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. 
 Furthermore, several situations for which it may not be easy to precisely define the voting rule exist.
 Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
@@ -162,7 +162,7 @@ While previous works have considered either partial information about the agents
 
 \section{Partial information}
 \label{sec:background}
-We assume defined a set $A$ of $m$ alternatives (products, restaurants, public projects, etc.) and a set $\set{1, …, n}$ of agents. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (connected, transitive, asymmetric relation) over the alternatives.
+We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, etc.) and a set $\set{1, …, n}$ of agents. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (connected, transitive, asymmetric relation) over the alternatives.
 A {\em profile} is the association of a preference to each agent and it is equivalently represented by $(\pref_1,\ldots,\pref_n)$ or by $\profile=(v_1,\ldots,v_n) \in V$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$.
 %Given $V$ the set of possible preference profiles, a social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners; where $\powersetz{A}$ represents the set of subsets of $A$ except for the emptyset.
 A social choice function associates a profile with a set of winners; we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the scoring vector $(w_1, \ldots, w_m)$.
