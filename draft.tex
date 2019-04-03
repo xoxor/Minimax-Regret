@@ -98,13 +98,13 @@
 \DeclarePairedDelimiter\card{\lvert}{\rvert}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
-%	\tolerance=2000
-%	%Accept overfull hbox up to...
-%	\hfuzz=1cm
-%	%Reduces verbosity about the bad line breaks.
-%	\hbadness 10000
-%	%Reduces verbosity about the underful vboxes.
-%	\vbadness=10000
+\tolerance=2000
+%Accept overfull hbox up to...
+\hfuzz=1cm
+%Reduces verbosity about the bad line breaks.
+\hbadness 10000
+%Reduces verbosity about the underful vboxes.
+\vbadness=10000
 
 \title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
 
@@ -261,12 +261,8 @@ We note that our notion of regret gives some cardinal meaning to the scores: ins
 In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the $\PMR$ into the contributions associated to each agent by adapting the reasoning from \citet{Lu2011}.
 The setting is however more challenging due to the presence of uncertainty in the weights.
 
-Scoring rules are additively decomposable.
-%A scoring rule associates each alternative to a score that is given by the sum of points obtained for each agent.
-Recall that when computing $s(x; \profile, \w)$, $w_{v_j(x)}$ is the number of points that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}).
-By exploiting the decomposition of the score in terms of votes, we write the actual regret of choosing $x$ instead of $y$ as
-\commentBN{Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}).
-Since scoring rules are additively decomposable, we can decompose the score in terms of votes. Thus, we can write the actual regret of choosing $x$ instead of $y$ as}
+Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}).
+Since scoring rules are additively decomposable, we can consider separately the contribution of each voter to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as
 \[
 s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)},
 \]
@@ -311,7 +307,7 @@ The $\PMR$ can be written as:
 & = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} = \\ 
 & = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 \end{align}
-where the $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the rankings of the completed \commentBN{?} profile $\hat{\profile}$.
+where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$.
 \end{claim}
 The last claim shows that PMR is linear in the weights.
 Recall that the preferences of the chair are encoded with linear constraints $\Co_{W}$.
