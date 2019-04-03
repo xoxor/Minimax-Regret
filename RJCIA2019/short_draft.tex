@@ -188,7 +188,7 @@ a set of constraints restraining the possible values that they can take. We cons
 %We assume that in addition of basic requirements (monotonicity and convexity), 
 the chair is able to specify additional preferences about how the social choice function should behave. 
 %Of course it may be difficult for real decision makers to state these preferences, thus we can elicit them, for instance, by showing a complete profile of a small synthetic election and asking who should be elected in this case. \commentOC{Not entirely true as stated here. This works only in a subset of the case. So this remark should be dropped or amended, to say that we worked on this problem and it is still a work in progress to come up with an elicitation procedure that uses only questions that can effectively be asked using such a small synthetic election, and that it is not discussed further in this short article for lack of space. Also I’d remove “Of course”, it’s not obviously true.}
-Such requirements are encoded with linear constraints about the vector $\w$ and the set of these constraints is denoted by $\Co_W$. Given the set of convex weight vectors $\W$, we use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the preferences expressed by the chair.
+Such requirements are encoded with linear constraints about the vector $\w$ and the set of these constraints is denoted by $\Co_W$. Given the set of convex weight vectors $\W$, we use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the chair's preferences.
 
 \section[Minimax regret under partial profile and weight information]{
 Robust winner determination}
@@ -198,9 +198,10 @@ As a decision criterion to determine a winner, we propose to use minimax regret 
 %\citet{Lu2011} have adopted minimax regret for winner determination in social choice with
 %the preferences of the agents that are only partially known, while the social choice function is predetermined and known.
 %In this work we consider the simultaneous presence of uncertainty in the agents' preferences and uncertainty in the weights.
-We use {\em maximum regret} to quantify the worst-case error, which measures, intuitively, how far an alternative is from the optimal one given current knowledge.
+We use {\em maximum regret} to quantify the worst-case error, which measures, intuitively, how far an alternative is from the optimal one given current knowledge; 
 % about the voting rule and the agents' preferences.
-The alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
+the alternatives that minimize this error are selected as tied winners.
+%, providing us with a form of robust optimization.
 The maximum regret of an alternative is the highest possible difference between its score and the one achievable by any alternative in any state compatible with our current knowledge.
 %The maximum regret, given our current knowledge and an alternative $x$, is the highest possible difference between the score of $x$ and the score achievable by any alternative in any state compatible with our current knowledge.
 It is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete one, and 2) instantiate the weights choosing among any weight vector in $\pw$.
@@ -226,6 +227,7 @@ x^{*}_{\pprofile,W} \in A^*_{\pprofile, W} & = \argmin_{x \in A} \MR(x;\pprofile
 %x^{*}_{\pprofile,W} \in A^*_{\pprofile, W} & = \argmin_{x \in A} \MR(x;\pprofile,W) 
 %\end{align*}
 By picking as consensus choice an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty. 
+$\PMR$ can be computed by adapting the reasoning of Lu and Boutilier \cite{Lu2011} to the case of uncertain weights using linear programming.
 %In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
 %
 %Notice that if $\MMR(\pprofile, W)\!=\!0$, then $x^{*}_{\pprofile,W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \!\in\! W$, $x^{*}_{\pprofile,W}$ obtains a highest score.
