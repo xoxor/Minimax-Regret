@@ -323,7 +323,9 @@ Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variabl
 
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
 Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
-Observe that, whenever the PMR of an alternative $x$ (against some other alternative) exceeds the best MR value found so far, we don't need to further evaluate $x$, as it can't be optimal. \commentBN{?} 
+Observe that, whenever the $\PMR$ of an alternative $x$ (against some other alternative $y$) exceeds the best MR value found so far, we don't need to further evaluate $x$. 
+%, as it can't be optimal. 
+\commentBN{Indeed, the maximum regret of an alternative is the maximum value among all the PMRs, so we already know that $\MR(x) \geq \PMR(x,y)$, which is greater than the current MR. Thus, x will never be selected as a winner in the minimizing step.} 
 This idea can be exploited further by adopting a minimax-search tree \citep{Braziunas2011}.
 
 \section{Interactive Elicitation} 
