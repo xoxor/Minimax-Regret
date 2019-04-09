@@ -288,15 +288,35 @@ To summarize:
 \label{eq:compl}
 \begin{split}
 a \pref_j x &⇔ ¬(x \pprefeq_j a)\\
-y \pref_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \pprefeq_j y) ∨ (x \ppref_j a)).
+y \pref_j a &⇔ ¬(a \ppref_j y) ∧ (¬(x \pprefeq_j y) ∨ (x \pprefeq_j a)).
 \end{split}
 \end{align} 
+\commentBN{I think it would be more intuitive writing: \\ $ y \pref_j a ⇔ ¬(a \ppref_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$}
 We just sketched a proof of the following claim, and leave the rest of the proof to the reader.
 \begin{claim}
 There exists a completion $\hat{\profile} \in C(\pprofile)$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies (\ref{eq:compl}).
 \end{claim}
 It follows that $\hat{v}_{j}(x)$, the rank of $x$ in the PMR-maximizing linear order of agent $j$, 
-is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, where ${\pprefeq_j}(x)$ designates the set of alternatives that are less good than $x$ according to $\pprefeq_j$ (thus including $x$ itself), and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\beta$, where $\beta = \card{{\pinc_j}(x)}$ if $(x \pprefeq_j y)$ and $\beta = 0$ otherwise and with ${\pinc_j}(x)$ designating the alternatives incomparable with $x$ in $\pprefeq_j$ \commentBN{Still not good. In the set of alternatives incomparable with $x$ there could be alternatives strictly better than $y$. It is exactly the problem we had before. Instead, $\beta$ represents the number of alternatives incomparable with $x$ that are no better than $y$: $\beta = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ }.
+is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, where ${\pprefeq_j}(x)$ designates the set of alternatives that are less good than $x$ according to $\pprefeq_j$ (thus including $x$ itself), and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\card{\beta}$, where $\card{\beta} = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ if $(x \pprefeq_j y)$ and $\card{\beta} = 0$ otherwise.
+In the case $(x \pprefeq_j y)$, intuitively $\beta$ represents the number of alternatives incomparable with $x$ that are no better than $y$. Let's reason about what alternatives must be placed above $y$ by negating the second equation of \ref{eq:compl}:
+\begin{align}
+\label{eq:betaproof} 
+\begin{split}
+a \prefeq_j y &⇔ (a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))\\
+a \pref_j y &⇔ (a \neq_j y) ∧ [(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))]
+\end{split}
+\end{align} 
+But the term in the square brackets implies $(a \neq_j y)$, indeed:
+\[(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)) \Rightarrow (a \neq_j y)\]
+$(a \ppref_j y) \Rightarrow (a \neq_j y)$ is always true, and we can rewrite $¬(x \pprefeq_j a)$ as $(a \ppref_j x) ∨ (a \pinc_j x)$, where $\pinc_j$ designates incomparability. Thus:
+\begin{gather*} 
+(x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) \Rightarrow (a \neq_j y) \\
+(x \pprefeq_j y) ∧ ((a \ppref_j x) ∨ (a \pinc_j x)) \Rightarrow (a \neq_j y) \\
+((x \pprefeq_j y) ∧ (a \ppref_j x)) ∨ ((x \pprefeq_j y) ∧ (a \pinc_j x)) \Rightarrow (a \neq_j y).
+\end{gather*}
+So we can go back to \ref{eq:betaproof} dropping the $(a \neq_j y)$ term:
+\[a \pref_j y ⇔ (a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y))\]
+In case $(x \pprefeq_j y)$, we say an alternative $a \in \beta$ iff $¬((x \pprefeq_j a) ∨ (a \ppref_j y))$. Thus defining $\beta=A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))$.
 
 %Proof: Define $\pref$ as just $\ppref_j$ with the arcs added to minimally satisfy the above. Thus, add the following arcs: when $x ? a$, add $a > x$. When $a ? y ∧ x \ppref_j y ∧ ¬(x \ppref_j a)$, add $a \pref y$. When $a ? y ∧ [¬(x \ppref_j y) ∨ (x \ppref_j a)]$, add $y \pref a$. Observe that $\ppref_j \subseteq \pref$. We have to show that it is acyclic. (Then we take its transitive closure to make it a partial order, and it’s done.) Note that if there is a cycle in $\pref$, it’s because of some new arcs, as $\ppref_j$ is acyclic. Thus, the cycle must go through one of these new arcs. …
 
