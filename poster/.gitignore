@@ -1,0 +1,16 @@
+#All: poster, article, pres
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+#Pres
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.thm
+

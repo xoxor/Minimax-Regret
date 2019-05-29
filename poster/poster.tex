@@ -1,0 +1,347 @@
+%nag warns a lot about tikzposter.
+%\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[blockverticalspace=3cm]{tikzposter}
+\input{preamble/packages}
+\input{preamble/redac}
+\input{preamble/math_basics}
+\input{preamble/math_mine}
+\input{preamble/draw}
+\usepackage{tabularx}
+\listfiles
+
+
+\definecolor{myorange}{RGB}{250, 95, 0} 
+\definecolor{myburgundy}{RGB}{150, 0, 15} 
+
+\colorlet{backgroundcolor}{white}
+\colorlet{framecolor}{orange}
+\colorlet{blocktitlebgcolor}{myorange}
+
+\newcommand{\profile}{\bm{v}}%(complete) profile
+\newcommand{\pprofile}{{\bm{p}}}%partial profile
+\newcommand{\w}{\bm{w}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\Co}{\mathcal{C}}
+\newcommand{\pw}{W}%our knowledge about the weights
+\newcommand{\strat}[1]{\emph{#1}}
+\newcommand{\ppref}{\succ^\text{p}}%partial pref
+\newcommand{\pprefeq}{\succeq^\text{p}}%partial pref
+\newcommand{\pref}{\succ}% pref
+\DeclareMathOperator{\Regret}{Regret}
+\DeclareMathOperator{\SCORE}{Score}
+\DeclareMathOperator{\PMR}{PMR}
+\DeclareMathOperator{\MR}{MR}
+\DeclareMathOperator{\MMR}{MMR}
+
+\makeatletter
+\def\title#1{\gdef\@title{\scalebox{\TP@titletextscale}{%
+			\begin{minipage}[t]{\linewidth}
+				\centering
+				#1
+				\par
+				\vspace{0.5em}
+			\end{minipage}%
+		}}}
+		\makeatother
+%I find these settings useful in draft mode. Should be removed for final versions.
+	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
+%		\tolerance=2000
+	%Accept overfull hbox up to...
+%		\hfuzz=2cm
+	%Reduces verbosity about the bad line breaks.
+%		\hbadness 5000
+	%Reduces verbosity about the underful vboxes.
+%		\vbadness=1300
+
+\title{Simultaneous Elicitation of Committee and \\ Voters Preferences}
+\institute{$^1$ LAMSADE, Université Paris-Dauphine, Paris, France \\ $^2$ LIP6, Sorbonne Universit\'e, Paris, France}
+\author{B. Napolitano$^1$, O. Cailloux$^1$ and P. Viappiani$^2$}
+
+
+\begin{document}
+\maketitle[titletotopverticalspace=11cm]
+
+\begin{columns}
+	\column{0.5}
+		\block{Setting}{
+			\begin{tikzpicture}[remember picture,overlay]
+				\path (current page.north west) ++(1.5cm, -1cm) node[anchor=north west, inner sep=0] (first) {
+					\includegraphics[height=6.5cm]{dauphine_psl2018.png}
+				};
+				\path (current page.north east) ++(-1.5cm, -1cm) node[anchor=north east, inner sep=0] {
+					\includegraphics[height=7cm]{LAMSADE95.jpg}
+				};
+			\end{tikzpicture}%
+		%
+%			\begin{tikzpicture}[remember picture,overlay]
+%				\path (current page.south west) ++(1.5cm, 1.5cm) node[anchor=south west, text width=27cm] {
+%					Olivier Cailloux and Yves Meinard. \emph{A formal framework for deliberated judgment}. Under revision at Theory and Decision. \href{https://arxiv.org/abs/1801.05644}{arXiv:1801.05644 [cs.AI]}.
+%				};
+%			\end{tikzpicture}%
+		%
+			\textbf{Incomplete profile and uncertain positional scoring rule \\}
+			\begin{tikzfigure}
+				\includegraphics{set.png}
+				%		\caption{.}
+				%		\label{fig:b1}
+			\end{tikzfigure}
+
+			\textbf{Goals}
+			\begin{itemize}
+				\item Development of query strategies interleaving questions to the chair and to the voters in order to simultaneously elicit preferences and voting rule
+				\item Robust winner determination
+			\end{itemize}
+		}
+		\block{Minimax Regret}{
+			
+			\begin{align*}
+			\Regret^{\profile,\w}(x) & = \max_{y \in A} s^{\profile,\w}(y) - s^{\profile, \w}(x) \\
+			\PMR^{\pprofile,W}(x,y) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)}s^{\profile,\w}(y) - s^{\profile, \w}(x) \\
+			\MR^{\pprofile,W}(x) & = \max_{y \in A} \PMR^{\pprofile,W}(x,y)\\
+			%& = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x, \profile, \w) \\
+			\MMR(\pprofile,W) & = \min_{x \in A} \MR^{\pprofile,W}(x) \\
+			x^{*}_{\pprofile,W} \in A^*_{\pprofile, W} & = \argmin_{x \in A}\MR^{\pprofile,W}(x)
+			\end{align*}
+		}
+		\block{Question Types}{
+			\begin{itemize}
+				\item \textbf{Questions to the voters}
+				\begin{itemize}
+					\item Comparison queries that ask a particular agent to compare two alternatives
+					\[a \pref_j b \quad ?\]
+				\end{itemize}
+				\item \textbf{Questions to the chair}
+				\begin{itemize}
+					\item Queries relating the difference between the importance of consecutive ranks $r$ and $r+1$
+					\[ w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2}) \quad ? \] 
+				\end{itemize}
+			\end{itemize}
+		}
+		\block{Elicitation strategies}{
+			A function that, given our partial knowledge so far, returns a question that should be asked. 
+			\begin{itemize}
+				\item \textbf{Random}: it decides, with a probability of $1/2$, whether to ask a question to the voters or to the chair, then it equiprobably draws a question among the set of the possible ones;
+			
+				\item \textbf{Extreme completions}: it asks a question to the chair or to the agents depending on which uncertainty contributes the most to the regret;
+			
+				\item \textbf{Pessimistic}: it selects the question that leads to minimal regret in the worst case considering, and aggregating, both possible answers to each question; 
+			
+				\item \textbf{Two phase}: it asks a predefined, non adaptive sequence of $m-2$ questions to the chair and then it only asks questions about the agents.
+			\end{itemize}
+		}
+	\column{0.5}
+		\block{Motivation and approach}{
+			\begin{itemize}
+				\item \textbf{Who?}
+				\begin{itemize}
+					\item Imagine to be an \emph{external observer} helping with the voting procedure
+				\end{itemize}
+				\item \textbf{Why?}
+				\begin{itemize}
+					\item Requiring voters to express \emph{full
+					preference} orderings can be prohibitively \emph{costly}, especially for decisions with lots of alternatives
+					\item \emph{Difficult} for non-expert users \emph{to formalize} a voting rule on the basis of some generic preferences over a desired aggregation method
+				\end{itemize}
+				\item \textbf{How?}
+				\begin{itemize}
+					\item \emph{Minimax regret}: given the current knowledge, the alternatives with the lowest worst-case regret are selected as tied winners
+				\end{itemize}		
+				\item \textbf{Assumptions:}
+				\begin{itemize}
+					\item Voters and committee have true preferences in mind
+					\item The voting rule is a Positional Scoring Rule where the scoring vector $(w_1, \dots , w_m)$ is a convex sequence of weights and $w_1=1$, $w_m=0$ 
+				\end{itemize}
+			\end{itemize}
+		}
+		\block{Pairwise Max Regret Computation}{
+			The computation of $\PMR^{\pprofile,W}(x,y)$ can be seen as a game in which an adversary can both extend the partial	profile into a complete one and instantiate the weights	choosing among any feasible weight vector
+			\begin{itemize}
+				\item \textbf{Profile Completion}\\
+				For any other alternative $a$ 
+				\begin{align*} 
+				a \pref_j x &⇔ ¬(x \pprefeq_j a)\\
+				\label{eq:comply}
+				y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
+				\end{align*}
+				Considering the example \\
+					\begin{center}
+						\includegraphics{set5.png}
+					\end{center}
+					
+				\item \textbf{Weights Choice}\\
+				The vector that satisfies the constraints specified by the chair so far and maximize the PMR is chosen. \\
+				In the previous example the vector {\color{red}$(1,0,0)$} is chosen.
+			\end{itemize}
+			}
+			\block{References}{
+				\small{
+					\bibliography{biblio}
+					\bibliographystyle{plain}
+				}
+			}
+		
+\end{columns}
+%
+%\block{Deliberation can change your mind}{
+%	\newlength{\seplott}
+%	\setlength{\seplott}{3em}
+%	\begin{center}
+%		Choose between L1 and L2, then choose between L3 and L4. Are you sure?
+%		\framebox{
+%			\begin{tikzpicture}[grow'=right, sibling distance=3cm, level distance=8cm]
+%				\path node (l1) {L1} child {
+%					node {1M €} edge from parent node[above] {100\%}
+%				};
+%				\path (l1-1.east) ++ (\seplott, 0) node (ql12) {VS};
+%				\path (ql12) ++ (\seplott, 0) node[anchor=west] (l2) {L2} child {
+%					node {0M €} edge from parent node[above] {1\%}
+%				} child {
+%					node {1M €} edge from parent node[above right] {89\%}
+%				} child {
+%					node {5M €} edge from parent node[below] {10\%}
+%				};
+%				\path (l1) ++(40cm, 0) node (l3) {L3} child {
+%					node {0M €} edge from parent node[above] {89\%}
+%				} child {
+%					node {1M €} edge from parent node[below] {11\%}
+%				};
+%				\path (l3 -| l3-1.east) ++ (\seplott, 0) node (ql34) {VS};
+%				\path (ql34) ++ (\seplott, 0) node[anchor=west] (l4) {L4} child {
+%					node {0M €} edge from parent node[above] {90\%}
+%				} child {
+%					node {5M €} edge from parent node[below] {10\%}
+%				};
+%			\end{tikzpicture}
+%		}
+%	\end{center}
+%	\mbox{}
+%
+%	\begin{minipage}{0.6\textwidth}
+%%		\rule{\textwidth}{1cm}
+%		\begin{itemize}
+%			\item First observation (Bernouilli): don’t be content with maximizing (untransformed) expected revenue!
+%			\item Second observation: $i$ could be intuitively attracted by L1 $\succ$ L2 and L3 $\succ$ L4 (Allais’s problem)
+%			\item Including Savage
+%			\item And might change her mind when given a reasoning pro expected utility
+%			\item “There is, of course, an important sense in which preferences, being entirely subjective, cannot be in error”
+%			\item … “but in a different, more subtle sense they can be.” (Savage, \emph{The Foundations of Statistics})
+%			\item[⇒]Systematic decision principles might help deliberate
+%		\end{itemize}
+%	\end{minipage}%
+%	\begin{minipage}{0.33\textwidth}%
+%		\footnotesize
+%%		\rule{\textwidth}{1cm}
+%		\centering
+%		\setlength{\seplott}{3em}
+%		\begin{tikzpicture}[grow'=right, sibling distance=1.5cm, level distance=8cm]
+%			\path node (l1) {L1} child {
+%				node {1M €} edge from parent node[above] {89\%}
+%			} child {
+%				node {1M €} edge from parent node[below] {11\%}
+%			};
+%			\path (l1 -| l1-1.east) ++ (\seplott, 0) node (ql12) {VS};
+%			\path (ql12) ++ (\seplott, 0) node[anchor=west] (l2) {L2} child {
+%				node {1M €} edge from parent node[above] {89\%}
+%			} child {
+%				node {0M €} edge from parent node[above right] {1\%}
+%			} child {
+%				node {5M €} edge from parent node[below] {10\%}
+%			};
+%			\path (l1.south) ++(0, -4cm) node[anchor=north] (l3) {L3} child {
+%				node {0M €} edge from parent node[above] {89\%}
+%			} child {
+%				node {1M €} edge from parent node[below] {11\%}
+%			};
+%			\path (l3 -| l3-1.east) ++ (\seplott, 0) node (ql34) {VS};
+%			\path (ql34) ++ (\seplott, 0) node[anchor=west] (l4) {L4} child {
+%				node {0M €} edge from parent node[above] {89\%}
+%			} child {
+%				node {0M €} edge from parent node[above right] {1\%}
+%			} child {
+%				node {5M €} edge from parent node[below] {10\%}
+%			};
+%		\end{tikzpicture}
+%	\end{minipage}
+%}
+%
+%\begin{columns}
+%	\column{0.45}
+%		\block{Study deliberated judgement}{
+%			The proposed research program aims at the following.
+%			\begin{enumerate}
+%				\item Define \ac{DJ} formally
+%				\begin{itemize}
+%					\item Given a set of arguments
+%					\item Of an individual $i$
+%					\item[⇒] The position that is stable facing counter-arguments
+%				\end{itemize}
+%				\item Define the concept of a model of someone’s \ac{DJ}
+%				\begin{itemize}
+%					\item[⇒] A model articulates claims concerning $i$’s \ac{DJ} and argues for its claim
+%				\end{itemize}
+%				\item Define validity of a model
+%				\begin{itemize}
+%					\item[⇒] Correctly captures $i$’s \ac{DJ}
+%				\end{itemize}
+%				\item Study conditions for falsifying models using observable data only
+%				\begin{itemize}
+%					\item[⇒] Let models debate, use $i$ as a judge
+%				\end{itemize}
+%			\end{enumerate}
+%		}
+%	\column{0.55}
+%		\block{Example of a situation and a model of it}{
+%			\begin{tabularx}{40cm}{LYl}
+%				\toprule
+%				\text{Notation}	&\text{Here}	&Description\\
+%				\midrule
+%				T	&\set{\prop}	&The topic, containing propositions about which $i$ deliberates\\
+%				\args	&\set{\ar, \ar[1], \ar[2], \ar[3]}	&The arguments\\
+%				{\ileadsto} \subseteq \args × T	&\set{(\ar, \prop), (\ar[1], \prop)}	&Support as considered by $i$\\
+%				{\ibeatse} \subseteq \args × \args	&\set{(\ar[2], \ar[1])}	&Attacks as considered by $i$ in some perspective\\
+%				{\mbeats} \subseteq \args × \args	&\set{(\ar[3], \ar[2])}	&Attacks as considered by the model $\eta$\\
+%				\bottomrule
+%			\end{tabularx}
+%			\vspace{2em}
+%			\begin{center}
+%			\begin{tikzpicture}
+%				\path node (eq) {weather f.\ predicts so ($\ar[1]$)};
+%				\path (eq.east) node[anchor=west] (eql) {$\ileadsto$};
+%				\path (eql.east) node[anchor=west] (eqr) {rain tomorrow ($\prop$)};
+%				\path (eq.south) ++(0, -\BDNodeSep) node[anchor=north] (wrong) {weather forecast is often wrong ($\ar[2]$)};
+%				\path (wrong) edge[/Beliefs/attack] node[right] {$\ibeatse$} (eq);
+%				\path (wrong.south) ++(0, -\BDNodeSep) node[anchor=north] (right) {weather forecast is more often right ($\ar[3]$)};
+%				\path (right) edge[/Beliefs/attack] node[right] {$\mbeats$} (wrong);
+%				
+%				\path (eqr.east) node[anchor=west] (complexl) {\reflectbox{$\ileadsto$}};
+%				\path (complexl.base east) node[anchor=base west] (complex) {complex arg. ($\ar$)};
+%			\end{tikzpicture}
+%			\end{center}
+%%		\raggedleft{Example of a }
+%		}
+%\end{columns}
+%
+%\begin{columns}
+%	\column{0.5}
+%		\block{Application: test axioms of decision theory}{
+%			\begin{itemize}
+%				\item Axioms considered appropriate normatively?
+%				\begin{itemize}
+%					\item But some (Allais, Ellsberg) disagree
+%				\end{itemize}
+%				\item Proposal: build models resting on those axioms
+%				\item Test models: their convincing power will give us indications about the reasonableness of the axioms for “normal” people (meaning, not scientists studying decision theory)
+%			\end{itemize}
+%		}
+%	\column{0.5}
+%		\block{Application: test conceptions of justice}{
+%			\begin{itemize}
+%				\item Philosophers have proposed sophisticated conceptions of justice (Rawls, Nozick, …)
+%				\item Individual’s shallow intuitions about justice are observed and used to confront Rawls or others (Experimental Social Choice)
+%				\item Proposal: study reactions of individuals to arguments of philosophers rather than just shallow intuitions
+%				\item Move towards Reflective equilibrium (Goodman, Rawls)
+%			\end{itemize}
+%		}
+%\end{columns}
+\end{document}
+
