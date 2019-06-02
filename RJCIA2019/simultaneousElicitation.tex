@@ -1,11 +1,8 @@
-%\input{rfia} 
 \documentclass[a4paper,twoside]{article}
 \usepackage{rfia2000}
 \usepackage[T1]{fontenc}
-%\usepackage[english]{babel}
 \usepackage{times}
 
-%\author{ID: 2696}
 \author{\begin{tabular}[t]{c@{\extracolsep{6em}}c@{\extracolsep{6em}}c}
 	B. Napolitano${}^1$ & O. Cailloux${}^1$ & P. Viappiani${}^2$ \\
 	\end{tabular}
@@ -141,17 +138,14 @@ beatrice.napolitano@dauphine.fr, olivier.cailloux@dauphine.fr, paolo.viappiani@l
 {\em
 	Social choice deals with the problem of determining a consensus choice from the preferences of different voters. In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the voters is provided.
 	Recently, the assumption of full preference information has been questioned by a number of researchers and several methods for eliciting preferences have been proposed.
-%	\commentOC{This “we go one step further” sounds odd here. I suggest one more sentence about the normal elicitation setting with only the agents preferences partially specified.}
 	In this paper we go one step further and we assume that both the voting rule and the voters' preferences are partially specified. In this setting, we present an interactive elicitation protocol based on minimax regret and develop several query strategies that interleave questions to the chair and questions to the voters in order to attempt to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
 }
 \subsection*{Keywords}
 Computational Social Choice, uncertainty in AI, preference elicitation, minimax regret.
 
 \section{Introduction}
-%Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc) whose final goal is to find a consensus choice.
-%In this contexts, a natural approach consists in looking at methods from social choice and see how they can be adapted for group decision-making in a computerized setting. 
-In a traditional social choice setting, both the social choice function and the full preference orderings of the voters are expressed beforehand. Nevertheless, in real situations this is not always the case. When considering decisions with large sets of alternatives, requiring voters to express full preference orderings can be prohibitively costly and, perhaps, not necessary in order to determine a consensus choice. Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Consider as an example a situation in which the council of a city wants to build a community allotment and the decision of what to grow has to be taken. The voters are the residents of the neighborhood and the alternatives consist of all the vegetables that can grow in that particular area. An external observer, who is helping with the voting procedure, is responsible for collecting the preferences of both the residents (regarding the vegetable to grow) and the members of the council (regarding the method for aggregating the residents' preferences). Imagine that, after collecting some preferences, she notices that some alternatives are always the least preferred. In this case, it is really unlikely that these alternatives would be selected as winners by any reasonable voting rule. Thus, she may consider to ask the voters only their preferences over few strategical alternatives instead of asking them the full preference orderings. Furthermore, if she notices that a particular vegetable is the most preferred of almost the totality of the residents there is no need to know the specific voting rule. Any reasonable aggregation procedure, in fact, would select this alternative as a winner. The reason behind this consideration is that is not unrealistic to assume that the committee, that has to decide how to aggregate these preferences, is not able to define a specific procedure. \\
-These observations have motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Naamani-Dery2015} of voters' preferences. Lu and Boutilier \cite{Lu2011} have proposed the use of minimax regret to drive incremental vote and preferences elicitation when the social choice function is fixed and known. Furthermore, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the voters are fully known. Some elicitation methods for a quite general class of rules based on weak orders have also been proposed by Cailloux and Endriss \citep{Cailloux2014}. \\
+In a traditional social choice setting, both the social choice function and the full preference orderings of the voters are expressed beforehand. Nevertheless, in real situations this is not always the case. When considering decisions with large sets of alternatives, requiring voters to express full preference orderings can be prohibitively costly and, perhaps, not necessary in order to determine a consensus choice. Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Consider as an example a situation in which the council of a city wants to build a community allotment and the decision of what to grow has to be taken. The voters are the residents of the neighborhood and the alternatives consist of all the vegetables that can grow in that particular area. An external observer, who is helping with the voting procedure, is responsible for collecting the preferences of both the residents (regarding the vegetable to grow) and the members of the council (regarding the method for aggregating the residents' preferences). Imagine that, after collecting some preferences, she notices that some alternatives are always the least preferred. In this case, it is really unlikely that these alternatives would be selected as winners by any reasonable voting rule. Thus, she may consider to ask the voters only their preferences over few strategical alternatives instead of asking them the full preference orderings. Furthermore, if she notices that a particular vegetable is the most preferred of almost the totality of the residents there is no need to know the specific voting rule. Any reasonable aggregation procedure, in fact, would select this alternative as a winner. The reasoning behind this is that it is not unrealistic to assume that the committee, that has to decide how to aggregate these preferences, is not able to define a specific procedure. \\
+These observations have motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Naamani-Dery2015} of voters' preferences. Lu and Boutilier \cite{Lu2011} proposed the use of minimax regret to drive incremental vote and preferences elicitation when the social choice function is fixed and known. Furthermore, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} worked on positional scoring rules with uncertain weights, assuming that the preferences of the voters are fully known. Some elicitation methods for a quite general class of rules based on weak orders have also been proposed by Cailloux and Endriss \citep{Cailloux2014}. \\
 In this paper we focus on positional scoring rules, that are
 a particularly common method used to aggregate rankings, and we assume that both the voters’ preferences and the social choice rule are partially specified.
 We develop methods for computing the minimax-optimal alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to a voter or to the committee, that quickly reduce minimax regret.
@@ -173,45 +167,23 @@ where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in t
 In this work we assume fixed, but unknown, a profile $\profile^* = (\pref^*_1, \ldots, \pref^*_n)$ and a weight vector $\w^*$.
 Our knowledge at a given time of the preference of voter $j$ is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$; we assume that preference information is truthful, i.e. 
 ${a \ppref_j b ⇒ a \pref_j^* b}$.
-%\commentOC{Or simply ${\ppref_j} \subseteq {\pref_j^*}$, if you need to save space}
-%We use $\pinc$ to denote incomparability, that is $a \pinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
 An incomplete profile ${\pprofile = (\ppref_1, \ldots, \ppref_n)}$ maps each voter to a partial preference. A completion of $\ppref_j$ is any linear order $\pref$ that extends $\ppref_j$ and we indicate with $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ the set of possible completions of $\ppref_j$, where $\linors$ is the set of linear orders on $A$.
-%We let $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ be the set of complete profiles extending $p$. Note that $\profile^* \in C(\pprofile)$.
 
-Our knowledge regarding the weights of the positional scoring rule is represented by
-%We also assume that the weights of the scoring rule are only partially specified.
-%Therefore the vector $(w_1,\ldots,w_m)$  is not known but we are given 
-a set of constraints restraining the possible values that they can take. We consider a convex sequence of weights and we assume that 
-%, i.e. a decreasing sequence $1=w_{1} > w_{2} > \ldots > w_{m}=0$ such that the difference between the weights of the first and second positions is at least as great as the difference between the weights of the second and third positions, etc.
-%\begin{equation} 
-%\label{eq:convexity}
-%\forall r \in \{1,\ldots,m-2\}: w_r - w_{r+1} \geq w_{r+1}-w_{r+2}.
-%\end{equation}
-%We assume that in addition of basic requirements (monotonicity and convexity), 
-the chair is able to specify additional preferences about how the social choice function should behave. 
-%Of course it may be difficult for real decision makers to state these preferences, thus we can elicit them, for instance, by showing a complete profile of a small synthetic election and asking who should be elected in this case. \commentOC{Not entirely true as stated here. This works only in a subset of the case. So this remark should be dropped or amended, to say that we worked on this problem and it is still a work in progress to come up with an elicitation procedure that uses only questions that can effectively be asked using such a small synthetic election, and that it is not discussed further in this short article for lack of space. Also I’d remove “Of course”, it’s not obviously true.}
+Our knowledge regarding the weights of the positional scoring rule is represented by a set of constraints restraining the possible values that they can take. We consider a convex sequence of weights and we assume that the chair is able to specify additional preferences about how the social choice function should behave. 
 Such requirements are encoded with linear constraints about the vector $\w$ and the set of these constraints is denoted by $\Co_W$. Given the set of convex weight vectors $\W$, we use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the chair's preferences. We will provide an example of such constraints, used to specify information about weights, in Section \ref{sec:elicit}.
 
 \section[Minimax regret under partial profile and weight information]{
 Robust winner determination}
 \label{sec:mmr}
 As a decision criterion to determine a winner, we propose to use minimax regret \cite{Savage1954}. This concept has been used for robust optimization under data uncertainty \cite{Kouvelis1997} as well as in decision-making with uncertain utility values \cite{Salo2001,Boutilier2006}. Lu and Boutilier \cite{Lu2011} have adopted this criterion for winner determination in social choice with the preferences of the voters that are only partially known, while the social choice function is predetermined and known.
-%In this work we consider the simultaneous presence of uncertainty in the voters' preferences and uncertainty in the weights.
-We use {\em maximum regret} to quantify the worst-case error, which measures, intuitively, how far an alternative is from the optimal one given current knowledge; 
-% about the voting rule and the voters' preferences.
-the alternatives that minimize this error are selected as tied winners.
+We use {\em maximum regret} to quantify the worst-case error, which measures, intuitively, how far an alternative is from the optimal one given current knowledge; the alternatives that minimize this error are selected as tied winners.
 %, providing us with a form of robust optimization.
 The maximum regret of an alternative is the highest possible difference between its score and the one achievable by any alternative in any state compatible with our current knowledge.
-%The maximum regret, given our current knowledge and an alternative $x$, is the highest possible difference between the score of $x$ and the score achievable by any alternative in any state compatible with our current knowledge.
 It is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete one, and 2) instantiate the weights choosing among any weight vector in $\pw$.
 We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret^{\profile,\w}(x)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
 \[\Regret^{\profile,\w}(x) = \max_{y \in A} s^{\profile,\w}(y) - s^{\profile, \w}(x).\]
 The pairwise max regret $\PMR^{\pprofile,W}(x,y)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$ is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} weights. Max regret $\MR^{\pprofile,W}(x)$ is the worst-case loss of $x$ and $\MMR^{\pprofile,W}$ is the value of minimax regret obtained when recommending a minimax optimal alternative. 
-%\begin{align}
-%\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
-%\end{align}
-%It is the loss occurred by an adversarial selection of a complete profile $\profile$ extending $\pprofile$ and a selection of $\w \in W$ to maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
 \begin{align}
 \PMR^{\pprofile,W}(x,y) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)}s^{\profile,\w}(y) - s^{\profile, \w}(x) \\
 \MR^{\pprofile,W}(x) & = \max_{y \in A} \PMR^{\pprofile,W}(x,y)\\
@@ -220,23 +192,12 @@ The pairwise max regret $\PMR^{\pprofile,W}(x,y)$ of $x$ relative to $y$ given p
 x^{*}_{\pprofile,W} & = \argmin_{x \in A}\MR^{\pprofile,W}(x) \in A^*_{\pprofile, W}
 \end{align}
 
-%Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W}$:
-%\begin{align*}
-%\MMR(\pprofile,W) & = \min_{x \in A} \MR(x;\pprofile,W) \\
-%x^{*}_{\pprofile,W} \in A^*_{\pprofile, W} & = \argmin_{x \in A} \MR(x;\pprofile,W) 
-%\end{align*}
 By picking as consensus choice an alternative associated with minimax regret $x^*_{\pprofile, W} \in A^*_{\pprofile, W} $, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty. 
 %\[x^{*}_{\pprofile,W} = \argmin_{x \in A}\MR^{\pprofile,W}(x)\]
 In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using a tie-breaking strategy.
 Because the constraints in $\Co_W$ are not necessarily linear $\PMR$ is not straightforwardly optimized, but it can be computed by adapting the reasoning of Lu and Boutilier \cite{Lu2011} to the case of uncertain weights using linear programming. This optimization strategy uses the assumption of convexity.
-%In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
-%
-%Notice that if $\MMR(\pprofile, W)\!=\!0$, then $x^{*}_{\pprofile,W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \!\in\! W$, $x^{*}_{\pprofile,W}$ obtains a highest score.
-%
-%We note that our notion of regret gives some cardinal meaning to the scores: instead of just being used to select winners under the corresponding PSR, their differences are considered as representing the regret of the chair.
 
-
-\section{Interactive Elicitation} 
+\section{Interactive elicitation} 
 \label{sec:elicit}
 We propose an incremental elicitation method based on minimax regret.
 At each step, the system may ask a question either to one of the voters or to the chair.
