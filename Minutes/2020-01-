@@ -1,2 +1,25 @@
-* shall we change s(ȳ; v̄, w) to s^{v̄, w}(ȳ) ? (and also PMR, MMR etc.)
+== TODO
+
+. two phase with tau on an instance (m,n) = (10,10)
+* first ask k random questions about w
+* then k' questions to voters using tau (we don't have the problem of comparing two taus that are most likely not compatible)
+
+. optimize k
+
+. invert the order of questions (first to voters and then to committee) and optimize k again
+
+. try to reproduce the error and print the knowledge at that moment
+
+. find a lambda for tau strategy
+
+. two phase random
+
+//-
+
+* next step) optimize the pessimistic strategy
+
+== Minors:
+* shall we change s(x; v, w) to s^{v, w}(x) ?
 * tau_1 and tau_2 can be called tau_profile and tau_weights
+* change name to extreme completion strategy? 
+
