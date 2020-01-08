@@ -170,6 +170,8 @@ An alternative obtains a score that depends on the rank obtained in each of the 
 s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 = \sum_{r=1}^{m} \alpha^{x}_r w_r 
 \end{align}
+\commentBN{$s^{\profile,\w}(x)$}
+
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives with highest scores.
 
@@ -422,13 +424,13 @@ Define:
 \end{align}
 {\color{red}
 \begin{align}
-	\tau_{\w} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
-	\tau_{\profile_i} & = \min_{\hat{\profile_i} \in C(\pprofile)} s^{\hat{\profile_i},\bar{\w}}(\bar{y}) -  s^{\hat{\profile_i},\bar{\w}}(x^{*}) 
+	\tau_{wg} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
+	\tau_{i} & = \min_{\profile_i \in C(\pprofile)} s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(\bar{y}) -  s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(x^{*}) 
 \end{align}
-where $\hat{\profile_i}$ is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
+or we can use $\hat{\profile_i}=(\bar{\profile}_{-i},\profile_i)$ which is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
 
 Intuitively the quantity $\MMR - \tau_{1} = \max_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w) - \min_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$ estimates the contribution to regret of our uncertainty about the weights $\w$, while $\MMR - \tau_{2} $ estimates the uncertainty about the profile.
-Therefore, whenever $\tau_{1} < \tau_{2}$ we ask a question to the chair, and compare component-wise $\bar{\w}$ and $\w^{\tau}$, the argmax of Eq. (\ref{eq:tau1}), to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
+Therefore, whenever ${\color{red} \lambda *} \tau_{1} < \tau_{2}$ we ask a question to the chair, and compare component-wise $\bar{\w}$ and $\w^{\tau}$, the argmax of Eq. (\ref{eq:tau1}), to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
 Instead, if $\tau_{1} > \tau_{2}$ we ask a question to one of the agents. We select the question by checking for each agent $j$ the difference between the difference of the ranks of $x$ and $y$ in the profile that minimizes compared to the one that maximizes the difference of scores, and pick an agent related to the highest difference, then pick $x$ or $y$ with $1/2$ chances as the first alternative of the question, and pick an incomparable alternative equiprobably as the second one.
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
