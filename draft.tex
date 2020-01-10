@@ -12,6 +12,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{newunicodechar}
 \usepackage{textcomp}
+
 %\newunicodechar{⇒}{\implies}
 \newunicodechar{⇒}{\Rightarrow}
 \newunicodechar{≠}{\ensuremath{\neq}}
@@ -28,6 +29,8 @@
 \newunicodechar{⇔}{\Leftrightarrow}
 \newcommand{\N}{ℕ}
 \newunicodechar{ℕ}{\mathbb{N}}
+\newcommand{\R}{ℝ}
+\newunicodechar{ℝ}{\mathbb{R}}
 \usepackage{algorithm, algpseudocode}
 \usepackage{amsmath,amssymb,enumerate,amsthm}
 \usepackage{natbib}
@@ -88,6 +91,7 @@
 \DeclareMathOperator{\MMR}{MMR}
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\badn}{badness}
 
 \newtheorem{claim}{Claim}
 \newtheorem{prop}{Proposition}
@@ -254,7 +258,7 @@ By picking as consensus choice
  an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation). 
 In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
 
-Observe that if $\MMR(\pprofile, W)\!=\!0$, then $x^{*}_{\pprofile,W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \!\in\! W$, $x^{*}_{\pprofile,W}$ obtains a highest score.
+Observe that if $\MMR(\pprofile, W)\!=\!0$, then $x^{*}_{\pprofile,W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \!\in\! W$, $x^{*}_{\pprofile,W}$ obtains the highest score.
 
 We note that our notion of regret gives some cardinal meaning to the scores: instead of just being used to select winners under the corresponding PSR, their differences are considered as representing the regret of the chair.
 
@@ -538,6 +542,8 @@ Finally, an important direction of extension aims at studying how to elicit pref
 
 \appendix
 \section{Bounding differences of weights}
+\newcommand{\Wq}{W_\text{q}}
+
 We want to check whether we can round PMR values to (for example) $10^{-4}$. Thus, we want to bound the difference of scores (unless it is zero).
 
 Consider $s(a) = w_2 + w_4$, $s(b) = w_3 + w_3$, $w_1 = 1, w_2 = w_3 + \epsilon, w_4 = 0$, with $w_3$ and $\epsilon$ two small positive numbers. Then convexity is satisfied and $s(a) - s(b) = \epsilon$.
@@ -547,6 +553,108 @@ Note that in this example, $w_3 ≤ \epsilon$, thus the difference of scores is 
 Consider $w_1 = 1, w_2 = 0.45, w_3 = 0.1, w_4 = 0$, $s(a) - s(b) = (w_2 - w_3) -3 (w_3 - w_4) = 0.35 - 0.30 = 0.05 < w_3$. 
 
 Problem: we can make the difference of scores very small, even with $n=2$ voters and $m=3$ alternatives and while satisfying convexity. Consider $w_1 = 1, w_2 = \frac{1-\epsilon}{n}, w_3 = 0$, $s(a) - s(b) = (w_1 - w_2) - (n-1) (w_2 - w_3) = w_1 - n w_2 = \epsilon$. Choose $\epsilon < \frac{1}{n+1}$ so that $w_2 > \epsilon$ and $n ≥ 2$ to satisfy convexity. For example, $\epsilon = 1/1000, n = 2, w_2 = 999/2000$.
+
+\section{Best question}
+\subsection{Much fixed}
+Throughout, $\Wq$ designates a closed set.
+
+Fix $x, y, \profile^*, W \subseteq \W$, fix $m = 3$. $\Wq \subseteq W$, define $\PMR(\Wq) = \PMR(x, y, \profile^*, \Wq)$. Define $\PMR(w) = PMR(\set{w})$, denoting the pairwise regret when the weight vector is $w$. Let $P$ be a probability defined on the whole set $\W$ of possible weights.
+%Define $\overline{w} = \argmax_{w \in W} s(y, \profile^*, w) - s(x, \profile^*, w) = \argmax PMR(w)$.
+
+For $\emptyset ≠ \Wq \subset W$, define $\badn(\Wq) = P[w^* \in \Wq] \PMR(\Wq) + P[w^* \notin \Wq] \PMR(W \setminus \Wq).$
+Equivalently, we could define the quality of a question as $P[w^* \in \Wq] (PMR(W) - PMR(\Wq)) + P[w^* \notin \Wq] (PMR(W) - PMR(W \setminus \Wq))$. This yields the same ordering. Still equivalently, we could define the badness using $P[\Wq \mid W]$ and $P[W \setminus \Wq \mid W]$, so that these probabilities sum to one.
+
+NB in general, this badness measure could perhaps be too short sighted, but that doesn’t seem to be a problem with the restrictions adopted here.
+
+With $m=3$, we can consider that $W \subseteq [0, 1]$, with $w \in W$ denoting the weight associated with the second rank.
+Let $P$ be the Lebesgue measure (or the uniform probability distribution) on $[0, 1]$.
+
+Recalling that $\alpha^y_1$ denotes the number of times $y$ is ranked first in $\profile^*$, define $t_1 = \alpha^y_1 - \alpha^x_1$ and $t_2 = \alpha^y_2 - \alpha^x_2$ to represent the difference in number of voters placing at a given position. Then $\PMR(w) = t_1 + t_2 w$. Thus, the worst (maximal) regret $\PMR(\Wq)$ is reached, for any set of weights $\Wq$, at an extremum of $\Wq$. If $t_2 ≥ 0$, the supremum of $\Wq$ is an optimal adversarial choice, and if $t_2 ≤ 0$, the infimum of $\Wq$ is an optimal adversarial choice. Thus $\PMR(\Wq) = t_1 + t_2 \sup(\Wq)$ if $t_2 ≥ 0$ and $\PMR(\Wq) = t_1 + t_2 \inf(\Wq)$ if $t_2 ≤ 0$.
+
+Assume that $W$ has the form $W = [\inf W, \sup W]$.
+
+Let $W_q$, with $q \in W$, denote asking whether $w^* ≥ q$, thus $W_q = \set{w ≥ q} ∩ W$. 
+We can say the following about the question $W_q$.
+\begin{itemize}
+	\item $P[W_q] = \sup W - q$
+	\item $P[W \setminus W_q] = q - \inf W$
+	\item $\PMR(W_q) = t_1 + t_2 \sup W$ if $t_2 ≥ 0$
+	\item $\PMR(W_q) = t_1 + t_2 q$ if $t_2 ≤ 0$
+	\item $\PMR(W \setminus W_q) = t_1 + t_2 q$ if $t_2 ≥ 0$. 
+	\item $\PMR(W \setminus W_q) = t_1 + t_2 \inf W$ if $t_2 ≤ 0$
+	\item $\badn(W_q) = (\sup W - q) (t_1 + t_2 \sup W) + (q - \inf W) (t_1 + t_2 q)$ if $t_2 ≥ 0$, whose derivative is $-(t_1 + t_2 \sup W) + (t_1 + t_2 q) + (q - \inf W) t_2 = 2 t_2 q - t_2 \sup W - t_2 \inf W$, thus the least badness is reached at $q = \frac{\sup W + \inf W}{2}$
+	\item $\badn(W_q) = (\sup W - q) (t_1 + t_2 q) + (q - \inf W) (t_1 + t_2 \inf W)$ if $t_2 ≤ 0$, whose derivative is $-(t_1 + t_2 q) + (\sup W - q) t_2 + (t_1 + t_2 \inf W) = -2 t_2 q + t_2 \sup W + t_2 \inf W$, thus the least badness is reached at $q = \frac{\sup W + \inf W}{2}$
+\end{itemize}
+In both cases, asking a question about the middle of the interval is optimal.
+
+\subsection{y variable}
+Fix $x, \profile^*, W \subseteq \W$, fix $m = 3$. 
+Assume that $W$ has the form $W = [\inf W, \sup W]$.
+For $\Wq \subseteq W$, define $\MR(\Wq) = \max_{y \in A} \PMR(x, y, \profile^*, \Wq) = \max_{y \in A, w \in \Wq} s(y, \profile^*, w) - s(x, \profile^*, w)$. For $w \in W$, define $\MR(w) = \MR(\set{w})$.
+
+For $\Wq \subseteq W$, define $\badn(\Wq) = P[\Wq] \MR(\Wq) + P[W \setminus \Wq] \MR(W \setminus \Wq)$.
+
+Let $t_1^a = \alpha_1^a - \alpha_1^x$ and $t_2^a = \alpha_2^a - \alpha_2^x$, for $a \in A$, representing the difference of number of times an alternative reaches a given position compared to the alternative $x$. Thus, $t_1^x = t_2^x = 0$. For $q \in W$, $\PMR(x, a, \profile^*, q) = t_1^a + t_2^a q$. Thus, $\MR(q) = \max \set{t_1^x + t_2^x q, t_1^y + t_2^y q, t_1^z + t_2^z q}$, with $A = \set{x, y, z}$. Therefore, $\MR$ has a maximal value at an extremum point of $W$.
+
+We obtain that $\MR(\Wq) = \max \set{\MR(\inf \Wq), \MR(\sup \Wq)}$.
+
+Define $W_q = \set{w ≥ q} ∩ W$, with $q \in W$.
+
+Assume that $t_2^y ≤ 0$ and $t_2^z ≤ 0$. 
+Sort alternatives by slope, thus, let $a, b, c$ denote different alternatives such that $t_2^a ≤ t_2^b ≤ t_2^c$ and $t_2^a = t_2^b ⇒ t_1^a ≥ t_1^b$ and $t_2^b = t_2^c ⇒ t_1^b ≥ t_2^b$ (picking one naming arbitrarily if several namings are compatible with these constraints).
+TODO it should follow that $\inf W$ is a maximum of $\MR$ over $W$. 
+Let $q_{a \sim b} \in ℝ$ denote the point such that $t_1^a + t_2^a q_{a \sim b} = t_1^b + t_2^b q_{a \sim b}$. If several or no points match this requirement, define $q_{a \sim b} = -1$. Define similarly $q_{b \sim c}$; setting it at 1 if several or no points match the requirement.
+TODO it follows that $q_{a \sim b} ≤ q_{b \sim c}$.
+
+TODO it follows that $\MR(q) = t_1^a + t_2^a q$ for $q ≤ q_{a \sim b}$, 
+$\MR(q) = t_1^b + t_2^b q$ for $q_{a \sim b} ≤ q ≤ q_{b \sim c}$, 
+$\MR(q) = t_1^c + t_2^c q$ for $q_{b \sim c} ≤ q$.
+
+Also, $\MR(W_q) = \MR(q)$, and 
+$\MR(W \setminus W_q) = \MR(\inf W)$. 
+
+Thus for $q ≤ q_{a \sim b}$, $\badn(W_q) = (\sup W - q) (t_1^a + t_2^a q) + (q - \inf W) (t_1^a + t_2^a \inf W)$.
+
+\begin{example}
+	When $q_{a \sim b} ≤ \inf W$ and $q_{b \sim c} ≤ \frac{1}{2}$, $q_{b \sim c}$ is an optimum. (TODO prove it)
+	\begin{itemize}
+		\item Def $\inf W = 0, \sup W = 1$.
+		\item Def $t_1^a = 0, t_2^a = -20, t_1^b = 1, t_2^b = -10$.
+		\item $q_{a \sim b} = -1/10, q_{b \sim c} = 1/10$.
+		\item $\MR(\frac{1}{20}) = \frac{1}{2}$, $\MR(\frac{1}{10}) = 0$.
+		\item $\MR(\frac{3}{20}) = 0 = \MR(\frac{4}{20})$.
+		\item $\MR(W \setminus W_q) = 1, \forall q \in W$.
+		\item $\badn(W_\frac{1}{20}) = \frac{19}{20} \frac{1}{2} + \frac{1}{20} 1 = \frac{21}{40}$.
+		\item $\badn(W_\frac{1}{10}) = \frac{9}{10} 0 + \frac{1}{10} 1 = \frac{4}{40}$.
+		\item $\badn(W_q) = (1 - q) 0 + q 1 = q$, with $\frac{1}{10} ≤ q$.
+	\end{itemize}
+	The optimum is at $\frac{1}{10}$ as expected.
+\end{example}
+
+\begin{example}
+	Here, the optimum should be for some $q_{a \sim b} ≤ q ≤ \frac{1}{2}$.
+	\begin{itemize}
+		\item Def $\inf W = 0, \sup W = 1$.
+		\item Def $t_1^a = 1, t_2^a = -10, t_1^b = 8/15, t_2^b = -2/3$.
+		\item $q_{a \sim b} = 1/20, q_{b \sim c} = 8/10$.
+		\item $\MR(\frac{1}{40}) = \frac{3}{4}$, $\MR(\frac{1}{20}) = \frac{1}{2}$.
+		\item $\MR(\frac{2}{20}) = \frac{14}{30}$, $\MR(\frac{3}{20}) = \frac{13}{30}$, $\MR(\frac{4}{20}) = \frac{12}{30}$, $\MR(\frac{6}{20}) = \frac{10}{30}$, $\MR(\frac{1}{2}) = \frac{3}{15}$.
+		\item $\MR(W \setminus W_q) = 1, \forall q \in W$.
+		\item $\badn(W_\frac{1}{40}) = \frac{39}{40} \frac{3}{4} + \frac{1}{40} 1 = \frac{3}{4} + \frac{1}{160}$.
+		\item $\badn(W_\frac{1}{20}) = \frac{19}{20} \frac{1}{2} + \frac{1}{20} 1 = \frac{1}{2} + \frac{1}{40}$.
+		\item $\badn(W_\frac{2}{20}) = \frac{9}{10} \frac{7}{15} + \frac{1}{10} 1 = \frac{1}{2} + \frac{1}{50}$.
+		\item $\badn(W_\frac{3}{20}) = \frac{17}{20} \frac{13}{30} + \frac{3}{20} 1 = \frac{1}{2} + \frac{11}{600}$.
+		\item $\badn(W_\frac{4}{20}) = \frac{8}{10} \frac{12}{30} + \frac{2}{10} 1 = \frac{1}{2} + \frac{1}{50}$.
+		\item For $\frac{1}{20} ≤ q ≤ \frac{8}{10}$, $\badn(W_q) = (1 - q) (\frac{8}{15} - \frac{2}{3} q) + q$; derivative is $-\frac{1}{5} + \frac{4}{3} q$, zero when $q = \frac{3}{20}$.
+	\end{itemize}
+\end{example}
+
+\subsection{x variable}
+Define $\MR_x(\Wq) = \max_{y \in A, w \in W_q} \PMR(x, y, \profile^*, w)$. Define $\MMR(\Wq) = \min_{x \in A} \MR_x(\Wq)$. Define $\badn(W_q) = (1 - q) \MMR(W_q) + q \MMR(W \setminus \W_q$.
+
+Define $\MR_x(w) = \MR_x(\set{w})$.
+
+We want to 1. Plot $\MR_x(w) = \max \set{t_1^{a, x} + t_2^{a, x} w, …}$. 2. Plot $\MR_x(W_q)$. 3. Plot $\MMR(W_q) = \min_x \MR_x(W_q)$.
 \end{document}
 
 \section{Minimax Computation under Convex Assumption} 
