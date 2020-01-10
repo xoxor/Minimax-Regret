@@ -23,3 +23,11 @@
 * tau_1 and tau_2 can be called tau_profile and tau_weights
 * change name to extreme completion strategy? 
 
+== Problems:
+* 1.0, 0.769, 0.548, 0.327, 0.155, 0.0 it's not convex because of approximation
+** solution: using more decimal places in the rounder
+
+* v1 3.827084 v2 6.362462000000001 v3 5.0 v4 5.0 v5 5.0 v6 5.0 v7 5.0 uncertainVoter1 3.827084 Voter: Voter{1} Pref: [<1 -> 5>, <1 -> 6>, <1 -> 7>, <2 -> 3>, <4 -> 1>, <4 -> 6>, <4 -> 7>, <5 -> 2>, <6 -> 5>, <7 -> 5>, <7 -> 6>]    
+** it happens that the smallest regret is associated to a voter whose preference profile is complete
+
+
