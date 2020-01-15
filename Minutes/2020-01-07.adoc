@@ -30,4 +30,6 @@
 * v1 3.827084 v2 6.362462000000001 v3 5.0 v4 5.0 v5 5.0 v6 5.0 v7 5.0 uncertainVoter1 3.827084 Voter: Voter{1} Pref: [<1 -> 5>, <1 -> 6>, <1 -> 7>, <2 -> 3>, <4 -> 1>, <4 -> 6>, <4 -> 7>, <5 -> 2>, <6 -> 5>, <7 -> 5>, <7 -> 6>]    
 ** it happens that the smallest regret is associated to a voter whose preference profile is complete
 
+1) Boutilier heuristic to improve pessimistic
+2) two phase random
 
