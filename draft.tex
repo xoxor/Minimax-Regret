@@ -107,7 +107,7 @@
 %Reduces verbosity about the underful vboxes.
 \vbadness=10000
 
-\title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rules and Preferences}
+\title{Robust Winner Determination and Simultaneous Elicitation of Scoring Rule and Agents Preferences}
 
 \begin{document}
 \maketitle
@@ -122,7 +122,7 @@ Focusing on positional scoring rules, we assume that the chair, while  not able 
 Moreover, the preferences of the agents are incrementally acquired by asking comparison queries.
 
 In this setting, we propose a method  for robust approximate winner determination with minimax regret. 
-Moreover, we provide an interactive elicitation protocol based on minimax regret
+We also provide an interactive elicitation protocol based on minimax regret
 and develop several query strategies that interleave questions to the chair and questions to the agents in order to attempt to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
 \end{abstract}
 
@@ -424,7 +424,7 @@ Define:
 \end{align}
 {\color{red}
 \begin{align}
-	\tau_{wg} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
+	\tau_{\text{wgt}} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
 	\tau_{i} & = \min_{\profile_i \in C(\pprofile)} s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(\bar{y}) -  s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(x^{*}) 
 \end{align}
 or we can use $\hat{\profile_i}=(\bar{\profile}_{-i},\profile_i)$ which is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
