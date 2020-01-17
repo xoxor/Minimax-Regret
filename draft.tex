@@ -274,7 +274,7 @@ and we can rewrite $\PMR$ as follows:
 & \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] \\
 & =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]. \\
 \end{align*}
-Note that in general the inner max depends on the weights chosen by the outer min.
+Note that in general the inner max depends on the weights chosen by the outer max.
 
 We are interested in computing $\PMR(x, y; \pprofile, W)$. This represents the “worst” difference of score, thus the difference of score between $y$ and $x$ under the worst case preferences compatible with $\pprofile$ and $W$, where the worst case is the one that maximizes this difference of score.
 We consider now a procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering minimax regret with a fixed weight vector.
@@ -347,8 +347,7 @@ Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variabl
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
 Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
 Observe that, whenever the $\PMR$ of an alternative $x$ (against some other alternative $y$) exceeds the best MR value found so far, we don't need to further evaluate $x$. 
-%, as it can't be optimal. 
-\commentBN{Indeed, the maximum regret of an alternative is the maximum value among all the PMRs, so we already know that $\MR(x) \geq \PMR(x,y)$, which is greater than the current MR. Thus, x will never be selected as a winner in the minimizing step.} 
+%\commentBN{Indeed, the maximum regret of an alternative is the maximum value among all the PMRs, so we already know that $\MR(x) \geq \PMR(x,y)$, which is greater than the current MR. Thus, x will never be selected as a winner in the minimizing step.} 
 This idea can be exploited further by adopting a minimax-search tree \citep{Braziunas2011}.
 
 \section{Interactive Elicitation} 
