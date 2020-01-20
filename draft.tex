@@ -145,7 +145,6 @@ When considering positional scoring rules, several authors \citep{Stein1994, Lla
 In this paper we consider that both the agents’ preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
 %changed from: We develop methods for computing the minimax-optimal alternative for scoring rules with partial agent preference information and partial information about the weights of the scoring rule.
 While previous works have considered either partial information about the agents preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
-
 In this work, we focus on positional scoring rules, that are a particularly common method used to aggregate rankings and determine a winner.
 We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
 %In particular, our query strategies focus simultaneously on reduction of relevant preference and voting rule uncertainty.
@@ -170,8 +169,7 @@ An alternative obtains a score that depends on the rank obtained in each of the 
 s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 = \sum_{r=1}^{m} \alpha^{x}_r w_r 
 \end{align}
-\commentBN{$s^{\profile,\w}(x)$}
-
+%\commentBN{$s^{\profile,\w}(x)$}
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives with highest scores.
 
@@ -184,7 +182,6 @@ An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent
 A completion of $\ppref_j$ is any linear order $\pref$ that extends $\ppref_j$ and we indicate with $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ the set of possible completions of $\ppref_i$.
 Then $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ is the set of complete profiles extending $p$. Note that $\profile^* \in C(\pprofile)$.
 
-\medskip
 We also assume that the weights of the scoring rule are only partially specified.
 Therefore, the vector $(w_1,\ldots,w_m)$  is not known but we are given a set of constraints restraining the possible values that weights can take.
 We consider a decreasing sequence of weights:
@@ -277,7 +274,8 @@ and we can rewrite $\PMR$ as follows:
 Note that in general the inner max depends on the weights chosen by the outer max.
 
 We are interested in computing $\PMR(x, y; \pprofile, W)$. This represents the “worst” difference of score, thus the difference of score between $y$ and $x$ under the worst case preferences compatible with $\pprofile$ and $W$, where the worst case is the one that maximizes this difference of score.
-We consider now a procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering minimax regret with a fixed weight vector.
+We consider now a procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering %minimax regret with 
+a fixed weight vector.
 As we will show, this procedure can also be used when the weight vector is not completely known.
 
 \begin{claim}
@@ -398,17 +396,16 @@ Pick any alternative $c$ that is not $a$ or $b$.
 %Let $c_t$ denote the number of times $c$ reaches rank $t$ or better in $P$. Note that $c_m = p+q$ and $c_t ≤ p + q, 1 ≤ t ≤ m$. Define $a_t$ similarly, for the alternative $a$. By construction, $a_r = q$, $a_{r+2} = q+p = a_m$. 
 Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ agents voting in profile $P$. By our construction, the  $2 \delta$ new agents of $P'$ give to $c$ the ranks $(3, m)$, or $(4, m-1)$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$.
 \end{proof}
-
-At this stage, we are content that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
+At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
 \paragraph{Elicitation strategies}
 We develop several elicitation strategies for simultaneous elicitation of agents' preferences and of the scoring rule.
 While it is of course possible to first fully elicit the agents’ preferences and afterwards elicit weights, we also want to propose interleaved approaches and compare them experimentally.
 Indeed, it can be beneficial to interleave questions asked to the chair and questions asked to agents, depending on which is estimated to be more informative.
 
-We define here the various strategies we tested experimentally. A strategy is a function (or a random process) that gives us, given our partial knowledge so far $(\pprofile, W)$, a question that should be asked according to that strategy. 
-
-Among them, the \strat{Random} strategy is used to capture how hard an elicitation problem is, by giving us a baseline: using it we can estimate how fast the regret diminishes when we ask questions randomly. 
+We define here the various strategies we tested experimentally; a strategy %is a function (or a random process) that 
+gives us, given the current partial knowledge $(\pprofile, W)$, a question that should be asked. % according to that strategy. 
+Among them, the \strat{Random} strategy is used to capture how hard an elicitation problem is, by giving us a baseline. %: using it we can estimate how fast the regret diminishes when we ask questions randomly. 
 Choosing the questions purely randomly however, that is, independently of what we know already, would be pointless, as we would most of the time ask questions we already know the answer of. Thus, this strategy choses questions in a minimally “clever” way, just by picking questions in a set of a priori relevant questions. 
 The \strat{Random} strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
 
@@ -421,12 +418,12 @@ Define:
 \tau_{1} & = \min_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w),  \label{eq:tau1} \\
 \tau_{2} & = \min_{\profile \in C(\pprofile)} s(\bar{y},\profile, \bar{\w}) -  s(x^{*}; \profile, \bar{\w}).
 \end{align}
-{\color{red}
-\begin{align}
-	\tau_{\text{wgt}} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
-	\tau_{i} & = \min_{\profile_i \in C(\pprofile)} s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(\bar{y}) -  s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(x^{*}) 
-\end{align}
-or we can use $\hat{\profile_i}=(\bar{\profile}_{-i},\profile_i)$ which is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
+%{\color{red}
+%\begin{align}
+%	\tau_{\text{wgt}} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
+%	\tau_{i} & = \min_{\profile_i \in C(\pprofile)} s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(\bar{y}) -  s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(x^{*}) 
+%\end{align}
+%or we can use $\hat{\profile_i}=(\bar{\profile}_{-i},\profile_i)$ which is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
 
 Intuitively the quantity $\MMR - \tau_{1} = \max_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w) - \min_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$ estimates the contribution to regret of our uncertainty about the weights $\w$, while $\MMR - \tau_{2} $ estimates the uncertainty about the profile.
 Therefore, whenever ${\color{red} \lambda *} \tau_{1} < \tau_{2}$ we ask a question to the chair, and compare component-wise $\bar{\w}$ and $\w^{\tau}$, the argmax of Eq. (\ref{eq:tau1}), to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
