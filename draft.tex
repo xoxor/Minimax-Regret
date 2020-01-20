@@ -86,6 +86,7 @@
 \DeclareMathOperator{\PMR}{PMR}
 \DeclareMathOperator{\MR}{MR}
 \DeclareMathOperator{\MMR}{MMR}
+\DeclareMathOperator{\leximax}{leximax}
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
 
@@ -409,7 +410,6 @@ Among them, the \strat{Random} strategy is used to capture how hard an elicitati
 Choosing the questions purely randomly however, that is, independently of what we know already, would be pointless, as we would most of the time ask questions we already know the answer of. Thus, this strategy choses questions in a minimally “clever” way, just by picking questions in a set of a priori relevant questions. 
 The \strat{Random} strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
 
-% In the code, called Current solution
 We also define the \strat{Extreme completions} strategy, which we consider as a more realistic baseline. 
 Consider the solution of the minimax regret game, 
  $(x^{*},\bar{y},\bar{\profile},\bar{\w})$, where $x^{*}$ is the minimax regret optimal alternative, and $\bar{y} = \arg \max_{y \in A} \PMR(x,y; \pprofile, W)$, $\bar{\profile}$ and $\bar{\w}$ are the adversarial choices, thus, the instantiations that, given the choice of $x^*$, maximize the regret. 
@@ -418,12 +418,6 @@ Define:
 \tau_{1} & = \min_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w),  \label{eq:tau1} \\
 \tau_{2} & = \min_{\profile \in C(\pprofile)} s(\bar{y},\profile, \bar{\w}) -  s(x^{*}; \profile, \bar{\w}).
 \end{align}
-%{\color{red}
-%\begin{align}
-%	\tau_{\text{wgt}} & = \min_{\w \in W} s^{\bar{\profile},\w}(\bar{y}) - s^{\bar{\profile},\w}(x^{*}) \\
-%	\tau_{i} & = \min_{\profile_i \in C(\pprofile)} s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(\bar{y}) -  s^{(\bar{\profile}_{-i},\profile_i),\bar{\w}}(x^{*}) 
-%\end{align}
-%or we can use $\hat{\profile_i}=(\bar{\profile}_{-i},\profile_i)$ which is defined as $\bar{\profile}$ except for $i$, $\forall i \in \{1, \dots, n\}$. }
 
 Intuitively the quantity $\MMR - \tau_{1} = \max_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w) - \min_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$ estimates the contribution to regret of our uncertainty about the weights $\w$, while $\MMR - \tau_{2} $ estimates the uncertainty about the profile.
 Therefore, whenever ${\color{red} \lambda *} \tau_{1} < \tau_{2}$ we ask a question to the chair, and compare component-wise $\bar{\w}$ and $\w^{\tau}$, the argmax of Eq. (\ref{eq:tau1}), to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
@@ -431,7 +425,11 @@ Instead, if $\tau_{1} > \tau_{2}$ we ask a question to one of the agents. We sel
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
 \[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
-This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes the measure. Note that other aggregators than $\max$ can be used as well. The \strat{Pessimistic} strategy considers as possible questions the ones defined by the \strat{Random} strategy (with the difference that a threshold is used: if for some rank $r$ the interval of possible values for $\lambda$ is not larger than $0.1$, the question is not considered). It uses a variant of the $\max$ as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value. We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
+This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes the measure. Note that other aggregators than $\max$ can be used as well. 
+%The \strat{Pessimistic} strategy considers as possible questions the ones defined by the \strat{Random} strategy (with the difference that a threshold is used: if for some rank $r$ the interval of possible values for $\lambda$ is not larger than $0.1$, the question is not considered). 
+It uses the $\leximax$ criterion %a variant of the $\max$ 
+as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value.
+ We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
 
 The \strat{Two phase} strategy asks a predefined, non adaptive sequence of $m-2$ questions in order to gather informations about the weights $\w$ of the scoring rule, using one question per rank (except the extreme ones) as defined in the other strategies, thus, each cutting the initial interval of possibilities into two equal parts. Then it only asks questions about the agents, using questions as defined in the \strat{Pessimistic} strategy.
 %TODO Then use minimax regret as in Lu and Boutilier. check what’s this.
