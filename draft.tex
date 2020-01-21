@@ -166,7 +166,7 @@ s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 \end{align}
 %\commentBN{$s^{\profile,\w}(x)$}
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
-The winners are the alternatives with highest scores.
+The winners are the alternatives gighest scores.
 
 In this work we assume fixed, but unknown \commentBN{I think we should phrase it better to be sure that the reader understands that this represents what's on people mind and it's unknown only to us}, a profile $\profile^*$ (and corresponding agents preferences $\pref_j^*$) and a weight vector $\w^*$, and we want to reason about partial preference information concerning those objects.
 At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
@@ -410,7 +410,7 @@ However, to avoid the absorption property of max, we adopt the $\leximax$ criter
  We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate \commentBN{estimation?} of an upper bound to the possible quality of a strategy.
 
 %TODO Limited; chair
-The \strat{LimitedPessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
+The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
 For each voter, a candidate question is chosen by considering the heuristic proposed by \citet{Lu2011}. 
 For the chair, we define
 \begin{align}
@@ -421,7 +421,7 @@ and compare component-wise $\bar{\w}$ and $\w^{\tau}$, to find the position $r$ 
 We then evaluate, for each candidate question, the minimax regret for each possible answer; finally we choose the best according to $\leximax$.
 %\commentOC{Reducing the complexity to $O(n^2 m^3). Is this right? If we can solve easily a size $(m, n) = (15, 15)$ with the Pwh strategy, which requires about $15^5 \approx 8 . 10^5$ operations, we should be able to solve easily a size $(m, n) = (6, 6)$ with the Pessimistic strategy, which requires about $6^7 \approx 3 . 10^5$ operations.}
 
-Finally, the \strat{Two phase} strategy is developed in order to investigate the effect of varying the proportion of questions asked to voters and to the committee. The \strat{Two phase - vc} first asks $p$ questions to the voters, then $k-p$ questions to the committee, using in both cases Pessimistic with heuristic \commentBN{limitedPessimistic?} to select the specific question. The \strat{Two phase - cv} strategy starts with $p$ questions to the committee, then asks to the voters. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
+Finally, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to voters and to the committee. The \strat{Two phases - vc} first asks $p$ questions to the voters, then $k-p$ questions to the committee, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the committee, then asks to the voters. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 
@@ -433,7 +433,7 @@ Finally, the \strat{Two phase} strategy is developed in order to investigate the
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{k} & {Rnd} & {sd} & {Pes.} & {sd} & {Pes.\ w.\ h.} & {sd} \\
+			{k} & {Rnd} & {sd} & {Pes.} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
 			0 & 5.0 & 0 & 5.0 & 0\\
 			5 & 4.93 & 0.16 & 4.15 & 0.32\\
@@ -453,7 +453,7 @@ Finally, the \strat{Two phase} strategy is developed in order to investigate the
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{k} & {Rnd} & {sd} & {Pes.\ w.\ h.} & {sd} \\
+			{k} & {Rnd} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
 			0 & 6.0 & 0 &  &  \\
 			5 &  &  &  &  \\
@@ -470,13 +470,13 @@ Finally, the \strat{Two phase} strategy is developed in order to investigate the
 \end{table}
 
 We test our strategies using randomly generated datasets. %TODO and real datasets. (sushi and iris).
-Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Pessimistic with heuristic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the voters (with respect to questions asked to the committee) on the reduction of the worst regret.
+Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the voters (with respect to questions asked to the committee) on the reduction of the worst regret.
 %We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
 We use the following protocol.
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the selected strategy, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained. Then we compute the resulting $\MMR$. We repeat this whole experiment 10 times, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation.
 
-The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, 2 ph. for Two phases, Pes. for Pessimistic and Pes.\ w.\ h. for Pessimistic with heuristic.
+The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, 2 ph. for Two phases, Pes. for Pessimistic and L.\ pes. for Limited pessimistic.
 
 \begin{table}
 	\begin{center}
