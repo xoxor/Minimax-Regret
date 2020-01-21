@@ -431,13 +431,13 @@ Finally, the \strat{Two phases} strategy is developed in order to investigate th
 			\toprule
 			{k} & {Rnd} & {sd} & {Pes.} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
-			0 & 5.0 & 0 & 5.0 & 0\\
-			5 & 4.958 & 0.100 & 3.741 & 0.024\\
-			10 & 4.709 & 0.436 & 3.283 & 0.423\\
-			15 & 4.432 & 0.467 & 2.716 &0.410 \\
-			20 & 3.666 & 0.522 & 1.549 & 0.430\\
-			25 & 3.068 & 0.679 & 1.424 &  0.512\\
-			30 & 2.631 & 0.466 & 0.394 & 0.359\\
+			0 & 5.0 & 0 & 5.0 & 0 & 5.0 & 0\\
+			5 & 4.958 & 0.100 & 3.741 & 0.024 & 4.350 & 0.604\\
+			10 & 4.709 & 0.436 & 3.283 & 0.423 & 3.323 & 0.374\\
+			15 & 4.432 & 0.467 & 2.716 &0.410 & 2.722 & 0.672\\
+			20 & 3.666 & 0.522 & 1.549 & 0.430 & 2.145 & 0.716\\
+			25 & 3.068 & 0.679 & 1.424 &  0.512 & 0.921 & 0.569\\
+			30 & 2.631 & 0.466 & 0.394 & 0.359 & 0.470 & 0.355\\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -451,13 +451,12 @@ Finally, the \strat{Two phases} strategy is developed in order to investigate th
 			\toprule
 			{k} & {Rnd} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
-			0 & 6.0 & 0 &  &  \\
-			5 &  &  &  &  \\
-			10 &  &  &  &  \\
-			15 &  &  &  &  \\
-			20 &  &  &  &  \\
-			25 &  &  &  &  \\
-			30 &  &  &  &  \\
+			0 & 20.0 & 0 & 20.0 & 0 \\
+			20 & 19.985 & 0.042 & 18.770 & 0.111 \\
+			40 & 19.903 & 0.080 & 17.659 & 0.290 \\
+			60 & 19.764 & 0.159 & 16.951 & 0.541 \\
+			80 & 19.403 & 0.221 & 15.736 & 0.367 \\
+			100 & 18.947 & 0.383 & 14.621 & 0.703 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -472,20 +471,20 @@ Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (ti
 We use the following protocol.
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the selected strategy, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained. Then we compute the resulting $\MMR$. We repeat this whole experiment 10 times, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation.
 
-The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, 2 ph. for Two phases, Pes. for Pessimistic and L.\ pes. for Limited pessimistic.
+The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, Pes. for Pessimistic, L.\ pes. for Limited pessimistic and 2 ph. for Two phases.
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{p} & {Rnd} & {sd} & {2 ph.} & {sd} \\
+			{p} & {2 ph.\ cv} & {sd} & {2 ph. vc} & {sd} \\
 			\midrule
-			0 &  &  &  &  \\
-			20 &  &  &  &  \\
-			40 &  &  &  &  \\
-			60 &  &  &  &  \\
-			80 &  &  &  &  \\
-			100 &  &  &  &  \\
+			0 & 100.0 & 0 &  &  \\
+			20 & 18.778 & 0.125 &  &  \\
+			40 & 17.648 & 0.473 &  &  \\
+			60 & 16.460 & 0.609 &  &  \\
+			80 & 15.470 & 0.597 &  &  \\
+			100 & 14.876 & 0.460 &  &  \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
