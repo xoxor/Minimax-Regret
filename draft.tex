@@ -135,7 +135,7 @@ When considering positional scoring rules, several authors \citep{Stein1994, Lla
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
 In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agents’ preferences and the social choice rule are partially specified. We develop methods for computing the minimax-optimal
-alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to a voter or to the committee, that quickly reduce minimax regret. While previous works have considered either partial information about the agents’
+alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to an agent or to the chair, that quickly reduce minimax regret. While previous works have considered either partial information about the agents’
 preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
 
 %In this paper we consider that both the agents’ preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
@@ -151,7 +151,7 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) \commentBN{I think we should stick with only few example useful for our purpose} and a set $\set{1, …, n}$ of agents (voters) \commentBN{I think we should use either agent or voter}. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
+We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) \commentBN{I think we should stick with only few example useful for our purpose} and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
 Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
@@ -257,7 +257,7 @@ In order to compute pairwise maximum regret, and therefore minimax regret, we de
 The setting is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}).
-Since scoring rules are additively decomposable, we can consider separately the contribution of each voter to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as
+Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as
 \[
 s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)},
 \]
@@ -411,7 +411,7 @@ However, to avoid the absorption property of max, we adopt the $\leximax$ criter
 
 %TODO Limited; chair
 The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
-For each voter, a candidate question is chosen by considering the heuristic proposed by \citet{Lu2011}. 
+For each agent, a candidate question is chosen by considering the heuristic proposed by \citet{Lu2011}. 
 For the chair, we define
 \begin{align}
 w^\tau & = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w), \label{eq:tau} 
@@ -421,7 +421,7 @@ and compare component-wise $\bar{\w}$ and $\w^{\tau}$, to find the position $r$ 
 We then evaluate, for each candidate question, the minimax regret for each possible answer; finally we choose the best according to $\leximax$.
 %\commentOC{Reducing the complexity to $O(n^2 m^3). Is this right? If we can solve easily a size $(m, n) = (15, 15)$ with the Pwh strategy, which requires about $15^5 \approx 8 . 10^5$ operations, we should be able to solve easily a size $(m, n) = (6, 6)$ with the Pessimistic strategy, which requires about $6^7 \approx 3 . 10^5$ operations.}
 
-Finally, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to voters and to the committee. The \strat{Two phases - vc} first asks $p$ questions to the voters, then $k-p$ questions to the committee, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the committee, then asks to the voters. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
+Finally, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 
@@ -470,7 +470,7 @@ Finally, the \strat{Two phases} strategy is developed in order to investigate th
 \end{table}
 
 We test our strategies using randomly generated datasets. %TODO and real datasets. (sushi and iris).
-Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the voters (with respect to questions asked to the committee) on the reduction of the worst regret.
+Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the agents (with respect to questions asked to the chair) on the reduction of the worst regret.
 %We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
 We use the following protocol.
@@ -549,7 +549,7 @@ Note that in this example, $w_3 ≤ \epsilon$, thus the difference of scores is 
 
 Consider $w_1 = 1, w_2 = 0.45, w_3 = 0.1, w_4 = 0$, $s(a) - s(b) = (w_2 - w_3) -3 (w_3 - w_4) = 0.35 - 0.30 = 0.05 < w_3$. 
 
-Problem: we can make the difference of scores very small, even with $n=2$ voters and $m=3$ alternatives and while satisfying convexity. Consider $w_1 = 1, w_2 = \frac{1-\epsilon}{n}, w_3 = 0$, $s(a) - s(b) = (w_1 - w_2) - (n-1) (w_2 - w_3) = w_1 - n w_2 = \epsilon$. Choose $\epsilon < \frac{1}{n+1}$ so that $w_2 > \epsilon$ and $n ≥ 2$ to satisfy convexity. For example, $\epsilon = 1/1000, n = 2, w_2 = 999/2000$.
+Problem: we can make the difference of scores very small, even with $n=2$ agents and $m=3$ alternatives and while satisfying convexity. Consider $w_1 = 1, w_2 = \frac{1-\epsilon}{n}, w_3 = 0$, $s(a) - s(b) = (w_1 - w_2) - (n-1) (w_2 - w_3) = w_1 - n w_2 = \epsilon$. Choose $\epsilon < \frac{1}{n+1}$ so that $w_2 > \epsilon$ and $n ≥ 2$ to satisfy convexity. For example, $\epsilon = 1/1000, n = 2, w_2 = 999/2000$.
 \end{document}
 
 \section{Minimax Computation under Convex Assumption} 
@@ -728,9 +728,9 @@ Then we can transform it in:
 w_{2} - w_{3} &\geq 2 \cdot w_{3} - 2 \cdot w_{4} \notag \\
 w_{2} + 2 \cdot w_{4} &\geq 3 \cdot w_{3} 
 \end{align}
-and ask the committee if they would prefer as a winner an alternative ranked first one time and third three times rather than an alternative ranked second four times.
+and ask the chair if they would prefer as a winner an alternative ranked first one time and third three times rather than an alternative ranked second four times.
 
-Another way to query the committee, a more concrete one, is to present them a profile representing the situation described by the query and then deduce its answer from the selected winner. Obviously we have to be sure to choose a profile where only the alternatives we are interested in could be pick as winners. Therefore, we need a systematic way to construct a profile that reflects the situation outlined by the query for two alternatives and the others are not better than them.
+Another way to query the chair, a more concrete one, is to present them a profile representing the situation described by the query and then deduce its answer from the selected winner. Obviously we have to be sure to choose a profile where only the alternatives we are interested in could be pick as winners. Therefore, we need a systematic way to construct a profile that reflects the situation outlined by the query for two alternatives and the others are not better than them.
 
 
 Assume we have a profile of $3$ agents ranking $4$ alternatives. We can represent it by columns where each of them represents the preference ordering of one agent.
@@ -787,7 +787,7 @@ d
 \end{array}
 \]
 
-Recalling the query (\ref{eqn:juryquery}) we are considering as an example, it is easy to see that in the current profile alternatives $a$ and $b$ represent the situation as described by the query. Therefore, if after proposing this profile to the committee the winning alternative turns out to be $a$ then we know that $w_{2} - w_{3} > 2(w_{3} - w_{4})$; if, instead, the winner is $b$ we know that $w_{2} - w_{3} < 2(w_{3} - w_{4})$ and if both alternatives are picked as winners then $w_{2} - w_{3} = 2(w_{3} - w_{4})$. 
+Recalling the query (\ref{eqn:juryquery}) we are considering as an example, it is easy to see that in the current profile alternatives $a$ and $b$ represent the situation as described by the query. Therefore, if after proposing this profile to the chair the winning alternative turns out to be $a$ then we know that $w_{2} - w_{3} > 2(w_{3} - w_{4})$; if, instead, the winner is $b$ we know that $w_{2} - w_{3} < 2(w_{3} - w_{4})$ and if both alternatives are picked as winners then $w_{2} - w_{3} = 2(w_{3} - w_{4})$. 
 
 Nevertheless, in this example it is clear that $c$ will always be preferred to other alternatives (see Claim \ref{clm:wsequence} in Section \ref{sec:weights}). To see it we can express for each alternative the number of agents placing it at a given rank or at a higher one.
 
@@ -830,7 +830,7 @@ d
 	For our assumptions we know the sequence of weights is monotonic non-increasing and convex. Moreover, for the Claim \ref{clm:wsequence} in Section \ref{sec:weights}, we know that $w_1 > w_2$. Therefore, even in the worst case where $r_k(i) = r_k(j) \ forall \ k=2, \dots,m$ the sum of weights for alternative $i$ cannot be lower than the one for $j$. It is worth noting that we cannot say anything when $r_1(i) = r_1(j)$. Indeed, as said in Corollary \ref{cor:weq}, all the weights for other position but the first one can be equal, thus the number of agents ranking the alternatives at a certain position does not matter anymore.	
 \end{proof}
 
-So the strategy for querying the committee is to use two alternatives $i$ and $j$ to represent the query and complete the profile such that the other alternatives are all dominated by them. An algorithmic approach is to start from the initial profile and then add as many agents as needed that rank $i$ and $j$ as their top choices and the other alternatives afterwards. As an example let consider again the query \ref*{eqn:juryquery}. We want the committee to choose between $a$ or $b$:
+So the strategy for querying the chair is to use two alternatives $i$ and $j$ to represent the query and complete the profile such that the other alternatives are all dominated by them. An algorithmic approach is to start from the initial profile and then add as many agents as needed that rank $i$ and $j$ as their top choices and the other alternatives afterwards. As an example let consider again the query \ref*{eqn:juryquery}. We want the committee to choose between $a$ or $b$:
 
 \[
 \begin{array}{ccccc}
