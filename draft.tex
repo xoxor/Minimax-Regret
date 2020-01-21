@@ -115,16 +115,9 @@
 \begin{abstract}
 Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
 In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
-
 Recently, the assumption of full preference information has been questioned by a number of researchers and several methods for eliciting preferences have been proposed.
-In this paper we go one step further and we assume that both the voting rule and the agents preferences are partially specified.
-
-Focusing on positional scoring rules, we assume that the chair, while  not able to give a precise definition of the rule, is capable of answering simple questions  requiring to pick a winner from a specific  example profile.
-Moreover, the preferences of the agents are incrementally acquired by asking comparison queries.
-
-In this setting, we propose a method  for robust approximate winner determination with minimax regret. 
-We also provide an interactive elicitation protocol based on minimax regret
-and develop several query strategies that interleave questions to the chair and questions to the agents in order to attempt to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
+In this paper we go one step further and we assume that both the voting rule and the agents preferences are partially specified. Focusing on positional scoring rules, we assume that the chair, while  not able to give a precise definition of the rule, is capable of answering simple questions  requiring to pick a winner from a specific  example profile.
+Moreover, the preferences of the agents are incrementally acquired by asking comparison queries. In this setting, we propose a method  for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that interleave questions to the chair and questions to the agents in order to attempt to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
 \end{abstract}
 
 \section{Introduction}
@@ -134,20 +127,21 @@ It is therefore natural to look at methods from social choice and see how they c
 
 The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents are expressed beforehand. These represent two strong hypothesis.
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost), especially for decisions with large sets of alternatives.
-This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. 
-
-Also the first hypothesis should be relaxed considering that in several situations it may not be easy to precisely define the voting rule.
-Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
+This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+%Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
 The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
 %it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
-In this paper we consider that both the agents’ preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
+In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agents’ preferences and the social choice rule are partially specified. We develop methods for computing the minimax-optimal
+alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to a voter or to the committee, that quickly reduce minimax regret. While previous works have considered either partial information about the agents’
+preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
+
+%In this paper we consider that both the agents’ preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
 %changed from: We develop methods for computing the minimax-optimal alternative for scoring rules with partial agent preference information and partial information about the weights of the scoring rule.
-While previous works have considered either partial information about the agents preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
-In this work, we focus on positional scoring rules, that are a particularly common method used to aggregate rankings and determine a winner.
-We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
+
+%We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
 %In particular, our query strategies focus simultaneously on reduction of relevant preference and voting rule uncertainty.
 
 The paper is organized as follows.
@@ -157,7 +151,7 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (connected, transitive, asymmetric relations) over the alternatives.
+We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) \commentBN{I think we should stick with only few example useful for our purpose} and a set $\set{1, …, n}$ of agents (voters) \commentBN{I think we should use either agent or voter}. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
 Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
@@ -174,8 +168,8 @@ s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives with highest scores.
 
-In this work we assume fixed, but unknown, a profile $\profile^*$ (and corresponding agents preferences $\pref_j^*$) and a weight vector $\w^*$, and we want to reason about partial preference information concerning those objects.
-Our knowledge at a given time of the preference of agent $j$ is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
+In this work we assume fixed, but unknown \commentBN{I think we should phrase it better to be sure that the reader understands that this represents what's on people mind and it's unknown only to us}, a profile $\profile^*$ (and corresponding agents preferences $\pref_j^*$) and a weight vector $\w^*$, and we want to reason about partial preference information concerning those objects.
+At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
 In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
 An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent to a partial preference.
@@ -225,7 +219,7 @@ the preferences of the agents that are only partially known, while the social ch
 
 In this work, we consider the simultaneous presence of uncertainty in agents' preferences and in weights.
 Using {\em maximum regret} to quantify the worst-case error, the alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
-Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given current knowledge.
+Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given the current knowledge.
 
 The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
 We formalize the notion of minimax regret in multiple steps.
@@ -381,6 +375,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 \begin{claim}
 	Given a rational $\lambda = p/q$ and a rank $r$ between $1$ and $m - 2$, the profile named $P'$ in the ensuing description is such that, for any weight vector $\w \in \W$, $a \in f(P')$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P')$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
 \end{claim}
+%TODO If space is needed, check if we can cut something here; 1.5 columns seems too much for that
 \begin{proof}
 Observe that the question may be defined equivalently as $q \cdot w_{r} + p \cdot w_{r+2} ≥ (p + q) \cdot w_{r+1}$, where $p, q$ are natural numbers. 
 As a first attempt to make this question concrete, let us define a profile $P$ containing $p+q$ agents. 
@@ -406,13 +401,13 @@ Indeed, it can be beneficial to split efforts asking questions to the chair and 
 We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question should be asked next.
 
 The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
-This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
+This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely \commentBN{and picks with equal probability two alternatives that are incomparable in her partial preference profile.}; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
 \[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes the measure. Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value.
- We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
+ We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate \commentBN{estimation?} of an upper bound to the possible quality of a strategy.
 
 %TODO Limited; chair
 The \strat{LimitedPessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
@@ -426,7 +421,7 @@ and compare component-wise $\bar{\w}$ and $\w^{\tau}$, to find the position $r$ 
 We then evaluate, for each candidate question, the minimax regret for each possible answer; finally we choose the best according to $\leximax$.
 %\commentOC{Reducing the complexity to $O(n^2 m^3). Is this right? If we can solve easily a size $(m, n) = (15, 15)$ with the Pwh strategy, which requires about $15^5 \approx 8 . 10^5$ operations, we should be able to solve easily a size $(m, n) = (6, 6)$ with the Pessimistic strategy, which requires about $6^7 \approx 3 . 10^5$ operations.}
 
-Finally, the \strat{Two phase} strategy is developed in order to investigate the effect of varying the proportion of questions asked to voters and to the committee. The \strat{Two phase - vc} first asks $p$ questions to the voters, then $k-p$ questions to the committee, using in both cases Pessimistic with heuristic to select the specific question. The \strat{Two phase - cv} strategy starts with $p$ questions to the committee, then asks to the voters. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
+Finally, the \strat{Two phase} strategy is developed in order to investigate the effect of varying the proportion of questions asked to voters and to the committee. The \strat{Two phase - vc} first asks $p$ questions to the voters, then $k-p$ questions to the committee, using in both cases Pessimistic with heuristic \commentBN{limitedPessimistic?} to select the specific question. The \strat{Two phase - cv} strategy starts with $p$ questions to the committee, then asks to the voters. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 
