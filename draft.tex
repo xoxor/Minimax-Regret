@@ -126,7 +126,7 @@ In many situations, such as in group recommender systems, the goal is to find a 
 It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
 
 The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents are expressed beforehand. These represent two strong hypothesis.
-Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost), especially for decisions with large sets of alternatives.
+Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
 The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
@@ -151,7 +151,7 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) \commentBN{I think we should stick with only few example useful for our purpose} and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
+We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
 Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
@@ -164,11 +164,10 @@ An alternative obtains a score that depends on the rank obtained in each of the 
 s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 = \sum_{r=1}^{m} \alpha^{x}_r w_r 
 \end{align}
-%\commentBN{$s^{\profile,\w}(x)$}
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives gighest scores.
 
-In this work we assume fixed, but unknown \commentBN{I think we should phrase it better to be sure that the reader understands that this represents what's on people mind and it's unknown only to us}, a profile $\profile^*$ (and corresponding agents preferences $\pref_j^*$) and a weight vector $\w^*$, and we want to reason about partial preference information concerning those objects.
+In this work we assume fixed, but unknown to us, a profile $\profile^*$, representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$, representing the preferences of the chair, and we want to reason about partial preference information concerning those objects.
 At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
 In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
@@ -340,7 +339,6 @@ Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variabl
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
 Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
 Observe that, whenever the $\PMR$ of an alternative $x$ (against some other alternative $y$) exceeds the best MR value found so far, we don't need to further evaluate $x$. 
-%\commentBN{Indeed, the maximum regret of an alternative is the maximum value among all the PMRs, so we already know that $\MR(x) \geq \PMR(x,y)$, which is greater than the current MR. Thus, x will never be selected as a winner in the minimizing step.} 
 This idea can be exploited further by adopting a minimax-search tree \citep{Braziunas2011}.
 
 \section{Interactive Elicitation} 
@@ -401,15 +399,14 @@ Indeed, it can be beneficial to split efforts asking questions to the chair and 
 We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question should be asked next.
 
 The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
-This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely \commentBN{and picks with equal probability two alternatives that are incomparable in her partial preference profile.}; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
+This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
 \[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes the measure. Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value.
- We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate \commentBN{estimation?} of an upper bound to the possible quality of a strategy.
+ We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
 
-%TODO Limited; chair
 The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
 For each agent, a candidate question is chosen by considering the heuristic proposed by \citet{Lu2011}. 
 For the chair, we define
@@ -417,9 +414,8 @@ For the chair, we define
 w^\tau & = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w), \label{eq:tau} 
 \end{align}
 and compare component-wise $\bar{\w}$ and $\w^{\tau}$, to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
-\commentOC{I am not so happy about this. If we have time, we should consider one question per rank and drop the tau business.}
+%\commentOC{I am not so happy about this. If we have time, we should consider one question per rank and drop the tau business.}
 We then evaluate, for each candidate question, the minimax regret for each possible answer; finally we choose the best according to $\leximax$.
-%\commentOC{Reducing the complexity to $O(n^2 m^3). Is this right? If we can solve easily a size $(m, n) = (15, 15)$ with the Pwh strategy, which requires about $15^5 \approx 8 . 10^5$ operations, we should be able to solve easily a size $(m, n) = (6, 6)$ with the Pessimistic strategy, which requires about $6^7 \approx 3 . 10^5$ operations.}
 
 Finally, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
 
@@ -436,12 +432,12 @@ Finally, the \strat{Two phases} strategy is developed in order to investigate th
 			{k} & {Rnd} & {sd} & {Pes.} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
 			0 & 5.0 & 0 & 5.0 & 0\\
-			5 & 4.93 & 0.16 & 4.15 & 0.32\\
-			10 & 4.84 & 0.22 & 3.44 & 0.46\\
-			15 & 4.28 & 0.58 & 2.66 &0.54 \\
-			20 & 3.85 & 0.33 & 1.62 & 0.82\\
-			25 & 3.50 & 0.78 & 0.84 &  0.57\\
-			30 & 2.96 & 0.80 & 0.53 & 0.70\\
+			5 & 4.958 & 0.100 & 3.741 & 0.024\\
+			10 & 4.709 & 0.436 & 3.283 & 0.423\\
+			15 & 4.432 & 0.467 & 2.716 &0.410 \\
+			20 & 3.666 & 0.522 & 1.549 & 0.430\\
+			25 & 3.068 & 0.679 & 1.424 &  0.512\\
+			30 & 2.631 & 0.466 & 0.394 & 0.359\\
 			\bottomrule
 		\end{tabular}
 	\end{center}
