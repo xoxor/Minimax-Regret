@@ -272,7 +272,7 @@ We consider now a procedure for completing a partial profile that was first prop
 a fixed weight vector.
 As we will show, this procedure can also be used when the weight vector is not completely known.
 
-\begin{claim}
+\begin{claim} \label{claim:completion}
 There exists a completion $\hat{\profile} \in C(\pprofile)$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
 \begin{align} 
 \label{eq:complx}
@@ -407,17 +407,20 @@ This badness measure gives a way of picking questions among a set of possible qu
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value.
  We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
 
-The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but only considering a small set of candidate questions.
-For each agent, a candidate question is chosen by considering the heuristic proposed by \citet{Lu2011}. 
-For the chair, we define
+The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but limiting it only to a small set of candidate questions. It considers the current solution of the $\MMR$, i.e. the minimax optimal alternative $x^{*}$ and the adversarial choices $\bar{y}, \bar{w}, \bar{v}$.
+Then, it selects n questions (one per agent) by adopting the heuristic proposed by \citet{Lu2011}. If we consider an agent $j$, there are only three possible relations between the alternatives $x^{*}$ and $\bar{y}$ in her partial preference: either $x^{*} \ppref_j \bar{y}$, or $\bar{y} \ppref_j x^{*}$, or they are incomparable. As shown in the proof of Claim \ref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as he can above $x^{*}$ in the first case, and between $\bar{y}$ and $x^{*}$ in the second. An intuitive way to reduce the pairwise max regret is, therefore, to directly ask questions involving such alternatives, hoping for an answer that would prevent the adversary to play his best game. If $x^{*}$ and $\bar{y}$ are incomparable, then we just ask the voter $j$ to compare them.
+To conclude the set of candidate questions, the \strat{Limited pessimistic} strategy also selects a question to the committee. We define
 \begin{align}
 w^\tau & = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w), \label{eq:tau} 
 \end{align}
-and compare component-wise $\bar{\w}$ and $\w^{\tau}$, to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
+as the weight vector that minimize the $\PMR$ in the worst case.
+We compare component-wise $\bar{\w}$ and $\w^{\tau}$ to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
 %\commentOC{I am not so happy about this. If we have time, we should consider one question per rank and drop the tau business.}
-We then evaluate, for each candidate question, the minimax regret for each possible answer; finally we choose the best according to $\leximax$.
+We then evaluate, for each candidate question, the minimax regret for the two possible answers; finally we choose the best according to $\leximax$.
 
-Finally, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
+Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
+It first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases \strat{Limited pessimistic} strategy to select the specific question. The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead, in an already studied case of uncertainty of the voting rule with a known complete profile. 
+
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 
@@ -477,14 +480,14 @@ The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are 
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{p} & {2 ph.\ cv} & {sd} & {2 ph. vc} & {sd} \\
+			{p} & {Two ph.} & {sd} \\%& {2 ph. vc} & {sd} \\
 			\midrule
-			0 & 100.0 & 0 &  &  \\
-			20 & 18.778 & 0.125 &  &  \\
-			40 & 17.648 & 0.473 &  &  \\
-			60 & 16.460 & 0.609 &  &  \\
-			80 & 15.470 & 0.597 &  &  \\
-			100 & 14.876 & 0.460 &  &  \\
+			0 & 100.0 & 0 \\%&  &  \\
+			20 & 18.778 & 0.125 \\%&  &  \\
+			40 & 17.648 & 0.473 \\%&  &  \\
+			60 & 16.460 & 0.609 \\%&  &  \\
+			80 & 15.470 & 0.597 \\%&  &  \\
+			100 & 14.876 & 0.460 \\%&  &  \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
