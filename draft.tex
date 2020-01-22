@@ -367,24 +367,28 @@ for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of 
 As we assume the weights constitute the utility components of the chair, it might be reasonable to assume
 %as we do here, 
 that the chair is able to answer such abstract questions in our setting. However, it is important to make sure that a question can also, in principle, be asked in a more concrete way, in terms of winners of example profiles. This permits to test how the chair understands the question and to relate the preference of the chair to her choice behavior in the economic sense. 
-%Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
+Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
 \begin{claim}
 	Given a rational $\lambda = p/q$ and a rank $r$ between $1$ and $m - 2$, the profile named $P'$ in the ensuing description is such that, for any weight vector $\w \in \W$, $a \in f(P')$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P')$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
 \end{claim}
-%TODO If space is needed, check if we can cut something here; 1.5 columns seems too much for that
 \begin{proof}
 Observe that the question may be defined equivalently as $q \cdot w_{r} + p \cdot w_{r+2} ≥ (p + q) \cdot w_{r+1}$, where $p, q$ are natural numbers. 
-As a first attempt to make this question concrete, we could define a profile $P$ such that there is an alternative $a$ that receives $q$ times the rank $r$ and $p$ times the rank $r+2$, and an alternative $b$ that receives $p+q$ times the rank $r+1$. 
+As a first attempt to make this question concrete, we could define a profile $P$
+%TODO
+containing $p+q$ agents
+in such a way that an alternative $a$ receives $q$ times the rank $r$ and $p$ times the rank $r+2$, and an alternative $b$ receives $p+q$ times the rank $r+1$. 
 Observing that the score of $a$ in that profile is exactly the left hand side of the question, and that the score of $b$ is the right hand side, intuition suggests that observing whether the chair picks $a$ or $b$ as winner will let us determine which side is greater; equality occurring when the chair declares $a$ and $b$ as tied for the victory. 
-However, we still need to complete the profile, in a way that none of these other alternatives is better than $a$ or $b$: if the chair picks a different alternative $c$, it tells us that the chair prefers $c$ to both $a$ and $b$, 
+However, we still need to complete the profile, thus, come up with other $m-2$ alternatives defined so that each agent in the resulting profile has placed exactly one alternative in each rank.
+And we must ensure, doing this, that these other alternatives are not better than $a$ or $b$: if the chair picks a different alternative $c$, it tells us that the chair prefers $c$ to both $a$ and $b$, 
 but it generally does not  answer the question we are interested in. 
 Taking $p = q = 1$, $m=4$, $r=2$, we see that such a completion may be impossible. Luckily, this problem can be worked around, at the price of increasing the number of agents. 
 
 First build a temporary profile $P$ of $p+q$ agents with $a$ and $b$ ranked as just described. Complete it with $m-2$ alternatives ranked in arbitrary orders so that the resulting profile has complete strict rankings for each of the $p+q$ agent. Now we will make the other alternatives as bad as desired by adding agents to $P$ that appreciate $a$ and $b$ more than the other alternatives, thus building a profile $P'$ in which, whatever the weights, $c$ may not have a better score than $a$. Observe that if we add $\delta$ agents (with $\delta$ a natural number) that put $a$ at first rank and $b$ at second rank, and $\delta$ agents that put $b$ at first rank and $a$ at second rank, we do not change the difference of the scores of $a$ and $b$, and thus, observing the chair choosing $a$ or $b$ still answers the question.
 % Choose arbitrarily a matching of the remaining $m-2$ alternatives to the ranks $3$ to $m$, say, $c \mapsto 3$, $d \mapsto 4$, and so on. The first $\delta$ supplementary agents, who rank $a$ first and $b$ second, rank the other alternatives as the just defined mapping suggests. The other $\delta$ supplementary agents, who rank $b$ first and $a$ second, use the opposite ranking for the remaining alternatives, say, $c \mapsto m$, $d \mapsto m-1$, and so on. 
 
-We can prove that, for $\delta = p+q$, and whatever the weight vector $\w \in \W$, no alternative, except possibly $b$, has a better score than $a$. (In fact, as the construction will exhibit, they are all worst than both $a$ and $b$, but the weaker fact is enough for our claim.)
+We can prove that, for $\delta = p+q$, and whatever the weight vector $\w \in \W$, no alternative, except possibly $b$, has a better score than $a$. 
+%(In fact, as the construction will exhibit, they are all worst than both $a$ and $b$, but the weaker fact is enough for our claim.)
 Pick any alternative $c$ that is not $a$ or $b$. 
 %Let $c_t$ denote the number of times $c$ reaches rank $t$ or better in $P$. Note that $c_m = p+q$ and $c_t ≤ p + q, 1 ≤ t ≤ m$. Define $a_t$ similarly, for the alternative $a$. By construction, $a_r = q$, $a_{r+2} = q+p = a_m$. 
 Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ agents voting in profile $P$. By our construction, the  $2 \delta$ new agents of $P'$ give to $c$ the ranks $(3, m)$, or $(4, m-1)$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$.
@@ -404,22 +408,20 @@ The \strat{Pessimistic} strategy selects the question that leads to minimal regr
 \[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes the measure. Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest of this value.
- We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it gives us an estimate of an upper bound to the possible quality of a strategy.
+ We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it estimates an upper bound to the possible quality of a strategy.
 
-The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but limiting it only to a small set of candidate questions. It considers the current solution of the $\MMR$, i.e. the minimax optimal alternative $x^{*}$ and the adversarial choices $\bar{y}, \bar{w}, \bar{v}$.
-Then, it selects n questions (one per agent) by adopting the heuristic proposed by \citet{Lu2011}. If we consider an agent $j$, there are only three possible relations between the alternatives $x^{*}$ and $\bar{y}$ in her partial preference: either $x^{*} \ppref_j \bar{y}$, or $\bar{y} \ppref_j x^{*}$, or they are incomparable. As shown in the proof of Claim \ref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as he can above $x^{*}$ in the first case, and between $\bar{y}$ and $x^{*}$ in the second. An intuitive way to reduce the pairwise max regret is, therefore, to directly ask questions involving such alternatives, hoping for an answer that would prevent the adversary to play his best game. If $x^{*}$ and $\bar{y}$ are incomparable, then we just ask the voter $j$ to compare them.
-To conclude the set of candidate questions, the \strat{Limited pessimistic} strategy also selects a question to the committee. We define
-\begin{align}
-w^\tau & = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w), \label{eq:tau} 
-\end{align}
-as the weight vector that minimize the $\PMR$ in the worst case.
+The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but limiting it to a small set of $n+1$ candidate questions: one per agent, and one to the chair. It uses the heuristic proposed by \citet{Lu2011} to define the candidate questions to the agents. Considering agent $j$, either $x^{*} \ppref_j \bar{y}$, or $\bar{y} \ppref_j x^{*}$, or $x^{*}$ and $\bar{y}$ are incomparable in $\ppref_j$. As shown in the proof of Claim \ref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as he can above $x^{*}$ in the first case, and between $\bar{y}$ and $x^{*}$ in the second. An intuitive way to reduce the pairwise max regret is, therefore, to directly ask questions involving such alternatives, hoping for an answer that would prevent the adversary to play his best game. If $x^{*}$ and $\bar{y}$ are incomparable, then we just ask the voter $j$ to compare them.
+To define the candidate question to the chair, consider
+%\begin{align}
+$w^\tau = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$,
+%\end{align}
+the weight vector that minimize the $\PMR$ in the worst case.
 We compare component-wise $\bar{\w}$ and $\w^{\tau}$ to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
-%\commentOC{I am not so happy about this. If we have time, we should consider one question per rank and drop the tau business.}
+%TODO
 We then evaluate, for each candidate question, the minimax regret for the two possible answers; finally we choose the best according to $\leximax$.
 
 Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
-It first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases \strat{Limited pessimistic} strategy to select the specific question. The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead, in an already studied case of uncertainty of the voting rule with a known complete profile. 
-
+It first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases the \strat{Limited pessimistic} strategy to select the specific question. The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
 
@@ -475,8 +477,9 @@ Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy,
 
 The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, Pes. for Pessimistic, L.\ pes. for Limited pessimistic and 2 ph. for Two phases. 
 
-We can see in Table \ref{fig:55} that while the \strat{Pessimistic} strategy is able to reduce the regret almost completely after $30$ questions, it takes $1000$ times more time than the \strat{Random} strategy ($16s$ of the Pessimistic compared to $0.014s$ of the Random). Moreover, the results of the \strat{Limited pessimistic}, that takes almost $80\%$ less of the time of the \strat{Pessimistic} ($2.6s$), are essentially the same.
-In Table \ref{fig:1020}, we can see the drop of regret using a bigger instance.
+We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Limited pessimistic performs essentially as well as Pessimistic. This is good news, since for that size, Pessimistic takes $16s$ compared to $2.6s$ for finding a question.
+%However, it takes $1000$ times more time than the \strat{Random} strategy ($16s$ of the Pessimistic compared to $0.014s$ of the Random). Moreover, the results of the \strat{Limited pessimistic}, that takes almost $80\%$ less of the time of the \strat{Pessimistic} ($2.6s$), are essentially the same.
+%In Table \ref{fig:1020}, we can see the drop of regret using a bigger instance.
 %Finally in Table \ref{fig:p}
 
 \begin{table}
@@ -506,7 +509,7 @@ Our experimental results %on randomly generated and real world data sets
 suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agents' preferences.
 
-%As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments and more, at https://github.com/…
+As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments, and more (url not displayed for anonymity reasons).
 
 We mention some directions for future works.
 Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
@@ -516,7 +519,6 @@ Finally, an important direction of extension aims at studying how to elicit pref
 \bibliography{biblio}
 %\bibliographystyle{named}
 \bibliographystyle{abbrvnat} 
-%\end{document}
 \end{document}
 
 \appendix
