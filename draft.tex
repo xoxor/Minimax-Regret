@@ -374,10 +374,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 \end{claim}
 \begin{proof}
 Observe that the question may be defined equivalently as $q \cdot w_{r} + p \cdot w_{r+2} ≥ (p + q) \cdot w_{r+1}$, where $p, q$ are natural numbers. 
-As a first attempt to make this question concrete, we could define a profile $P$
-%TODO
-containing $p+q$ agents
-in such a way that an alternative $a$ receives $q$ times the rank $r$ and $p$ times the rank $r+2$, and an alternative $b$ receives $p+q$ times the rank $r+1$. 
+As a first attempt to make this question concrete, we could define a profile $P$ containing $p+q$ agents in such a way that an alternative $a$ receives $q$ times the rank $r$ and $p$ times the rank $r+2$, and an alternative $b$ receives $p+q$ times the rank $r+1$. 
 Observing that the score of $a$ in that profile is exactly the left hand side of the question, and that the score of $b$ is the right hand side, intuition suggests that observing whether the chair picks $a$ or $b$ as winner will let us determine which side is greater; equality occurring when the chair declares $a$ and $b$ as tied for the victory. 
 However, we still need to complete the profile, thus, come up with other $m-2$ alternatives defined so that each agent in the resulting profile has placed exactly one alternative in each rank.
 And we must ensure, doing this, that these other alternatives are not better than $a$ or $b$: if the chair picks a different alternative $c$, it tells us that the chair prefers $c$ to both $a$ and $b$, 
@@ -418,12 +415,11 @@ $\w^\tau = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\pr
 %\end{align}
 the weight vector that minimize the $\PMR$ in the worst case.
 We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
-%TODO
 We then evaluate, for each candidate question, the minimax regret for the two possible answers; finally we choose the best according to $\leximax$.
 
 Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
 It first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases the same method as \strat{Limited pessimistic} to select the specific question. 
-Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known the voting rule. 
+Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known voting rule. 
 %And vice-versa when asking first questions to the agents, the second part of the elicitation is similar to the setting of incompletely specified scoring rule. 
 %The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
 
@@ -472,7 +468,7 @@ Note that when asking first only questions to the chair, if the obtained knowled
 	\label{fig:1020}
 \end{table}
 
-We test our strategies using randomly generated datasets. %TODO and real datasets. (sushi and iris).
+We test our strategies using randomly generated datasets. 
 Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the agents (with respect to questions asked to the chair) on the reduction of the worst regret.
 %We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
