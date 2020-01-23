@@ -226,9 +226,9 @@ First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as
 \[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
 The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
 is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
-\begin{align}
+\begin{align*}
 \PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
-\end{align}
+\end{align*}
 
 Max regret $\MR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
 \begin{align}
@@ -256,14 +256,11 @@ In order to compute pairwise maximum regret, and therefore minimax regret, we de
 The setting is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see Equation \ref{eq:srule}).
-Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as
-\[
-s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)},
-\]
+Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$,
 and we can rewrite $\PMR$ as follows:
 \begin{align*}
 & \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] \\
-& =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]. \\
+& =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}].
 \end{align*}
 Note that in general the inner max depends on the weights chosen by the outer max.
 
@@ -306,11 +303,11 @@ or equivalently, if and only if
 (a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
 \end{equation} 
 Indeed, \eqref{eq:betteryinter} $⇒$ \eqref{eq:bettery}, and \eqref{eq:bettery} $⇒$ \eqref{eq:betteryinter} because $(x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ⇒ a ≠ y$ (as when $a = y$, $(x \pprefeq_j y)$ and $¬(x \pprefeq_j a)$ are opposite claims). Suffices now to rewrite \cref{eq:bettery} to let the two disjuncts designate disjoint sets:
-\begin{equation}
+\begin{equation*}
 \label{eq:betteryfinal}
 a \pref_j y ⇔ 
 (a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
-\end{equation} 
+\end{equation*} 
 \end{proof}
 
 The claim can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
@@ -328,10 +325,9 @@ The last claim shows that PMR is linear in the weights.
 Recall that the preferences of the chair are encoded with linear constraints $\Co_{W}$.
 The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions. 
 \begin{align*}
-\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}\\
-\text{ s.t. } & \text{\cref{eq:monotone}} \text{ and } \text{\cref{eq:convexity}} \text{ and } \Co_W
+\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}
 \end{align*}
-Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
+$\text{ s.t. } \text{\cref{eq:monotone}} \text{ and } \text{\cref{eq:convexity}} \text{ and } \Co_W$. Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
 (we leave $w_{1}$ and $w_{m}$ in the LP just for clarity of presentation).
 
 The max regret $\MR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
@@ -404,8 +400,7 @@ We define here the various strategies we tested experimentally. A strategy tells
 The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
 This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $2 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; picks an alternative $a$ randomly with equal probability among those involved in some incomparabilities in $\ppref_j$; and picks an alternative $b$ with equal probability among those incomparable with $a$ in $\ppref_j$.
 
-The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
-\[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
+The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is: $\max_{i=1,2} \MMR(\pprofile_i,W_i) $.
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes ths measure of minimax regret {\em a posteriori}. 
 %Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest value.
@@ -492,16 +487,19 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 			\toprule
 			{p} & {Two ph.} & {sd} \\%& {2 ph. vc} & {sd} \\
 			\midrule
-			0 & 100.0 & 0 \\%&  &  \\
-			20 & 18.778 & 0.125 \\%&  &  \\
-			40 & 17.648 & 0.473 \\%&  &  \\
-			60 & 16.460 & 0.609 \\%&  &  \\
-			80 & 15.470 & 0.597 \\%&  &  \\
-			100 & 14.876 & 0.460 \\%&  &  \\
+			0 & 20.0 & 0 \\%&  &  \\
+			25 & 18.851 & 0.125 \\%&  &  \\
+			50 & 17.296 & 0.473 \\%&  &  \\
+			75 & 15.774 & 0.609 \\%&  &  \\
+			100 & 14.707 & 0.597 \\%&  &  \\
+			125 & 12.999 & 0.460 \\%&  &  \\
+			150 & 11.975 & 0.473 \\%&  &  \\
+			175 & 9.999 & 0.609 \\%&  &  \\
+			200 & 11.499 & 0.597 \\%&  &  \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Regret in problems of size $(10, 20)$ after $100$ questions.}
+	\caption{Regret in problems of size $(10, 20)$ after $200$ questions.}
 	\label{fig:p}
 \end{table}
 
@@ -510,15 +508,11 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 In this paper we have considered a social choice setting with partial information about the agent's preferences and a partially specified voting rule.
 In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world data sets 
-suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly.
+suggest that regret-based elicitation is effective and allow to quickly reduce worst regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
+%Finally, an important direction of extension aims at studying how to elicit preferences while restraining to concrete and easy questions.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agents' preferences.
-
 As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments, and more (url not displayed for anonymity reasons).
 
-We mention some directions for future works.
-Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
-Second, elicitation could be extended to voting rules beyond scoring rules.
-Finally, an important direction of extension aims at studying how to elicit preferences while restraining to concrete and easy questions.
 % Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 \bibliography{biblio}
 %\bibliographystyle{named}
