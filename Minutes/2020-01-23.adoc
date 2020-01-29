@@ -1,0 +1,12 @@
+== TODO code
+* clean the strategies, remove the not used ones
+* switch to the new Regret everywhere
+* switch to the new Runner 
+** add losses, create files
+
+== What next?
+* Consider the completion in the avg case not in the worst one
+** difficult to compute
+* would a min_avg work instead?
+* lower bound on the improval of regret
+** use this to show that it's not feasible 
