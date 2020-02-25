@@ -1,0 +1,14 @@
+
+== What next?
+* correct p in the paper
+* continue the experiments, see how much and when it will decrease 
+* two phase with a fixed p in the table 2
+* table 2 k=500 incrementally computed (phase 2: increase the number of runs)
+* plot the way the questions are asked
+** bar chart for each question how many questions are asked
+** curve with points where committee is questioned
+
+?
+* lower bound on the improval of regret
+** use this to show that it's not feasible 
+

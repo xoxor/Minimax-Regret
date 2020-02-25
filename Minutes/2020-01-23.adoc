@@ -8,5 +8,8 @@
 * Consider the completion in the avg case not in the worst one
 ** difficult to compute
 * would a min_avg work instead?
+
 * lower bound on the improval of regret
 ** use this to show that it's not feasible 
+
+
