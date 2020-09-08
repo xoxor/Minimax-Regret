@@ -1,0 +1,435 @@
+\section{Old table}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+			\toprule
+			{k} & {Rnd} & {sd} & {T. ph.} & {sd} & {Pes.} & {sd} & {Pes.} & {sd} \\
+			\midrule
+			0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0 & 4.0 & 0\\
+			5 & 3.40 & 0.40 & 3.86 & 0.13 & 2.63 & 0.28 & 2.63 & 0.28\\
+			10 & 2.59 & 0.75 & 2.63 & 0.39 & 1.29 & 0.50\\
+			15 & 2.37 & 0.33 & 0.92 & 0.76 & 0.43 & 0.50\\
+			20 & 1.23 & 1.04 & 0.15 & 0.23 & 0.09 & 0.27\\
+			25 & 0.90 & 0.80 & 0 & 0 & 0.25 & 0.75 \\
+			30 & 0.34 & 0.57 & 0.02 & 0 & 0 & 0\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Minimax regret in problems of size $(4, 4)$ after $k$ questions.}
+	\label{fig:44}
+\end{table}
+See \cref{fig:44}.
+
+\section{Bounding differences of weights}
+We want to check whether we can round PMR values to (for example) $10^{-4}$. Thus, we want to bound the difference of scores (unless it is zero).
+
+Consider $s(a) = w_2 + w_4$, $s(b) = w_3 + w_3$, $w_1 = 1, w_2 = w_3 + \epsilon, w_4 = 0$, with $w_3$ and $\epsilon$ two small positive numbers. Then convexity is satisfied and $s(a) - s(b) = \epsilon$.
+
+Note that in this example, $w_3 ≤ \epsilon$, thus the difference of scores is indeed at least the smallest weight!
+
+Consider $w_1 = 1, w_2 = 0.45, w_3 = 0.1, w_4 = 0$, $s(a) - s(b) = (w_2 - w_3) -3 (w_3 - w_4) = 0.35 - 0.30 = 0.05 < w_3$. 
+
+Problem: we can make the difference of scores very small, even with $n=2$ agents and $m=3$ alternatives and while satisfying convexity. Consider $w_1 = 1, w_2 = \frac{1-\epsilon}{n}, w_3 = 0$, $s(a) - s(b) = (w_1 - w_2) - (n-1) (w_2 - w_3) = w_1 - n w_2 = \epsilon$. Choose $\epsilon < \frac{1}{n+1}$ so that $w_2 > \epsilon$ and $n ≥ 2$ to satisfy convexity. For example, $\epsilon = 1/1000, n = 2, w_2 = 999/2000$.
+
+
+\section{Minimax Computation under Convex Assumption} 
+Refer to \citep{Lu2011}
+The goal is to choose as a winner the alternative $x^*$ whose worst case loss is minimal under all possible realizations of the full profile and all possible choices of weights. 
+Assume hereinafter the selected weights sequence $\w \in W$ to be convex. 
+In order to compute the minimal max regret $\MMR(\pprofile)$ under partial profile $\pprofile$ we need to compute the pairwise max regret between all pairs of alternatives $(x,y)$, where $x$ is a proposed winner and $y$ is the ``adversary'' alternative. Indeed, the construction of $\PMR(x,y,\pprofile,\w)$ can be viewed as an adversary's attempt to maximize the regret of choosing $x$ instead of $y$. 
+For doing this, he can choose a completion $\profile_i \in C(\pprofile_i)$ of the partial profile and a (feasible) scoring vector $\w$ that maximize the contribution of the agent $i$ to $\PMR(x,y,\pprofile,\w)$. Let us now analyze how it could be done depending on the relation between alternatives $x$ and $y$ in $\pprofile_i$. 
+\begin{itemize}
+	\item $x \succ_i^\pprofile y$
+	\newline If we know $x$ is preferred to $y$ and we choose $x$ as a winner, $\pprofile_i$ contribution to $\PMR(x,y,\pprofile,\w)$ must be negative. In this situation, our adversary can only try to minimize this advantage by minimizing the positional gap between the two alternatives. To achieve that, he can arbitrary place all the alternatives preferred to $x$ above $x$, together with all the ones with unknown relation to $x$. Moreover, he can place all the alternatives less preferred to $x$ and with unknown relation to $y$ below $y$. We can summarize it for each $q \in A$ as follows:
+	\begin{align}
+	q \succ_i^\pprofile x \vee q \ ?_i^\pprofile \ x \ & \Rightarrow \ \uparrow_x \\
+	x \succ_i^\pprofile q \wedge ( q \ ?_i^\pprofile \ y \vee y \succ_i^\pprofile q) \ & \Rightarrow \ \downarrow_y \\
+	x \succ_i^\pprofile q \succ_i^\pprofile y \ & \Rightarrow \ \text{in between} \\
+	\end{align}
+	It is worth noting that when the relation between $q$ and $x$ is not known in the partial profile, the adversary takes advantage by placing $q$ above $x$ only under the assumption of convex weight sequences.
+	\item $y \succ_i^\pprofile x$
+	\newline If $y$ is preferred to $x$ the construction proceeds similarly to the previous case, but now the adversary takes advantage by maximizing the gap between $x$ and $y$ placing as much alternatives as he can between the two. We can summarize the procedure for each $q \in A$ as follows:
+	\begin{align}
+	q \succ_i^\pprofile y \ & \Rightarrow \ \uparrow_y \\
+	x \succ_i^\pprofile q \ & \Rightarrow \ \downarrow_x \\
+	(y \succ_i^\pprofile q \vee y \ ?_i^\pprofile \ q) \wedge (q \succ_i^\pprofile x \vee q \ ?_i^\pprofile \ x) \ & \Rightarrow \ \text{in between} \\
+	\end{align}
+	\item $x \ ?_i^\pprofile \ y$
+	\newline If the partial profile $\pprofile_i$ does not specify the relation between $x$ and $y$, the advantage is maximized by ordering $y$ over $x$ and maximizing the gap between them following the procedure for the case $y \succ_i^\pprofile x$.
+\end{itemize}
+
+\section{Dropping the Convex Assumption}
+\subsection{Profile completion}
+What if the sequence of weights is not convex? When $y \succ_i^\pprofile x$ or $x \ ?_i^\pprofile \ y$ weights do not influence the arbitrary placement of alternatives. Please remind we are working under the assumption that weights constitute a monotonic non-increasing sequence. Thus, there is no way for the adversary to take advantage from the weights distribution in order to increase the gap between $y$ and $x$ besides placing as much alternatives as he can between the two. The only case in which weights can influence the positional gap between $x$ and $y$ is when $x \succ_i^\pprofile y$ and $q \ ?_i^\pprofile \ x$. For convex sequences we place such alternatives $q$ above $x$, but it is not obvious that this is the best option for other sequences. For example, suppose $x$ and $y$ are ranked respectively in first and second position in the partial profile and we wonder where to place an alternative $q$ with unknown relation to $x$ (and thus to $y$). Suppose also that in the weight sequence the distance between the first and second positions is much lower than the one between the second and the third ones. In this case, placing $q$ above $x$ does not minimize the gap between $x$ and $y$ but we want, instead, to place $q$ below $y$.
+\newline The constraints expressed by the chair may result in a set of feasible vectors such that none of them forms a convex sequence. In this case we need to analyze the particular sequence of weights in order to decide how to maximize the adversary advantage. Before going into details, let us define $A$ as the set of alternatives (if any) preferred to $x$, $B$ as the set of alternatives preferred to $y$ but not to $x$, and $U$ the set of those with unknown relation to both $x$ and $y$. The idea is to determine the positions that minimize $x$'s advantage over $y$ and then place some of the alternatives in $U$ above $x$ and some below $y$ in order to get that desired ranking. Since we cannot change the order of the alternatives in the set $B$ we know that $x$ and $y$ are separated exactly by $|B|$ positions (the adversary would not take any advantage by adding alternatives between them). So, starting from the position of $x$ in the partial completion of $\pprofile_i$ computed so far ($\hat{\profile}_i$), we find the two positions separated by $|B|$ alternatives whose weights difference is the lowest. Note that we can only add $|U|$ alternatives so we can check only until the position $\hat{\profile}_i(x)+|U|$. Algorithm \ref{alg:splittingU} shows the procedure described.
+
+It is easy to see that we check at most $|U|$ positions. In the worst case the size of $U$ is equal to $m-2$, thus the procedure can be computed in $O(m)$ time. This cost does not affect the minimax regret computation time complexity that remains $O(nm^3)$.
+
+\begin{algorithm}[h] 
+	\caption{Placing alternatives in $U$ without Convex Assumption}
+	\label{alg:splittingU} 
+	\begin{algorithmic}
+		\Require $x$, $y$, $\hat{\profile}_i$, $\w$, $U$, $B$
+		\Ensure $\profile_i \in C(\pprofile)$
+		\Statex
+		\State $ j \gets 0$;
+		\State $ i \gets \hat{\profile}_i(x)$;
+		\State $ \mathit{posmin} \gets i$;
+		\State $ \mathit{min} \gets \w(i) - \w(i+1+|B|)$;
+		\While {$( j \leq |U| )$}
+		\If{ $(\w(i+j)-\w(i+1+|B|+j) < \mathit{min})$ }
+		\State $ \mathit{min} \gets \w(i+j) - \w(i+1+|B|+j)$;
+		\State $ \mathit{posmin} \gets i+j$;
+		\EndIf
+		\EndWhile
+		
+		\State $U_{\mathit{abovex}} \gets (i-\mathit{posmin}) \text{ alternatives} \in U $;
+		\State $U_{\mathit{belowy}} \gets U \setminus U_{\mathit{above}}$;
+		\Statex
+		\State $\profile_i \gets place(\pprofile_i,U_{\mathit{abovex}},U_{\mathit{belowy}})$;
+		\Statex \Return $\profile_i$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Minimax regret without the convex assumption}
+Without the convex assumption, we cannot use $\hat{v}$ for the agents in $U^{-}$, but only for agents in $U^{+}$ and $U^{?}$.
+%Let $\hat{v}_i$ be the linear order extending $\succ^{p}_i$ according to the above procedure.
+Then PMR can be written as follows:
+\begin{align}
+ &\PMR(x,y; \pprofile, W) =\\ 
+ &\max_{\w \in W} \Big \{ \sum_{j \in U^-} [\max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} \!-\! w_{v_j(x)}]] 
+  \!+\!	 \sum_{j \in A^+ \cup  U^?} [w_{\hat{v}_j(y)} \!-\! w_{\hat{v}_j(x)}] \Big \} 
+ \end{align}
+%Note that the second addendum inside the max do not depend on the choice of $\w$.
+Consider the two addenda inside the ``max''. 
+The first addendum is concerned with positioning of alternatives $x$ and $y$ for agents in $U^{-}$ for which we know that $x$ is preferred to $y$.
+The second addendum is concerned with agents in $U^{+}$ and $U^{?}$.
+We rewrite the second addendum as:
+\begin{align}
+\sum_{j \in U^+ \cup  U^?} [w_{\hat{v}_j(y)} \!-\! w_{\hat{v}_j(x)}] 
+= \sum_{i = 1}^{m} (\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i}
+\end{align}
+where $\hat{\alpha}_{i}^{x}$ is the number of times that $x$ is ranked  in position $i$  considering the profile $\hat{v}$ of agents in $U^+ \cup  U^?$.
+%We compute pairwise maximum regret by considering binary variables $\{ B_{i} \}_{i=1,\ldots,m}$ to represent optimization choices related to where to position the alternatives.
+
+We now address the agents in $A^{-}$
+For a given $j$, let $\beta$ be the number of alternatives that are incomparable with $x$ and $y$:
+\[ \beta_{j} = \mid \{ c : c \prefinc_{j} y \wedge c \prefinc_{j} x \} \mid \]
+$x$ can be ranked between $t_{1}(j)=\mid \{ c \in A : c \ppref_{j} y \wedge x \nppref_{j} c \} \mid $ and position $t_{2}(j)=t_{1}(j)+\beta_{j}$.
+The completion for agent $j$ is such that the positions of $x$ and $y$ differ of exactly $\gamma_{j} =
+\mid \{ c \in A : x \ppref c \ppref y \} \mid$ positions.
+
+
+We now show how to optimize $\PMR$.
+In addition to variables $\{ w_{j} \}_{j=1,\ldots,m}$ (one for each position) we need to employ several additional decision variables.
+We introduce two sets of binary variables $B^{+}_{i,j}$ and $B^{-}_{i,j}$  for each position $i$ and for each agent $j$.
+Variable $B_{i,j}^{+}$ encodes the fact that the alternative $y$ is placed in position $i$ in the ranking of agent $j$; while  $B_{i,j}^{-}$ encodes the same thing for alternative $x$.
+%We also have numerical variables to represent the weights of the scoring rule.
+Since each alternative needs to be placed exactly in one place for each agent, we adopt the constraints
+$\sum_{i=t_{1}(j)}^{t_{2}(j)} B_{i,j}^{+} = 1$.
+Since we know that $x$ and $y$ are ranked $\gamma_{j}$ positions apart, we set the constraint:
+$B_{i+\gamma_{j},j}^{-} \geq B_{i,j}^{+}$,  for $i = \{ t_{1}(j), \ldots, t_{2}(j)\}$.
+
+% and $\sum_{i=1}^{m} B_{i,j}^{-} = 1$.
+%Since the objective is to maximize pairwise regret...
+
+The score of alternative $y$ can be written as $\sum_{i = 1}^{m} \hat{\alpha}_{i}^{y}  w_{i} + \sum_{i=1}^{n} \sum_{j=1}^{m} w_{j} B_{i,j}^{+}$.
+The objective function is now:
+ \[ \max \sum_{i = 1}^{m} (\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i} +  \sum_{i=1}^{n} \sum_{j=1}^{m} (B_{i,j}^{+} - B_{i,j}^{-})  w_i \]
+
+We use integer programming enconding tricks in order to linearize the problem.
+We introduce yet another set of variables  $V_{i,j}^{+} $  and $V_{i,j}^{-}$ % the multiplicative terms by new variables.
+and we enforce that $V_{i,j}^{+} = B^{+}_{i,j} w_i$ by setting constraints $V_{i,j}^{+} \leq B^{+}_{i,j}$ and $V_{i,j}^{+}  \leq w_i$.
+We have similar constraints for enforcing $V_{i,j}^{-} = B^{-}_{i,j} w_i$.
+
+We therefore obtain the following mixed integer linear program:
+
+\begin{align}
+\max & \sum_{i=1}^m  [(\hat{\alpha}_{i}^{y} - \hat{\alpha}_{i}^{x}) w_{i}] +
+  \sum_{j \in A^{-}} \sum_{i=t_{1}}^{t_{2}}  [V_{i,j}^{+} - V_{i,j}^{-}]
+\end{align}
+\begin{align}
+\text{ s.t. } &  \text{Equation } (\ref{eq:monotone}) & \\
+&  \mathcal{C}(\w) &  \\
+& \sum_{i=t_{1}}^{t_{2}} B_{i,j}^{+} = 1 & \forall j \in A^{-} \\
+& B_{i+\gamma_{j},j}^{-} \geq B_{i,j}^{+} & \forall i \in \{ t_{1}, \ldots t_{2}\}, \forall j \in A^{-} \\
+& V_{i,j}^{+} \leq B_{i,j}^{+}  & \forall i \in \{ t_{1}, \ldots t_{2}\}, j \in A^{-} \\
+& V_{i,j}^{+} \leq w_i & \forall i \in \{ t_{1}, \ldots t_{2}\}, j \in A^{-} \\
+& V_{i,j}^{-} \geq w_{i} + B_{i,j}^{-} - 1 & \forall i \in \{ t_{1}, \ldots t_{2}\}, j \in A^{-}\\
+& V_{i,j}^{-} \geq 0 & \forall i \in \{ t_{1}, \ldots t_{2}\}, j \in A^{-}
+\end{align} 
+%We write $w \in W$ as a shourtcut to represent the constraints that the weights are chosen to be in the feasible set.
+There are (at most) $nm$ binary variables and $m(n+1)$ numerical variables.
+The optimization program can be solved by any suitable MILP solver, although it is not suitable to large problem instances.
+
+% DONT KNOW IF WE HAVE TO FORMALIZE THIS AS A CLAIM
+%\begin{claim}
+%The $\PMR$ is computed using the above optimization problem.
+%\end{claim}
+
+\section{Considerations on weights}
+\label{sec:weights}
+Let us consider a monotonic non-increasing sequence of weights: $w_{1} \geq w_{2} \geq \ldots \geq w_{m}$. Without loss of generality, we can assume $w_1=1$ and $w_m=0$.
+
+\begin{claim}
+	\label{clm:wsequence}
+	If the weight sequence is convex then $w_{1} > w_{2}$.
+	\[\forall i \in \{1,\ldots,m\} \;\; w_i - w_{i+1} \geq w_{i+1}-w_{i+2} \Rightarrow w_{1} > w_{2} \geq \ldots \geq w_{m}\] 
+\end{claim}
+\begin{proof}
+	By contradiction let assume $w_{1} = w_{2}$ then 
+	\begin{align}
+	w_{1} - w_{2} \geq w_{2} - w_{3} &\geq \dots \geq w_{m-1} - w_{m} \\
+	1 - 1 \geq 1 - w_{3} &\geq \dots \geq w_{m-1} - 0 \\
+	0 \geq 1 - w_{3} &\geq \dots \geq w_{m-1}
+	\end{align}
+	At this point either $0\leq w_{3}<1$ or $w_{3}=1$. In the first case 
+	\[0 \ngeq 1 - w_{3}\]
+	This breaks the convexity assumption so it is impossible.
+	In the second case, by definition there is a $w_{i} \neq 1$ where $2 < i \leq m$. So it would be 
+	\[0 \ngeq 1 - w_{i}\]
+	for some $i$. Again, the convexity is not satisfied.
+\end{proof}
+
+\begin{corollary}
+	\label{cor:weq}
+	If the weight sequence is convex and $w_{i} = w_{i+1}$ for some $i$, then $w_{j}=0 \ \forall \
+	j=i, \dots m$.
+\end{corollary}
+
+
+\section{Querying the chair}
+Suppose our query strategy suggests us to ask the chair the following query:
+\[ w_{2} - w_{3} \geq 2(w_{3} - w_{4}) \]
+Then we can transform it in:
+\begin{align}
+\label{eqn:juryquery}
+w_{2} - w_{3} &\geq 2 \cdot w_{3} - 2 \cdot w_{4} \notag \\
+w_{2} + 2 \cdot w_{4} &\geq 3 \cdot w_{3} 
+\end{align}
+and ask the chair if they would prefer as a winner an alternative ranked first one time and third three times rather than an alternative ranked second four times.
+
+Another way to query the chair, a more concrete one, is to present them a profile representing the situation described by the query and then deduce its answer from the selected winner. Obviously we have to be sure to choose a profile where only the alternatives we are interested in could be pick as winners. Therefore, we need a systematic way to construct a profile that reflects the situation outlined by the query for two alternatives and the others are not better than them.
+
+
+Assume we have a profile of $3$ agents ranking $4$ alternatives. We can represent it by columns where each of them represents the preference ordering of one agent.
+\[
+\begin{array}{ccc}
+v_1
+& v_2
+& v_3 \\
+\midrule 
+c
+& d
+& c \\
+a
+& c
+& d \\
+b
+& b
+& b \\
+d
+& a
+& a \\
+\end{array}
+\]
+
+Assuming anonymity, we can also write the profile expressing for each alternative $i \in A$ the number of agents placing it at a given rank.
+
+\[
+\begin{array}{ccccc}
+& 1^\circ
+& 2^\circ
+& 3^\circ
+& 4^\circ \\
+\cmidrule{2-5}
+a 
+& 0
+& 1
+& 0
+& 2 \\
+b
+& 0
+& 0
+& 3
+& 0 \\
+c
+& 2
+& 1
+& 0
+& 0 \\
+d
+& 0
+& 1
+& 1
+& 1 \\
+\end{array}
+\]
+
+Recalling the query (\ref{eqn:juryquery}) we are considering as an example, it is easy to see that in the current profile alternatives $a$ and $b$ represent the situation as described by the query. Therefore, if after proposing this profile to the chair the winning alternative turns out to be $a$ then we know that $w_{2} - w_{3} > 2(w_{3} - w_{4})$; if, instead, the winner is $b$ we know that $w_{2} - w_{3} < 2(w_{3} - w_{4})$ and if both alternatives are picked as winners then $w_{2} - w_{3} = 2(w_{3} - w_{4})$. 
+
+Nevertheless, in this example it is clear that $c$ will always be preferred to other alternatives (see Claim \ref{clm:wsequence} in Section \ref{sec:weights}). To see it we can express for each alternative the number of agents placing it at a given rank or at a higher one.
+
+\[
+\begin{array}{ccccc}
+& \geq 1^\circ
+& \geq 2^\circ
+& \geq 3^\circ
+& \geq 4^\circ \\
+\cmidrule{2-5}
+a 
+& 0
+& 1
+& 1
+& 3 \\
+b
+& 0
+& 0
+& 3
+& 3 \\
+c
+& 2
+& 3
+& 3
+& 3 \\
+d
+& 0
+& 1
+& 2
+& 3 \\
+\end{array}
+\]
+
+
+\begin{claim}
+	Consider a set $A$ of $m$ alternatives and let $r_k(i)$ be the number of times the alternative $i$ obtains a rank $k$ or a higher one. Consider two alternatives $ i,j \in A$, if $\forall \ k=2, \dots,m \ r_k(i)\geq r_k(j)$ and $r_1(i) > r_1(j)$ then $i$ is always preferred to $j$ for any choice of weights.
+\end{claim}
+
+\begin{proof}
+	For our assumptions we know the sequence of weights is monotonic non-increasing and convex. Moreover, for the Claim \ref{clm:wsequence} in Section \ref{sec:weights}, we know that $w_1 > w_2$. Therefore, even in the worst case where $r_k(i) = r_k(j) \ forall \ k=2, \dots,m$ the sum of weights for alternative $i$ cannot be lower than the one for $j$. It is worth noting that we cannot say anything when $r_1(i) = r_1(j)$. Indeed, as said in Corollary \ref{cor:weq}, all the weights for other position but the first one can be equal, thus the number of agents ranking the alternatives at a certain position does not matter anymore.	
+\end{proof}
+
+So the strategy for querying the chair is to use two alternatives $i$ and $j$ to represent the query and complete the profile such that the other alternatives are all dominated by them. An algorithmic approach is to start from the initial profile and then add as many agents as needed that rank $i$ and $j$ as their top choices and the other alternatives afterwards. As an example let consider again the query \ref*{eqn:juryquery}. We want the committee to choose between $a$ or $b$:
+
+\[
+\begin{array}{ccccc}
+& 1^\circ
+& 2^\circ
+& 3^\circ
+& 4^\circ \\
+\cmidrule{2-5}
+a 
+& 0
+& 1
+& 0
+& 2 \\
+b
+& 0
+& 0
+& 3
+& 0 \\
+\end{array}
+\]
+
+We add agents in order to increase the number of times $a$ and $b$ are ranked at first position. Please note we must maintain these scheme, so every add of a position to the ranking of $a$ must correspond to the same in the ranking of $b$.
+
+\[
+\begin{array}{cccccc}
+v_1
+& v_2
+& v_3 
+& v_4
+& v_5
+& v_6 \\
+\midrule 
+a
+& b
+& c 
+& d
+& a
+& b \\
+c
+& a
+& d
+& c
+& b
+& a \\
+b
+& d
+& b
+& b
+& d
+& c \\
+d
+& c
+& a
+& a
+& c
+& d \\
+\end{array}
+\]
+
+\[
+\begin{array}{ccccc}
+& 1^\circ
+& 2^\circ
+& 3^\circ
+& 4^\circ \\
+\cmidrule{2-5}
+a 
+& 2
+& 2
+& 0
+& 2 \\
+b
+& 2
+& 1
+& 3
+& 0 \\
+c
+& 1
+& 2
+& 1
+& 2 \\
+d
+& 1
+& 1
+& 2
+& 2 \\
+\end{array}
+\]
+
+\[
+\begin{array}{ccccc}
+& \geq 1^\circ
+& \geq 2^\circ
+& \geq 3^\circ
+& \geq 4^\circ \\
+\cmidrule{2-5}
+a 
+& 2
+& 4
+& 4
+& 6 \\
+b
+& 2
+& 3
+& 6
+& 6 \\
+c
+& 1
+& 3
+& 4
+& 6 \\
+d
+& 1
+& 2
+& 4
+& 6 \\
+\end{array}
+\]
+\textbf{Remarks:}
+\begin{itemize}
+	\item We are considering $\lambda \in \mathbb{N} \setminus \{0\}$ but we could be interested in a real number. \textit{Solution}: we can multiply both sides.
+\end{itemize}
