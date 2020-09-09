@@ -1,0 +1,39 @@
+Do discuss: remarks from IJCAI reviewers 
+
+== Title
+* Please check the genitive: agents''''''''' preferences (Do we put the genitive in the title?)
+
+== Abstract
+* The abstract would be stronger if it motivated the simultaneous elicitation task.
+
+== Introduction
+* The introductory material would appeal to more readers if it clarified the task by defining the roles of agents, the chair, the concept of regret in social choice scenarios, and the meaning of minimax-optimal alternatives. 
+
+== Related Works 
+* The paper does not have a separate related work section, and while it cites appropriate work, the alternatives to this approach could use more discussion.
+* The discussion of the empirical evaluation is very brief. There is a substantial body of literature that was not cited, related to preference elicitation and incomplete preferences in a voting situation. Although they do not seem to be on exactly the same topic, it is important that the paper is positioned correctly with respect to the existing literature.
+* The authors ignores (or unaware of) almost entire literature on both preference elicitation and voting with incomplete preferences. Few examples (not at all exhaustive) of vast related work with whom the authors must compare and position their work are as follows:
+
+** Palash Dey, Neeldhara Misra, and Y. Narahari. Complexity of manipulation with partial information in voting. Theor. Comput. Sci., 726:78–99,2018.
+** Ulle Endriss, Svetlana Obraztsova,Maria Polukarov, and Jeffrey S. Rosenschein. Strategic voting with incomplete information. In Proc. the Twenty-Fifth International Joint Conference on Artificial Intelligence, IJCAI 2016, New York, NY, USA, 9-15 July 2016, pages 236–242, 2016.
+** Omer Lev, Reshef Meir, Svetlana Obraztsova, and Maria Polukarov. Heuristic voting as ordinal dominance strategies. In Proc. The Thirty-Third AAAI Conference on Artificial Intelligence, AAAI 2019,
+The Thirty-First Innovative Applications of Artificial Intelligence Conference, IAAI 2019, The Ninth AAAI Symposium on Educational Advances in Artificial Intelligence, EAAI 2019, Honolulu, Hawaii, USA, January 27 - February 1, 2019, pages 2077–2084, 2019.
+** Reshef Meir. Plurality voting under uncertainty. In Proc. Twenty-Ninth AAAI Conference on Artificial Intelligence, January 25-30, 2015, Austin, Texas,USA, pages 2103–2109, 2015.
+** Annemieke Reijngoud and Ulle Endriss. Voter response to iterated poll information. In International Conference on Autonomous Agents and Multiagent Systems, AAMAS 2012, Valencia, Spain, June
+4-8, 2012 (3 Volumes), pages 635–644, 2012.
+** Palash Dey: Manipulative elicitation - A new attack on elections with incomplete preferences. Theor. Comput. Sci. 731: 36-49 (2018)
+** Vincent Conitzer: Eliciting Single-Peaked Preferences Using Comparison Queries. J. Artif. Intell. Res. 35: 161-191 (2009)
+** Palash Dey, Neeldhara Misra: Elicitation for Preferences Single Peaked on Trees. IJCAI 2016: 215-221
+** Palash Dey, Neeldhara Misra: Preference Elicitation for Single Crossing Domain. IJCAI 2016: 222-228
+
+== Section 4 (Interactive Elicitation)
+* Some additional meta sentences summarizing the basic ideas would be highly appreciated.
+
+== Empirical Evaluation / Conclusions
+* The paper presents, but does not discuss the experimental results, and it would be much stronger if the authors provided that analysis/interpretation. As it stands, it is unclear what the work is teaching us.
+
+== References
+* Check the reference for double doi/link, superfluous ISSN.
+
+== Various 
+* Please be more precise with using the word 'robust'. Robustness is always robustness against something.
