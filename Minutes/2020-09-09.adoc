@@ -1,16 +1,22 @@
-Do discuss: remarks from IJCAI reviewers 
+Decision about the remarks from IJCAI reviewers 
 
 == Title
 * Please check the genitive: agents''''''''' preferences (Do we put the genitive in the title?)
+** Check whether Ulle or Boutilier use the genitive or not.
+*** They don't. Use "agent preferences"! [Beatrice]
+*** Agents preferences is wrong! Angents' preferences is ok.
 
 == Abstract
 * The abstract would be stronger if it motivated the simultaneous elicitation task.
+** Motivate it better. [Beatrice]
 
 == Introduction
 * The introductory material would appeal to more readers if it clarified the task by defining the roles of agents, the chair, the concept of regret in social choice scenarios, and the meaning of minimax-optimal alternatives. 
 
 == Related Works 
 * The paper does not have a separate related work section, and while it cites appropriate work, the alternatives to this approach could use more discussion.
+** Divide the related works from the Introduction and expand this new section. [Paolo]
+
 * The discussion of the empirical evaluation is very brief. There is a substantial body of literature that was not cited, related to preference elicitation and incomplete preferences in a voting situation. Although they do not seem to be on exactly the same topic, it is important that the paper is positioned correctly with respect to the existing literature.
 * The authors ignores (or unaware of) almost entire literature on both preference elicitation and voting with incomplete preferences. Few examples (not at all exhaustive) of vast related work with whom the authors must compare and position their work are as follows:
 
@@ -28,6 +34,8 @@ The Thirty-First Innovative Applications of Artificial Intelligence Conference, 
 
 == Section 4 (Interactive Elicitation)
 * Some additional meta sentences summarizing the basic ideas would be highly appreciated.
+** Maybe show a small example saying what the different strategies would pick.
+** Think more about it. [Olivier]
 
 == Empirical Evaluation / Conclusions
 * The paper presents, but does not discuss the experimental results, and it would be much stronger if the authors provided that analysis/interpretation. As it stands, it is unclear what the work is teaching us.
@@ -36,4 +44,8 @@ The Thirty-First Innovative Applications of Artificial Intelligence Conference, 
 * Check the reference for double doi/link, superfluous ISSN.
 
 == Various 
-* Please be more precise with using the word 'robust'. Robustness is always robustness against something.
+* Please be more precise with using the word 'robust'. Robustness is always robustness against something. [Beatrice]
+
+== Plots
+* Think about showing some plots.
+** Percentage of questions asked to the voters in the first x questions.
