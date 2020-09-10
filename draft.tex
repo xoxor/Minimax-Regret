@@ -413,8 +413,8 @@ To define the candidate question to the chair, consider
 %\begin{align}
 $\w^\tau = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$,
 %\end{align}
-the weight vector that minimize the $\PMR$ in the worst case.
-We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
+the weight vector that minimize the $\PMR$ in the worst case. \commentOC{Changed this.} Define the spread at rank $r$ as $\sum_{k \in \set{0, 1, 2}}\abs{\bar{\w}_{r + k} - \w^{\tau}_{r + k}}$.
+We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes the spread at $r$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
 We then evaluate, for each candidate question, the minimax regret for the two possible answers; finally we choose the best according to $\leximax$.
 
 Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
