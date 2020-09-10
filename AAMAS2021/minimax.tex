@@ -445,7 +445,7 @@ Note that when asking first only questions to the chair, if the obtained knowled
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Minimax regret in problems of size $(5, 10)$ after $k$ questions over $25$ runs.}
+	\caption{Average minimax regret in problems of size $(5, 10)$ after $k$ questions over $25$ runs.}
 	\label{fig:55}
 \end{table}
 
@@ -453,18 +453,18 @@ Note that when asking first only questions to the chair, if the obtained knowled
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{k} & {Rnd} & {sd} & {L.\ pes.} & {sd} \\
+			{k} & {Rnd} & {sd} & {L.\ pes.} & {sd??} \\
 			\midrule
-			0 & 20.0 & 0 & 20.0 & 0 \\
-			20 & 19.985 & 0.042 & 18.770 & 0.111 \\
-			40 & 19.903 & 0.080 & 17.659 & 0.290 \\
-			60 & 19.764 & 0.159 & 16.951 & 0.541 \\
-			80 & 19.403 & 0.221 & 15.736 & 0.367 \\
-			100 & 18.947 & 0.383 & 14.621 & 0.703 \\
+			0 & 20.0 & 0.0 & 20.0 & 0.0 \\
+			50 & 19.81 & 0.12 & 17.19 & 1.2 \\
+			100 & 19.22 & 0.25 & 14.72 & 2.4 \\
+			150 & 18.18 & 0.54 & 12.52 & 3.89 \\
+			200 & 17.05  & 0.29 & 10.57 & 5.14 \\
+			250 & 15.95 & 0.26 & 9.28 & 6.17 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Regret in problems of size $(10, 20)$ after $k$ questions.}
+	\caption{Average regret in problems of size $(10, 20)$ after $k$ questions over $5$ runs.}
 	\label{fig:1020}
 \end{table}
 
@@ -488,19 +488,17 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 			\toprule
 			{p} & {Comm. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
 			\midrule
-			0 & 5.02 & 0.82 & & \\
-			50 & 6.47 & 1.14 & & \\
-			100 & 9.4 & 1.58 & & \\
-			150 &  & & & \\
-			100 &  & & & \\
-			125 &  & & & \\
-			150 &  & & 12.31 & 0.96 \\
-			200 &  & & 16.12 & 1.06 \\
-			250 &  & & 20.0 & 0.0 \\
+			0 & 5.02 & 0.82 & 3.21 & 1.6 \\
+			25 & 5.83 & 1.25 & 6.79 & 1.2 \\
+			50 & 6.47 & 1.14 & 5.2 & 1.58 \\
+			100 & 9.4 & 1.58 & 8.66 & 0.51 \\
+			150 & 11.89 & 1.1 & 12.31 & 0.96 \\
+			200 & 15.64  & 0.52 & 16.12 & 1.06 \\
+			250 & 20.0 & 0.0 & 20.0 & 0.0 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Regret in problems of size $(10, 20)$ after $250$ questions over $5$ runs. Where $p$ represents the number of questions asked to the committee.}
+	\caption{Average regret in problems of size $(10, 20)$ after $250$ questions over $5$ runs. Where $p$ represents the number of questions asked to the committee.}
 	\label{fig:p}
 \end{table}
 
