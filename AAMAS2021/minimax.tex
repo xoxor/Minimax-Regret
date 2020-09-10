@@ -47,7 +47,7 @@
 
 %%% Use this command to specify the title of your paper.
 
-\title{Simultaneous Elicitation of Scoring Rule and Agents Preferences for Robust Winner Determination}
+\title{Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 
@@ -78,7 +78,7 @@
 Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
 In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
 Recently, the assumption of full preference information has been questioned by a number of researchers and several methods for eliciting preferences have been proposed.
-In this paper we go one step further and we assume that both the voting rule and the agents' preferences are partially specified. Focusing on positional scoring rules, we assume that the chair, while  not able to give a precise definition of the rule, is capable of answering simple questions  requiring to pick a winner from a specific  example profile.
+In this paper we go one step further and we assume that both the voting rule and the agent preferences are partially specified. Focusing on positional scoring rules, we assume that the chair, while  not able to give a precise definition of the rule, is capable of answering simple questions  requiring to pick a winner from a specific  example profile.
 Moreover, the preferences of the agents are incrementally acquired by asking comparison queries. In this setting, we propose a method  for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that interleave questions to the chair and questions to the agents in order to attempt to acquire the most relevant information in order to quickly converge to optimal or a near-optimal alternative.
 \end{abstract}
 
@@ -121,18 +121,17 @@ It is therefore natural to look at methods from social choice and see how they c
 
 The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents are expressed beforehand. These represent two strong hypothesis.
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
-This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agents’ preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
 The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
 %it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
-In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agents’ preferences and the social choice rule are partially specified. We develop methods for computing the minimax-optimal
-alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to an agent or to the chair, that quickly reduce minimax regret. While previous works have considered either partial information about the agents’
-preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
+In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agent preferences and the social choice rule are partially specified. We develop methods for computing the minimax-optimal
+alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, either to an agent or to the chair, that quickly reduce minimax regret. While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
 
-%In this paper we consider that both the agents’ preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
+%In this paper we consider that both the agent preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
 %changed from: We develop methods for computing the minimax-optimal alternative for scoring rules with partial agent preference information and partial information about the weights of the scoring rule.
 
 %We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
@@ -200,7 +199,7 @@ These additional preferences can be elicited by asking questions about concrete 
 \section[Minimax regret under partial profile and weight information]{
 	Robust winner determination}
 \label{sec:mmr}
-In this paper, we consider a setting where both the agents' preferences and the preferences of the chair about the voting rule are incomplete.
+In this paper, we consider a setting where both the agent preferences and the preferences of the chair about the voting rule are incomplete.
 Some authors have considered possible and necessary winners assuming a partial profile  \citep{Xia2008} or assuming an incompletely specified scoring rule \citep{Viappiani2018};
 however, we note that, in typical settings, there are no necessary winner and too many possible winners.
 In practice it is often useful to declare a winner given partial information.
@@ -210,7 +209,7 @@ Minimax regret \citep{Savage1954} is a decision criterion that has been used for
 \citet{Lu2011} have adopted minimax regret for winner determination in social choice with
 the preferences of the agents that are only partially known, while the social choice function is predetermined and known.
 
-In this work, we consider the simultaneous presence of uncertainty in agents' preferences and in weights.
+In this work, we consider the simultaneous presence of uncertainty in agent preferences and in weights.
 Using {\em maximum regret} to quantify the worst-case error, the alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
 Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given the current knowledge.
 
@@ -237,7 +236,7 @@ Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ a
 	x^{*}_{\pprofile,W} \in A^*_{\pprofile, W} & = \argmin_{x \in A} \MaxR(x;\pprofile,W)
 \end{align}
 By picking as consensus choice
-an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agents' preferences and the weights used in the aggregation). 
+an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agent preferences and the weights used in the aggregation). 
 In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
 
 Observe that if $\MMR(\pprofile, W)\!=\!0$, then $x^{*}_{\pprofile,W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \!\in\! W$, $x^{*}_{\pprofile,W}$ obtains a highest score.
@@ -351,7 +350,7 @@ Then, we describe different strategies to determine informative queries to ask n
 We distinguish between questions asked to the agents and questions asked to the chair.
 As {\em questions asked to the agents} it is natural to consider comparison queries asking to compare two alternatives.
 %Another common type of queries are {\em top-k}, asking to each agent her $k$ most preferred alternatives.
-The effect of a response to a question asked to an agent is the increase in our knowledge about the agents' rankings, thus augmenting the partial profile $\pprofile$. 
+The effect of a response to a question asked to an agent is the increase in our knowledge about the agent rankings, thus augmenting the partial profile $\pprofile$. 
 If agent $j$ answers a comparison query stating that alternative $a$ is preferred to $b$, then the partial order $\ppref_j$ is augmented with $a \ppref_j b$ and by transitive closure.
 
 A bit more discussion is needed about {\em questions asked to the chair}.
@@ -390,13 +389,13 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
 \paragraph{Elicitation strategies}
-We develop several elicitation strategies for simultaneous elicitation of agents' preferences and of the scoring rule.
-While it is of course possible to first fully elicit the agents’ preferences and afterwards elicit weights, we also want to propose interleaved approaches and compare them experimentally.
+We develop several elicitation strategies for simultaneous elicitation of agent preferences and of the scoring rule.
+While it is of course possible to first fully elicit the agent preferences and afterwards elicit weights, we also want to propose interleaved approaches and compare them experimentally.
 Indeed, it can be beneficial to split efforts asking questions to the chair and to agents, depending on which is estimated to be more informative.
 We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question should be asked next.
 
 The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
-This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably \commentOC{Isn’t this $1 ≤ r$?} \commentBN{Yep.}, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; draws an alternative $a$ equiprobably among those involved in some incomparabilities in $\ppref_j$; and draws an alternative $b$ equiprobably among those incomparable with $a$ in $\ppref_j$.
+This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; draws an alternative $a$ equiprobably among those involved in some incomparabilities in $\ppref_j$; and draws an alternative $b$ equiprobably among those incomparable with $a$ in $\ppref_j$.
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
 \[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
@@ -410,8 +409,7 @@ To define the candidate question to the chair, consider
 %\begin{align}
 $\w^\tau = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$,
 %\end{align}
-the weight vector that minimize the $\PMR$ in the worst case.
-We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes $\abs{\bar{\w}_r - \w^{\tau}_r}$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
+the weight vector that minimize the $\PMR$ in the worst case. \commentOC{Changed this.} Define the spread at rank $r$ as $\sum_{k \in \set{0, 1, 2}}\abs{\bar{\w}_{r + k} - \w^{\tau}_{r + k}}$. We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes the spread at $r$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
 After having selected the candidate questions, we apply the Pessimistic strategy. We evaluate, for each of the questions, the minimax regret for the two possible answers and we choose the best according to $\leximax$.
 
 Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
@@ -511,7 +509,7 @@ In this setting, we have proposed the use of minimax regret both as a means of r
 Our experimental results %on randomly generated and real world data sets 
 suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly.
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
-%Regret-based elicitation allows to determine near-optimal winners using only few information about the agents' preferences.
+%Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
 As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments, and more (url not displayed for anonymity reasons).
 
