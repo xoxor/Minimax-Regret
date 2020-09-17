@@ -1,0 +1,17 @@
+== Pending
+
+*While reviewing the minimax code, I remembered something that I have had in mind for a long time. Our code would speed up very drastically if we implemented a better update of the knowledge. Currently, evaluating the score of a question requires to copy the knowledge twice, just to update one edge in one graph or one lambda value in each copy, then discard it. These copies are extremely costly: O(n×m²), and conceptually unnecessary.
+
+Please think about the following solution and tell me if you see possible problems.
+- Transform PreferenceKnowledge into an Interface, so that we can switch the implementation at runtime. Make the current implementation a PreferenceKnowledgeImpl, which would serve as its main implementation. So far, no functional change to the code (it should still run as before).
+- Design another PK implementation, called DelegatingPreferenceKnowledge. At construction time, it receives a PK, playing the role of a delegate, and a Preference, representing the preference of one specific voter. It delegates everything to the PK except that it overrides one voter’s preference.
+- Unit test the DPK.
+- Use the DPK in the method that computes scores instead of the PKI.
+
+If this works, we can then proceed similarly for changing a lambda value; then compare speeds.
+
+
+
+
+
+
