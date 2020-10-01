@@ -1,0 +1,10 @@
+Social choice deals with the problem of determining a consensus choice from the preferences of different agents (voters).
+In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
+This assumption of full preference information has been questioned by a number of researchers and several methods have been proposed to elicit the preferences of the agents under assumption of complete knowledge of the voting rule. More recently, viewing the voting rule as representing the preference of a committee, methods for eliciting those preferences under assumption of complete knowledge of the voters preferences have been proposed as well.
+This article goes one step further by tackling one important new case, namely, when both the voting rule and the agents preferences are partially known. It also permits to obtain progressively refined recommendation without requiring to achieve full knowledge of either sort of information.
+This is useful because providing such information is often costly: committees may find it hard to specify a rule completely; voters may need time to form reflective preferences.
+Focusing on positional scoring rules, we assume that the chair, while  not able to give a precise definition of the rule, is capable of answering simple questions  requiring to pick a winner from a specific  example profile.
+Moreover, the preferences of the agents are incrementally acquired by asking comparison queries. In this setting, we propose a method  for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that question the chair and the agents in order to attempt to acquire the most relevant information in order to quickly converge to a near-optimal alternative.
+
+committee? chair?
+
