@@ -120,7 +120,7 @@ In this setting, we propose a method for robust approximate winner determination
 
 \section{Introduction}
 
-Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
+èàù Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
 
@@ -403,7 +403,9 @@ The \strat{Random} strategy gives a baseline for comparison and informs about th
 This strategy first decides with a probability of $1/2$ each whether it will ask a question about weights or a question about a preference ordering (unless the profile is already known entirely). If it opted for a question about weights, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; draws an alternative $a$ equiprobably among those involved in some incomparabilities in $\ppref_j$; and draws an alternative $b$ equiprobably among those incomparable with $a$ in $\ppref_j$.
 
 The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
-\[\max_{i=1,2} \MMR(\pprofile_i,W_i) \]
+\begin{align}
+	\max_{i=1,2} \MMR(\pprofile_i,W_i)
+\end{align}
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes ths measure of minimax regret {\em a posteriori}. 
 %Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest value.
