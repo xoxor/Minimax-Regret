@@ -43,7 +43,7 @@
 %%% Use this command to specify your EasyChair submission number.
 %%% In anonymous mode, it will be printed on the first page.
 
-\acmSubmissionID{???}
+\acmSubmissionID{554}
 
 %%% Use this command to specify the title of your paper.
 
@@ -53,15 +53,15 @@
 
 \author{Beatrice Napolitano}
 \affiliation{
-	\institution{LAMSADE, UMR 7243, CNRS and Universit\'e Paris Dauphine, PSL Research University}
-	\city{Paris}
+	\institution{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE}
+	\city{75016 Paris}
 	\state{France}}
 \email{beatrice.napolitano@dauphine.fr}
 
 \author{Olivier Cailloux}
 \affiliation{
-	\institution{LAMSADE, UMR 7243, CNRS and Universit\'e Paris Dauphine, PSL Research University}
-	\city{Paris}
+	\institution{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE}
+	\city{75016 Paris}
 	\state{France}}
 \email{olivier.cailloux@dauphine.fr}
 
@@ -94,7 +94,7 @@ In this setting, we propose a method for robust approximate winner determination
 %%% Use this command to specify a few keywords describing your work.
 %%% Keywords should be separated by commas.
 
-\keywords{Uncertainty in AI, Computational Social Choice, Knowledge Representation and Reasoning}
+\keywords{Uncertainty in AI, Computational Social Choice, Preference Elicitation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -120,7 +120,7 @@ In this setting, we propose a method for robust approximate winner determination
 
 \section{Introduction}
 
-èàù Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
+Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
 It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
 
@@ -221,7 +221,9 @@ Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from th
 The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
 We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
-\[\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).\]
+\begin{align} 
+	\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).
+\end{align}
 The pairwise max regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given partial profile $\pprofile$ and the set of weights $W$
 is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
 \begin{align}
@@ -361,7 +363,9 @@ If agent $j$ answers a comparison query stating that alternative $a$ is preferre
 A bit more discussion is needed about {\em questions asked to the chair}.
 Such questions aim at refining our knowledge about the scoring rule; a response gives us a constraint on the weight vector $\w$.
 In particular, we want to acquire constraints of the type:
-\[ w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2}) \] 
+\begin{align}
+	w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})
+\end{align}
 for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of ranks $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
 
 \paragraph{Building concrete questions for the chair}
@@ -426,7 +430,7 @@ Note that when asking first only questions to the chair, if the obtained knowled
 %The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
-
+\balance
 \section{Empirical Evaluation} 
 \label{sec:experiments}
 \commentBN{Change the text according to the new tables.}
@@ -506,8 +510,6 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 	\caption{Average regret in problems of size $(10, 20)$ after $250$ questions over $5$ runs. Where $p$ represents the number of questions asked to the chair.}
 	\label{fig:p}
 \end{table}
-
-\balance
 
 \section{Conclusions}  
 \label{sec:conclusions}
