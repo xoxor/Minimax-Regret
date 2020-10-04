@@ -30,6 +30,9 @@
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
 
+%TODO remove this before submission, check vboxes
+\vbadness=9000
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% AAMAS-2021 copyright block (do not change!)
@@ -438,10 +441,10 @@ Note that when asking first only questions to the chair, if the obtained knowled
 \label{sec:experiments}
 \commentBN{Change the text according to the new tables.}
 
-\sisetup{round-mode=places, round-precision=2, table-figures-integer=1, table-figures-decimal=2}
+\sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
 \begin{table}
 	\begin{center}
-		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
 			{k} & {Rnd} & {sd} & {Pes.} & {sd} & {L.\ pes.} & {sd} \\
 			\midrule
@@ -463,7 +466,7 @@ Note that when asking first only questions to the chair, if the obtained knowled
 
 \begin{table}
 	\begin{center}
-		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
 			{k} & {Rnd} & {sd} & {L.\ pes.} & {sd??} \\
 			\midrule
@@ -496,7 +499,7 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 
 \begin{table}
 	\begin{center}
-		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
 			{p} & {Comm. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
 			\midrule
@@ -553,6 +556,8 @@ Finally, an important direction of extension aims at studying how to elicit pref
 %\bibliography{biblio}
 
 \bibliographystyle{ACM-Reference-Format} 
+%TODO remove this when submitting, and consider solving the vertical overflows
+\vfuzz=5pt
 \bibliography{biblio}
 \end{document}
 
