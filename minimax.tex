@@ -420,49 +420,79 @@ The \strat{Random} strategy gives a baseline for comparison and informs about th
 It admits a parameter $\pi \in [0, 1]$.
 This strategy first decides whether it will ask a question about weights (probability $\pi$) or a question about a preference ordering (probability $1-\pi$). If it opted for a question about weights, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$. The intervals are initialized to $[1, n]$. If it opted for a question to agents, it draws equiprobably among the agents whose preference is not known entirely; draws an alternative $a$ equiprobably among those involved in some incomparabilities in $\ppref_j$; and draws an alternative $b$ equiprobably among those incomparable with $a$ in $\ppref_j$.
 
-The \strat{Pessimistic} strategy selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
+The \strat{Pessimistic} strategy considers the same candidate questions as the Random strategy, but instead of picking one among those randomly, selects the question that leads to minimal regret in the worst case, considering both possible answers to the question. Assume that a question leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile_2, W_2)$, depending on the answer. Then the badness of the question in the worst case is:
 \begin{align}
 	\max_{i=1,2} \MMR(\pprofile_i,W_i)
 \end{align}
 This badness measure gives a way of picking questions among a set of possible questions, by picking one that minimizes ths measure of minimax regret {\em a posteriori}. 
-%Note that other aggregators than $\max$ can be used as well. %We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+Note that other aggregators than $\max$ can be used as well. 
+We use the $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt the $\leximax$ criterion as an aggregator: if the maximal $\MMR$ of two questions are equal, then it considers the other $\MMR$ values, that are the one associated to the opposite answer, preferring the question with the lowest value.
+(Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the minimal $\MMR$ values, with a predominant weight to the maximal one.)
 We expect this strategy to perform very well, but only for very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$. For small dimensions, it estimates an upper bound to the possible quality of a myopic strategy.
 
-The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but limiting it to a small set of $n+1$ candidate questions: one per agent, and one to the chair. Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $\bar{y}, \bar{\profile}, \bar{\w}$ are, respectively, the choice of $y$, the completion of the profile and the selection of weights for which $x^{*}$ is the minimax optimal alternative. The \strat{Limited pessimistic} strategy first selects $n$ candidates questions to the agents using the heuristic proposed by \citet{Lu2011}. Considering agent $j$, either $x^{*} \ppref_j \bar{y}$, or $\bar{y} \ppref_j x^{*}$, or $x^{*}$ and $\bar{y}$ are incomparable in $\ppref_j$. As shown in the proof of Claim \ref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as he can above $x^{*}$ in the first case, and between $\bar{y}$ and $x^{*}$ in the second. An intuitive way to reduce the pairwise max regret would be, therefore, to ask questions involving such alternatives \commentOC{(with equal likelyhood?)}\commentBN{We are not asking questions yet. We select as a candidate question the one corresponding to the situation. If you mean "what if there are several alternatives that can be placed between the two?" then yes, we pick one equiprobably.}, hoping for an answer that would prevent the adversary to play his best game. If $x^{*}$ and $\bar{y}$ are incomparable, then the candidate question to agent $j$ simply consists in comparing the two alternatives.
-To define the candidate question to the chair, consider
-%\begin{align}
-$\w^\tau = \argmin_{\w \in W} s(\bar{y}; \bar{\profile}, \w) - s(x^{*}; \bar{\profile}, \w)$,
-%\end{align}
-the weight vector that minimize the $\PMR$ in the worst case. \commentOC{Changed this.} Define the spread at rank $r$ as $\sum_{k \in \set{0, 1, 2}}\abs{\bar{\w}_{r + k} - \w^{\tau}_{r + k}}$. We compare $\bar{\w}$ and $\w^{\tau}$ component-wise to find the position $r$ that is most valuable to ask about (the one that maximizes the spread at $r$), and choose $\lambda$ as the middle of the interval of possible values for that rank.
-After having selected the candidate questions, we apply the Pessimistic strategy. We evaluate, for each of the questions, the minimax regret for the two possible answers and we choose the best according to $\leximax$.
+The \strat{Limited pessimistic} strategy uses the same criterion as the pessimistic strategy, but limiting it to a small set of $n + m$ candidate questions: one per agent, and one per rank. Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $\bar{y}, \bar{\profile}, \bar{\w}$ are, respectively, the choice of $y$, the completion of the profile and the selection of weights for which $x^{*}$ is the minimax optimal alternative. 
+The \strat{Limited pessimistic} strategy first selects $n$ candidates questions to the agents using the heuristic proposed by \citet{Lu2011}: for each agent $j$, if $x^*$ and $\bar{y}$ are incomparable in $\ppref_j$, the candidate question concerns the pair $(x^*, \bar{y})$, otherwise, the candidate question concerns the pair $(x^*, z)$ for some $z$ incomparable to $x^*$ (randomly chosen), or if none such $z$ exist, the pair $(\bar{y}, z)$ for some $z$ incomparable to $\bar{y}$, or, if both $x^*$ and $\bar{y}$ are comparable to every alternatives in $\ppref_j$, any incomparable pair is picked at random. 
+To understand the intuition behind favoring these two alternatives for our questions, recall that, as shown in the proof of \cref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as she can above $x^{*}$ if $x^* \ppref_j \bar{y}$, and between $\bar{y}$ and $x^{*}$ if $\bar{y} \ppref_j x^*$. 
+\commentOC{I do not understand the reasoning in the next sentence.}
+An intuitive way to reduce the pairwise max regret would be, therefore, to ask questions involving such alternatives, hoping for an answer that would prevent the adversary to play his best game. 
+The candidate questions to the chair are determined as in the Random and Pessimistic strategies.
+After having selected the candidate questions, we apply the Pessimistic strategy: we evaluate, for each of the questions, the minimax regret for the two possible answers and we choose the best according to $\leximax$.
 
-Lastly, the \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair. %The \strat{Two phases - vc} first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific question. The \strat{Two phases - cv} strategy starts with $p$ questions to the chair, then asks to the agents. \commentOC{If our XPs exhibit no significant change between vc and cv (or if we don’t have time to run them), I will drop this distinction.}
-It first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases the same method as \strat{Limited pessimistic} to select the specific question. 
-Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known voting rule. 
+The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the voters first. 
+The \strat{Two phases - ac} variant first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Limited pessimistic to select the specific questions; whereas the \strat{Two phases - ca} variant starts with $p$ questions to the chair, then questions the agents. 
+%Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known voting rule. 
 %And vice-versa when asking first questions to the agents, the second part of the elicitation is similar to the setting of incompletely specified scoring rule. 
-%The aim of this strategy is to simulate the current state of the art when considering incomplete preferences. In fact, by asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Moreover, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
+This strategy also permits to simulate the current state of the art when considering incomplete preferences. By asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Similarly, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
+
+Finally, the \strat{Elitist} strategy aims at uncovering as quickly as possible the top alternative of each agent. It asks $m-1$ questions to each agent in turn. 
+Given an agent to query $j$, it asks about an alternative currently undominated in $\ppref_j$ and any alternative that it has not yet asked about for that agent, or equivalently, any alternative that is currently incomparable to this alternative. This approach guarantees that the top alternative in the ranking of $j$ will be known after having asked $j$ exactly $m-1$ questions.
+After having asked $n (m-1)$ questions to the agents, it questions the chair only, using the same approach as the Limited strategy.
+This strategy can be expected to perform well when the chair assigns an important weight to the first rank, as compared to the other ranks. It will be useful to further challenge the Limited strategy, which is not specifically tailored to such a situation.
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
-\balance
+
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-\commentBN{Change the text according to the new tables.}
+\commentOC{
+	\begin{enumerate}
+		\item Pessimistic is feasible and much better than Random
+		\begin{itemize}
+			\item Graph featuring (5, 10, 150, 200 runs), Random, Pess, L. pess, Elitist.
+			\item And table like table 1.
+		\end{itemize}
+		\item Limited pessimistic performs well.
+		\begin{itemize}
+			\item Reach regret: $n/10$. For this, we need $m^x n$ questions. TODO Olivier: find $x$. TODO Beatrice: check and compile results in a table specifically for this (see: function regret by k).
+			\item Almost as good as Pess and better than the Elitist one (see previous graphs or table)
+			\item Much faster [do this much later]
+		\end{itemize}
+		\item Decrease in MMR is linear with nb of questions
+		\begin{itemize}
+			\item Redo nice graph of Beatrice with same sizes.
+		\end{itemize}
+		\item Value of information qC VS qV with 2 phases and 2phases VS interleaving
+		\begin{itemize}
+			\item Interleaving $k$ questions is similar to asking $p$ questions to the chair first and then $k - p$ to the voters when $p$ is chosen optimally. [do this a bit later]
+			\item A question to the chair has a similar value (in regret) as a qV: use the graph summarized by Olivier. Check prop. qC. Check on other sizes.
+		\end{itemize}
+		\item Limited pessimistic approx Limited optimistic [do this much later]
+	\end{enumerate}
+}
+Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
 
-1. Pessimistic is feasible and much better than Random
-	Graph featuring (5, 10, 150, 200 runs), Random, Pess, L. pess, Elitist.
-	And table like table 1.
-2. Limited pessimistic performs well.
-	Reach regret: $n/10$. For this, we need $m^x n$ questions. TODO Olivier: find $x$. TODO Beatrice: check and compile results in a table specifically for this (see: function regret by k).
-	Almost as good as Pess and better than the Elitist one (see previous graphs or table)
-	Much faster [do this much later]
-3. Decrease in MMR is linear with nb of questions
-	Redo nice graph of Beatrice with same sizes.
-4. Value of information qC VS qV with 2 phases and 2phases VS interleaving
-	Interleaving $k$ questions is similar to asking $p$ questions to the chair first and then $k - p$ to the voters when $p$ is chosen optimally. [do this a bit later]
-	A question to the chair has a similar value (in regret) as a qV: use the graph summarized by Olivier. Check prop. qC. Check on other sizes.
-5. Limited pessimistic approx Limited optimistic [do this much later]
+Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. 
+The preferences are generated following an impartial culture assumption: the linear order of each voter is generated independently from the other ones and all have the same probability of appearing. The weights are generated by drawing $m-1$ differences randomly with uniform distribution, normalizing them, then ordering them, in order to ensure convexity.
 
+We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
+
+\subsection{Small size elections}
+Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around these sizes yield similar conclusions). In such situations, we can run the resource-consuming Pessimistic strategy. Table x / graph x compares it to other strategies. We see that these strategies perform much better than random, even when its parameter $\pi$ is chosen in an optimal way, that is, when the proportion of questions asked to the chair is ideal. We also see a first important positive result for applicability of our approach, namely, that it is possible to reach a small regret with a reasonable number of questions in such problems. 
+
+\subsection{Limited pessimistic}
+We next investigate the better performing Limited pessimistic strategy, because Pessimistic is too slow to be ran repeatedly on much bigger problem sizes.
+
+\subsection{Our previous presentation}
 \sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
 \begin{table}
 	\begin{center}
@@ -509,9 +539,6 @@ We test our strategies using randomly generated datasets.
 Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the agents (with respect to questions asked to the chair) on the reduction of the worst regret.
 %We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
-We use the following protocol.
-Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the selected strategy, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained. Then we compute the resulting $\MMR$. We repeat this whole experiment 10 times, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
-
 The results are displayed in \cref{fig:55,fig:1020,fig:p}, where strategies are designated by Rnd for Random, Pes. for Pessimistic, L.\ pes. for Limited pessimistic and 2 ph. for Two phases. 
 
 We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Limited pessimistic performs almost as well as Pessimistic; this is good news since (for $m=5$ and $n=5$), the former strategy is much faster and takes only $2.6s$ for a complete elicitation session, while the latter takes $16s$.
@@ -541,6 +568,8 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 
 \section{Conclusions}  
 \label{sec:conclusions}
+%TODO balance columns appropriately before submitting
+%\balance
 In this paper we have considered a social choice setting with partial information about the agent's preferences and a partially specified voting rule.
 In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world data sets 
