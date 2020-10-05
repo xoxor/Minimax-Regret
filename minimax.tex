@@ -86,10 +86,12 @@ Social choice deals with the problem of determining a consensus choice from the 
 In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
 This assumption of full preference information has recently been questioned by a number of researchers.
 Methods for eliciting the voting rule when the preferences of the agents are completely known have been proposed, as well as techniques that consider the opposite scenario. %, viewing the voting rule as representing the preference of the chair. 
+
 This article goes one step further by tackling one important new case, namely, when both the voting rule and the agents preferences are partially known. It also permits to obtain a progressively refined recommendation without requiring to achieve full knowledge of either sort of information.
 %However, there may be cases where both of them are only partially known.
 %This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
 This is useful because providing such information is often costly: the chair may find it hard to specify a rule completely; voters may need time to form reflective preferences.
+
 Focusing on positional scoring rules, we assume that the chair, while not able to give a precise definition of the rule, is capable of answering simple questions requiring to pick a winner from a specific example profile. In addition, the preferences of the agents are incrementally acquired by asking comparison queries. 
 In this setting, we propose a method for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that question the chair and the agents in order to acquire the most relevant information for quickly converging to a near-optimal alternative.
 \end{abstract}
@@ -134,7 +136,7 @@ It is therefore natural to look at methods from social choice and see how they c
 
 The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
-This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015,Benabbou2016} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
 The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
@@ -162,12 +164,12 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
+We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents (voters). Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order $\pref_j \, \in \!\linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
 Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
 Let $V$ be the set of possible preference profiles (the union, for any integer, $n$ of the $n$-fold cartesian product of the linear orders over the alternatives).
-A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the emptyset. (Sets are used for tied winners.)
+A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the emptyset (sets are used for tied winners).
 Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$ (also called the scoring vector).
 An alternative obtains a score that depends on the rank obtained in each of the preference orders:
 \begin{align}
@@ -178,7 +180,7 @@ An alternative obtains a score that depends on the rank obtained in each of the 
 where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives with the highest scores.
 
-In this work we assume fixed, but unknown to us, a profile $\profile^*$, representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$, representing the preferences of the chair, and we want to reason about partial preference information concerning those objects.
+In this work we assume a fixed, but unknown to us, profile $\profile^*$, representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$, representing the preferences of the chair, and we want to reason about partial preference information concerning those objects.
 At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
 In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
@@ -218,7 +220,7 @@ These additional preferences can be elicited by asking questions about concrete 
 	Robust winner determination}
 \label{sec:mmr}
 In this paper, we consider a setting where both the agent preferences and the preferences of the chair about the voting rule are incomplete.
-Some authors have considered possible and necessary winners assuming a partial profile  \citep{Xia2008} or assuming an incompletely specified scoring rule \citep{Viappiani2018};
+Some authors have considered possible and necessary winners assuming a partial profile  \citep{Kalech2011,Xia2008} or assuming an incompletely specified scoring rule \citep{Stein1994};
 however, we note that, in typical settings, there are no necessary winner and too many possible winners.
 In practice it is often useful to declare a winner given partial information.
 
