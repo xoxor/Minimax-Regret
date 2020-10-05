@@ -150,6 +150,11 @@ alternative using positional scoring rules and we provide incremental elicitatio
 %We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
 %In particular, our query strategies focus simultaneously on reduction of relevant preference and voting rule uncertainty.
 
+\paragraph{Experimental conclusions}
+Our approach permits to compare experimentally strategies that question the chair, the voters, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ voters. First, low levels of regret can be reached by asking approximately $m n$ questions to the voters and $m$ questions to the chair. 
+Second, the decrease in MMR is approximately linear with the number of questions asked, except when the regret approaches zero.
+Third, the value of information of one question to the chair is similar to the value of information of one question to a voter (in the ranges we considered). Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
+
 The paper is organized as follows.
 In Section \ref{sec:background} we provide the necessary background and in Section \ref{sec:mmr} we introduce the minimax criterion, that selects a winner that minimizes the worst possible regret.
 Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minimal regret;  in Section \ref{sec:experiments} we present the empirical validation of our approach with simulations; and Section \ref{sec:conclusions} provides some final thoughts.
@@ -405,8 +410,8 @@ At this stage, we are satisfied that a procedure exists to transform our abstrac
 
 \paragraph{Elicitation strategies}
 We develop several elicitation strategies for simultaneous elicitation of agent preferences and of the scoring rule.
-While it is of course possible to first fully elicit the agent preferences and afterwards elicit weights, we also want to propose interleaved approaches and compare them experimentally.
-Indeed, it can be beneficial to split efforts asking questions to the chair and to agents, depending on which is estimated to be more informative.
+While it is of course possible to first fully elicit the agent preferences and afterwards elicit weights, we want to investigate experimentally approaches that are able to recommend winning alternatives before obtaining complete knowledge of the profile or the rule.
+%Indeed, it can be beneficial to split efforts asking questions to the chair and to agents, depending on which is estimated to be more informative.
 We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question should be asked next.
 
 The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
@@ -440,6 +445,20 @@ Note that when asking first only questions to the chair, if the obtained knowled
 \section{Empirical Evaluation} 
 \label{sec:experiments}
 \commentBN{Change the text according to the new tables.}
+
+1. Pessimistic is feasible and much better than Random
+	Graph featuring (5, 10, 150, 200 runs), Random, Pess, L. pess, Elitist.
+	And table like table 1.
+2. Limited pessimistic performs well.
+	Reach regret: $n/10$. For this, we need $m^x n$ questions. TODO Olivier: find $x$. TODO Beatrice: check and compile results in a table specifically for this (see: function regret by k).
+	Almost as good as Pess and better than the Elitist one (see previous graphs or table)
+	Much faster [do this later]
+3. Decrease in MMR is linear with nb of questions
+	include nice graph of Beatrice.
+4. Value of information qC VS qV with 2 phases and 2phases VS interleaving
+	A question to the chair has a similar value (in regret) as a qV.
+	Interleaving $k$ questions is similar to asking $p$ questions to the chair first and then $k - p$ to the voters when $p$ is chosen optimally. 
+5. Limited pessimistic approx Limited optimistic
 
 \sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
 \begin{table}
