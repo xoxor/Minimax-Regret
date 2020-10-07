@@ -138,7 +138,6 @@ The traditional approach to social choice assumes that both the social choice fu
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015,Benabbou2016} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
-The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
 %it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
@@ -154,12 +153,31 @@ alternative using positional scoring rules and we provide incremental elicitatio
 
 \paragraph{Experimental conclusions}
 Our approach permits to compare experimentally strategies that question the chair, the voters, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ voters. First, low levels of regret can be reached by asking approximately $m n$ questions to the voters and $m$ questions to the chair. 
-Second, the decrease in MMR is approximately linear with the number of questions asked, except when the regret approaches zero.
+Second, the decrease in $\MMR$ is approximately linear with the number of questions asked, except when the regret approaches zero. \commentBN{Not true anymore, some example with Pess (former Lim.Pes.) 
+$\begin{array}{ccc}
+	k \quad & \textbf{(5,10)}&\textbf{(10,20)}\\
+	0 \quad &10&20\\
+	10 \quad &7.93&19.5\\
+	20 \quad &5.85&18.2\\
+	30 \quad &4.31&17.43\\
+	40 \quad &3.01&16.56\\
+	50 \quad &1.95&15.59\\
+	100 \quad &0.0&11.91\\
+	150 \quad &0.0&8.92\\
+	200 \quad &0.0&6.24\\
+\end{array}
+$
+}\\
 Third, the value of information of one question to the chair is similar to the value of information of one question to a voter (in the ranges we considered). Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
 
 The paper is organized as follows.
 In Section \ref{sec:background} we provide the necessary background and in Section \ref{sec:mmr} we introduce the minimax criterion, that selects a winner that minimizes the worst possible regret.
 Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minimal regret;  in Section \ref{sec:experiments} we present the empirical validation of our approach with simulations; and Section \ref{sec:conclusions} provides some final thoughts.
+
+\section{Related Work}
+%The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
+%it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
+%Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
 \section{Social choice with partial information}
 \label{sec:background}
@@ -495,19 +513,19 @@ In such situations, we can run the resource-consuming Pessimistic strategy. Tabl
 		\resizebox{\columnwidth}{!}{
 		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {L.\ pes.} & {sd} & {Eli.} & {sd} \\
+			{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Ex.\ pes.} & {sd} & {Eli.} & {sd} \\
 			\midrule
 			0 & 10.0 & 0.0 & 10.0 & 0.0 & 10.0 & 0.0 & 10.0 & 0.0\\
-			20 & 9.06 & 0.49 & 6.17 & 0.78 & 5.85 & 0.87& 6.32 & 0.61\\
-			40 & 7.35 & 0.82 & 2.98 & 0.99 & 2.57 & 1.05 & 3.37 & 0.83\\
-			60 & 5.74 & 1.03 & 0.77 &0.78 & 0.67 & 0.67 & 2.33 & 1.05\\
-			80 & 4.10 & 1.15 & 0.05 & 0.18 & 0.03 & 0.12 & 2.28 & 1.05\\
+			20 & 9.06 & 0.49 & 5.85 & 0.87 & 6.17 & 0.78 & 6.32 & 0.61\\
+			40 & 7.35 & 0.82 & 2.57 & 1.05 & 2.98 & 0.99 & 3.37 & 0.83\\
+			60 & 5.74 & 1.03 & 0.67 & 0.67 & 0.77 &0.78 & 2.33 & 1.05\\
+			80 & 4.10 & 1.15 & 0.03 & 0.12 & 0.05 & 0.18 & 2.28 & 1.05\\
 			100 & 2.63 & 1.19 & 0.0 &  0.0 & 0.0 & 0.0& 2.28 & 1.05\\
 			\bottomrule
 		\end{tabular}
 		}
 	\end{center}
-	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions and $200$ runs.}
+	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions and $200$ runs.\commentBN{Attention, I already corrected the table with the new names. The column Pes. here is the Limited Pessimistic, I inverted them to follow the presentation order.}}
 	\label{tab:smallSize}
 \end{table}
 
@@ -518,7 +536,7 @@ In such situations, we can run the resource-consuming Pessimistic strategy. Tabl
 	\label{fig:smallSize}
 \end{figure}
 
-\subsection{Comparing limited pessimistic}
+\subsection{Judging limited pessimistic relatively}
 Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around these sizes yield similar conclusions). 
 \Cref{tab:smallSize} and \cref{fig:smallSize} compares some of our strategies in this case.
 We see that that Limited pessimistic performs better than Random and Pessimistic on a small size problem.
@@ -536,7 +554,7 @@ We next focus on the Limited pessimistic strategy, because Pessimistic is too sl
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
 			\toprule
-			{m} & {n} & {$\frac{n}{10}$} & {$k_{MMR}$} & {$0.4 m^{1.6} n$} \\
+			{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} & {$0.4 m^{1.6} n$} \\
 			\midrule
 			5 & 10 & 1.0 & 60 &  55 \\
 			5 & 15 & 1.5 & 80 &  83 \\
@@ -547,7 +565,7 @@ We next focus on the Limited pessimistic strategy, because Pessimistic is too sl
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{}
+	\caption{Number of questions needed by Pessimistic strategy to reach $\MMR=\frac{n}{10}$ (represented by $k_{\MMR}$), for various problem sizes.}
 	\label{tab:lowRegret}
 \end{table}
 
@@ -565,7 +583,7 @@ To estimate this number, we assume the following querying process: given a parti
 \begin{figure}
 	\centering
 	\includegraphics[width=.45\textwidth]{linearity.png}
-	\caption{Average MMR after $k$ questions with Limited Pessimistic strategy after 10 runs for different problem sizes.}
+	\caption{Average $\MMR$ after $k$ questions with Pessimistic strategy after 10 runs for different problem sizes.}
 	\label{fig:linearity}
 \end{figure}
 
@@ -583,29 +601,51 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 %However, it takes $1000$ times more time than the \strat{Random} strategy ($16s$ of the Pessimistic compared to $0.014s$ of the Random). Moreover, the results of the \strat{Limited pessimistic}, that takes almost $80\%$ less of the time of the \strat{Pessimistic} ($2.6s$), are essentially the same.
 %In Table \ref{fig:1020}, we can see the drop of regret using a bigger instance.
 %Finally in Table \ref{fig:p}
+%
+%\begin{table}
+%	\begin{center}
+%		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+%			\toprule
+%			{p} & {Comm. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
+%			\midrule
+%			0 & 0.48 &0.59 & 0.48 &0.59  \\
+%			50 & 0.01 & 0.04& 0.0 & 0.0 \\
+%			100 & 0.04 & 0.09 & 0.13 & 0.35 \\
+%			150 & 0.68 & 0.65 & 0.66 & 0.77 \\
+%			200 &   &  &  &  \\
+%			250 & 3.2 & 1.67 & 4.07	& 1.51 \\
+%			300 &&&& \\
+%			350 &&&& \\
+%			400 &&&& \\
+%			450 &&&& \\
+%			500 &&&& \\
+%			\bottomrule
+%		\end{tabular}
+%	\end{center}
+%	\caption{Average regret in problems of size $(10, 20)$ after $500$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair.}
+%	\label{tab:twoP500}
+%\end{table}
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{p} & {Comm. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
+			{p} & {Com. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
 			\midrule
-			0 &  &  &  &  \\
-			50 &  &  &  &  \\
-			100 &  &  &  &  \\
-			150 &  &  & &  \\
+			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
+			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
+			100 & 2.03 & 1.56 &  &  \\
+			150 & 3.41 & 1.79 & 4.07 & 1.51 \\
 			200 &   &  &  &  \\
-			250 &  & &  &  \\
+			250 & 8.4 & 1.86 & 	& \\
 			300 &&&& \\
 			350 &&&& \\
 			400 &&&& \\
-			450 &&&& \\
-			500 &&&& \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Average regret in problems of size $(10, 20)$ after $500$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair.}
-	\label{tab:twoP}
+	\caption{Average $\MMR$ in problems of size $(10, 20)$ after $400$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair. (The $\MMR$ after 400 questions with Pessimistic is $0.62$ ± $0.56$)}
+	\label{tab:twoP400}
 \end{table}
 
 \section{Conclusions}  
