@@ -455,16 +455,17 @@ This strategy can be expected to perform well when the chair assigns an importan
 \label{sec:experiments}
 \commentOC{
 	\begin{enumerate}
-		\item Pessimistic is feasible and much better than Random
+		\item Limited pessimistic performs best.
 		\begin{itemize}
+			\item Much better than Random
+			\item Better than Pess and Elitist!
 			\item Graph featuring (5, 10, 150, 200 runs), Random, Pess, L. pess, Elitist.
 			\item And table like table 1.
 		\end{itemize}
-		\item Limited pessimistic performs well.
+		\item L pess performs well.
 		\begin{itemize}
 			\item Reach regret: $n/10$. For this, we need $m^x n$ questions. TODO Olivier: find $x$. TODO Beatrice: check and compile results in a table specifically for this (see: function regret by k).
-			\item Almost as good as Pess and better than the Elitist one (see previous graphs or table)
-			\item Much faster [do this much later]
+			\item Much faster than Pess [do this much later]
 		\end{itemize}
 		\item Decrease in MMR is linear with nb of questions
 		\begin{itemize}
@@ -477,6 +478,7 @@ This strategy can be expected to perform well when the chair assigns an importan
 		\end{itemize}
 		\item Limited pessimistic approx Limited optimistic [do this much later]
 	\end{enumerate}
+	TODO: find a way of displaying the graph so that it is understandable in B/W.
 }
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
 
@@ -486,13 +488,8 @@ The preferences are generated following an impartial culture assumption: the lin
 We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
 
 \subsection{Small size elections}
-Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around these sizes yield similar conclusions). In such situations, we can run the resource-consuming Pessimistic strategy. Table x / graph x compares it to other strategies. We see that these strategies perform much better than random, even when its parameter $\pi$ is chosen in an optimal way, that is, when the proportion of questions asked to the chair is ideal. We also see a first important positive result for applicability of our approach, namely, that it is possible to reach a small regret with a reasonable number of questions in such problems. 
+In such situations, we can run the resource-consuming Pessimistic strategy. Table x / graph x compares it to other strategies. We see that these strategies perform much better than random, even when its parameter $\pi$ is chosen in an optimal way, that is, when the proportion of questions asked to the chair is ideal. We also see a first important positive result for applicability of our approach, namely, that it is possible to reach a small regret with a reasonable number of questions in such problems. 
 
-\subsection{Limited pessimistic}
-We next investigate the better performing Limited pessimistic strategy, because Pessimistic is too slow to be ran repeatedly on much bigger problem sizes.
-
-\subsection{Our previous presentation}
-\sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
 \begin{table}
 	\begin{center}
 		\resizebox{\columnwidth}{!}{
@@ -511,16 +508,60 @@ We next investigate the better performing Limited pessimistic strategy, because 
 		}
 	\end{center}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions and $200$ runs.}
-	\label{tab:comparison}
+	\label{tab:smallSize}
 \end{table}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.45\textwidth]{comparison.png}
-	\caption{Plot in support of \cref{tab:comparison}}
-	\label{fig:comparison}
+	\caption{Plot in support of \cref{tab:smallSize}}
+	\label{fig:smallSize}
 \end{figure}
 
+\subsection{Comparing limited pessimistic}
+Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around these sizes yield similar conclusions). 
+\Cref{tab:smallSize} and \cref{fig:smallSize} compares some of our strategies in this case.
+We see that that Limited pessimistic performs better than Random and Pessimistic on a small size problem.
+(These figures also display the performance of the Elitist strategy, to which we will come back.)
+
+Asking Random questions does not permit to reach a low regret level even after having asked 100 questions, whereas a low regret level (MMR = 1) is reached by Limited pessimistic before having asked 60 questions.
+
+We also see that Pessimistic performs slightly less well than Limited pessimistic. Although they come close, Pessimistic performs significatively less well, in the sense that the numbers are consistently in favor of Limited pessimistic if running the experiment again.
+
+We next focus on the Limited pessimistic strategy, because Pessimistic is too slow to be ran repeatedly on much bigger problem sizes.
+
+\subsection{Judging limited pessimistic absolutely}
+\label{sec:lowRegret}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
+			\toprule
+			{m} & {n} & {$\frac{n}{10}$} & {$k_{MMR}$} & {$0.4 m^{1.6} n$} \\
+			\midrule
+			5 & 10 & 1.0 & 60 &  55 \\
+			5 & 15 & 1.5 & 80 &  83 \\
+			5 & 20 & 2.0 & 110 &  110 \\
+			10 & 20 & 2.0 & 340 &  341 \\
+			10 & 30 & 3.0 & 527 &  512 \\
+			15 & 30 & 3.0 &  &  991 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{}
+	\label{tab:lowRegret}
+\end{table}
+
+The previous section compares Limited pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Limited pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of voters ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the voters rank $x$ last instead of first.
+The results for various sizes are displayed in \cref{tab:lowRegret}. From these numbers, we obtain the function $0.4m^{1.6}n$ as a general approximation formula for the number of questions required to reach a low regret level. We see that the number of questions required grows approximately linearly with the number of voters and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the committee, each voter will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level. For $m = 5$, that is about $6$ questions per voter; for $m = 10$, that is about $17$ questions per voter; and for $m = 15$, that is about $33$ questions per voter.
+
+\subsection{Comparing with full elicitation}
+In this work, we advocate obtaining an approximate winner without obtaining the full profile or determine completely the voting rule. The previous section evaluate the number of questions per voter to reach a low regret value.
+In order to contrast our approach to one that would apply existing works to, on the one hand, obtain the full profile, and on the other hand, to determine the voting rule, it is interesting to compute the number of questions that would be required to elicit the complete profile. We focus on the profile because eliciting the scores to full precision would require infinitely many questions, with the questions we use, and existing works do not propose to use such questions, thus they are not readily comparable on that aspect. 
+Note that this may underestimate the number of questions required to determine completely the profile and the rule, as these questions yield no information about the scoring vector.
+
+To estimate this number, we assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering, assuming that every linear order is equally probable as a representation of the real agent preferences.
+
+\subsection{Decrease in MMR values}
 \begin{figure}
 	\centering
 	\includegraphics[width=.45\textwidth]{linearity.png}
@@ -528,30 +569,15 @@ We next investigate the better performing Limited pessimistic strategy, because 
 	\label{fig:linearity}
 \end{figure}
 
-\begin{table}
-	\begin{center}
-		\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
-			\toprule
-			{m} & {n} & {$\frac{n}{10}$} & {$k_{MMR}$} & {$m\cdot n +m^?$} \\
-			\midrule
-			5 & 10 & 1.0 & 60 &  \\
-			5 & 15 & 1.5 & 80 &  \\
-			5 & 20 & 2.0 & 110 &  \\
-			10 & 20 & 2.0 & 340 &  \\
-			10 & 30 & 3.0 & 527 &  \\
-			15 & 30 & 3.0 &  &  \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	\caption{}
-	\label{tab:linearity}
-\end{table}
+We next wonder how fact the regret decreases, measured as a function of the number of questions asked. This is important practically because one may not be able to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease thus permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer.
 
+\subsection{Our previous presentation}
+\sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
 We test our strategies using randomly generated datasets. 
 Our first goal is to see, with a small problem size ($m = 5, n = 5$) and the (time consuming) Pessimistic strategy, if an important lowering of the maximal regret can be achieved with a reasonable number of questions. We also want to estimate how “hard” such a problem is, by using the Random strategy as a baseline. Third, we want to estimate the loss (in terms of worst regret) when switching to the faster Limited pessimistic strategy. Fourth, we want to see, on a bigger problem size ($m = 10, n = 20$), how many questions must be asked for that strategy to achieve a significant reduction of the worst regret. Finally, we want to evaluate, thanks to the Two phases strategy, the impact of varying the proportion of questions asked to the agents (with respect to questions asked to the chair) on the reduction of the worst regret.
 %We also want to see how realistic our approach is for various problem sizes, by estimating the number of questions we would have to ask before being able to reduce the worst regret significantly.
 
-The results are displayed in \cref{tab:comparison,fig:linearity,tab:twoP}, where strategies are designated by Rnd for Random, Pes. for Pessimistic, L.\ pes. for Limited pessimistic and 2 ph. for Two phases. 
+%The results are displayed in \cref{tab:comparison,fig:linearity,tab:twoP}, where strategies are designated by Rnd for Random, Pes. for Pessimistic, L.\ pes. for Limited pessimistic and 2 ph. for Two phases. 
 
 We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Limited pessimistic performs almost as well as Pessimistic; this is good news since (for $m=5$ and $n=5$), the former strategy is much faster and takes only $2.6s$ for a complete elicitation session, while the latter takes $16s$.
 %However, it takes $1000$ times more time than the \strat{Random} strategy ($16s$ of the Pessimistic compared to $0.014s$ of the Random). Moreover, the results of the \strat{Limited pessimistic}, that takes almost $80\%$ less of the time of the \strat{Pessimistic} ($2.6s$), are essentially the same.
