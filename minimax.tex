@@ -138,7 +138,6 @@ The traditional approach to social choice assumes that both the social choice fu
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015,Benabbou2016} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
-The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
 When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
 %it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
@@ -154,12 +153,31 @@ alternative using positional scoring rules and we provide incremental elicitatio
 
 \paragraph{Experimental conclusions}
 Our approach permits to compare experimentally strategies that question the chair, the voters, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ voters. First, low levels of regret can be reached by asking approximately $m n$ questions to the voters and $m$ questions to the chair. 
-Second, the decrease in MMR is approximately linear with the number of questions asked, except when the regret approaches zero.
+Second, the decrease in $\MMR$ is approximately linear with the number of questions asked, except when the regret approaches zero. \commentBN{Not true anymore, some example with Pess (former Lim.Pes.) 
+$\begin{array}{ccc}
+	k \quad & \textbf{(5,10)}&\textbf{(10,20)}\\
+	0 \quad &10&20\\
+	10 \quad &7.93&19.5\\
+	20 \quad &5.85&18.2\\
+	30 \quad &4.31&17.43\\
+	40 \quad &3.01&16.56\\
+	50 \quad &1.95&15.59\\
+	100 \quad &0.0&11.91\\
+	150 \quad &0.0&8.92\\
+	200 \quad &0.0&6.24\\
+\end{array}
+$
+}\\
 Third, the value of information of one question to the chair is similar to the value of information of one question to a voter (in the ranges we considered). Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
 
 The paper is organized as follows.
 In Section \ref{sec:background} we provide the necessary background and in Section \ref{sec:mmr} we introduce the minimax criterion, that selects a winner that minimizes the worst possible regret.
 Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minimal regret;  in Section \ref{sec:experiments} we present the empirical validation of our approach with simulations; and Section \ref{sec:conclusions} provides some final thoughts.
+
+\section{Related Work}
+%The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
+%it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
+%Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
 \section{Social choice with partial information}
 \label{sec:background}
