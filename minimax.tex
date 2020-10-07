@@ -587,7 +587,32 @@ To estimate this number, we assume the following querying process: given a parti
 	\label{fig:linearity}
 \end{figure}
 
-We next wonder how fact the regret decreases, measured as a function of the number of questions asked. This is important practically because one may not be able to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease thus permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer.
+We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease thus permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very few questions, indicating to users of our approach that asking, for example, half the number of questions required to reach a low regret value will still yield a significant gain in regret, namely, more than half the distance to the low regret value.
+
+\subsection{Value of information comparison}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+			\toprule
+			{p} & {Com. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
+			\midrule
+			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
+			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
+			100 & 2.03 & 1.56 &  &  \\
+			150 & 3.41 & 1.79 & 4.07 & 1.51 \\
+			200 &   &  &  &  \\
+			250 & 8.4 & 1.86 & 	& \\
+			300 &&&& \\
+			350 &&&& \\
+			400 &&&& \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Average $\MMR$ in problems of size $(10, 20)$ after $400$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair. (The $\MMR$ after 400 questions with Pessimistic is $0.62$ ± $0.56$)}
+	\label{tab:twoP400}
+\end{table}
+
+The experiments so far let the strategy decide the target of its questions, leaving the possibility to question the chair or the agents at each step. It may be desired in practical implementations to restrict the strategy to ask questions to agents only, or mostly, or to wonder what is lost in terms of regret by asking more questions to the chair. That may be because of unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature.
 
 \subsection{Our previous presentation}
 \sisetup{round-mode=places, round-precision=2, table-figures-integer=2, table-figures-decimal=2}
@@ -625,28 +650,6 @@ We observe that the Pessimistic strategy is able to reduce the regret almost com
 %	\caption{Average regret in problems of size $(10, 20)$ after $500$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair.}
 %	\label{tab:twoP500}
 %\end{table}
-
-\begin{table}
-	\begin{center}
-		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-			\toprule
-			{p} & {Com. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
-			\midrule
-			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
-			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
-			100 & 2.03 & 1.56 &  &  \\
-			150 & 3.41 & 1.79 & 4.07 & 1.51 \\
-			200 &   &  &  &  \\
-			250 & 8.4 & 1.86 & 	& \\
-			300 &&&& \\
-			350 &&&& \\
-			400 &&&& \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	\caption{Average $\MMR$ in problems of size $(10, 20)$ after $400$ questions and $10$ runs. Where $p$ represents the number of questions asked to the chair. (The $\MMR$ after 400 questions with Pessimistic is $0.62$ ± $0.56$)}
-	\label{tab:twoP400}
-\end{table}
 
 \section{Conclusions}  
 \label{sec:conclusions}
