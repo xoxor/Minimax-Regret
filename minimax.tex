@@ -444,8 +444,8 @@ The \strat{Extended pessimistic} strategy uses the same criterion as the pessimi
 After having selected the candidate questions, we apply the same operator as for the Pessimistic strategy: we evaluate, for each of the possible questions, the minimax regret for the two possible answers and we choose the best according to (quasi-)$\leximax$.
 We use this strategy to test whether Pessimistic performs well: depending on the quality of the heuristic of the Pessimistic strategy, it might perform nearly equally well, or perhaps even better, than Extended pessimistic, while being (much) more efficient. We expect that Extended pessimistic will be applicable only to very small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$.
 
-The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the voters first. 
-The \strat{Two phases - ac} variant first asks $p$ questions to the agents, then $k-p$ questions to the chair, using in both cases Pessimistic to select the specific questions; whereas the \strat{Two phases - ca} variant starts with $p$ questions to the chair, then questions the agents. 
+The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the voters first. It is parameterized by $p$, a value indicating the number of questions that must be asked to the chair.
+The \strat{Two phases - ca} variant first asks $p$ questions to the chair, then $k-p$ questions to the agents, using in both cases Pessimistic to select the specific questions; whereas the \strat{Two phases - ac} variant starts with $k - p$ questions to the agents, then questions the chair. 
 %Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known voting rule. 
 %And vice-versa when asking first questions to the agents, the second part of the elicitation is similar to the setting of incompletely specified scoring rule. 
 %This strategy also permits to simulate the current state of the art when considering incomplete preferences. By asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Similarly, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
@@ -463,15 +463,10 @@ This strategy can be expected to perform well when the chair assigns an importan
 	\begin{enumerate}
 		\item Pessimistic VS Elitist
 		\item Reach regret: $n/10$. For this, we need $m^x n$ questions. 
-		\item Value of information qC VS qV with 2 phases and 2phases VS interleaving
-		\begin{itemize}
-			\item Interleaving $k$ questions is similar to asking $p$ questions to the chair first and then $k - p$ to the voters when $p$ is chosen optimally. [do this a bit later]
-			\item A question to the chair has a similar value (in regret) as a qV: use the graph summarized by Olivier. Check prop. qC. Check on other sizes.
-		\end{itemize}
 		\item find a way of displaying the graph so that it is understandable in B/W.
 		\item Time comparison XPess VS Pess?
 		\item Check Pess VS XPess on other sizes.
-		\item ?
+		\item Prop qC in value of information
 	\end{enumerate}
 }
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
@@ -481,7 +476,7 @@ The preferences are generated following an impartial culture assumption: the lin
 
 We start with empty knowledge ($\pprofile = (\emptyset_j), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
 
-\subsection{Judging Pessimistic relatively}
+\subsection{Relative evaluation of Pessimistic strategy}
 \begin{table}
 	\begin{center}
 		\resizebox{\columnwidth}{!}{
@@ -523,7 +518,7 @@ We also see that Extended pessimistic performs slightly less well than Pessimist
 
 We next focus on the Pessimistic strategy, because Extended pessimistic is too slow to be ran repeatedly on much bigger problem sizes.
 
-\subsection{Judging Pessimistic absolutely}
+\subsection{Absolute evaluation of Pessimistic strategy}
 \label{sec:lowRegret}
 \begin{table}
 	\begin{center}
@@ -547,13 +542,6 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 The previous section compares Pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of voters ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the voters rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. From these numbers, we obtain the function $0.4m^{1.6}n$ as a general approximation formula for the number of questions required to reach a low regret level. We see that the number of questions required grows approximately linearly with the number of voters and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the committee, each voter will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level. For $m = 5$, that is about $6$ questions per voter; for $m = 10$, that is about $17$ questions per voter; and for $m = 15$, that is about $33$ questions per voter.
 
-\subsection{Comparing with full elicitation}
-In this work, we advocate obtaining an approximate winner without obtaining the full profile or determine completely the voting rule. The previous section evaluate the number of questions per voter to reach a low regret value.
-In this section we want to contrast our approach to one that would obtain the full profile on the one hand, and determine the voting rule on the other hand. More precisely, we want to estimate the number of questions that would be required to elicit the complete profile. We focus on the profile because eliciting the scores to full precision would require infinitely many questions, with the questions we use. 
-Note that this may underestimate the number of questions required to determine completely the profile and the rule, as questions to the agents yield no information about the scoring vector.
-
-To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
-
 \subsection{Decrease in MMR values}
 \begin{figure}
 	\centering
@@ -562,7 +550,7 @@ To estimate this number, we draw one linear order randomly (with equiprobability
 	\label{fig:linearity}
 \end{figure}
 
-We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease thus permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very few questions, indicating to users of our approach that asking, for example, half the number of questions required to reach a low regret value will still yield a significant gain in regret, namely, more than half the distance to the low regret value.
+We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating to users of our approach that asking, for example, half the number of questions required to reach a low regret value will still yield a significant gain in regret, namely, more than half the distance to the low regret value.
 
 \subsection{Value of information comparison}
 \begin{table}
@@ -587,7 +575,17 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 	\label{tab:twoP400}
 \end{table}
 
-The experiments so far let the strategy decide the target of its questions, leaving open the possibility of questioning either the chair or an agent at each step. It may be desired in practical implementations to restrict the strategy to ask questions to agents only, or mostly, or to wonder what is lost in terms of regret by asking more questions to the chair, or what is lost if the circumstances require to ask all questions to the chair first, then only question the voters, or the other way around. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} show the MMR value that is reached in a problem of size $m = 10, n = 20$ after $400$ questions, using various constraints added to the Pessimistic strategy. The constraints have this form: the strategy must ask $p$ questions to the chair first, then $400 - p$ questions to the agents; or conversely, must ask $400 - p$ questions to the agents before turning to the chair. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+%In this work, we advocate obtaining an approximate winner without determining completely the voting rule, or the profile. \Cref{sec:lowRegret} evaluates the number of questions per voter required to reach a low regret value.
+%In this section we want to explore to which extent it is possible to recommend without knowing the voting rule. One extreme, in our setting, consists in knowing only that the weights are convex, our basis hypothesis. The 
+
+%contrast our approach to one that would obtain the full profile on the one hand, and determine the voting rule on the other hand. More precisely, we want to estimate the number of questions that would be required to elicit the complete profile. We focus on the profile because eliciting the weights to full precision would require infinitely many questions, with the questions we use. 
+%Note that this may underestimate the number of questions required to determine completely the profile and the rule, as questions to the agents yield no information about the scoring vector.
+
+%To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
+
+The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. It may be desired in practical implementations to restrict the strategy to question the agents only, or mostly, or to wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} show the MMR value that is reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy. The constraints have this form: the strategy must ask $p$ questions to the chair first, then $400 - p$ questions to the agents; or conversely, must ask $400 - p$ questions to the agents before turning to the chair. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+
+These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis: when $p = 0$, no question is asked to the chair, and a good-quality recommendation is still reached after a relatively small number of questions. By contrast, the Pessimistic strategy, when unconstrained, asks X questions to the chair.
 
 \section{Conclusions}  
 \label{sec:conclusions}
@@ -596,7 +594,7 @@ The experiments so far let the strategy decide the target of its questions, leav
 In this paper we have considered a social choice setting with partial information about the agent's preferences and a partially specified voting rule.
 In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world data sets 
-suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly.
+suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly. They also highlight the importance of not insisting to obtain a completely specified voting rule, as good quality (low regret) recommendations can be achieved short of knowing the weights precisely, in our setting.
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
@@ -604,7 +602,7 @@ As part of the contribution of this work, we publish an open-source library that
 
 We mention some directions for future works.
 Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
-Second, elicitation could be extended to voting rules beyond scoring rules.
+Second, elicitation could be extended to voting rules beyond scoring rules. 
 Finally, an important direction of extension aims at studying how to elicit preferences while restraining to concrete and easy questions.
 % Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
 
