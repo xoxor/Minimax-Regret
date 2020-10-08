@@ -154,7 +154,7 @@ alternative using positional scoring rules and we provide incremental elicitatio
 \paragraph{Experimental conclusions}
 Our approach permits to compare experimentally strategies that question the chair, the voters, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ agents. First, a good quality recommendation can be reached by asking what can be considered a reasonable number of questions to the chair and agents. For example, in a problem of size $m = 5$, $n = 10$, $55$ questions in total are required to reach a good quality recommendation, whcih can be considered reasonable as these questions are to be dispatched over $10$ agents and the chair.
 Second, the quality of the recommendation increases faster than linearly with the number of questions, after only a few questions (the first few questions yield no increase in quality).
-Third, we experimentally find out that asking questions to the voters only performs similarly than asking questions both to the voters and the chair, although questions to the chair do have a positive value in terms of quality of the recommendation.
+Third, we experimentally find out that asking questions to the agents only performs similarly than asking questions both to the agents and the chair, although questions to the chair do have a positive value in terms of quality of the recommendation.
 %the value of information of one question to the chair is similar to the value of information of one question to a voter (in the ranges we considered), up to a certain proportion of questions asked to the chair. 
 Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
 
@@ -461,32 +461,18 @@ This strategy can be expected to perform well when the chair assigns an importan
 \label{sec:experiments}
 \commentOC{
 	\begin{enumerate}
-		\item Pessimistic performs best.
-		\begin{itemize}
-			\item Much better than Random
-			\item Better than XPess and Elitist!
-			\item Graph featuring (5, 10, 150, 200 runs), Random, XPess, Pess, Elitist.
-			\item And table like table 1.
-		\end{itemize}
-		\item Pess performs well.
-		\begin{itemize}
-			\item Reach regret: $n/10$. For this, we need $m^x n$ questions. TODO Olivier: find $x$. TODO Beatrice: check and compile results in a table specifically for this (see: function regret by k).
-			\item Much faster than XPess [do this much later]
-		\end{itemize}
-		\item Decrease in MMR is linear with nb of questions
-		\begin{itemize}
-			\item Redo nice graph of Beatrice with same sizes.
-		\end{itemize}
+		\item Pessimistic VS Elitist
+		\item Reach regret: $n/10$. For this, we need $m^x n$ questions. 
 		\item Value of information qC VS qV with 2 phases and 2phases VS interleaving
 		\begin{itemize}
 			\item Interleaving $k$ questions is similar to asking $p$ questions to the chair first and then $k - p$ to the voters when $p$ is chosen optimally. [do this a bit later]
 			\item A question to the chair has a similar value (in regret) as a qV: use the graph summarized by Olivier. Check prop. qC. Check on other sizes.
 		\end{itemize}
-		\item Pessimistic approx Optimistic [do this much later]
+		\item find a way of displaying the graph so that it is understandable in B/W.
+		\item Time comparison XPess VS Pess?
+		\item Check Pess VS XPess on other sizes.
+		\item ?
 	\end{enumerate}
-	TODO: find a way of displaying the graph so that it is understandable in B/W.
-	Variations around the small size. Time comparison XPess VS Pess?
-	Check Pess VS XPess on other sizes.
 }
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
 
