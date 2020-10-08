@@ -164,12 +164,13 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 
 \section{Related Work}
 \label{sec:related}
-The recent growing interest in voting theory has also led to an increase in attention to its problems. One of these, the full information assumption; which has driven an increasing number of authors to question its validity. \citet{Conitzer2005} have studied the complexity of communication, using different voting rules, determining lower and upper bounds for it. They showed that, in the worst case, the agents should send their complete set of preference for most of the rule investigated. Considering then, cases where the information of agent preferences is only partial, \citet{Konczak05} have proposed a way to compute possible and necessary winners. They also showed that, even though this computation is hard in the general case, their method is polynomial in case of positional scoring rule. Later on, for the necessary winner problem, other authors have proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}; sufficient conditions that assure tractability have been proved \citep{Pini2007}; and the uncertainty in weights has been considered \citep{Walsh2007,Viappiani2018}.
-From this starting point several studies on elicitation of agent preferences have been proposed \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Cailloux2014,Dey2016,Dey2016_2}, and analysis on when to stop the elicitation process have been conducted \citep{Walsh2009,Conitzer2009}. Although more interest 
+In a social choice context, an increasing number of authors has been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences, assuming that the voting rule is known. \Citet{Conitzer2005} have studied the complexity of communication, using different voting rules, determining lower and upper bounds for it. They showed that, in the worst case, the agents should send their complete set of preference for most of the rules they investigated. \Citet{Konczak05} have proposed a way to compute possible and necessary winners when the knowledge of agent preferences is only partial, for various voting rules. They also showed that, even though this computation is hard in the general case, their method is polynomial in case of positional scoring rule. Later on, for the necessary winner problem, other authors have proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}; sufficient conditions that ensure tractability have been proved \citep{Pini2007}.
 
-Although more interest has been shown in the incompleteness of agent preferences, several authors have considered scenarios where the voting rule is partially defined.  \citep{Stein1994, Viappiani2018}. Among others, \citet{Llamazares2013} have considered  the problem of dealing with variable weights in positional scoring rules.
+From this starting point, several studies on elicitation of agent preferences have been proposed \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Cailloux2014,Dey2016,Dey2016_2}, and analysis on when to stop the elicitation process have been conducted \citep{Walsh2009,Conitzer2009}.
 
-In this context, questions on the manipulability of voting rules have begun to arise. In fact, studies on the reactions of agents after others actions have been proposed \citep{Endriss2016,Dey2018,Dey2018_2}. It is worth precising that, in our work, we consider the agents to give their preferences in a secret way.
+Although more interest has been shown in the incompleteness of agent preferences, several authors have considered scenarios where the voting rule is partially defined \citep{Stein1994}. Among others, \citet{Llamazares2013} have considered the problem of dealing with variable weights in positional scoring rules, and \citet{Walsh2007, Viappiani2018} consider the uncertainty in weights assuming a positional scoring rule has been considered under the assumption that the agents preferences are known. \commentOC{Check Walsh.}
+
+Studies related to the manipulability of voting rules have been proposed in this context \citep{Endriss2016,Dey2018,Dey2018_2}, studying the reactions of agents when they learn incrementally about other agents preferences.
 
 \section{Social choice with partial information}
 \label{sec:background}
@@ -472,12 +473,11 @@ This strategy can be expected to perform well when the chair assigns an importan
 \commentOC{
 	\begin{enumerate}
 		\item Pessimistic VS Elitist
-		\item Reach regret: $n/10$. For this, we need $m^x n$ questions. 
+		\item Reach regret: $n/10$. For this, we need $m^x n$ questions. (Correct formula)
 		\item find a way of displaying the graph so that it is understandable in B/W.
-		\item Time comparison XPess VS Pess?
 		\item Check Pess VS XPess on other sizes.
 		\item Prop qC in value of information
-		\item Fix approximation formula
+		\item Time comparison XPess VS Pess? (If time, check our estimate)
 	\end{enumerate}
 }
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
@@ -568,7 +568,7 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 
 The previous section compares Pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.6}n$ as an approximation formula for the number of questions required to reach a low regret level. We see that the number of questions required grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the committee, each agent will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level, if this experimental formula reveals correct. For $m = 5$, that is about $6$ questions per agent; for $m = 10$, that is about $17$ questions per agent; and for $m = 15$, that is about $33$ questions per agent. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}. We constrained the Pessimistic strategy to ask questions to the agent only, and ran it on a single agent problem, with various values for $m$, to evaluate the number of questions required to elicit the full preference of an agent.
+By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.6}n$ as an approximation formula for the number of questions required to reach a low regret level. We see that the number of questions required grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the chair, each agent will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level, if this experimental formula reveals correct. For $m = 5$, that is about $6$ questions per agent; for $m = 10$, that is about $17$ questions per agent; and for $m = 15$, that is about $33$ questions per agent. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}. We constrained the Pessimistic strategy to ask questions to the agent only, and ran it on a single agent problem, with various values for $m$, to evaluate the number of questions required to elicit the full preference of an agent.
 
 \subsection{Decrease in MMR values}
 \begin{figure}
@@ -585,7 +585,7 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 	\begin{center}
 		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 			\toprule
-			{p} & {Com. Fst.} & {sd} & {Vot. Fst.} & {sd} \\
+			{p} & {2 ph.\ ca} & {sd} & {2 ph.\ ag} & {sd} \\
 			\midrule
 			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
 			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
@@ -611,7 +611,7 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 
 %To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. It may be desired in practical implementations to restrict the strategy to question the agents only, or mostly, or to wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} show the MMR value that is reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy. The constraints have this form: the strategy must ask $p$ questions to the chair first, then $400 - p$ questions to the agents; or conversely, must ask $400 - p$ questions to the agents before turning to the chair. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. It may be desired in practical implementations to restrict the strategy to question the agents only, or mostly, or to wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} show the MMR value that is reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
 
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis: when $p = 0$, no question is asked to the chair, and a good-quality recommendation is still reached after a relatively small number of questions. By contrast, the Pessimistic strategy, when unconstrained, asks X questions to the chair.
 
