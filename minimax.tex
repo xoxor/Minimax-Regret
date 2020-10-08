@@ -462,7 +462,7 @@ The \strat{Two phases - ca} variant first asks $p$ questions to the chair, then 
 
 Finally, the \strat{Elitist} strategy aims at uncovering as quickly as possible the top alternative of each agent. It asks $m-1$ questions to each agent in turn. 
 Given an agent to query $j$, it asks about an alternative currently undominated in $\ppref_j$ and any alternative that it has not yet asked about for that agent, or equivalently, any alternative that is currently incomparable to this alternative. This approach guarantees that the top alternative in the ranking of $j$ will be known after having asked $j$ exactly $m-1$ questions.
-After having asked $n (m-1)$ questions to the agents, it questions the chair only, using the same approach as the Limited strategy.
+After having asked $n (m-1)$ questions to the agents, it questions the chair only, using the same approach as the Pessimistic strategy.
 This strategy can be expected to perform well when the chair assigns an important weight to the first rank, as compared to the other ranks. It will be useful to further challenge the Pessimistic strategy, which is not specifically tailored to such a situation.
 
 %\item {\em Volumetric} strategy: chooses an agent $i$ and a query that maximizes the number of new pairwise preferences revealed given the worst response.
