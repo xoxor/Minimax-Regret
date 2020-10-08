@@ -138,7 +138,7 @@ The traditional approach to social choice assumes that both the social choice fu
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
 This observation has motivated a number of recent works considering social choice with partial preference orders \citep{Xia2008, Pini2009, Konczak05} and incremental elicitation \citep{Kalech2011, Lu2011, Naamani-Dery2015,Benabbou2016} of agent preferences. \\ Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
 %Also the first hypothesis should be relaxed considering that, in several situations, it may not be easy to precisely define the voting rule.Indeed, it is possible that the chair has some preferences over the desired aggregation method, but is not able to formalize the voting rule upfront.
-When considering positional scoring rules, several authors \citep{Stein1994, Llamazares2013, Viappiani2018} have worked on positional scoring rules with uncertain weights, assuming that the preferences of the agents are fully known.
+
 %it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
@@ -164,9 +164,12 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 
 \section{Related Work}
 \label{sec:related}
-%The work of \citet{Cailloux2014} provides elicitation methods for a quite general class of rules based on weak orders.
-%it is possible to derive dominance relations (akin to stochastic dominance) that allow to eliminate some alternatives since they will be less preferred than another one for any instantiation of the weights \citep{Stein1994}.
-%Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
+The recent growing interest in voting theory has also led to an increase in attention to its problems. One of these, the full information assumption; which has driven an increasing number of authors to question its validity. \citet{Conitzer2005} have studied the complexity of communication, using different voting rules, determining lower and upper bounds for it. They showed that, in the worst case, the agents should send their complete set of preference for most of the rule investigated. Considering then, cases where the information of agent preferences is only partial, \citet{Konczak05} have proposed a way to compute possible and necessary winners. They also showed that, even though this computation is hard in the general case, their method is polynomial in case of positional scoring rule. Later on, for the necessary winner problem, other authors have proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}; sufficient conditions that assure tractability have been proved \citep{Pini2007}; and the uncertainty in weights has been considered \citep{Walsh2007,Viappiani2018}.
+From this starting point several studies on elicitation of agent preferences have been proposed \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Cailloux2014,Dey2016,Dey2016_2}, and analysis on when to stop the elicitation process have been conducted \citep{Walsh2009,Conitzer2009}. Although more interest 
+
+Although more interest has been shown in the incompleteness of agent preferences, several authors have considered scenarios where the voting rule is partially defined.  \citep{Stein1994, Viappiani2018}. Among others, \citet{Llamazares2013} have considered  the problem of dealing with variable weights in positional scoring rules.
+
+In this context, questions on the manipulability of voting rules have begun to arise. In fact, studies on the reactions of agents after others actions have been proposed \citep{Endriss2016,Dey2018,Dey2018_2}. It is worth precising that, in our work, we consider the agents to give their preferences in a secret way.
 
 \section{Social choice with partial information}
 \label{sec:background}
@@ -539,7 +542,7 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 			5 & 20 & 2.0 & 110 &  110 \\
 			10 & 20 & 2.0 & 340 &  341 \\
 			10 & 30 & 3.0 & 527 &  512 \\
-			15 & 30 & 3.0 &  &  991 \\
+			15 & 30 & 3.0 & 919 &  991 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -569,13 +572,13 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 			\midrule
 			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
 			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
-			100 & 2.03 & 1.56 &  &  \\
+			100 & 2.03 & 1.56 & 1.88 & 1.02  \\
 			150 & 3.41 & 1.79 & 4.07 & 1.51 \\
-			200 &   &  &  &  \\
-			250 & 8.4 & 1.86 & 	& \\
-			300 &&&& \\
-			350 &&&& \\
-			400 &&&& \\
+			200 & 4.61	& 1.35  & 6.53 & 2.0  \\
+			250 & 8.4 & 1.86 & 	7.69 & 1.24 \\
+			300 &11.07 & 0.86& 11.87 & 1.25 \\
+			350 &&&15.59 & 0.6 \\
+			400 &20.0 & 0.0 & 20.0 & 20.0 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
