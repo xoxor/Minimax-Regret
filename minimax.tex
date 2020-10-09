@@ -505,46 +505,12 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting MMR and the standard deviation \textit{sd}.
 
 \subsection{Relative evaluation of Pessimistic strategy}
-\begin{table}
-	\begin{center}
-		\resizebox{\columnwidth}{!}{
-		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-			\toprule
-			{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Ex.\ pes.} & {sd} & {Eli.} & {sd} \\
-			\midrule
-			0 & 10.0 & 0.0 & 10.0 & 0.0 & 10.0 & 0.0 & 10.0 & 0.0\\
-			20 & 9.06 & 0.49 & 5.85 & 0.87 & 6.17 & 0.78 & 6.32 & 0.61\\
-			40 & 7.35 & 0.82 & 2.57 & 1.05 & 2.98 & 0.99 & 3.37 & 0.83\\
-			60 & 5.74 & 1.03 & 0.67 & 0.67 & 0.77 &0.78 & 2.33 & 1.05\\
-			80 & 4.10 & 1.15 & 0.03 & 0.12 & 0.05 & 0.18 & 2.28 & 1.05\\
-			100 & 2.63 & 1.19 & 0.0 &  0.0 & 0.0 & 0.0& 2.28 & 1.05\\
-			\bottomrule
-		\end{tabular}
-		}
-	\end{center}
-	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
-	\label{tab:smallSize}
-\end{table}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=.45\textwidth]{comparison.png}
 	\caption{Plot in support of \cref{tab:smallSize}}
 	\label{fig:smallSize}
 \end{figure}
-
-Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around this size yield similar conclusions), ran it $200$ times and averaged the results.
-\Cref{tab:smallSize} and \cref{fig:smallSize} compares some of our strategies in this case.
-We see that that Pessimistic performs better than Random and Extended pessimistic on a small size problem.
-(These figures also display the performance of the Elitist strategy, to which we will come back.)
-
-We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes only $15$ seconds for a complete elicitation session, while Extended pessimistic takes $80$ seconds.
-
-Asking Random questions does not permit to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
-
-We also see that Extended pessimistic performs slightly less well than Pessimistic. Although they come close, Pessimistic performs significantly better, in the sense that the numbers are consistently in favor of Pessimistic if running the experiment again.
-
-We next focus on the Pessimistic strategy, because Extended pessimistic is too slow to be ran repeatedly on much bigger problem sizes.
 \begin{table}
 	\begin{center}
 			\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
@@ -566,10 +532,8 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 	\caption{Average MMR in problems of size $(10, 20)$ after $k$ questions.}
 	\label{tab:biggerSize}
 \end{table}
-
 \begin{table}
 	\begin{center}
-		
 			\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 				\toprule
 				{k} & {Pes.} & {sd} & {Eli.} & {sd} \\
@@ -584,6 +548,16 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
 \end{table}
+
+Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around this size yield similar conclusions), ran it $200$ times and averaged the results.
+\Cref{fig:smallSize} compares some of our strategies in this case.
+We see that that Pessimistic performs better than Random and Extended pessimistic on a small size problem.
+(The figure also displays the performance of the Elitist strategy, to which we will come back.)
+Asking Random questions does not permit to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
+We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes only $15$ seconds for a complete elicitation session, while Extended pessimistic takes $80$ seconds. (Although they come close, Pessimistic performs significantly better, in the sense that the numbers are consistently in favor of Pessimistic if running the experiment again.)
+\Cref{tab:biggerSize} shows that these conclusions also hold for a bigger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be ran repeatedly on much bigger problem sizes.
+
+We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitsit. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
 \subsection{Absolute evaluation of Pessimistic strategy}
 \label{sec:lowRegret}
