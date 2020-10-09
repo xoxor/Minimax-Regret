@@ -500,7 +500,9 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 
 We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computinh the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
 
-\subsection{Relative evaluation of Pessimistic strategy}
+%\subsection{Relative evaluation of Pessimistic strategy}
+\paragraph{Comparison of all strategies in problem instances of small size}
+
 \begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
@@ -539,18 +541,21 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 		\bottomrule
 	\end{tabular}
 \end{table}
-
-Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around this size yield similar conclusions), ran it $200$ times and averaged the results.
+%Our first experimental result concerns small size situations. 
+In the first experiment we picked $m = 5, n = 10$ to illustrate our results (variations around this size yield similar conclusions), ran it $200$ times and averaged the results.
 \Cref{fig:smallSize} compares some of our strategies in this case.
-We see that that Pessimistic performs better than Random and Extended pessimistic on a small size problem.
-(The figure also displays the performance of the Elitist strategy, to which we will come back.)
-Asking Random questions does not permit to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
-We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes on average only $24$s for a complete elicitation session ($150$ questions), while Extended pessimistic takes $76$s. (Although they come close, Pessimistic performs significantly better, in the sense that the numbers are consistently in favor of Pessimistic if running the experiment again.)
-\Cref{tab:biggerSize} shows that these conclusions also hold for a bigger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be ran repeatedly on much bigger problem sizes.
+We see that that Pessimistic performs better than Random,  Extended pessimistic, %. % on a small size problem.
+and as well Elitist.
+%(The figure also displays the performance of the Elitist strategy).
+Asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
+We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes on average only $24$s for a complete elicitation session ($150$ questions), while Extended pessimistic takes $76$s. Notice that although they exhibit a close performance, Pessimistic performs %significantly %better, in the sense that the numbers are 
+consistently better Pessimistic in the different runs of the experiment).
+\Cref{tab:biggerSize} shows that these conclusions also hold for a problem of larger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be ran repeatedly on such instance.
 
-We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
+We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
-\subsection{Absolute evaluation of Pessimistic strategy}
+%\subsection{Absolute evaluation of Pessimistic strategy}
+\paragraph{In-dept evaluation of Pessimistic}
 \label{sec:lowRegret}
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
@@ -581,12 +586,15 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 		\bottomrule
 	\end{tabular}
 \end{table}
-
-The previous section compares Pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
+While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we focus %about the absolute quality of 
+on Pessimistic. 
+We %For practical usability,
+think that it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
 We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, in order to to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
-\subsection{Decrease in MMR values}
+%\subsection{Decrease in MMR values}
+\paragraph{Decrease in MMR values}
 %TODO balance columns appropriately before submitting
 \balance
 \begin{figure}
@@ -595,9 +603,12 @@ We see that the number of questions required to reach a low regret level grows a
 	\includegraphics[width=.45\textwidth]{linearity.png}
 \end{figure}
 
-We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating to users of our approach that halving the number of questions will do less harm than halving the gain in regret, on average.
+We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesiderable to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
+that, on average, halving the number of questions will reduce the reduction in regret by less than half.% do less harm than halving the gain in regret, on average.
 
-\subsection{Value of information comparison}
+%\subsection{Value of information comparison}
+\paragraph{Value of information comparison}
+
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair.}
 	\label{tab:twoP400}
@@ -628,7 +639,9 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 
 %To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the $\MMR$ value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the $\MMR$ value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the $\MMR$ value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” ({\em chair then agents}) and in the “ac” ({\em agents then chair}) variants. 
+The former variant first asks $q_{c}$ questions to the chair and then $400-q_{c}$ to the agents; the latter first $400-q_{c}$ to the agents and then $q_{c}$ questions to the chair.
+ These numbers are to be compared with the $\MMR$ value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
 
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair). By contrast, the Pessimistic strategy, when unconstrained, asks on average $48$ questions to the chair.
 
