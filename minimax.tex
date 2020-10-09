@@ -538,7 +538,7 @@ Our first experimental result concerns small size situations. We picked $m = 5, 
 We see that that Pessimistic performs better than Random and Extended pessimistic on a small size problem.
 (These figures also display the performance of the Elitist strategy, to which we will come back.)
 
-We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), the latter strategy is much faster and takes only $15s$ for a complete elicitation session, while the former takes $80s$.
+We observe that the Pessimistic strategy is able to reduce the regret almost completely after $30$ questions. We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes only $15$ seconds for a complete elicitation session, while Extended pessimistic takes $80$ seconds.
 
 Asking Random questions does not permit to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
 
@@ -602,7 +602,7 @@ We next focus on the Pessimistic strategy, because Extended pessimistic is too s
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Number of questions needed by Pessimistic strategy to reach $\MMR=\frac{n}{10}$ (represented by $k_{\MMR}$), for various problem sizes.}
+	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
 \end{table}
 \begin{table}
