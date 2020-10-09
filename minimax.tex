@@ -187,8 +187,8 @@ We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public
 Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
-Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold cartesian product of the linear orders over the alternatives).
-A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the emptyset (sets are used for tied winners).
+Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold Cartesian product of the linear orders over the alternatives).
+A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
 Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$ (also called the scoring vector).
 An alternative obtains a score that depends on the rank obtained in each of the preference orders:
 \begin{align}
@@ -456,12 +456,12 @@ Then, the Pessimistic strategy considers question $q_1$ more suitable than $q_2$
 \end{align}
 %This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
 We use this operator, similar to a $\max$ operator, because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
-However, to avoid the absorption property of max, we adopt a criterion closer to $\leximax$ as an aggregator: if the maximal MMR of two questions are (nearly) equal, then it considers the penalized minimal MMR values, preferring the question with the lowest value.
-(Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal MMR values, with a predominant weight to the maximal one.)
+However, to avoid the absorption property of max, we adopt a criterion closer to $\leximax$ as an aggregator: if the maximal $\MMR$ of two questions are (nearly) equal, then it considers the penalized minimal $\MMR$ values, preferring the question with the lowest value.
+(Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal $\MMR$ values, with a predominant weight to the maximal one.)
 
 The \strat{Extended pessimistic} strategy uses the same criterion as the pessimistic strategy, but extending it to a bigger set of candidate questions, the same as those considered by the Random strategy.
 These candidate questions are then evaluated using the same operator as for the Pessimistic strategy, that is, we compute the minimax regret for the two possible answers, for each candidate question, and choose the best according to (quasi-)$\leximax$.
-We use this strategy to test whether Pessimistic performs well: depending on the quality of the heuristic of the Pessimistic strategy, it might perform nearly equally well, or perhaps even better, than Extended pessimistic, while being (much) faster. Extended pessimistic is applicable only to small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute MMR twice, whose complexity is $O(nm^3)$.
+We use this strategy to test whether Pessimistic performs well: depending on the quality of the heuristic of the Pessimistic strategy, it might perform nearly equally well, or perhaps even better, than Extended pessimistic, while being (much) faster. Extended pessimistic is applicable only to small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute $\MMR$ twice, whose complexity is $O(nm^3)$.
 
 The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the agents first. It is parameterized by $q_c$, a value indicating the number of questions that must be asked to the chair.
 The \strat{Two phases - ca} variant first asks $q_c$ questions to the chair, then $k - q_c$ questions to the agents, using in both cases Pessimistic to select the specific questions; whereas the \strat{Two phases - ac} variant starts with $k - q_c$ questions to the agents, then questions the chair. 
@@ -490,7 +490,7 @@ Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy 
 The preferences are generated following an impartial culture assumption: the linear order of each agent is generated independently from the other ones and all have the same probability of appearing. The weights are generated by drawing $m-1$ differences randomly with uniform distribution, normalizing them, then ordering them, in order to ensure convexity.
 The penalty parameters for the Pessimistic and Extended pessimistic strategies are set to $p(t) = 1.1$ and $p'(t) = 10^{-6}$ when $t = $“chair” and $p(t) = 1.0$ and $p'(t) = 0$ when $t = $“agent”.
 
-We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting MMR and the standard deviation \textit{sd}.
+We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We use the oracle to answer the question and update our knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, compute the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
 
 \subsection{Relative evaluation of Pessimistic strategy}
 \begin{figure}
@@ -639,7 +639,7 @@ We mention some directions for future works.
 Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
 Second, elicitation could be extended to voting rules beyond scoring rules. 
 Finally, an important direction of extension aims at studying how to elicit preferences while restraining to concrete and easy questions.
-% Acknowledgements: We thank the reviewers for comments helping to improve the paper. 
+% Acknowledgments: We thank the reviewers for comments helping to improve the paper. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
