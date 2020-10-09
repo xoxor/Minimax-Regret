@@ -189,7 +189,7 @@ A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(
 
 Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold Cartesian product of the linear orders over the alternatives).
 A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
-Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$ (also called the scoring vector).
+Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$, also known as the {\em scoring vector}.
 An alternative obtains a score that depends on the rank obtained in each of the preference orders:
 \begin{align}
 	\label{eq:srule}
@@ -239,15 +239,16 @@ showing a complete profile of a small synthetic election and asking who should b
 \section{Robust winner determination}
 \label{sec:mmr}
 In this paper, we consider a setting where both the agent preferences and the preferences of the chair about the voting rule are incomplete.
-As reviewed in \cref{sec:related}, some authors have considered possible and necessary winners assuming a partial profile or assuming an incompletely specified scoring rule, but in typical settings, there are no necessary winner and too many possible winners.
-In practice it is often useful to declare a winner given partial information.
+As reviewed in \cref{sec:related}, some authors have considered possible and necessary winners assuming 
+either a partial profile or assuming an incompletely specified scoring rule.
 
+Notice that often there are no necessary winner and too many possible winners; it is therefore useful to declare a winner given partial information.
 As a decision criterion to determine a winner, we propose to use minimax regret. 
 Minimax regret \citep{Savage1954} is a decision criterion that has been used for robust optimization under data uncertainty \citep{Kouvelis1997} as well as in decision-making with uncertain utility values \citep{Salo2001,Boutilier2006}.
-\citet{Lu2011} have adopted minimax regret for winner determination in social choice where
+In particular, \citet{Lu2011} have adopted minimax regret for winner determination in social choice where
 the preferences of agents that are only partially known, while the social choice function is predetermined and known.
 
-In this work, we consider the simultaneous presence of uncertainty in agent preferences and in weights.
+In this work, we consider the simultaneous presence of uncertainty in agent preferences and in the weights of the scoring rule used as a social choice function.
 Using {\em maximum regret} to quantify the worst-case error, the alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
 Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given the current knowledge.
 
@@ -439,22 +440,28 @@ This strategy first chooses equiprobably whether it will ask a question about we
 Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $\bar{y}, \bar{\profile}, \bar{\w}$ are, respectively, the choice of $y$, the completion of the profile and the selection of weights for which $x^{*}$ is the minimax optimal alternative. 
 The \strat{Pessimistic} strategy considers a set of $n + m$ candidate questions: one per agent, and one per rank.
 The candidate questions to the agents use the heuristic proposed by \citet{Lu2011}: for each agent $j$, if $x^*$ and $\bar{y}$ are incomparable in $\ppref_j$, the candidate question concerns the pair $(x^*, \bar{y})$, otherwise, the candidate question concerns the pair $(x^*, z)$ for some $z$ incomparable to $x^*$ (randomly chosen), or if none such $z$ exist, the pair $(\bar{y}, z)$ for some $z$ incomparable to $\bar{y}$, or, if both $x^*$ and $\bar{y}$ are comparable to every alternatives in $\ppref_j$, any incomparable pair is picked at random. 
-To understand the intuition behind favoring these two alternatives, recall that, as shown in the proof of \cref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, an adversary should place as many alternatives as she can above $x^{*}$ if $x^* \ppref_j \bar{y}$, and between $\bar{y}$ and $x^{*}$ if $\bar{y} \ppref_j x^*$.  Asking questions involving $x^*$ or $\bar{y}$ thus has a particular chance of reducing usefully the possibilities of the adversary.
-The candidate questions to the chair are determined as in the Random strategy.
-The strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile'_1, W'_1)$, depending on the answer. 
+To understand the rationale behind the heuristic %relies oo understand the intuition behind %favoring these two alternatives, 
+recall that, as shown in the proof of \cref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, the adversary should place as many alternatives as possible above $x^{*}$ if $x^* \ppref_j \bar{y}$, and between $\bar{y}$ and $x^{*}$ if $\bar{y} \ppref_j x^*$.  
+Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
+
+\noindent The candidate questions to the chair are determined as in the Random strategy.
+The Pessimistic strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile'_1, W'_1)$, depending on the answer. 
 Define $R^{\max}_1 = \max\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)}$
 and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} p(t) + p'(t)$.
 %If $(\pprofile_1, W_1) ≥ (\pprofile'_1, W'_1)$, define $\MMR^{\max} = \MMR(\pprofile_1, W_1)$ and $\MMR^{\min} = \MMR(\pprofile'_1, W'_1)$; otherwise, define $\MMR^{\max} = \MMR(\pprofile'_1, W'_1)$ and $\MMR^{\min} = \MMR(\pprofile_1, W_1)$.
 % and and $(\pprofile^\min_2, W^\min_2)$. numbering them so that $\MMR(\pprofile_1, W_1) ≥ \MMR(\pprofile_2, W_2)$. Then the badness of the question in the worst case is:
 The terms $p(t)$ and $p'(t)$ are real numbers depending on the kind of question. These parameters are to be determined experimentally.
 Define similarly $t_2$, $R^{\max}_2$ and $R^{\min}_2$ for a question $q_2$.
-Then, the Pessimistic strategy considers question $q_1$ more suitable than $q_2$ iff
+We are now faced with the problem of aggregating these values to determine the informative value of the question. Motivated by  \citet{Cailloux2014} we adopt a pessimistic approach, reported to perform much better than optimistic aggregation.
+% use this operator, similar to a $\max$ operator, because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+However, to avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
+Pessimistic considers question $q_1$ to be better  than $q_2$ iff
 \begin{align}
-	R^{\max}_1 ≤ R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 ≤ R^{\min}_2].
+	R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2].
 \end{align}
 %This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
-We use this operator, similar to a $\max$ operator, because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
-However, to avoid the absorption property of max, we adopt a criterion closer to $\leximax$ as an aggregator: if the maximal $\MMR$ of two questions are (nearly) equal, then it considers the penalized minimal $\MMR$ values, preferring the question with the lowest value.
+%The motivation for using this operator lies in 
+In other words if the maximal {\em a posteriori} $\MMR$ of two questions are (nearly) equal, then it considers the (penalized) minimal $\MMR$ values, preferring the question with the lowest value.
 (Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal $\MMR$ values, with a predominant weight to the maximal one.)
 
 The \strat{Extended pessimistic} strategy uses the same criterion as the pessimistic strategy, but extending it to a bigger set of candidate questions, the same as those considered by the Random strategy.
