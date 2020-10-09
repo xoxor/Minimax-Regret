@@ -589,6 +589,8 @@ The results for various sizes are displayed in \cref{tab:lowRegret}.
 By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.6}n$ as an approximation formula for the number of questions required to reach a low regret level. We see that this number grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the chair, each agent will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level, if this experimental formula reveals correct. For $m = 5$, that is about $6$ questions per agent; for $m = 10$, that is about $17$ questions per agent; and for $m = 15$, that is about $33$ questions per agent. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}. We constrained the Pessimistic strategy to ask questions to the agent only, and ran it on a single agent problem, with various values for $m$, to evaluate the number of questions required to elicit the full preference of an agent.
 
 \subsection{Decrease in MMR values}
+%TODO balance columns appropriately before submitting
+\balance
 \begin{figure}
 	\caption{Average MMR after $k$ questions with Pessimistic strategy after 10 runs for different problem sizes.}
 	\label{fig:linearity}
@@ -630,16 +632,14 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 
 The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the MMR value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
 
-These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis: when $p = 0$, no question is asked to the chair, and a good-quality recommendation is still reached after a relatively small number of questions. By contrast, the Pessimistic strategy, when unconstrained, asks X questions to the chair.
+These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair). By contrast, the Pessimistic strategy, when unconstrained, asks X questions to the chair.
 
 \section{Conclusions}  
 \label{sec:conclusions}
-%TODO balance columns appropriately before submitting
-%\balance
 In this paper we have considered a social choice setting with partial information about the agent's preferences and a partially specified voting rule.
 In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world data sets 
-suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly. They also highlight the importance of not insisting to obtain a completely specified voting rule, as good quality (low regret) recommendations can be achieved short of knowing the weights precisely, in our setting.
+suggest that regret-based elicitation is effective and allow to quickly reduce worst regret significantly. They also show that good quality (low regret) recommendations can be achieved short of knowing the weights precisely or the profile completely, in our setting.
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
