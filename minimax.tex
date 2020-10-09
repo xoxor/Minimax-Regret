@@ -504,47 +504,42 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 
 \subsection{Relative evaluation of Pessimistic strategy}
 \begin{figure}
-	\centering
-	\includegraphics[width=.45\textwidth]{comparison.png}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
+	\includegraphics[width=.45\textwidth]{comparison.png}
 \end{figure}
 \begin{table}
-	\begin{center}
-			\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-				\toprule
-				{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Eli.} & {sd} \\
-				\midrule
-				0 &20.0 & 0.0 & 20.0 & 0.0&  20.0 & 0.0 \\
-				50 & 19.82 & 0.04 &	15.59 &0.56	&17.38& 0.7\\
-				100 & 19.12	& 0.26&	11.91&	1.26 &15.23& 0.73\\
-				150 & 18.06	& 0.47&	8.92&	1.53 &13.38& 1.11\\
-				200 & 16.89	& 0.62&6.24&2.02&11.76& 1.03\\
-				250 & 15.63 & 0.84&	4.64&1.72&10.56& 0.89\\
-				300 & 14.72	& 0.94&	3.01& 1.35 &10.48& 0.87\\
-				350 & 13.41	& 1.15& 1.76& 0.95&10.48& 0.86\\
-				400 & 11.98	& 0.68&	0.62&0.56 &10.48& 0.86\\
-				\bottomrule
-			\end{tabular}
-	\end{center}
 	\caption{Average MMR in problems of size $(10, 20)$ after $k$ questions.}
 	\label{tab:biggerSize}
+	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\toprule
+		{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Eli.} & {sd} \\
+		\midrule
+		0 &20.0 & 0.0 & 20.0 & 0.0&  20.0 & 0.0 \\
+		50 & 19.82 & 0.04 &	15.59 &0.56	&17.38& 0.7\\
+		100 & 19.12	& 0.26&	11.91&	1.26 &15.23& 0.73\\
+		150 & 18.06	& 0.47&	8.92&	1.53 &13.38& 1.11\\
+		200 & 16.89	& 0.62&6.24&2.02&11.76& 1.03\\
+		250 & 15.63 & 0.84&	4.64&1.72&10.56& 0.89\\
+		300 & 14.72	& 0.94&	3.01& 1.35 &10.48& 0.87\\
+		350 & 13.41	& 1.15& 1.76& 0.95&10.48& 0.86\\
+		400 & 11.98	& 0.68&	0.62&0.56 &10.48& 0.86\\
+		\bottomrule
+	\end{tabular}
 \end{table}
 \begin{table}
-	\begin{center}
-			\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-				\toprule
-				{k} & {Pes.} & {sd} & {Eli.} & {sd} \\
-				\midrule
-				0	&20.0	&0.0	&20.0	&0.0\\
-				100	&12.48	&0.93	&15.6	&0.43\\
-				200	&7.43	&1.25	&10.95	&1.12\\
-				300	&3.47	&1.32	&6.57	&0.79\\
-				\bottomrule
-			\end{tabular}
-	\end{center}
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
+	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\toprule
+		{k} & {Pes.} & {sd} & {Eli.} & {sd} \\
+		\midrule
+		0	&20.0	&0.0	&20.0	&0.0\\
+		100	&12.48	&0.93	&15.6	&0.43\\
+		200	&7.43	&1.25	&10.95	&1.12\\
+		300	&3.47	&1.32	&6.57	&0.79\\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 Our first experimental result concerns small size situations. We picked $m = 5, n = 10$ to illustrate our results (variations around this size yield similar conclusions), ran it $200$ times and averaged the results.
@@ -560,37 +555,33 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \subsection{Absolute evaluation of Pessimistic strategy}
 \label{sec:lowRegret}
 \begin{table}
-	\begin{center}
-		\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
-			\toprule
-			{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} & {$0.4 m^{1.6} n$} \\
-			\midrule
-			5 & 10 & 1.0 & 60 &  55 \\
-			5 & 15 & 1.5 & 80 &  83 \\
-			5 & 20 & 2.0 & 110 &  110 \\
-			10 & 20 & 2.0 & 340 &  341 \\
-			10 & 30 & 3.0 & 527 &  512 \\
-			15 & 30 & 3.0 & 812 &  991 \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
+	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
+		\toprule
+		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} & {$0.4 m^{1.6} n$} \\
+		\midrule
+		5 & 10 & 1.0 & 60 &  55 \\
+		5 & 15 & 1.5 & 80 &  83 \\
+		5 & 20 & 2.0 & 110 &  110 \\
+		10 & 20 & 2.0 & 340 &  341 \\
+		10 & 30 & 3.0 & 527 &  512 \\
+		15 & 30 & 3.0 & 812 &  991 \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 \begin{table}
-	\begin{center}
-		\begin{tabular}{S[table-figures-integer=2, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=2]}
-			\toprule
-			m & k \\
-			\midrule
-			5 & 6.6\\
-			10 & 24.8\\
-			15 & 48.4\\
-			\bottomrule
-		\end{tabular}
-	\end{center}
 	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
 	\label{tab:fullProfile}
+	\begin{tabular}{S[table-figures-integer=2, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=2]}
+		\toprule
+		m & k \\
+		\midrule
+		5 & 6.6\\
+		10 & 24.8\\
+		15 & 48.4\\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 The previous section compares Pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
@@ -599,37 +590,34 @@ By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.
 
 \subsection{Decrease in MMR values}
 \begin{figure}
-	\centering
-	\includegraphics[width=.45\textwidth]{linearity.png}
 	\caption{Average MMR after $k$ questions with Pessimistic strategy after 10 runs for different problem sizes.}
 	\label{fig:linearity}
+	\includegraphics[width=.45\textwidth]{linearity.png}
 \end{figure}
 
 We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating to users of our approach that havling the number of questions will do less harm than halving the gain in regret, on average.
 
 \subsection{Value of information comparison}
 \begin{table}
-	\begin{center}
-		\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-			\toprule
-			{$q_c$} & {2 ph.\ ca} & {sd} & {2 ph.\ ac} & {sd} \\
-			\midrule
-			0 & 0.66 & 0.67 & 0.65 & 0.65  \\
-			15 & 0.71 & 0.73 & 0.67	& 0.64 \\
-			30 & 0.62 & 0.5 & 0.8 & 0.62 \\
-			50 & 1.23 & 1.46 & 0.8 & 0.79 \\
-			100 & 2.03 & 1.56 & 1.88 & 1.02  \\
-			150 & 3.41 & 1.79 & 4.07 & 1.51 \\
-			200 & 4.61	& 1.35  & 6.53 & 2.0  \\
-			250 & 8.4 & 1.86 & 	7.69 & 1.24 \\
-			300 &11.07 & 0.86& 11.87 & 1.25 \\
-			350 &15.06 & 0.68&15.59 & 0.6 \\
-			400 &20.0 & 0.0 & 20.0 & 20.0 \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
 	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair.}
 	\label{tab:twoP400}
+	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\toprule
+		{$q_c$} & {2 ph.\ ca} & {sd} & {2 ph.\ ac} & {sd} \\
+		\midrule
+		0 & 0.66 & 0.67 & 0.65 & 0.65  \\
+		15 & 0.71 & 0.73 & 0.67	& 0.64 \\
+		30 & 0.62 & 0.5 & 0.8 & 0.62 \\
+		50 & 1.23 & 1.46 & 0.8 & 0.79 \\
+		100 & 2.03 & 1.56 & 1.88 & 1.02  \\
+		150 & 3.41 & 1.79 & 4.07 & 1.51 \\
+		200 & 4.61	& 1.35  & 6.53 & 2.0  \\
+		250 & 8.4 & 1.86 & 	7.69 & 1.24 \\
+		300 &11.07 & 0.86& 11.87 & 1.25 \\
+		350 &15.06 & 0.68&15.59 & 0.6 \\
+		400 &20.0 & 0.0 & 20.0 & 20.0 \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 %In this work, we advocate obtaining an approximate winner without determining completely the voting rule, or the profile. \Cref{sec:lowRegret} evaluates the number of questions per agent required to reach a low regret value.
