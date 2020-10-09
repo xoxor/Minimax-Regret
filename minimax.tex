@@ -501,7 +501,7 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computinh the resulting $\MMR$ values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting $\MMR$ and the standard deviation \textit{sd}.
 
 %\subsection{Relative evaluation of Pessimistic strategy}
-\paragraph{Comparison of all strategies in problem instances of small size}
+\paragraph{Comparison of strategies in problem instances of small size}
 
 \begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
@@ -607,7 +607,7 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 that, on average, halving the number of questions will reduce the reduction in regret by less than half.% do less harm than halving the gain in regret, on average.
 
 %\subsection{Value of information comparison}
-\paragraph{Value of information comparison}
+\paragraph{Comparison with Two Phase}
 
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair.}
