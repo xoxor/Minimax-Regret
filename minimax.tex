@@ -484,6 +484,7 @@ This strategy can be expected to perform well when the chair assigns an importan
 %	\item Prop qC in value of information
 %	\item Time comparison XPess VS Pess? (If time, check our estimate)
 %Graphs: order symbols in the legend. Reduce number of marks on the X axis.
+%MMR and sd with systematically one decimal exactly
 %\end{enumerate}
 
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
@@ -542,23 +543,23 @@ Asking Random questions does not permit to reach a low regret level even after h
 We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since (for $m = 5$ and $n = 10$), Pessimistic is much faster: it takes only $15$ seconds for a complete elicitation session, while Extended pessimistic takes $80$ seconds. (Although they come close, Pessimistic performs significantly better, in the sense that the numbers are consistently in favor of Pessimistic if running the experiment again.)
 \Cref{tab:biggerSize} shows that these conclusions also hold for a bigger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be ran repeatedly on much bigger problem sizes.
 
-We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitsit. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
+We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
 \subsection{Absolute evaluation of Pessimistic strategy}
 \label{sec:lowRegret}
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
+	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
 		\toprule
-		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} & {$0.4 m^{1.6} n$} \\
+		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
 		\midrule
-		5 & 10 & 1.0 & 60 &  55 \\
-		5 & 15 & 1.5 & 80 &  83 \\
-		5 & 20 & 2.0 & 110 &  110 \\
-		10 & 20 & 2.0 & 340 &  341 \\
-		10 & 30 & 3.0 & 527 &  512 \\
-		15 & 30 & 3.0 & 812 &  991 \\
+		5 & 10 & 1.0 & 60 \\
+		5 & 15 & 1.5 & 80 \\
+		5 & 20 & 2.0 & 110 \\
+		10 & 20 & 2.0 & 340 \\
+		10 & 30 & 3.0 & 527 \\
+		15 & 30 & 3.0 & 812 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -578,7 +579,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 
 The previous section compares Pessimistic to other strategies. In this set of experiments, we wonder about the absolute quality of Pessimistic. For practical usability, it is important to know how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.6}n$ as an approximation formula for the number of questions required to reach a low regret level. We see that this number grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. In other words, on average, assuming no questions get asked to the chair, each agent will have to answer $0.4m^{1.6}$ questions in order to to reach a low regret level, if this experimental formula reveals correct. For $m = 5$, that is about $6$ questions per agent; for $m = 10$, that is about $17$ questions per agent; and for $m = 15$, that is about $33$ questions per agent. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}. We constrained the Pessimistic strategy to ask questions to the agent only, and ran it on a single agent problem, with various values for $m$, to evaluate the number of questions required to elicit the full preference of an agent.
+We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, in order to to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
 \subsection{Decrease in MMR values}
 %TODO balance columns appropriately before submitting
