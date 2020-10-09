@@ -463,13 +463,13 @@ Then, the Pessimistic strategy considers question $q_1$ more suitable than $q_2$
 \begin{align}
 	R^{\max}_1 ≤ R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 ≤ R^{\min}_2].
 \end{align}
-This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
-We use this operator that is similar to a $\max$ operator because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+%This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
+We use this operator, similar to a $\max$ operator, because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of max, we adopt a criterion closer to $\leximax$ as an aggregator: if the maximal MMR of two questions are (nearly) equal, then it considers the penalized minimal MMR values, preferring the question with the lowest value.
 (Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal MMR values, with a predominant weight to the maximal one.)
 
-The \strat{Extended pessimistic} strategy uses the same criterion as the pessimistic strategy, but extending it to a bigger set of $m^2 n + m$ candidate questions, the same as those considered by the Random strategy.
-After having selected the candidate questions, we apply the same operator as for the Pessimistic strategy: we evaluate, for each of the possible questions, the minimax regret for the two possible answers and we choose the best according to (quasi-)$\leximax$.
+The \strat{Extended pessimistic} strategy uses the same criterion as the pessimistic strategy, but extending it to a bigger set of candidate questions, the same as those considered by the Random strategy.
+These candidate questions are then evaluated using the same operator as for the Pessimistic strategy, that is, we compute the minimax regret for the two possible answers, for each candidate question, and choose the best according to (quasi-)$\leximax$.
 We use this strategy to test whether Pessimistic performs well: depending on the quality of the heuristic of the Pessimistic strategy, it might perform nearly equally well, or perhaps even better, than Extended pessimistic, while being (much) faster. Extended pessimistic is applicable only to small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute MMR twice, whose complexity is $O(nm^3)$.
 
 The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the agents first. It is parameterized by $q_c$, a value indicating the number of questions that must be asked to the chair.
@@ -487,15 +487,13 @@ This strategy can be expected to perform well when the chair assigns an importan
 
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-\commentOC{
-	\begin{enumerate}
-		\item Comment on Table Pessimistic VS Elitist Geometric
-		\item Comment on Table Pessimistic VS Elitist VS Random
-		\item Reach regret: $n/10$. For this, we need $m^x n$ questions. Wait for more runs (Correct formula)
-		\item Prop qC in value of information
-		\item Time comparison XPess VS Pess? (If time, check our estimate)
-	\end{enumerate}
-}
+%TODO
+%\begin{enumerate}
+%	\item Reach regret: $n/10$. For this, we need $m^x n$ questions. Wait for more runs (Correct formula)
+%	\item Prop qC in value of information
+%	\item Time comparison XPess VS Pess? (If time, check our estimate)
+%\end{enumerate}
+
 Our experiments are described by topic here below. We generally use the following protocol, deviations are indicated below for each experiment.
 
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. 
@@ -587,7 +585,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 			\midrule
 			5 & 6.6\\
 			10 & 24.8\\
-			15 & \\
+			15 & 48.4\\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -607,7 +605,7 @@ By relating the sizes to the column $k_{\MMR}$, we obtain the function $0.4m^{1.
 	\label{fig:linearity}
 \end{figure}
 
-We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating to users of our approach that asking, for example, half the number of questions required to reach a low regret value will still yield a significant gain in regret, namely, more than half the distance to the low regret value.
+We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or unwanted to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating to users of our approach that havling the number of questions will do less harm than halving the gain in regret, on average.
 
 \subsection{Value of information comparison}
 \begin{table}
@@ -642,7 +640,7 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 
 %To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. It may be desired in practical implementations to restrict the strategy to question the agents only, or mostly, or to wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the MMR value that is reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the MMR value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
 
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis: when $p = 0$, no question is asked to the chair, and a good-quality recommendation is still reached after a relatively small number of questions. By contrast, the Pessimistic strategy, when unconstrained, asks X questions to the chair.
 
