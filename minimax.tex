@@ -135,18 +135,23 @@ Furthermore, it is often difficult for non-expert users to formalize a voting ru
 %Among others, Llamazares and Pe{\~{n}}a have considered  the problem of dealing with underspecified weights in positional scoring rules.
 
 In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agent preferences and the social choice rule are partially specified. We develop methods for computing the minimax-optimal
-alternative using positional scoring rules and we provide incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that determine queries, to an agent or to the chair (the person or organization supervising the voting process), that quickly reduce minimax regret. While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
+alternative using positional scoring rules and we provide incremental elicitation methods that 
+%to acquire relevant preference information; 
+at each step of the elicitation ask a question either to one of the agents or to the chair (the person or organization supervising the voting process).
+We discuss several heuristics that determine queries that quickly reduce minimax regret. 
+While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
 
 %In this paper we consider that both the agent preferences and the social choice rule are partially specified and we develop methods for computing the minimax-optimal alternative under these assumptions.
 %changed from: We develop methods for computing the minimax-optimal alternative for scoring rules with partial agent preference information and partial information about the weights of the scoring rule.
 
 %We also address the problem of elicitation, providing incremental elicitation methods to acquire relevant preference information. We then discuss several heuristics that attempt to simultaneously reduce the preference and voting rule uncertainty by determining queries, either to an agent or to the chair, that quickly reduce minimax regret.
 %In particular, our query strategies focus simultaneously on reduction of relevant preference and voting rule uncertainty.
-
-\paragraph{Experimental conclusions}
-Our approach permits to compare experimentally strategies that question the chair, the agents, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ agents. First, a good quality recommendation can be reached by asking what can be considered a reasonable number of questions to the chair and agents. For example, in a problem of size $m = 5$, $n = 10$, $55$ questions in total are required to reach a good quality recommendation, which can be considered reasonable as these questions are to be dispatched over $10$ agents and the chair.
-Second, the quality of the recommendation increases faster than linearly with the number of questions, after only a few questions (the first few questions yield no increase in quality).
-Third, we experimentally find out that asking questions only to the agents performs similarly than asking questions both to the agents and the chair, although questions to the chair do have a positive value in terms of quality of the recommendation.
+%\paragraph{Experimental conclusions}
+Our approach permits to compare experimentally strategies that question the chair, the agents, or both. We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ agents. First, a good quality recommendation can be reached by asking what can be considered a reasonable number of questions to the chair and agents. For example, in a problem of size $m = 5$, $n = 10$, only $55$ questions in total are required to reach a good quality recommendation, which can be considered reasonable as these questions are to be dispatched over $10$ agents and the chair.
+Second, the quality of the recommendation increases faster than linearly with the number of questions, 
+after an initial phase with almost no increase in quality, before slowing down and converging to an optimal recommendation. %; so it is possible to stop the elicitation early and to pick a near-optimal recommendation.
+%after only a few questions (the first few questions yield no increase in quality), so it .
+Third, we experimentally find out that asking questions only to the agents performs almost as good than interleaving questions both to the agents and the chair, although questions to the chair do have a positive value in terms of quality of the recommendation.
 %the value of information of one question to the chair is similar to the value of information of one question to a agent (in the ranges we considered), up to a certain proportion of questions asked to the chair. 
 Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
 
@@ -603,7 +608,7 @@ We see that the number of questions required to reach a low regret level grows a
 	\includegraphics[width=.45\textwidth]{linearity.png}
 \end{figure}
 
-We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesiderable to ask enough questions to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
+We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesiderable to ask all questions necessary to reach low level of regrets, as computed in \cref{sec:lowRegret}. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in $\MMR$ according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
 that, on average, halving the number of questions will reduce the reduction in regret by less than half.% do less harm than halving the gain in regret, on average.
 
 %\subsection{Value of information comparison}
@@ -638,12 +643,14 @@ that, on average, halving the number of questions will reduce the reduction in r
 %Note that this may underestimate the number of questions required to determine completely the profile and the rule, as questions to the agents yield no information about the scoring vector.
 
 %To estimate this number, we draw one linear order randomly (with equiprobability over all possible linear orders) and assume the following querying process: given a partial ordering representing our knowledge so far of an agent preferences, we pick a question equiprobably among the remaining edges, and add the edge in the appropriate direction to our partial ordering. We count the average number of questions required to reach a complete ordering.
+The experiments so far considered strategies that, at each step, mix questions to the chair and to the agents. One may wonder what is lost in terms of regret by focusing on the Two Phase strategy that asks a bulk of question of one type first and then switches to the other type.  %different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. 
+Notice that there might be practical reasons (for example, the chair may be unavailable during part of the process) for restricting a question type to a specific part of the elicitation process.
+We are also interested in analyzing the performance of different proportions of question types, since  (notice that the estimated cognitive costs may differ sensibly, as these types of questions differ in nature).
+\Cref{tab:twoP400} shows the $\MMR$ value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” ({\em chair then agents}) and in the “ac” ({\em agents then chair}) variants, for different values of $q_{c}$, the number of questions to the chair; 
+e.g. the former variant first asks $q_{c}$ questions to the chair and then $400-q_{c}$ to the agents. %, while the latter asks $400-q_{c}$ to the agents and then $q_{c}$ questions to the chair.
+These numbers are to be compared with the $\MMR$ value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the $\MMR$ value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” ({\em chair then agents}) and in the “ac” ({\em agents then chair}) variants. 
-The former variant first asks $q_{c}$ questions to the chair and then $400-q_{c}$ to the agents; the latter first $400-q_{c}$ to the agents and then $q_{c}$ questions to the chair.
- These numbers are to be compared with the $\MMR$ value reached after 400 questions with the unconstrained Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
-
-These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair). By contrast, the Pessimistic strategy, when unconstrained, asks on average $48$ questions to the chair.
+These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair). By contrast, the Pessimistic strategy (that interleaves the two types of questions) asks on average $48$ questions to the chair.
 
 \section{Conclusions}  
 \label{sec:conclusions}
