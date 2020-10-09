@@ -174,7 +174,7 @@ another line of research has dealt with scenarios where it is instead the voting
 A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
 
 More recently \citet{Llamazares2013} and \citet{Viappiani2018} %(among others \commentOC{Which others?}) 
-considered the problem of dealing with unspecified weights in positional scoring rules; the first proposed a method based on Data Envelope Analysis, while the second proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
+considered the problem of dealing with unspecified weights in positional scoring rules; the first proposed a method based on Data Envelopment Analysis (DEA), while the second proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
 The work of \citet{Cailloux2014} deals with the problem of eliciting a generic voting rule.
 
 Finally we also mention works related to the manipulability of voting rules %have been proposed in this context 
@@ -327,6 +327,7 @@ As we will show, this procedure can also be used when the weight vector is not c
 Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered by $j$ as less good than or equal to $x$, and ${\pprefinv_j}(y)$ be the set of alternatives known to be considered by $j$ as strictly better than $y$.
 \begin{claim}
 	The rank of $x$ in the PMR-maximizing linear orders of agent $j$ is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\card{\beta}$, where $\card{\beta} = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ if $(x \pprefeq_j y)$ and $\card{\beta} = 0$ otherwise.
+	\label{claim:rankPMR}
 \end{claim}
 \begin{proof}
 	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
@@ -347,9 +348,7 @@ Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered b
 		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
 	\end{equation}
 \end{proof}
-
 The claim can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
-
 \begin{claim}
 	The $\PMR$ can be written as:
 	\begin{align} 
@@ -357,12 +356,11 @@ The claim can also be understood by observing that in the case $(x \pprefeq_j y)
 		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} = \\ 
 		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 	\end{align}
-	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$.
+	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in Claim \ref{claim:rankPMR}. %\ref{claim:completion}.
 \end{claim}
 The last claim shows that PMR is linear in the weights.
 Recall that the preferences of the chair are encoded with linear constraints $\Co_{W}$.
 The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions:
-
 \begin{align}
 	\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}\\
 	\text{ s.t. } & \text{\cref{eq:monotone}} \text{ and } \text{\cref{eq:convexity}} \text{ and } \Co_W.
