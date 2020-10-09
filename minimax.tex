@@ -164,13 +164,28 @@ Then, in Section \ref{sec:elicit} we provide an interactive elicitation protocol
 
 \section{Related Work}
 \label{sec:related}
-In a social choice context, an increasing number of authors has been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences, assuming that the voting rule is known. \Citet{Conitzer2005} have studied the complexity of communication, using different voting rules, determining lower and upper bounds for it. They showed that, in the worst case, the agents should send their complete set of preference for most of the rules they investigated. \Citet{Konczak05} have proposed a way to compute possible and necessary winners when the knowledge of agent preferences is only partial, for various voting rules. They also showed that, even though this computation is hard in the general case, their method is polynomial in case of positional scoring rule. Later on, for the necessary winner problem, other authors have proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}; showed that the general case remains computationally hard even when restricting to single-peaked preferences \citep{Walsh2007}; proved sufficient conditions that ensure tractability \citep{Pini2007}.
+In the context of social choice, several authors have been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences (assuming that the voting rule is known). One early work is  by \Citet{Conitzer2005} who studied the complexity of communication, using different voting rules, determining lower and upper bounds; they showed that, in the worst case, the agents should send their complete set of preference for most of the rules they investigated. 
 
-From this starting point, several studies on elicitation of agent preferences have been proposed \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Cailloux2014,Dey2016,Dey2016_2}, and analysis on when to stop the elicitation process have been conducted \citep{Walsh2009,Conitzer2009}.
+\Citet{Konczak05} were the first to consider the problem of computing, for various voting rules, possible and necessary winners in the case of partial knowledge of agent preferences and showed that the problem is hard in the general case.
+This work was then extended by \citet{Xia2008} that showed that, while the identification of a necessary co-winner in scoring rules is polynomial,  the determination of possible co-winners is NP-hard (the authors found a mistake in a proof in the Konczak and Lang's paper that claimed it to be polynomial); they also  proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}.
+In other papers it was showed that the general case remains computationally hard even when restricting to single-peaked preferences \citep{Walsh2007};  sufficient conditions that ensure tractability were then found \citep{Pini2007}.
 
-Although more interest has been shown in the incompleteness of agent preferences, several authors have considered scenarios where the voting rule is partially defined. Among others, \citet{Llamazares2013} have considered the problem of dealing with variable weights in positional scoring rules, and \citet{Stein1994,Viappiani2018} consider the uncertainty in weights of a positional scoring rule assuming that the agents preferences are known. 
+%They also showed that, even though this computation is hard in the general case, their method is polynomial in case of positional scoring rule. 
+%Later on, for the necessary winner problem, other authors have proposed polynomial-time algorithms when using maximin and Bucklin \citep{Xia2008}; showed that the general case remains computationally hard even when restricting to single-peaked preferences \citep{Walsh2007}; proved sufficient conditions that ensure tractability \citep{Pini2007}.
 
-Studies related to the manipulability of voting rules have been proposed in this context \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011}, and strategic behaviors, when agents learn incrementally about other agents preferences, have been investigated \citep{Endriss2016,Lev2019,Annemieke2012}.
+Thereafter, noticing that in many practical situations there would be too many possible winners but no necessary winners, the importance of proposing efficient elicitation strategies has been identified. 
+Indeeed, several works addressed the problem of  elicitation of agent preferences \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Dey2016,Dey2016_2} using a variety of approaches (minimax regret, Bayesian methods, etc.), and analysis on when to stop the elicitation process \citep{Walsh2009,Conitzer2009}.
+
+While most of the focus in the research community has been in dealing with incomplete agent preferences, 
+%Although more interest has been shown in the incompleteness of agent preferences, 
+another line of research has dealt with scenarios where it is instead the voting rule that is partially defined, but the preferences are given. 
+A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
+
+More recently \citet{Llamazares2013} and \cite{Viappiani2018} (among others) considered the problem of dealing with unspecified weights in positional scoring rules; the first  \citep{Llamazares2013} proposed a method based on Data Envelope Analysis, while the second \citep{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
+We also mention the work of \citet{Cailloux2014} that deals with the problem of eliciting a generic voting rule.
+
+Finally we also mention works related to the manipulability of voting rules %have been proposed in this context 
+\citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011}, and work concerning strategic behaviors, when agents learn incrementally about other agents preferences \citep{Endriss2016,Lev2019,Annemieke2012}.
 
 \section{Social choice with partial information}
 \label{sec:background}
