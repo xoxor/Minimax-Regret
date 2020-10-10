@@ -491,10 +491,9 @@ This strategy can be expected to perform well when the chair assigns an importan
 \label{sec:experiments}
 %TODO
 %\begin{enumerate}
-%	\item Reach regret: $n/10$. For this, we need $m^x n$ questions. Wait for more runs (Correct formula)
-%Graphs: order symbols in the legend. Reduce number of marks on the X axis.
+%	\item Reach regret: $n/10$. Add considerations.
+%Graphs: Reduce number of marks on the X axis.
 %MMR and sd with systematically one decimal exactly
-%$150$ questions?
 %Pessimistic systematically better than XPess?
 %Page numbers
 %reflexive?
@@ -554,7 +553,7 @@ Our first experiment concerns small size situations.
 \Cref{fig:smallSize} compares some of our strategies in the case $m = 5, n = 10$ (variations around this size yield similar conclusions), where the results are averaged over $200$ runs.
 %(The figure also displays the performance of the Elitist strategy, to which we will come back.)
 We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
-We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $24$s for a complete elicitation session (for $m = 5$, $n = 10$ and $150$ questions), while Extended pessimistic takes $76$s. Notice that although they exhibit a close performance, Pessimistic performs %significantly %better, in the sense that the numbers are 
+We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Notice that although they exhibit a close performance, Pessimistic performs %significantly %better, in the sense that the numbers are 
 consistently better than Extended pessimistic in the different runs of the experiment).
 \Cref{tab:biggerSize} shows that these conclusions also hold for a problem of larger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be ran repeatedly on such instance.
 
