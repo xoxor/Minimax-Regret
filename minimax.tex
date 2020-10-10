@@ -457,7 +457,7 @@ and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} \ep
 % and and $(\pprofile^\min_2, W^\min_2)$. numbering them so that $\MMR(\pprofile_1, W_1) ≥ \MMR(\pprofile_2, W_2)$. Then the badness of the question in the worst case is:
 The terms $\epsilon_t$ and $\epsilon'_{t}$ are real numbers associated to the type $t$ of question; these parameters are to be determined experimentally and are used to fine control the choice of the question type.
 Define similarly $t_2$, $R^{\max}_2$ and $R^{\min}_2$ for a question $q_2$.
-We now must aggregate these values to determine the informative value of the question. We adopt a pessimistic approach, reported to perform better than optimistic aggregation \citep{Cailloux2014}, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+We are now faced with the problem of aggregating these values on order to compare the informative values of the candidate questions. We adopt a pessimistic approach, reported to perform better than optimistic aggregation \citep{Cailloux2014}, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 To avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
 Pessimistic thus considers question $q_1$ to be better  than $q_2$ iff
 \begin{align}
@@ -629,7 +629,8 @@ that, on average, halving the number of questions will reduce the reduction in r
 	\end{tabular}
 \end{table}
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. \Cref{tab:twoP400} shows the MMR value reached in a problem of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$.% ± $0.56$.
+The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. 
+\Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$. % ± $0.56$.
 The Pessimistic strategy asks on average $48$ questions to the chair in this setting.
 
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair).
