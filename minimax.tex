@@ -25,8 +25,6 @@
 \usepackage{import}
 \usepackage{algorithm, algpseudocode}
 
-\usepackage{balance} % for balancing columns on the final page
-
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
 
@@ -581,6 +579,12 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 		\bottomrule
 	\end{tabular}
 \end{table}
+
+While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
+We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
+The results for various sizes are displayed in \cref{tab:lowRegret}. 
+We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, in order to to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+
 \begin{table}
 	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
 	\label{tab:fullProfile}
@@ -594,15 +598,9 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 		\bottomrule
 	\end{tabular}
 \end{table}
-While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
-We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
-The results for various sizes are displayed in \cref{tab:lowRegret}. 
-We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, in order to to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
 %\subsection{Decrease in MMR values}
 \paragraph{Decrease in MMR values}
-%TODO balance columns appropriately before submitting
-\balance
 \begin{figure}
 	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
@@ -615,7 +613,6 @@ that, on average, halving the number of questions will reduce the reduction in r
 
 %\subsection{Value of information comparison}
 \paragraph{Comparison with Two Phase}
-
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair.}
 	\label{tab:twoP400}
