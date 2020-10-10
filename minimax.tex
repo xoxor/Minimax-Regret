@@ -509,12 +509,14 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 \begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
+	\Description{Graph showing that Pessimistic performs slightly better than Extended pessimistic, itself performing better than Elitist, itself performing much better than Random.}
 	\includegraphics[width=.45\textwidth]{comparison.png}
 \end{figure}
+\sisetup{table-number-alignment = center, table-figures-integer=2, table-figures-decimal=1, table-auto-round}
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ after $k$ questions.}
 	\label{tab:biggerSize}
-	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
 		\toprule
 		{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Eli.} & {sd} \\
 		\midrule
@@ -533,7 +535,7 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
-	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
 		\toprule
 		{k} & {Pes.} & {sd} & {Eli.} & {sd} \\
 		\midrule
@@ -560,25 +562,25 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
+	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
 		\toprule
 		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
 		\midrule
-		5 & 10 & 1.0 & 60 \\
+		5 & 10 & 1 & 60 \\
 		5 & 15 & 1.5 & 80 \\
-		5 & 20 & 2.0 & 110 \\
-		10 & 20 & 2.0 & 340 \\
-		10 & 30 & 3.0 & 527 \\
-		15 & 30 & 3.0 & 812 \\
+		5 & 20 & 2 & 110 \\
+		10 & 20 & 2 & 340 \\
+		10 & 30 & 3 & 527 \\
+		15 & 30 & 3 & 812 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 \begin{table}
 	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
 	\label{tab:fullProfile}
-	\begin{tabular}{S[table-figures-integer=2, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=2]}
+	\begin{tabular}{S[table-figures-decimal=0]S}
 		\toprule
-		m & k \\
+		{m} & {k} \\
 		\midrule
 		5 & 6.6\\
 		10 & 24.8\\
@@ -598,6 +600,7 @@ We see that the number of questions required to reach a low regret level grows a
 \begin{figure}
 	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
+	\Description{Graph showing that the MMR decreases very approximately linearly, and is convex, as a function of the number of questions.}
 	\includegraphics[width=.45\textwidth]{linearity.png}
 \end{figure}
 
@@ -610,7 +613,7 @@ that, on average, halving the number of questions will reduce the reduction in r
 \begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair.}
 	\label{tab:twoP400}
-	\begin{tabular}{S[table-figures-integer=3, table-number-alignment = right, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
 		\toprule
 		{$q_c$} & {2 ph.\ ca} & {sd} & {2 ph.\ ac} & {sd} \\
 		\midrule
@@ -624,13 +627,13 @@ that, on average, halving the number of questions will reduce the reduction in r
 		250 & 8.4 & 1.86 & 	7.69 & 1.24 \\
 		300 &11.07 & 0.86& 11.87 & 1.25 \\
 		350 &15.06 & 0.68&15.59 & 0.6 \\
-		400 &20.0 & 0.0 & 20.0 & 20.0 \\
+		400 &20.0 & 0.0 & 20.0 & 0.0 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
 The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly, as these types of questions differ in nature. 
-\Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.62$. % ± $0.56$.
+\Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$.
 The Pessimistic strategy asks on average $48$ questions to the chair in this setting.
 
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair).
