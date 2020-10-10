@@ -499,7 +499,7 @@ This strategy can be expected to perform well when the chair assigns an importan
 %\end{enumerate}
 We  performed a number of numerical experiments in order to validate our approach and to test the performance of the different elicitation strategies. %Our experiments are described by topic here below. 
 We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
-Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we randomly generate an “oracle”, containing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. 
+Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we randomly generate an “oracle”, representing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. 
 The preferences are generated following an impartial culture assumption: the linear order of each agent is generated independently from the other ones and all have the same probability of appearing. 
 For generating the weights we first draw $m - 1$ numbers uniformly at random (representing weight ``differences''), normalize and sort them; 
 a sequence of convex decreasing weight is then obtained by a decumulative sum.
@@ -581,7 +581,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, in order to to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
 \begin{table}
 	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
@@ -607,7 +607,7 @@ We see that the number of questions required to reach a low regret level grows a
 \end{figure}
 
 We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
-that, on average, halving the number of questions will reduce the reduction in regret by less than half.% do less harm than halving the gain in regret, on average.
+that, on average, halving the number of questions will only reduce the gain in regret by less than half.% do less harm than halving the gain in regret, on average.
 
 %\subsection{Value of information comparison}
 \paragraph{Comparison with Two Phase}
