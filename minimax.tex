@@ -445,11 +445,11 @@ This strategy first chooses equiprobably whether it will ask a question about we
 Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $\bar{y}, \bar{\profile}, \bar{\w}$ are, respectively, the choice of $y$, the completion of the profile and the selection of weights for which $x^{*}$ is the minimax optimal alternative. 
 The \strat{Pessimistic} strategy considers a set of $n + m$ candidate questions: one per agent, and one per rank.
 The candidate questions to the agents use the heuristic proposed by \citet{Lu2011}: for each agent $j$, if $x^*$ and $\bar{y}$ are incomparable in $\ppref_j$, the candidate question concerns the pair $(x^*, \bar{y})$, otherwise, the candidate question concerns the pair $(x^*, z)$ for some $z$ incomparable to $x^*$ (randomly chosen), or if none such $z$ exist, the pair $(\bar{y}, z)$ for some $z$ incomparable to $\bar{y}$, or, if both $x^*$ and $\bar{y}$ are comparable to every alternatives in $\ppref_j$, any incomparable pair is picked at random. 
-To understand the rationale behind the heuristic %relies oo understand the intuition behind %favoring these two alternatives, 
+To understand the rationale behind the heuristic, 
 recall that, as shown in the proof of \cref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, the adversary should place as many alternatives as possible above $x^{*}$ if $x^* \ppref_j \bar{y}$, and between $\bar{y}$ and $x^{*}$ if $\bar{y} \ppref_j x^*$.  
 Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
-
 The candidate questions to the chair are determined as in the Random strategy.
+
 The Pessimistic strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile'_1, W'_1)$, depending on the answer. 
 Define $R^{\max}_1 = \max\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)}$
 and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} \epsilon_{t} + \epsilon'_{t}$.
@@ -457,8 +457,7 @@ and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} \ep
 % and and $(\pprofile^\min_2, W^\min_2)$. numbering them so that $\MMR(\pprofile_1, W_1) ≥ \MMR(\pprofile_2, W_2)$. Then the badness of the question in the worst case is:
 The terms $\epsilon_t$ and $\epsilon'_{t}$ are real numbers associated to the type $t$ of question; these parameters are to be determined experimentally and are used to fine control the choice of the question type.
 Define similarly $t_2$, $R^{\max}_2$ and $R^{\min}_2$ for a question $q_2$.
-We are now faced with the problem of aggregating these values to determine the informative value of the question. Motivated by  \citet{Cailloux2014} we adopt a pessimistic approach, reported to perform much better than optimistic aggregation.
-% use this operator, similar to a $\max$ operator, because \citet{Cailloux2014} reported that pessimistic aggregation works much better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+We are now faced with the problem of aggregating these values to determine the informative value of the question. Motivated by  \citet{Cailloux2014} we adopt a pessimistic approach, reported to perform better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 However, to avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
 Pessimistic considers question $q_1$ to be better  than $q_2$ iff
 \begin{align}
