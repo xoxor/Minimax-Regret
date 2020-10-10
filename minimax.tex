@@ -560,17 +560,17 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
+	\begin{tabular}{S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-number-alignment = center]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]S[table-figures-integer=1, table-number-alignment = center, table-figures-decimal=0]}
 		\toprule
-		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
+		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} & {$0.4 m^{1.6} n$}\\
 		\midrule
-		5 & 10 & 1.0 & 60 \\
-		5 & 15 & 1.5 & 80 \\
-		5 & 20 & 2.0 & 110 \\
-		10 & 20 & 2.0 & 340 \\
-		10 & 30 & 3.0 & 527 \\
-		15 & 30 & 3.0 & 812 \\
-		\bottomrule
+		5 & 10 & 1.0 & 60 & 53\\
+		5 & 15 & 1.5 & 80 & 79\\
+		5 & 20 & 2.0 & 110 & 105\\
+		10 & 20 & 2.0 & 340 & 318\\
+		10 & 30 & 3.0 & 527 & 479 \\
+		15 & 30 & 3.0 & 951 & 914\\
+		\bottomrule		
 	\end{tabular}
 \end{table}
 \begin{table}
