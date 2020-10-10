@@ -449,7 +449,7 @@ To understand the rationale behind the heuristic %relies oo understand the intui
 recall that, as shown in the proof of \cref{claim:completion}, in order to increase $\PMR(x^{*},\bar{y})$, the adversary should place as many alternatives as possible above $x^{*}$ if $x^* \ppref_j \bar{y}$, and between $\bar{y}$ and $x^{*}$ if $\bar{y} \ppref_j x^*$.  
 Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
 
-\noindent The candidate questions to the chair are determined as in the Random strategy.
+The candidate questions to the chair are determined as in the Random strategy.
 The Pessimistic strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile'_1, W'_1)$, depending on the answer. 
 Define $R^{\max}_1 = \max\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)}$
 and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} \epsilon_{t} + \epsilon'_{t}$.
