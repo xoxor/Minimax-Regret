@@ -450,16 +450,16 @@ recall that, as shown in the proof of \cref{claim:completion}, in order to incre
 Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
 The candidate questions to the chair are determined as in the Random strategy.
 
-The Pessimistic strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the possible new knowledge states $(\pprofile_1, W_1)$ and $(\pprofile'_1, W'_1)$, depending on the answer. 
+The Pessimistic strategy then selects among these $n + m$ candidate questions one that leads to minimal regret in the worst case, considering both possible answers to the question, and with penalty terms depending on the kind of question. To define this comparison precisely, assume that a question $q_1$ has type $t_1$ (being “chair” or “agent”), and leads to the new knowledge states $(\pprofile_1, W_1)$ if answered positively and $(\pprofile'_1, W'_1)$ if the answer is negative. 
 Define $R^{\max}_1 = \max\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)}$
 and $R^{\min}_1 = \min\set{\MMR(\pprofile_1, W_1), \MMR(\pprofile'_1, W'_1)} \epsilon_{t} + \epsilon'_{t}$.
 %If $(\pprofile_1, W_1) ≥ (\pprofile'_1, W'_1)$, define $\MMR^{\max} = \MMR(\pprofile_1, W_1)$ and $\MMR^{\min} = \MMR(\pprofile'_1, W'_1)$; otherwise, define $\MMR^{\max} = \MMR(\pprofile'_1, W'_1)$ and $\MMR^{\min} = \MMR(\pprofile_1, W_1)$.
 % and and $(\pprofile^\min_2, W^\min_2)$. numbering them so that $\MMR(\pprofile_1, W_1) ≥ \MMR(\pprofile_2, W_2)$. Then the badness of the question in the worst case is:
 The terms $\epsilon_t$ and $\epsilon'_{t}$ are real numbers associated to the type $t$ of question; these parameters are to be determined experimentally and are used to fine control the choice of the question type.
 Define similarly $t_2$, $R^{\max}_2$ and $R^{\min}_2$ for a question $q_2$.
-We are now faced with the problem of aggregating these values to determine the informative value of the question. Motivated by  \citet{Cailloux2014} we adopt a pessimistic approach, reported to perform better than optimistic aggregation, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
-However, to avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
-Pessimistic considers question $q_1$ to be better  than $q_2$ iff
+We now must aggregate these values to determine the informative value of the question. We adopt a pessimistic approach, reported to perform better than optimistic aggregation \citep{Cailloux2014}, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
+To avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
+Pessimistic thus considers question $q_1$ to be better  than $q_2$ iff
 \begin{align}
 	R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2].
 \end{align}
