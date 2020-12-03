@@ -17,3 +17,12 @@ Code at https://github.com/oliviercailloux/j-rank-vectors.
 * Read again the reviews to check we haven't missed anything
 * Reduce the paper to 6+1 pages
 
+=== Rules for resubmission:
+Authors of papers that have been rejected at any peer-reviewed conference within the past 6 months must declare the resubmission by including a cover letter with their submission. The cover letter should summarize the main reasons for rejection and should describe the changes the authors have made to address the reviewers’ comments. The cover letter should be inserted at the beginning of the submitted PDF, along with the previous reviews and previous anonymized rejected submission, before the 6+1 pages of the paper. Such resubmissions must contain, in a single PDF file:
+
+– the cover letter, starting with the title of the rejected paper, the tracking number (if any), and the name of the conference to which this paper was submitted,
+– the full reviews from the rejected conference,
+– the anonymized version of the rejected paper, and
+– the new submission.
+
+A paper rejected from a peer-reviewed conference within the past 6 months  will be rejected without further review if the authors do not declare the resubmission.
