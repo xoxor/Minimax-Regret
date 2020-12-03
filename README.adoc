@@ -1,0 +1,19 @@
+= Minimax-Regret
+A method for approximate winner determination and an incremental elicitation protocol based on minimax regret.
+
+Code at https://github.com/oliviercailloux/j-rank-vectors.
+
+
+== TODO
+* Add to the paper:
+** the example written in the rebuttal
+** that we use similar size for our experiments than the one used in the paper of Oliver & Ulle
+* Add references proposed by R1 and by Olivier (Sertel 2005)
+* Correct typos 
+* Improve the code
+* Rewrite the proof of claim 4 (Olivier)
+* Rephrase the introduction (Paolo)
+* Find dataset in preflib
+* Read again the reviews to check we haven't missed anything
+* Reduce the paper to 6+1 pages
+
