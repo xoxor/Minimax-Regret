@@ -1,17 +1,12 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+% The file ijcai21.sty is NOT the same than previous years'
+\usepackage{ijcai21}
+\usepackage{times}
+\usepackage{soul}
 
-%%% LaTeX Template for AAMAS-2021 (based on sample-sigconf.tex)
-%%% Prepared by Natasha Alechina and Ulle Endriss (version 2020-08-06)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% Start your document with the \documentclass command.
-%%% Use the first variant below for the final paper.
-%%% Use the second variant below for submission.
-
-\PassOptionsToPackage{hypertexnames=false, pdfusetitle, linkbordercolor={1 1 1}, citebordercolor={1 1 1}, urlbordercolor={1 1 1}}{hyperref}
-%\documentclass[sigconf]{aamas} 
-\documentclass[sigconf, anonymous]{aamas}
+\usepackage[hidelinks]{hyperref}
 
 %%% Load required packages here (note that many are included already).
 \input{preamble/packages}
@@ -24,31 +19,15 @@
 %for appendix
 \usepackage{import}
 \usepackage{algorithm, algpseudocode}
+\usepackage{booktabs}
 
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
 
-%TODO remove this before submission, check vboxes
-\vbadness=10000
+\pdfinfo{
+	/TemplateVersion (IJCAI.2021.0)
+}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% AAMAS-2021 copyright block (do not change!)
-
-\setcopyright{ifaamas} 
-\acmConference[AAMAS '21]{Proc.\@ of the 20th International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2021)}{May 3--7, 2021}{London, UK}{U.~Endriss, A.~Now\'{e}, F.~Dignum, A.~Lomuscio (eds.)}
-\copyrightyear{2021}
-\acmYear{2021}
-\acmDOI{}
-\acmPrice{}
-\acmISBN{}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% Use this command to specify your EasyChair submission number.
-%%% In anonymous mode, it will be printed on the first page.
-
-\acmSubmissionID{554}
 
 %%% Use this command to specify the title of your paper.
 
@@ -56,55 +35,18 @@
 
 %%% Provide names, affiliations, and email addresses for all authors.
 
-\author{Beatrice Napolitano}
-\affiliation{
-	\institution{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE}
-	\city{75016 Paris}
-	\state{France}}
-\email{beatrice.napolitano@dauphine.fr}
+\author{
+	Beatrice Napolitano$^1$\footnote{Contact Author}\and
+	Olivier Cailloux$^1$\and
+	Paolo Viappiani$^2$\\
+	\affiliations
+	$^1$Université Paris-Dauphine, Université PSL, CNRS, LAMSADE\\
+	$^2$LIP6, UMR 7606, CNRS and Sorbonne Universit\'e\\
+	\emails
+	\{beatrice.napolitano, olivier.cailloux\}@dauphine.fr,
+	paolo.viappiani@lip6.fr
+}
 
-\author{Olivier Cailloux}
-\affiliation{
-	\institution{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE}
-	\city{75016 Paris}
-	\state{France}}
-\email{olivier.cailloux@dauphine.fr}
-
-\author{Paolo Viappiani}
-\affiliation{
-	\institution{LIP6, UMR 7606, CNRS and Sorbonne Universit\'e}
-	\city{Paris}
-	\state{France}}
-\email{paolo.viappiani@lip6.fr}
-
-%%% Use this environment to specify a short abstract for your paper.
-
-\begin{abstract}
-Social choice deals with the problem of determining a consensus choice from the preferences of different agents.
-In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
-This assumption of full preference information has recently been questioned by a number of researchers.
-Methods for eliciting the voting rule when the preferences of the agents are completely known have been proposed, as well as techniques that consider the opposite scenario. %, viewing the voting rule as representing the preference of the chair. 
-
-This article goes one step further by tackling one important new case, namely, when both the voting rule and the agents preferences are partially known. It also permits to obtain a progressively refined recommendation without requiring to achieve full knowledge of either sort of information.
-%However, there may be cases where both of them are only partially known.
-%This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
-This is useful because providing such information is often costly: the chair may find it hard to specify a rule completely; agents may need time to form reflective preferences.
-
-Focusing on positional scoring rules, we assume that the chair, while not able to give a precise definition of the rule, is capable of answering simple questions requiring to pick a winner from a specific example profile. In addition, the preferences of the agents are incrementally acquired by asking comparison queries. 
-In this setting, we propose a method for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that question the chair and the agents in order to acquire the most relevant information for quickly converging to a near-optimal alternative. Finally, we study these strategies experimentally in order to validate our approach and obtain practical guidelines.
-\end{abstract}
-
-%%% The code below was generated by the tool at http://dl.acm.org/ccs.cfm.
-%%% Please replace this example with code appropriate for your own paper.
-%NB Olivier: suppresses the warning.
-\settopmatter{printccs=false}
-\ccsdesc[500]{Computing methodologies~Knowledge representation and reasoning}
-
-\keywords{Uncertainty in AI, Computational Social Choice, Preference Elicitation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% Include any author-defined commands here.
          
 \newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
 
@@ -112,19 +54,22 @@ In this setting, we propose a method for robust approximate winner determination
 
 \begin{document}
 
-%%% The following commands remove the headers in your paper. For final 
-%%% papers, these will be inserted during the pagination process.
-
-\pagestyle{fancy}
-\fancyhead{}
-\setlength{\footskip}{1.6cm}
-\cfoot{\thepage}
-
-%%% The next command prints the information defined in the preamble.
-
 \maketitle 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+	Social choice deals with the problem of determining a consensus choice from the preferences of different agents.
+	In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
+	This assumption of full preference information has recently been questioned by a number of researchers.
+	Methods for eliciting the voting rule when the preferences of the agents are completely known have been proposed, as well as techniques that consider the opposite scenario. %, viewing the voting rule as representing the preference of the chair. 
+	
+	This article goes one step further by tackling one important new case, namely, when both the voting rule and the agents preferences are partially known. It also permits to obtain a progressively refined recommendation without requiring to achieve full knowledge of either sort of information.
+	%However, there may be cases where both of them are only partially known.
+	%This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
+	This is useful because providing such information is often costly: the chair may find it hard to specify a rule completely; agents may need time to form reflective preferences.
+	
+	Focusing on positional scoring rules, we assume that the chair, while not able to give a precise definition of the rule, is capable of answering simple questions requiring to pick a winner from a specific example profile. In addition, the preferences of the agents are incrementally acquired by asking comparison queries. 
+	In this setting, we propose a method for robust approximate winner determination with minimax regret. We also provide an interactive elicitation protocol based on minimax regret and develop several query strategies that question the chair and the agents in order to acquire the most relevant information for quickly converging to a near-optimal alternative. Finally, we study these strategies experimentally in order to validate our approach and obtain practical guidelines.
+\end{abstract}
 
 \section{Introduction}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
@@ -520,7 +465,7 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 \begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
-	\Description{Graph showing that Pessimistic performs slightly better than Extended pessimistic, itself performing better than Elitist, itself performing much better than Random.}
+%	\Description{Graph showing that Pessimistic performs slightly better than Extended pessimistic, itself performing better than Elitist, itself performing much better than Random.}
 	\includegraphics[width=.45\textwidth]{comparison.png}
 \end{figure}
 \sisetup{table-number-alignment = center, table-figures-integer=2, table-figures-decimal=1, table-auto-round}
@@ -613,7 +558,7 @@ We see that the number of questions required to reach a low regret level grows a
 \begin{figure}
 	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
-	\Description{Graph showing that the MMR decreases very approximately linearly, and is convex, as a function of the number of questions.}
+	%\Description{Graph showing that the MMR decreases very approximately linearly, and is convex, as a function of the number of questions.}
 	\includegraphics[width=.45\textwidth]{linearity.png}
 \end{figure}
 
@@ -692,9 +637,7 @@ Finally, an important direction of extension aims at studying how to elicit pref
 %\bibliographystyle{abbrvnat} 
 %\bibliography{biblio}
 
-\bibliographystyle{ACM-Reference-Format} 
-%TODO remove this when submitting, and consider solving the vertical overflows
-\vfuzz=5pt
+\bibliographystyle{named}
 \bibliography{biblio}
 \end{document}
 
