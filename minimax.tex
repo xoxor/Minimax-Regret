@@ -24,6 +24,16 @@
 }
 
 
+%I find these settings useful in draft mode. Should be removed for final versions.
+	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
+		\tolerance=2000
+	%Accept overfull hbox up to...
+		\hfuzz=2cm
+	%Reduces verbosity about the bad line breaks.
+		\hbadness 5000
+	%Reduces verbosity about the underful vboxes.
+		\vbadness=6000
+
 %%% Use this command to specify the title of your paper.
 
 \title{Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
@@ -270,7 +280,7 @@ As we will show, this procedure can also be used when the weight vector is not c
 		y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
 	\end{align} 
 \end{claim}
-\begin{proof}[Sketch of proof]
+\begin{proof}[Sketch]
 	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
 	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
 	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
