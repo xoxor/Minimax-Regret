@@ -317,7 +317,7 @@ The claim can also be understood by observing that in the case $(x \pprefeq_j y)
 	The $\PMR$ can be written as:
 	\begin{align} 
 		\PMR(x,y; \pprofile, W)  
-		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} = \\ 
+		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
 		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 	\end{align}
 	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in Claim \ref{claim:rankPMR}. %\ref{claim:completion}.
@@ -374,25 +374,20 @@ Our approach is analogous to that of decision theorists with preference elicitat
 Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
 \begin{claim}
-	Given a rational $\lambda = p/q$ and a rank $r$ between $1$ and $m - 2$, the profile named $P'$ in the ensuing description is such that, for any weight vector $\w \in \W$, $a \in f(P')$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P')$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
+	Given a rational $\lambda = p/q > 1$ and a rank $r$ between $1$ and $m - 2$, there exists a profile $P$ such that, for any weight vector $\w \in \W$, $a \in f(P)$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P)$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
 \end{claim}
 \begin{proof}
-	Observe that the question may be defined equivalently as $q \cdot w_{r} + p \cdot w_{r+2} ≥ (p + q) \cdot w_{r+1}$, where $p, q$ are natural numbers. 
-	As a first attempt to make this question concrete, we could define a profile $P$ containing $p+q$ agents in such a way that an alternative $a$ receives $q$ times the rank $r$ and $p$ times the rank $r+2$, and an alternative $b$ receives $p+q$ times the rank $r+1$. 
-	Observing that the score of $a$ in that profile is exactly the left hand side of the question, and that the score of $b$ is the right hand side, intuition suggests that observing whether the chair picks $a$ or $b$ as winner will let us determine which side is greater; equality occurring when the chair declares $a$ and $b$ as tied for the victory. 
-	However, we still need to complete the profile, thus, come up with other $m-2$ alternatives defined so that each agent in the resulting profile has placed exactly one alternative in each rank.
-	And we must ensure, doing this, that these other alternatives are not better than $a$ or $b$: if the chair picks a different alternative $c$, it tells us that the chair prefers $c$ to both $a$ and $b$, 
-	but it generally does not  answer the question we are interested in. 
-	Taking $p = q = 1$, $m=4$, $r=2$, we see that such a completion may be impossible. Luckily, this problem can be worked around, at the price of increasing the number of agents. 
+	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
+	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
+	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
+	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
+	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
 	
-	First build a temporary profile $P$ of $p+q$ agents with $a$ and $b$ ranked as just described. Complete it with $m-2$ alternatives ranked in arbitrary orders so that the resulting profile has complete strict rankings for each of the $p+q$ agents. Now we will make the other alternatives as bad as desired by adding agents to $P$ that appreciate $a$ and $b$ more than the other alternatives, thus building a profile $P'$ in which, whatever the weights, $c$ may not have a better score than $a$. Observe that if we add $\delta$ agents (with $\delta$ a natural number) that put $a$ at first rank and $b$ at second rank, and $\delta$ agents that put $b$ at first rank and $a$ at second rank, we do not change the difference of the scores of $a$ and $b$, and thus, observing the chair choosing $a$ or $b$ still answers the question.
-	% Choose arbitrarily a matching of the remaining $m-2$ alternatives to the ranks $3$ to $m$, say, $c \mapsto 3$, $d \mapsto 4$, and so on. The first $\delta$ supplementary agents, who rank $a$ first and $b$ second, rank the other alternatives as the just defined mapping suggests. The other $\delta$ supplementary agents, who rank $b$ first and $a$ second, use the opposite ranking for the remaining alternatives, say, $c \mapsto m$, $d \mapsto m-1$, and so on. 
+	Define $P$ as the profile of $3 (p + q)$ voters containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
+	As a result, $a$ obtains the following ranks: $q$ times $r$, $p$ times $r + 2$, $p + q$ times first, and $p + q$ times second. The alternative $b$ obtains the ranks $r + 1$, $2$ and $1$, each $p + q$ times. Consider any alternative $c \in A \setminus \set{a, b}$. Its score is maximal when it comes first in $>_1$, first in $>_2$ and first in $>$, by convexity of the weights. In that case, $c$ is positioned at the ranks $1$, $3$ and $m$, each $p + q$ times. 
 	
-	We can prove that, for $\delta = p+q$, and whatever the weight vector $\w \in \W$, no alternative, except possibly $b$, has a better score than $a$. 
-	(In fact, as the construction will exhibit, they are all worse than both $a$ and $b$, but the weaker fact is enough for our claim.)
-	Pick any alternative $c$ that is not $a$ or $b$. 
-	%Let $c_t$ denote the number of times $c$ reaches rank $t$ or better in $P$. Note that $c_m = p+q$ and $c_t ≤ p + q, 1 ≤ t ≤ m$. Define $a_t$ similarly, for the alternative $a$. By construction, $a_r = q$, $a_{r+2} = q+p = a_m$. 
-	Define $c'_t$ as the number of times $c$ gets rank $t$ or better in $P'$, and define $a'_t$ similarly. Now $a'_1 ≥ \delta, a'_t ≥ 2\delta \text{ for } 2 ≤ t < m, a'_{r+2} = q+p+2\delta = a'_m$. To obtain upper bounds for $c'_t$, assume $c$ is ranked first by the $p+q$ agents in $P$. By our construction, the  $2 \delta$ new agents of $P'$ give to $c$ the ranks $3$ and $m$, or $4$ and $m-1$, … Observe that the score of $c$ is maximal for attribution $(3, m)$, by convexity of the weights. Therefore, in the best case for $c$, $c'_1 ≤ p + q, c'_2 ≤ p+q, c'_t ≤ p+q+\delta \text{ for } 3 ≤ t < m, c'_m ≤ p+q+2\delta$. Observe that $a'_t ≥ c'_t, 1 ≤ t ≤ m$ (with strict inequality for $t=2$). Because weights are non increasing, this guarantees, with $\delta = p + q$, that the score of $a$ is not lower than the one of $c$.
+	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
+	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
 \end{proof}
 At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
