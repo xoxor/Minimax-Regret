@@ -5,7 +5,7 @@
 \usepackage{ijcai21}
 \usepackage{times}
 \usepackage{soul}
-
+\usepackage{amsthm}
 \usepackage[hidelinks]{hyperref}
 
 %%% Load required packages here (note that many are included already).
@@ -15,6 +15,7 @@
 \usepackage{import}
 \usepackage{algorithm, algpseudocode}
 \usepackage{booktabs}
+
 
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
@@ -271,7 +272,7 @@ We consider now a procedure for completing a partial profile that was first prop
 a fixed weight vector.
 As we will show, this procedure can also be used when the weight vector is not completely known. Let us write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$.
 
-\begin{claim} \label{claim:completion}
+\begin{proposition} \label{claim:completion}
 	There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
 	\begin{align} 
 		\label{eq:complx}
@@ -279,21 +280,21 @@ As we will show, this procedure can also be used when the weight vector is not c
 		\label{eq:comply}
 		y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
 	\end{align} 
-\end{claim}
-\begin{proof}[Sketch]
+\end{proposition}
+\begin{proof*}[Sketch]
 	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
 	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
 	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
 	Furthermore, the first objective must take priority over the second one: when an alternative should go above $x$ according to the first objective (because $¬(x \pprefeq_j a)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$), then $a$ should be put above $x$ (irrespective of whether $a \pprefeq_j y$), which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
 	This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
-\end{proof}
+\end{proof*}
 
 Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered by $j$ as less good than or equal to $x$, and ${\pprefinv_j}(y)$ be the set of alternatives known to be considered by $j$ as strictly better than $y$.
-\begin{claim}
+\begin{proposition}
 	The rank of $x$ in the PMR-maximizing linear orders of agent $j$ is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\card{\beta}$, where $\card{\beta} = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ if $(x \pprefeq_j y)$ and $\card{\beta} = 0$ otherwise.
 	\label{claim:rankPMR}
-\end{claim}
-\begin{proof}
+\end{proposition}
+\begin{proof*}
 	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
 	\begin{equation}
 		\label{eq:betteryinter}
@@ -311,18 +312,18 @@ Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered b
 		a \pref_j y ⇔ 
 		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
 	\end{equation}
-\end{proof}
-The claim can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
-\begin{claim}
+\end{proof*}
+The proposition can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
+\begin{proposition}
 	The $\PMR$ can be written as:
 	\begin{align} 
 		\PMR(x,y; \pprofile, W)  
 		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
 		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 	\end{align}
-	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in Claim \ref{claim:rankPMR}. %\ref{claim:completion}.
-\end{claim}
-The last claim shows that PMR is linear in the weights.
+	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in \cref{claim:rankPMR}. %\ref{claim:completion}.
+\end{proposition}
+The last proposition shows that PMR is linear in the weights.
 Recall that the preferences of the chair are encoded with linear constraints $\Co_{W}$.
 The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions:
 \begin{align}
@@ -373,10 +374,10 @@ Our approach is analogous to that of decision theorists with preference elicitat
 
 Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
-\begin{claim}
+\begin{proposition}
 	Given a rational $\lambda = p/q > 1$ and a rank $r$ between $1$ and $m - 2$, there exists a profile $P$ such that, for any weight vector $\w \in \W$, $a \in f(P)$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P)$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
-\end{claim}
-\begin{proof}
+\end{proposition}
+\begin{proof*}
 	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
 	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
 	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
@@ -388,7 +389,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 	
 	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
 	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
-\end{proof}
+\end{proof*}
 At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
 \paragraph{Elicitation strategies}
@@ -537,7 +538,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-We see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives, for the sizes we considered. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
 \begin{table}
 	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
@@ -563,7 +564,7 @@ We see that the number of questions required to reach a low regret level grows a
 \end{figure}
 
 We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
-that, on average, halving the number of questions will only reduce the gain in regret by less than half.  
+that, on average, halving the number of questions will only reduce the gain in regret by less than half. \commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
 
 At the start of the elicitation, the space of uncertainty is so large that the adversary can attain the maximum possible value of regret; multiple answers are needed to constrain her enough for the MMR to start decreasing. When approaching optimality, the pace of MMR reduction decreases.
 
@@ -608,7 +609,7 @@ suggest that regret-based elicitation is effective and allows to quickly reduce 
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
-As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments, and more (url not displayed for anonymity reasons).
+As part of the contribution of this work, we publish an open-source library that allows to reproduce our experiments, and serve as a basis for further research (url not displayed for anonymity reasons).
 
 We mention some directions for future works.
 Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
