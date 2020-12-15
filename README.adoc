@@ -11,17 +11,17 @@ Code at https://github.com/oliviercailloux/minimax.
 * Find dataset in preflib (Bea)
 ** Check if there is something applicable to our case: job applications
 * Reduce the paper to 6+1 pages
-* Figure 1, X axis label should say "Number of questions" (Bea)
-** Also, the labels are not consistent among figures
+* +++<del>+++Figure 1, X axis label should say "Number of questions" (Bea)+++</del>+++
+** +++<del>+++Also, the labels are not consistent among figures+++</del>+++
 * Using \succeq^p_j(x) to denote the set of alternatives weakly worse than x can be confusing. Please consider using a different notation such as A^(\succeq^p_j,x). 
-** https://en.wikipedia.org/wiki/Upper_set [see Upper Set]
+** https://en.wikipedia.org/wiki/Upper_set[see Upper Set]
 
 
 == To discuss:
 
 * In several places you use the phrase "permits to" when it might be clearer to say "allows for". 
-** Those don't have the same meanings at all see https://dictionary.cambridge.org/dictionary/english/allow-for-sth [this]
-** Permit appears to be more formal than allow see https://dictionary.cambridge.org/grammar/british-grammar/allow-permit-or-let?q=Allow%2C+permit+or+let [this]
+** Those don't have the same meanings at all see https://dictionary.cambridge.org/dictionary/english/allow-for-sth[this]
+** Permit appears to be more formal than allow see https://dictionary.cambridge.org/grammar/british-grammar/allow-permit-or-let?q=Allow%2C+permit+or+let[this]
 
 
 === Rules for resubmission:
