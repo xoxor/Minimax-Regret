@@ -594,8 +594,61 @@ For the experiments we performed, we see that the number of questions required t
 %\subsection{Decrease in MMR values}
 \paragraph{Decrease in MMR values}
 
+%\begin{figure}
+%	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
+%	\label{fig:linearity}
+%	\begin{tikzpicture}
+%		\pgfplotsset{
+%			every axis legend/.append style={
+%				at={(0.5,1.03)},
+%				anchor=south
+%			},
+%		}
+%		\begin{axis}[
+%			y=3.5,
+%			legend columns=3,
+%			xlabel=Number of Questions,
+%			ylabel=Avg. Regret,
+%			ytick={0,5,10,15,20,25,30,35,146},
+%			xtick distance=100,
+%			ytick distance=5,
+%			xtick pos=left,
+%			ymajorgrids=true,
+%			ytick style={draw=none},
+%			ymin=0,
+%			ymax=146,
+%			xmin=0,
+%			xmax=1000,
+%			yticklabels={0,5,10,15,20,25,30,35,146}]
+%			
+%			\addlegendimage{mark=triangle*,teal,mark size=2}
+%			\addlegendimage{mark=*,violet,mark size=2}
+%			\addlegendimage{mark=square*,green,mark size=2}
+%			\addlegendimage{mark=diamond*,red,mark size=2}
+%			\addlegendimage{mark=pentagon*,cyan,mark size=2}
+%			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
+%			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
+%			
+%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/linearity.dat};
+%			\addlegendentry{m=5, n=10}
+%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/linearity.dat};
+%			\addlegendentry{m=5, n=15}
+%			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/linearity.dat};
+%			\addlegendentry{m=5, n=20}
+%			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity.dat};
+%			\addlegendentry{m=10, n=20}
+%			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/linearity.dat};
+%			\addlegendentry{m=10, n=30}
+%			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
+%			\addlegendentry{m=15, n=30}
+%			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {400}, brown] table [x=k, y=courses]{data/linearity.dat};
+%			\addlegendentry{courses}
+%		\end{axis}
+%	\end{tikzpicture}
+%\end{figure}
+
 \begin{figure}
-	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
+	\caption{Logarithmic plot representing the MMR reduction after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
 	\begin{tikzpicture}
 		\pgfplotsset{
@@ -604,22 +657,23 @@ For the experiments we performed, we see that the number of questions required t
 				anchor=south
 			},
 		}
-		\begin{axis}[
-			y=3.5,
+		\begin{semilogyaxis}[
 			legend columns=3,
 			xlabel=Number of Questions,
 			ylabel=Avg. Regret,
-			ytick={0,5,10,15,20,25,30,35},
-			xtick distance=100,
-			ytick distance=5,
-			xtick pos=left,
+			log basis y= 10,
+			ymin=10e-2,
+			ymax=10e2,
+			ytick={10e-2,1,2,10,15,20,30,146},
+			yticklabels={0.01,1,2,10,15,20,30,146},
 			ymajorgrids=true,
 			ytick style={draw=none},
-			ymin=0,
-			ymax=35,
 			xmin=0,
-			xmax=800,
-			yticklabels={0,5,10,15,20,25,30,35}]
+			xmax=1000,
+			xtick={0,100,200,300,400,500,600,700,800,900,1000},
+			xticklabels={0,100,200,300,400,500,600,700,800,900,1000},
+			ticklabel style = {font=\tiny}
+			]
 			
 			\addlegendimage{mark=triangle*,teal,mark size=2}
 			\addlegendimage{mark=*,violet,mark size=2}
@@ -627,10 +681,11 @@ For the experiments we performed, we see that the number of questions required t
 			\addlegendimage{mark=diamond*,red,mark size=2}
 			\addlegendimage{mark=pentagon*,cyan,mark size=2}
 			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
+			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
 			
-			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/linearity.dat};
+			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal, domain=-5:5] table [x=k, y=5.10]{data/linearity.dat};
 			\addlegendentry{m=5, n=10}
-			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/linearity.dat};
+			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet,domain=-5:5] table [x=k, y=5.15]{data/linearity.dat};
 			\addlegendentry{m=5, n=15}
 			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/linearity.dat};
 			\addlegendentry{m=5, n=20}
@@ -640,9 +695,12 @@ For the experiments we performed, we see that the number of questions required t
 			\addlegendentry{m=10, n=30}
 			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
 			\addlegendentry{m=15, n=30}
-		\end{axis}
+			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {400}, brown] table [x=k, y=courses]{data/linearity.dat};
+			\addlegendentry{courses}
+		\end{semilogyaxis}
 	\end{tikzpicture}
 \end{figure}
+
 %\begin{figure}
 %	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
 %
