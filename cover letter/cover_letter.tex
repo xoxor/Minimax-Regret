@@ -1,0 +1,28 @@
+(Rebuttal)\\
+Our proposal is methodologically innovative: it addresses in a new way the difficult problem of eliciting preferences about voting rules. It opens up a novel path to gather and exploit preferential information about voting rules, in parallel with more classical preferential information about the alternatives under scrutiny. As a result, multiple challenging research questions open up, several of which are raised by the reviewers. We warmly thank them for these observations.
+
+As reviewer 1 points out, one could simply ask for direct information about the parameters of the rules, such as the weight vector. But it is unclear whether the answers to such questions would be meaningful. For example, in many cases, the chair (supposed to be human) may not know whether the largest weight should be twice, or three times, the weight associated with the second rank.
+
+We ask the chair which alternative should win given a concrete profile. Such questions have precise semantics whose understanding is shared by the chair. This way of asking questions is sufficiently natural that it has been used in experimental settings investigating the feeling of justice of individuals (Does majoritarian approval matter in selecting a social choice rule? An exploratory panel study, Ebru Giritligil and Sertel, Social Choice and Welfare 25(1):43-73, 2005). To the best of our knowledge, the use of such questions to systematically guide an elicitation process is novel. We will highlight this aspect in the paper.
+
+Our approach is analogous to that of decision theorists with preference elicitation: a large stream of research considers more meaningful to ask direct choice questions ("please choose either a or b") than to question the decision maker about the shape of its utility function. The former are considered "observable": acts of choice are translated to preference statements.
+
+Concerning the hypothesis of convexity raised by reviewer 1, we need to assume that we look for a function inside a specific class of functions (here, the scoring rules with convex weights) because the class of all possible functions is too large. This allows for mixing an axiomatic basis with more precise "observable" questions; again, as it is usually done in decision theory (which often assumes the Subjective Expected Utility axioms). The use of convex weights is a natural and common assumption: losing ranks at the top of the ranking is more damaging than losing ranks at the bottom.
+
+A concrete application of our work might be a committee that is about to hire a new employee, whose performances are evaluated by several experts. The members of the committee may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule, but they might be willing to answer enough questions about selecting winners out of specific profiles to determine their employee of choice.
+
+Regarding the experimental concerns addressed by reviewer 1, our strategies and setting are meant to tackle small scale social choice situations such as just exemplified. Our questioning method, in particular, does not scale to hundreds of candidates because the chair must be assumed to have limited cognitive capacity.
+
+IC is a quite challenging situation: as can be expected intuitively (and shown experimentally by Lu and Boutilier in their setting), the number of questions to be asked decrease with less varied profiles. We want to focus on the most critical setting, as there is a wide variety of possible situations to test in such experiments.
+
+The reviewers are right to point out that our comments about Table 3 were overconfident, this will be corrected.
+
+Reviewer 1 Question6 : We should have written “given to c the ranks 3 and m” instead of (3, m) in the proof of Claim 4.
+
+Reviewer 2 Question2: The $\lambda$-range is initialized to [1,n] because $\lambda \geq1$ by convexity and we assume $\lambda \leq n$ wlog: for $\lambda \geq n$, the rule coincides with Plurality.
+
+Regarding the guarantees concerns raised by reviewer 2: The general lack of theoretical guarantees with respect to the number of questions in the literature adopting minimax regret approaches suggest that obtaining such results is very difficult, if possible. However, our approach guarantees to return the true winners when the elicitation is completed. Note that the process can be terminated early, and offers a guaranteed bound on the regret at any time.
+
+Reviewer 2 Question1: At the start of the elicitation, the space of uncertainty is so large that the adversary can attain the maximum possible value of regret; multiple answers are needed to constrain her enough for the MMR to start decreasing. When approaching optimality, the pace of MMR reduction decreases.
+
+Reviewer 3 Question1: We did not investigate a systematic way of mixing strategies but we manually mixed different ideas in order to obtain the strategies we presented. For example Two phase and Extended Pessimistic reuse ideas present in the Pessimistic strategy.
