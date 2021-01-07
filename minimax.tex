@@ -16,6 +16,7 @@
 \usepackage{algorithm, algpseudocode}
 \usepackage{booktabs}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
@@ -650,7 +651,7 @@ For the experiments we performed, we see that the number of questions required t
 		\pgfplotsset{
 			every axis legend/.append style={
 				at={(0.5,1.03)},
-				anchor=south
+				anchor=south,
 			},
 		}
 		\begin{semilogyaxis}[
