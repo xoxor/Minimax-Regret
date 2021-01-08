@@ -5,27 +5,25 @@ Code at https://github.com/oliviercailloux/minimax.
 
 
 == TODO
-* Experiments with https://www.preflib.org/data/election/agh/[courses preferences] and Pessimistic
 * Reduce the paper to 6+1 pages
 * Improve the code 
 * Rephrase the introduction (Paolo)
 ** Add that asking questions to the committee in term of profile is new and must be stressed more. Also, this is compatible with every rule. If we ask about the weights it works only for scoring rules.
-* Read the proof of claim 4 (Bea & Paolo)
-* Find dataset in preflib (Bea)
-** https://www.preflib.org/data/election/agh/
-** https://www.preflib.org/data/election/poster/
+* Merge (and shorten) introduction and related works (Paolo)
+* Move proofs to appendix and find an example for proposition 4 (Bea)
+* Remove table 4 and put number in the text (Bea)
+* Divide MMR/n in figure 2 (Bea)
+* Cover letter (Olivier)
+
 * Rephrase the experimental section writing the hypotesis first
 * Using \succeq^p_j(x) to denote the set of alternatives weakly worse than x can be confusing. Please consider using a different notation such as A^(\succeq^p_j,x). 
 ** https://en.wikipedia.org/wiki/Upper_set[see Upper Set]
 * Experiments to elicite the scoring rule when knowing the full profile
 ** Plot of decresing regret
+* Considerations on the distribution of the questions
 
 
 
-=== Resubmission:
-– the cover letter, (Bea)
- starting with the title of the rejected paper, the tracking number (if any), and the name of the conference to which this paper was submitted, [of AAMAS]
-– the full reviews from the rejected conference, [both IJCAI and AAMAS]
-– the anonymized version of the rejected paper, and [last one]
-– the new submission.
+
+
 
