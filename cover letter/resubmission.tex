@@ -16,8 +16,9 @@
 	%Reduces verbosity about the underful vboxes.
 		\vbadness=1300
 
-\title{Resubmission: Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
-\author{Submission ID: 554, AAMAS-2021}
+\title{Cover letter}
+\subtitle{Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
+\author{}
 \date{}
 \hypersetup{
 	pdfsubject={Cover letter},
@@ -45,15 +46,33 @@ converge quickly to a near-optimal alternative. Finally, we analyze these strate
  %and obtain practical guidelines.
 \end{abstract}
 
-\section{Cover Letter}
+\section{Summary of previous criticisms and our corrections}
+\commentOC{See \href{https://ijcai-21.org/cfp/}{CFP, Resubmissions}.}
+
 Dear editors and reviewers,
 
-We have submitted this article for the first time for IJCAI 2020. The reviewer’s evaluations of it were: from R1, Accept (good paper, I can argue for accepting it); from R2, Weak accept (marginally above the acceptance theshold, rejecting it would not be that bad); from R3, Weak reject (marginally below the acceptance threshold, accepting it would not be that bad); and from R4, Reject (Not good enough, I can argue for rejecting it). The strongest criticisms from the last two reviewers were, from R3, to improve presentation with a larger example and to expand the discussion (R3 incorrectly thought that we had room to spare within the constraints imposed by IJCAI); and from R4, that our literature review omitted important related works; that the results in the paper were incremental in nature; and that it was almost impossible to find the main contribution or take away message from the paper. The metareview pointed out that “One might view the work as somewhat incremental, but there is some substantial solid work here”; but recommended rejection because of 1) the very brief discussion of the empirical evaluation and 2) the incomplete literature review. The metareviewer also commented that “after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.”
+We have submitted this article for the first time to IJCAI 2020 (TODO ID?). The reviewer’s evaluations of it were: from R1, Accept (good paper, I can argue for accepting it); from R2, Weak accept (marginally above the acceptance theshold, rejecting it would not be that bad); from R3, Weak reject (marginally below the acceptance threshold, accepting it would not be that bad); and from R4, Reject (Not good enough, I can argue for rejecting it). The strongest criticisms from the last two reviewers were, from R3, that we should improve presentation with a larger example and expand the discussion (R3 incorrectly thought that we had room to spare within the constraints imposed by IJCAI); and from R4, that our literature review omitted important related works; that the results in the paper were incremental in nature; and that it was almost impossible to find the main contribution or take away message from the paper. The metareview pointed out that “One might view the work as somewhat incremental, but there is some substantial solid work here”; but recommended rejection because of 1) the very brief discussion of the empirical evaluation and 2) the incomplete literature review. The metareviewer also commented that “after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.”
 
-We extended very significantly the literature review and the experimental section, also taking advantage of two supplementary pages, and re-submitted the work for AAMAS 2021. The evaluations were: from R1 and R2, poor (4, good attempt but too many concerns, so probably should be rejected); and from R3, good (7, probably should be accepted). R1 considered our theoretical results as relatively simple extensions of the results of Lu and Boutilier and found the experimental results quite preliminary. About the first point, R1 stated to be unable to think about an example of a setting where our proposition would apply. After rebuttal, R1 stated that the example we provided in our response was convincing, but insisted that we need to test our heuristics beyond the impartial culture hypothesis. About experiments, R1 regretted that we use only impartial culture assumption; that we look at very small elections only; and that the way some of our conclusions are phrased make them appear more general than allowed by the experimental observations. R2 criticized the lack of theoretical guarantees for the proposed elicitation strategies, as well as the missing reasoning behind several of the experimental observations. After rebuttal, R2 took note of our observation that obtaining theoretical guarantees is generally considered beyond reach in a regret minimization setting; but insisted that experimental analysis should be presented by first formulating hypotheses to be tested, then showing how the experiments support or refute those hypotheses. Finally, R3, similarly to R1, found unclear which sorts of situations would permit an application of our proposed approach.
+We extended very significantly the literature review and the experimental section, also taking advantage of two supplementary pages, and submitted the resulting work to AAMAS 2021 (with submission ID 554). The evaluations were: from R1 and R2, poor (4, good attempt but too many concerns, so probably should be rejected); and from R3, good (7, probably should be accepted). R1 considered our theoretical results as relatively simple extensions of the results of Lu and Boutilier and found the experimental results quite preliminary. About the first point, R1 stated to be unable to think about an example of a setting where our proposition would apply. 
+(After rebuttal, R1 stated that the example we provided in our response was convincing.) 
+About experiments, R1 regretted that we use only impartial culture assumption; that we look at very small elections only; and that the way some of our conclusions are phrased make them appear more general than allowed by the experimental observations. 
+R2 criticized the lack of theoretical guarantees for the proposed elicitation strategies, as well as the missing reasoning behind several of the experimental observations. After rebuttal, R2 took note of our observation that obtaining theoretical guarantees is generally considered beyond reach in a regret minimization setting; but insisted that experimental analysis should be presented by first formulating hypotheses to be tested, then showing how the experiments support or refute those hypotheses. Finally, R3, similarly to R1, found unclear which sorts of situations would permit an application of our proposed approach.
+The metareview stated that the paper misses novelty and that hypotheses are missing from the experimental section and experiments should not be limited to the impartial culture assumption.
 
-\section{Reviews AAMAS-2021}
-\subsection*{Review 1}
+\section{Improvements}
+Compared to the submission to AAMAS 2021, and thanks to the reviews, we have brought the following changes to the article.
+
+\begin{itemize}
+	\item The introduction provides an example of a situation where our approach is applicable.
+	\item We better explain our motivation for asking questions that can be phrased as choices of winners out of a profile (which makes the answer “observable” in an econometric sense), and highlight the methodological novelty of this approach.
+	\item We integrated the Related Works section into the Introduction to save space, but kept all the references we added following the earlier criticisms about the missing references to the literature.
+	\item We went beyond impartial culture by testing our heuristics on real data. The results show that the number of questions to be asked is much smaller with real data than with impartial culture, as expected.
+	\item TODO We better explain what results can be anticipated before presenting the experimental results.
+	\item We changed the phrasing of some of our conclusions that were too general.
+\end{itemize}
+
+\section{Submission to AAMAS-2021}
+\subsection{Review 1}
 \subsubsection*{Summary:}	The authors use the notion of minimax regret to guide the process of preference elicitation in an election (they elicit both the voters' preferences and the preferences of the chair regarding the scoring rule used). The authors show that the methodology of Lu and Boutilier for computing minimax regret still applies in their setting and present some experimental results.
 \subsubsection*{Strengths:}	1) Minimax regret is a rather natural notion, which has not received much attention so far.
 \subsubsection*{Weaknesses:}
@@ -114,7 +133,7 @@ I found the example provided in the response to be convincing.
 
 I still think that testing the heuristics on IC only is insufficient. Even if it is the hardest case, I would also like to see how the algorithm peforms in the easier ones. Can it exploit the structure when the structure is present? One cannot evaluate such issues by looking at IC alone.
 
-\subsection*{Review 2}
+\subsection{Review 2}
 \subsubsection*{Summary:}
 The paper studies a voting problem wherein neither the voting rule nor the voters' preferences are specified in advance. Rather, an elicitation procedure is used to determine the election winner by asking the voters questions about their preferences and asking the chair questions about the voting rule.
 
@@ -197,7 +216,7 @@ Some minor comments are below.
 \subsubsection*{Comments added after rebuttal:}
 Thanks to the authors for responding to the questions raised in my review. My concern about the significance of the paper remains. In the absence of any formal theoretical guarantees about the performance of the elicitation heuristic, the paper will likely be of limited interest. The authors note that obtaining such guarantees could be difficult. Nevertheless, the paper could certainly benefit from a revised experimental analysis that clearly formulates the hypotheses to be tested and how the experiments support or refute those hypotheses.
 
-\subsection*{Review 3}
+\subsection{Review 3}
 \subsubsection*{Summary:}
 This paper considers elicitation in the context of scoring rules when both the preferences of the voters and the weights defining the rule might be missing. The authors model the problem via regret minimization and propose several types of queries and querying strategies. The paper also presents an interesting experimental study which supports the presented approach.
 \subsubsection*{Strengths:}	The problem addressed is interesting and has potential for practical applicability.
@@ -220,7 +239,7 @@ A minor complaint is that Figures 1 and 2 are blurred.
 \subsubsection*{Score:}	
 7: (good (probably should be accepted))
 
-\subsection*{Metareview}
+\subsection{Metareview}
 The main reason for the reject recommendation is the missing novelty in this paper. It basically is a reimplementation of the ideas from Lu and Boutilier. Furthermore, in the experimental section, clear hypotheses are missing and the reasons for limiting the analysis to IC are not convincing.
 
 \subsection{Our rebuttal}
@@ -252,7 +271,7 @@ Reviewer 2 Question1: At the start of the elicitation, the space of uncertainty 
 
 Reviewer 3 Question1: We did not investigate a systematic way of mixing strategies but we manually mixed different ideas in order to obtain the strategies we presented. For example Two phase and Extended Pessimistic reuse ideas present in the Pessimistic strategy.
 
-\section{Reviews IJCAI-20}
+\section{Submission to IJCAI 2020}
 \input{reviews_ijcai.tex}
 
 \section{Rejected paper AAMAS-2021}
