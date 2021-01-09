@@ -1,12 +1,28 @@
-
-\documentclass[a4paper]{article}
-\input{../preamble/packages}
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[version=3.21, pagesize, twoside=off, bibliography=totoc, DIV=calc, fontsize=12pt, a4paper]{scrartcl}
+\input{preamble/packages}
+\input{preamble/redac}
+\input{preamble/math_basics}
+\input{preamble/math_mine}
 \usepackage{pdfpages}
 
+%I find these settings useful in draft mode. Should be removed for final versions.
+	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
+		\tolerance=2000
+	%Accept overfull hbox up to...
+		\hfuzz=2cm
+	%Reduces verbosity about the bad line breaks.
+		\hbadness 5000
+	%Reduces verbosity about the underful vboxes.
+		\vbadness=1300
+
+\title{Resubmission: Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
+\author{Submission ID: 554, AAMAS-2021}
 \date{}
-
-\title{Resubmission \\ \vspace{1cm} \textbf{\Large Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination} \\ {\large Submission ID: 554, AAMAS-2021}}
-
+\hypersetup{
+	pdfsubject={Cover letter},
+	pdfkeywords={elicitation},
+}
 
 \begin{document}
 \maketitle
@@ -21,6 +37,9 @@
 \input{reviews_ijcai.tex}
 
 \section{Rejected paper AAMAS-2021}
-\includepdf[pages=-]{aamas21_paper_554.pdf}
+%\includepdf[pages=-]{aamas21_paper_554.pdf}
+
+%\bibliography{bibl}
 
 \end{document}
+
