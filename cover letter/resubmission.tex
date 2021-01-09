@@ -71,6 +71,79 @@ Compared to the submission to AAMAS 2021, and thanks to the reviews, we have bro
 	\item We changed the phrasing of some of our conclusions that were too general.
 \end{itemize}
 
+\section{Submission to IJCAI 2020}
+\subsection{Review 1}
+\subsubsection*{Overall score}
+Accept (good paper. I can argue for accepting it)
+\subsubsection*{Comments to authors}
+The paper makes a substantial contribution to social choice, which has clear implications for AI applications whenever a consensus result is needed.
+
+In the first part, a method of robust winner determination is derived, relying on the minimax (regret) principle. This part is written concisely, but still quite comprehensively. Each step follows logically from the previous one.
+
+The second part (Section 4) reflects on concrete elicitation procedures, which, of course, are highly relevant for practical use. At least for me, this part was much harder to read. Admittedly, one has to look at many details, but maybe some additional meta sentences summarizing the basic ideas would be highly appreciated.
+
+Some details:
+
+* Please be more precise with using the word 'robust'. Robustness is always robustness against something.
+
+* typos etc : please check the genitive: agents''''''''' preferences,
+p1 recent work? 2005,
+sd standard deviation?
+check the reference for double doi/link, superfluous ISSN
+
+
+
+\subsubsection*{Why should this paper be presented at IJCAI-PRICAI 2020?}
+As just said, the paper makes a substantial contribution to the general issue of how to arrive at a consensus choice, a question that is not only theoretically interesting but also of broader practical relevance. The novelty of the paper lies in the low structure of the setting: both the voting rule as well as the agents' preferences are only partially specified. This expands considerably the range of potential applications.
+
+\subsection{Review 2}
+\subsubsection*{Overall score}
+Weak Accept (marginally above the acceptance threshold. Rejecting it would not be that bad)
+\subsubsection*{Comments to authors}
+This paper examines a social choice problem where agent preferences and the criteria for aggregating preferences across agents are partially specified. The paper provides theory for representing partial preferences, enumerating consistent total preference orders, aggregating such preferences across agents, and determining a winner per a model that minimizes worst case regret. The paper examines strategies for querying agents and the chair (arbiter of social choice) to elicit their preferences/aggregation criteria. It reports minimum worst case regret as a function of the number of elicitation questions across several strategies.
+
+The paper provides a thorough mathematical development, and clearly identifies contrasting elicitation strategies. The text provides clear descriptions of the required set manipulations, which would otherwise be hard to parse.
+
+The abstract would be stronger if it motivated the simultaneous elicitation task. The introductory material would appeal to more readers if it clarified the task by defining the roles of agents, the chair, the concept of regret in social choice scenarios, and the meaning of minimax-optimal alternatives. The paper does not have a separate related work section, and while it cites appropriate work, the alternatives to this approach could use more discussion. The paper presents, but does not discuss the experimental results, and it would be much stronger if the authors provided that analysis/interpretation. As it stands, it is unclear what the work is teaching us.
+\subsubsection*{Why should this paper be presented at IJCAI-PRICAI 2020?}
+Research on voting strategies and preference elicitation relates to real-world problems of interest. The extension to simultaneous elicitation of partially specified agent and chair preferences is sound, and relevant to the broader inquiry.
+
+\subsection{Review 3}
+\subsubsection*{Overall score}
+Weak Reject (marginally below the acceptance threshold. Accepting it would not be that bad)
+\subsubsection*{Comments to authors}
+This paper develops a minimax regret decision approach when preferences and voting rules are partly specified. The paper seems technically correct, however, the presentation would be improved with a larger example. Also, the evaluation discussion in section 5 could be expanded as there is room in the paper within a 7 page limit.
+
+\subsection{Review 4}
+\subsubsection*{Overall score}
+Reject (Not good enough. I can argue for rejecting it)
+\subsubsection*{Comments to authors}
+The authors study the problem of winner determination when both the voting rule and voters' preferences are not fully determined. They propose an interactive elicitation protocol and query strategies for the minimax regret rule. In particular, they focus on minimax regret version of the positional scoring rule to aggregate incomplete preferences. The main contribution of the paper is to simultaneously consider both partial information about the agents’ preferences and partial
+specification of aggregation method. Both partial information about the agents’ preferences and partial specification of aggregation method have been studied separately in the literature.
+
+My main concern is that the authors ignores (or unaware of) almost entire literature on both preference elicitation and voting with incomplete preferences. Few examples (not at all exhaustive) of vast related work with whom the authors must compare and position their work are as follows.
+\begin{itemize}
+	\item Palash Dey, Neeldhara Misra, and Y. Narahari. Complexity of manipulation with partial information in voting. Theor. Comput. Sci., 726:78–99, 2018.
+	\item Ulle Endriss, Svetlana Obraztsova, Maria Polukarov, and Jeffrey S. Rosenschein. Strategic voting with incomplete information. In Proc. the Twenty-Fifth International Joint Conference on Artificial Intelligence, IJCAI 2016, New York, NY, USA, 9-15 July 2016, pages 236–242, 2016.
+	\item Omer Lev, Reshef Meir, Svetlana Obraztsova, and Maria Polukarov. Heuristic voting as ordinal dominance strategies. In Proc. The Thirty-Third AAAI Conference on Artificial Intelligence, AAAI 2019,
+	\item The Thirty-First Innovative Applications of Artificial Intelligence Conference, IAAI 2019, The Ninth AAAI Symposium on Educational Advances in Artificial Intelligence, EAAI 2019, Honolulu, Hawaii, USA, January 27 - February 1, 2019, pages 2077–2084, 2019.
+	\item Reshef Meir. Plurality voting under uncertainty. In Proc. Twenty-Ninth AAAI Conference on Artificial Intelligence, January 25-30, 2015, Austin, Texas, USA, pages 2103–2109, 2015.
+	\item Annemieke Reijngoud and Ulle Endriss. Voter response to iterated poll information. In International Conference on Autonomous Agents and Multiagent Systems, AAMAS 2012, Valencia, Spain, June 4-8, 2012 (3 Volumes), pages 635–644, 2012.
+	\item Palash Dey: Manipulative elicitation - A new attack on elections with incomplete preferences. Theor. Comput. Sci. 731: 36-49 (2018)
+	\item Vincent Conitzer: Eliciting Single-Peaked Preferences Using Comparison Queries. J. Artif. Intell. Res. 35: 161-191 (2009)
+	\item Palash Dey, Neeldhara Misra: Elicitation for Preferences Single Peaked on Trees. IJCAI 2016: 215-221
+	\item Palash Dey, Neeldhara Misra: Preference Elicitation for Single Crossing Domain. IJCAI 2016: 222-228
+\end{itemize}
+
+Also the results in the paper, in my opinion, in incremental in nature. I also found the writing style of the paper quite odd. For example, it is almost impossible to find the main contribution or take away message from the paper. Overall I think that the paper may contain some interesting results worth publishing but it has to be positioned correctly with respect to existing literature. The authors could also consider explicitly writing a bulleted list of contribution with pointers to parts of the paper that prove/discuss it.
+
+\subsection{Metareview}
+The paper combines ideas from [Lu and Boutilier, 2011] and [Viappiani, 2018], and builds on other work on minimax regret-based preference elicitation, to generate an interactive elicitation approach for a situation in which there is incomplete knowledge about both (a) the voters' preference orders and (b) the weights of a positional scoring rule that generates the overall winner. Given those two earlier papers, this is a natural further step to make, and the paper successfully develops the previous approaches. One might view the work as somewhat incremental, but there is some substantial solid work here.
+
+There are some other issues, pointed out by the reviewers. The discussion of the empirical evaluation is very brief. There is a substantial body of literature that was not cited, related to preference elicitation and incomplete preferences in a voting situation. Although they do not seem to be on exactly the same topic, it is important that the paper is positioned correctly with respect to the existing literature.
+
+Because of these issues, I'm recommending rejection of the paper. However, I think after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.
+
 \section{Submission to AAMAS-2021}
 \subsection{Review 1}
 \subsubsection*{Summary:}	The authors use the notion of minimax regret to guide the process of preference elicitation in an election (they elicit both the voters' preferences and the preferences of the chair regarding the scoring rule used). The authors show that the methodology of Lu and Boutilier for computing minimax regret still applies in their setting and present some experimental results.
@@ -271,13 +344,7 @@ Reviewer 2 Question1: At the start of the elicitation, the space of uncertainty 
 
 Reviewer 3 Question1: We did not investigate a systematic way of mixing strategies but we manually mixed different ideas in order to obtain the strategies we presented. For example Two phase and Extended Pessimistic reuse ideas present in the Pessimistic strategy.
 
-\section{Submission to IJCAI 2020}
-\input{reviews_ijcai.tex}
-
-\section{Rejected paper AAMAS-2021}
+\section{Rejected paper AAMAS 2021}
+You will find here below the version of this article that was submitted to AAMAS 2021.
 %\includepdf[pages=-]{aamas21_paper_554.pdf}
-
-%\bibliography{bibl}
-
 \end{document}
-
