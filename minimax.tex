@@ -16,7 +16,7 @@
 \usepackage{algorithm, algpseudocode}
 \usepackage{booktabs}
 \usepackage{pgfplots}
-%\pgfplotsset{compat=1.17}
+\pgfplotsset{compat=1.16}
 
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
@@ -279,38 +279,12 @@ As we will show, this procedure can also be used when the weight vector is not c
 		y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
 	\end{align} 
 \end{proposition}
-\begin{proof*}[Sketch]
-	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
-	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
-	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
-	Furthermore, the first objective must take priority over the second one: when an alternative should go above $x$ according to the first objective (because $¬(x \pprefeq_j a)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$), then $a$ should be put above $x$ (irrespective of whether $a \pprefeq_j y$), which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
-	This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
-\end{proof*}
 
 Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered by $j$ as less good than or equal to $x$, and ${\pprefinv_j}(y)$ be the set of alternatives known to be considered by $j$ as strictly better than $y$.
-\begin{proposition}
+\begin{proposition} \label{claim:rankPMR}
 	The rank of $x$ in the PMR-maximizing linear orders of agent $j$ is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\card{\beta}$, where $\card{\beta} = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ if $(x \pprefeq_j y)$ and $\card{\beta} = 0$ otherwise.
-	\label{claim:rankPMR}
 \end{proposition}
-\begin{proof*}
-	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
-	\begin{equation}
-		\label{eq:betteryinter}
-		(a \neq y) ∧ [(a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))],
-	\end{equation} 
-	or equivalently, if and only if
-	\begin{equation}
-		\label{eq:bettery}
-		%a \pref_j y ⇔ 
-		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
-	\end{equation} 
-	Indeed, \eqref{eq:betteryinter} $⇒$ \eqref{eq:bettery}, and \eqref{eq:bettery} $⇒$ \eqref{eq:betteryinter} because $(x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ⇒ a ≠ y$ (as when $a = y$, $(x \pprefeq_j y)$ and $¬(x \pprefeq_j a)$ are opposite claims). Suffices now to rewrite \cref{eq:bettery} to let the two disjuncts designate disjoint sets:
-	\begin{equation}
-		\label{eq:betteryfinal}
-		a \pref_j y ⇔ 
-		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
-	\end{equation}
-\end{proof*}
+
 The proposition can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
 \begin{proposition}
 	The $\PMR$ can be written as:
@@ -372,22 +346,10 @@ Our approach is analogous to that of decision theorists with preference elicitat
 
 Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
-\begin{proposition}
+\begin{proposition}\label{prop:chairQuestions}
 	Given a rational $\lambda = p/q > 1$ and a rank $r$ between $1$ and $m - 2$, there exists a profile $P$ such that, for any weight vector $\w \in \W$, $a \in f(P)$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P)$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
 \end{proposition}
-\begin{proof*}
-	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
-	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
-	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
-	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
-	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
-	
-	Define $P$ as the profile of $3 (p + q)$ voters containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
-	As a result, $a$ obtains the following ranks: $q$ times $r$, $p$ times $r + 2$, $p + q$ times first, and $p + q$ times second. The alternative $b$ obtains the ranks $r + 1$, $2$ and $1$, each $p + q$ times. Consider any alternative $c \in A \setminus \set{a, b}$. Its score is maximal when it comes first in $>_1$, first in $>_2$ and first in $>$, by convexity of the weights. In that case, $c$ is positioned at the ranks $1$, $3$ and $m$, each $p + q$ times. 
-	
-	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
-	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
-\end{proof*}
+
 At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
 \paragraph{Elicitation strategies}
@@ -461,7 +423,7 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting MMR and the standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 \paragraph{Comparison of strategies}
-\begin{figure}
+\begin{figure}[ht]
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
 	\begin{tikzpicture}
@@ -573,136 +535,142 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with those displayed in \cref{tab:fullProfile}, that estimate the number of questions required to elicit the full preference of an agent. To obtain the data for this table, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
-\begin{table}
-	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
-	\label{tab:fullProfile}
-	\begin{tabular}{S[table-figures-decimal=0]S}
-		\toprule
-		{m} & {k} \\
-		\midrule
-		5 & 6.6\\
-		10 & 24.8\\
-		15 & 48.4\\
-		\bottomrule
-	\end{tabular}
-\end{table}
+%\begin{table}
+%	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
+%	\label{tab:fullProfile}
+%	\begin{tabular}{S[table-figures-decimal=0]S}
+%		\toprule
+%		{m} & {k} \\
+%		\midrule
+%		5 & 6.6\\
+%		10 & 24.8\\
+%		15 & 48.4\\
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
 
 %\subsection{Decrease in MMR values}
 \paragraph{Decrease in MMR values}
 
-\begin{figure}
-	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
+\begin{figure}[ht]
+	\caption{Average MMR (normalized on the number of voters $n$) after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
 	\begin{tikzpicture}
 		\pgfplotsset{
 			every axis legend/.append style={
-				at={(0.5,1.03)},
+				at={(0.5,1.1)},
 				anchor=south
 			},
 		}
 		\begin{axis}[
-			y=3.5,
+			y=100,
 			legend columns=3,
 			xlabel=Number of Questions,
-			ylabel=Avg. Regret,
-			ytick={0,5,10,15,20,25,30},
+			ylabel=MMR/n,
+			ytick={0,0.5,1},
 			xtick distance=100,
-			ytick distance=5,
 			xtick pos=left,
 			ymajorgrids=true,
 			ytick style={draw=none},
 			ymin=0,
-			ymax=31,
+			ymax=1,
 			xmin=0,
 			xmax=1000,
-			yticklabels={0,5,10,15,20,25,30}]
+			yticklabels={0,0.5,1}]
 			
 			\addlegendimage{mark=triangle*,teal,mark size=2}
-			\addlegendimage{mark=*,violet,mark size=2}
+%			\addlegendimage{mark=*,violet,mark size=2}
 			\addlegendimage{mark=square*,green,mark size=2}
 			\addlegendimage{mark=diamond*,red,mark size=2}
+			\addlegendimage{mark=pentagon*,cyan,mark size=2}
+			\addlegendimage{mark=*,pink,mark size=2}
 			\addlegendimage{mark=halfsquare left*,blue,mark size=2}
 			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
-			\addlegendimage{mark=pentagon*,cyan,mark size=2}
 			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
 			
 			
-			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/linearity.dat};
+			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/normalizedLin.dat};
 			\addlegendentry{m=5, n=10}
-			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/linearity.dat};
-			\addlegendentry{m=5, n=15}
-			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/linearity.dat};
+%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/normalizedLin.dat};
+%			\addlegendentry{m=5, n=15}
+			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/normalizedLin.dat};
 			\addlegendentry{m=5, n=20}
-			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity.dat};
+			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/normalizedLin.dat};
 			\addlegendentry{m=10, n=20}
-			\addplot[thick, mark=halfquare left*, mark size = {2}, mark indices = {60}, blue] table [x=k, y=14.9]{data/linearity.dat};
-			\addlegendentry{m=14, n=9}
-			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/linearity.dat};
-			\addlegendentry{skate m14n9}
-			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/linearity.dat};
+			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/normalizedLin.dat};
 			\addlegendentry{m=10, n=30}
-			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
+			\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/normalizedLin.dat};
+			\addlegendentry{courses m9n146}
+			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/normalizedLin.dat};
+			\addlegendentry{m=14, n=9}
+			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/normalizedLin.dat};
+			\addlegendentry{skate m14n9}
+			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/normalizedLin.dat};
 			\addlegendentry{m=15, n=30}
-			
 		\end{axis}
 	\end{tikzpicture}
 \end{figure}
 
 %\begin{figure}
-%	\caption{Logarithmic plot representing the MMR reduction after $k$ questions with Pessimistic strategy for different problem sizes.}
+%	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
 %	\label{fig:linearity}
 %	\begin{tikzpicture}
 %		\pgfplotsset{
 %			every axis legend/.append style={
 %				at={(0.5,1.03)},
-%				anchor=south,
+%				anchor=south
 %			},
 %		}
-%		\begin{semilogyaxis}[
+%		\begin{axis}[
+%			y=3.5,
 %			legend columns=3,
 %			xlabel=Number of Questions,
 %			ylabel=Avg. Regret,
-%			log basis y= 10,
-%			ymin=10e-2,
-%			ymax=10e2,
-%			ytick={10e-2,1,2,10,15,20,30,146},
-%			yticklabels={0.01,1,2,10,15,20,30,146},
+%			ytick={0,5,10,15,20,25,30},
+%			xtick distance=100,
+%			ytick distance=5,
+%			xtick pos=left,
 %			ymajorgrids=true,
 %			ytick style={draw=none},
+%			ymin=0,
+%			ymax=31,
 %			xmin=0,
 %			xmax=1000,
-%			xtick={0,100,200,300,400,500,600,700,800,900,1000},
-%			xticklabels={0,100,200,300,400,500,600,700,800,900,1000},
-%			ticklabel style = {font=\tiny}
-%			]
+%			yticklabels={0,5,10,15,20,25,30}]
 %			
 %			\addlegendimage{mark=triangle*,teal,mark size=2}
 %			\addlegendimage{mark=*,violet,mark size=2}
 %			\addlegendimage{mark=square*,green,mark size=2}
 %			\addlegendimage{mark=diamond*,red,mark size=2}
+%			\addlegendimage{mark=halfsquare left*,blue,mark size=2}
+%			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
 %			\addlegendimage{mark=pentagon*,cyan,mark size=2}
 %			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
-%			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
 %			
-%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal, domain=-5:5] table [x=k, y=5.10]{data/linearity.dat};
+%			
+%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/linearity.dat};
 %			\addlegendentry{m=5, n=10}
-%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet,domain=-5:5] table [x=k, y=5.15]{data/linearity.dat};
+%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/linearity.dat};
 %			\addlegendentry{m=5, n=15}
 %			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/linearity.dat};
 %			\addlegendentry{m=5, n=20}
 %			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity.dat};
 %			\addlegendentry{m=10, n=20}
+%			\addplot[thick, mark=halfquare left*, mark size = {2}, mark indices = {60}, blue] table [x=k, y=14.9]{data/linearity.dat};
+%			\addlegendentry{m=14, n=9}
+%			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/linearity.dat};
+%			\addlegendentry{skate m14n9}
 %			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/linearity.dat};
 %			\addlegendentry{m=10, n=30}
 %			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
 %			\addlegendentry{m=15, n=30}
-%			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {400}, brown] table [x=k, y=courses]{data/linearity.dat};
-%			\addlegendentry{courses}
-%		\end{semilogyaxis}
+%			
+%		\end{axis}
 %	\end{tikzpicture}
 %\end{figure}
+
 
 %\begin{figure}
 %	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
@@ -786,14 +754,61 @@ Finally, an important direction of extension aims at studying how to elicit pref
 %\bibliographystyle{abbrvnat} 
 %\bibliography{biblio}
 
+\newpage
+
 \bibliographystyle{named}
 \bibliography{biblio}
+
+\newpage
+\appendix
+\section{Appendix}
+\begin{sketch*}[\cref{claim:completion}]
+	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
+	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
+	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
+	Furthermore, the first objective must take priority over the second one: when an alternative should go above $x$ according to the first objective (because $¬(x \pprefeq_j a)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$), then $a$ should be put above $x$ (irrespective of whether $a \pprefeq_j y$), which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
+	This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
+\end{sketch*}
+
+\begin{proof*}[\cref{claim:rankPMR}]
+	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
+	\begin{equation}
+		\label{eq:betteryinter}
+		(a \neq y) ∧ [(a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))],
+	\end{equation} 
+	or equivalently, if and only if
+	\begin{equation}
+		\label{eq:bettery}
+		%a \pref_j y ⇔ 
+		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
+	\end{equation} 
+	Indeed, \eqref{eq:betteryinter} $⇒$ \eqref{eq:bettery}, and \eqref{eq:bettery} $⇒$ \eqref{eq:betteryinter} because $(x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ⇒ a ≠ y$ (as when $a = y$, $(x \pprefeq_j y)$ and $¬(x \pprefeq_j a)$ are opposite claims). Suffices now to rewrite \cref{eq:bettery} to let the two disjuncts designate disjoint sets:
+	\begin{equation}
+		\label{eq:betteryfinal}
+		a \pref_j y ⇔ 
+		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
+	\end{equation}
+\end{proof*}
+
+\begin{proof*}[\cref{prop:chairQuestions}]
+	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
+	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
+	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
+	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
+	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
+	
+	Define $P$ as the profile of $3 (p + q)$ voters containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
+	As a result, $a$ obtains the following ranks: $q$ times $r$, $p$ times $r + 2$, $p + q$ times first, and $p + q$ times second. The alternative $b$ obtains the ranks $r + 1$, $2$ and $1$, each $p + q$ times. Consider any alternative $c \in A \setminus \set{a, b}$. Its score is maximal when it comes first in $>_1$, first in $>_2$ and first in $>$, by convexity of the weights. In that case, $c$ is positioned at the ranks $1$, $3$ and $m$, each $p + q$ times. 
+	
+	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
+	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
+\end{proof*}
+
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\appendix
-\import{preamble/}{appendix.tex}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
