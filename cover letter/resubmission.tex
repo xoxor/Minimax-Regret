@@ -33,27 +33,53 @@
 
 Dear editors and reviewers,
 
-We have submitted this article for the first time to IJCAI 2020 (TODO ID?). The reviewer’s evaluations of it were: from R1, Accept (good paper, I can argue for accepting it); from R2, Weak accept (marginally above the acceptance theshold, rejecting it would not be that bad); from R3, Weak reject (marginally below the acceptance threshold, accepting it would not be that bad); and from R4, Reject (Not good enough, I can argue for rejecting it). The strongest criticisms from the last two reviewers were, from R3, that we should improve presentation with a larger example and expand the discussion (R3 incorrectly thought that we had room to spare within the constraints imposed by IJCAI); and from R4, that our literature review omitted important related works; that the results in the paper were incremental in nature; and that it was almost impossible to find the main contribution or take away message from the paper. The metareview pointed out that “One might view the work as somewhat incremental, but there is some substantial solid work here”; but recommended rejection because of 1) the very brief discussion of the empirical evaluation and 2) the incomplete literature review. The metareviewer also commented that “after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.”
+\medskip
+We have submitted this article for the first time to IJCAI 2020 (TODO ID?). The submission was evaluated by four reviewers; the overall assessment (full reviews are included in Section \ref{sec:reviews-ijcai}) were: 
+\begin{itemize}
+\item R1: Accept {\em (good paper, I can argue for accepting it)};
+\item R2: Weak accept {\em (marginally above the acceptance theshold, rejecting it would not be that bad)};
+\item R3: Weak reject {\em (marginally below the acceptance threshold, accepting it would not be that bad)}; and
+\item R4:  Reject {\em (Not good enough, I can argue for rejecting it)}.
+\end{itemize}
 
-We extended very significantly the literature review and the experimental section, also taking advantage of two supplementary pages, and submitted the resulting work to AAMAS 2021 (with submission ID 554). The evaluations were: from R1 and R2, poor (4, good attempt but too many concerns, so probably should be rejected); and from R3, good (7, probably should be accepted). R1 considered our theoretical results as relatively simple extensions of the results of Lu and Boutilier and found the experimental results quite preliminary. About the first point, R1 stated to be unable to think about an example of a setting where our proposition would apply. 
-(After rebuttal, R1 stated that the example we provided in our response was convincing.) 
+%from R1, Accept (good paper, I can argue for accepting it); from R2, Weak accept (marginally above the acceptance theshold, rejecting it would not be that bad); from R3, Weak reject (marginally below the acceptance threshold, accepting it would not be that bad); and from R4, Reject (Not good enough, I can argue for rejecting it). 
+The strongest criticisms from the last two reviewers (R3 and R4). According to R3 we should have improved the presentation with a larger example and expanded the discussion (R3 incorrectly thought that we had room to spare within the constraints imposed by IJCAI);  R4 found that our literature review omitted important related works, that the results in the paper were incremental in nature; and that the main contribution or take away message was not clearly stated in the paper. 
+
+The metareview pointed out that {\em “One might view the work as somewhat incremental, but there is some substantial solid work here”}; but recommended rejection because of 1) the very brief discussion of the empirical evaluation and 2) the incomplete literature review. The metareviewer also commented that {\em “after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.”}
+
+\medskip
+Following the IJCAI rejection we focus our work in extending the literature review and in improving the experimental section %(also taking advantage of the two additional pages), 
+and submitted the resulting work to AAMAS 2021 (with submission ID 554). 
+Our AAMAS submission received the following evaluations (full reviews are given in Section \ref{sec:reviews-aamas}):
+\begin{itemize}
+\item R1: {\em poor (4, good attempt but too many concerns, so probably should be rejected)};
+\item R2: {\em poor (4, good attempt but too many concerns, so probably should be rejected)}; and
+\item R3; {\em good (7, probably should be accepted)}
+\end{itemize}
+%from R1 and R2, poor (4, good attempt but too many concerns, so probably should be rejected); and from R3, good (7, probably should be accepted). 
+R1 considered our theoretical results as relatively simple extensions of the results of Lu and Boutilier and found the experimental results quite preliminary. About the first point, R1 stated to be unable to think about an example of a setting where our proposition would apply. 
+Notice that we took the opportunity of using the rebuttal to provide an application example and that, after rebuttal, R1 stated that the example we provided in our response was convincing.
+
 About experiments, R1 regretted that we use only impartial culture assumption; that we look at very small elections only; and that the way some of our conclusions are phrased make them appear more general than allowed by the experimental observations. 
+
 R2 criticized the lack of theoretical guarantees for the proposed elicitation strategies, as well as the missing reasoning behind several of the experimental observations. After rebuttal, R2 took note of our observation that obtaining theoretical guarantees is generally considered beyond reach in a regret minimization setting; but insisted that experimental analysis should be presented by first formulating hypotheses to be tested, then showing how the experiments support or refute those hypotheses. Finally, R3, similarly to R1, found unclear which sorts of situations would permit an application of our proposed approach.
-The metareview stated that the paper misses novelty and that hypotheses are missing from the experimental section and experiments should not be limited to the impartial culture assumption.
+
+The metareview stated that the paper misses novelty, that the experimental section should be improved and that experiments should not be limited to the impartial culture assumption.
 
 \section{Improvements}
 Compared to the submission to AAMAS 2021, and thanks to the reviews, we have brought the following changes to the article.
 
 \begin{itemize}
-	\item The introduction provides an example of a situation where our approach is applicable.
+	\item The introduction provides an example of a situation where our approach is applicable (this example was found convincing by AAMAS reviewers after rebuttal).
 	\item We better explain our motivation for asking questions that can be phrased as choices of winners out of a profile (which makes the answer “observable” in an econometric sense), and highlight the methodological novelty of this approach.
-	\item We integrated the Related Works section into the Introduction to save space, but kept all the references we added following the earlier criticisms about the missing references to the literature.
+	\item We integrated the Related Works section into the Introduction to save space, but kept all the references we added following the earlier criticisms (in the IJCAI submission) about the missing references to the literature.
 	\item We went beyond impartial culture by testing our heuristics on real data. The results show that the number of questions to be asked is much smaller with real data than with impartial culture, as expected.
 	\item TODO We better explain what results can be anticipated before presenting the experimental results. \commentOC{We just agreed we don’t specifically talk about this and don’t change anything because does not apply here.}
 	\item We changed the phrasing of some of our conclusions that were too general.
 \end{itemize}
 
-\section{Submission to IJCAI 2020}
+\section{Submission to IJCAI 2020} 
+\label{sec:reviews-ijcai}
 \subsection{Review 1}
 \subsubsection*{Overall score}
 Accept (good paper. I can argue for accepting it)
@@ -126,7 +152,8 @@ There are some other issues, pointed out by the reviewers. The discussion of the
 
 Because of these issues, I'm recommending rejection of the paper. However, I think after some further work on the paper there's a reasonable chance that it could be accepted for another high quality conference.
 
-\section{Submission to AAMAS-2021}
+\section{Submission to AAMAS-2021} 
+\label{sec:reviews-aamas}
 \subsection{Review 1}
 \subsubsection*{Summary:}	The authors use the notion of minimax regret to guide the process of preference elicitation in an election (they elicit both the voters' preferences and the preferences of the chair regarding the scoring rule used). The authors show that the methodology of Lu and Boutilier for computing minimax regret still applies in their setting and present some experimental results.
 \subsubsection*{Strengths:}	1) Minimax regret is a rather natural notion, which has not received much attention so far.
