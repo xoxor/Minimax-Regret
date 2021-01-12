@@ -84,7 +84,8 @@ converge quickly to a near-optimal alternative. Finally, we analyze these strate
 \section{Introduction}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice.
-It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
+%It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
+Methods from social choice can be adapted for group decision-making in a computerized setting.
 
 The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
@@ -106,7 +107,7 @@ While previous works have considered either partial information about the agent 
 Actually, very few works altogether have considered the problem of eliciting a voting rule by asking questions to the chair.
 
 Our approach is evaluated experimentally in simulations where the both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
-We compare the effectiveness of several different strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind questions to chair and to the agents based on which is estimated to provide more information.
+We compare the effectiveness of several strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind questions to chair and to the agents based on which is estimated to provide more information.
 %Our approach permits to compare experimentally strategies that question the chair, the agents, or both.
 
 %A concrete application of our work might be a committee that is about to hire a new employee, whose performances are evaluated by several experts. The members of the committee may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule, but they might be willing to answer enough questions about selecting winners out of specific profiles to determine their employee of choice.
@@ -136,7 +137,6 @@ Several works addressed the problem of  elicitation of agent preferences \citep{
 While most of the focus in the research community has been in dealing with incomplete agent preferences, 
 another line of research has dealt with scenarios where it is instead the voting rule that is partially defined, but the preferences are given. 
 A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
-
 More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
 \Citet{Cailloux2014} are interested in elicitation of a different class of rules.
 
