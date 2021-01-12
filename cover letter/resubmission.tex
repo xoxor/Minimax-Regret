@@ -16,9 +16,9 @@
 	%Reduces verbosity about the underful vboxes.
 		\vbadness=1300
 
-\title{Cover letter}
+\title{Resubmission file}
 \subtitle{Simultaneous Elicitation of Scoring Rule and Agent Preferences for Robust Winner Determination}
-\author{}
+\author{Submission ID: TODO}
 \date{}
 \hypersetup{
 	pdfsubject={Cover letter},
@@ -27,24 +27,6 @@
 
 \begin{document}
 \maketitle
-
-\begin{abstract}
-Social choice deals with the problem of determining a consensus choice from the preferences of different agents.
-In the classical setting, the voting rule is fixed beforehand and full information concerning the preferences of the agents is provided.
-This assumption of full preference information has recently been questioned by a number of researchers and
-	several methods for eliciting the preferences of the agents have been proposed.
-	%  are completely known have been proposed, as well as techniques that consider the opposite scenario. 
-
-In this paper we argue that in many situations one should consider as well the voting rule to be 	partially specified.
-%	This article goes one step further by tackling one important new case, namely, when both the voting rule and the agents preferences are partially known. It also permits to obtain a progressively refined recommendation without requiring to achieve full knowledge of either sort of information.
-%This is useful because providing such information is often costly: the chair may find it hard to specify a rule completely; agents may need time to form reflective preferences.	
-	Focusing on positional scoring rules, we assume that the chair, while not able to give a precise definition of the rule, is capable of answering simple questions requiring to pick a winner from a specific example profile. In addition, we assume that the agent preferences have to be elicited as well and are acquired by asking comparison queries. 
-	We propose a method for robust approximate winner determination and interactive elicitation based on minimax regret; we develop several strategies for choosing the questions to ask to  the chair and the agents in order to %acquire the most relevant information for
-converge quickly to a near-optimal alternative. Finally, we analyze these strategies in experiments %in order to validate our approach
- %focusing on settings 
- where the voting rule and the preferences are simultaneously elicited.
- %and obtain practical guidelines.
-\end{abstract}
 
 \section{Summary of previous criticisms and our corrections}
 \commentOC{See \href{https://ijcai-21.org/cfp/}{CFP, Resubmissions}.}
@@ -67,7 +49,7 @@ Compared to the submission to AAMAS 2021, and thanks to the reviews, we have bro
 	\item We better explain our motivation for asking questions that can be phrased as choices of winners out of a profile (which makes the answer “observable” in an econometric sense), and highlight the methodological novelty of this approach.
 	\item We integrated the Related Works section into the Introduction to save space, but kept all the references we added following the earlier criticisms about the missing references to the literature.
 	\item We went beyond impartial culture by testing our heuristics on real data. The results show that the number of questions to be asked is much smaller with real data than with impartial culture, as expected.
-	\item TODO We better explain what results can be anticipated before presenting the experimental results.
+	\item TODO We better explain what results can be anticipated before presenting the experimental results. \commentOC{We just agreed we don’t specifically talk about this and don’t change anything because does not apply here.}
 	\item We changed the phrasing of some of our conclusions that were too general.
 \end{itemize}
 
