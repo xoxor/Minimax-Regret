@@ -258,7 +258,6 @@ Since scoring rules are additively decomposable, we can consider separately the 
 s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)},
 \]
 and we can rewrite $\PMR$ as follows:
-
 \begin{align}
 	& \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] \\
 	& =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]. \\
@@ -408,7 +407,7 @@ These candidate questions are then evaluated using the same operator as for the 
 We use this strategy to test whether Pessimistic performs well: depending on the quality of the heuristic of the Pessimistic strategy, it might perform nearly equally well, or perhaps even better, than Extended pessimistic, while being (much) faster. Extended pessimistic is applicable only to small problem instances: its complexity is in $O(n^2 m^5)$, because we consider $O(m^2)$ questions for each agent and need for each question to compute MMR twice, whose complexity is $O(nm^3)$.
 
 The \strat{Two phases} strategy is developed in order to investigate the effect of varying the proportion of questions asked to agents and to the chair, and compare the performance of asking questions to the chair first or to the agents first. It is parameterized by $q_c$, a value indicating the number of questions that must be asked to the chair.
-The \strat{Two phases - ca} variant first asks $q_c$ questions to the chair, then $k - q_c$ questions to the agents, using in both cases Pessimistic to select the specific questions; whereas the \strat{Two phases - ac} variant starts with $k - q_c$ questions to the agents, then questions the chair. 
+The \strat{Two phases-ca} variant first asks $q_c$ questions to the chair, then $k - q_c$ questions to the agents, using in both cases Pessimistic to select the specific questions; whereas the \strat{Two phases-ac} variant starts with $k - q_c$ questions to the agents, then questions the chair. 
 %Note that when asking first only questions to the chair, if the obtained knowledge approximates well the scoring vector, then in the second part of the elicitation we fall into the more classical setting of incompleteness of preferences assuming a known voting rule. 
 %And vice-versa when asking first questions to the agents, the second part of the elicitation is similar to the setting of incompletely specified scoring rule. 
 %This strategy also permits to simulate the current state of the art when considering incomplete preferences. By asking enough questions to the chair we can reduce our problem into a well studied one of incompleteness of preferences knowing the voting rule. Similarly, if we invert to whom ask questions first, we fall instead in an already studied case of uncertainty of the voting rule with a known complete profile. 
@@ -422,12 +421,6 @@ This strategy can be expected to perform well when the chair assigns a large wei
 
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-%TODO
-%\begin{enumerate}
-%	\item Reach regret: $n/10$. Add considerations.
-%MMR and sd with systematically one decimal exactly
-%Page numbers
-%\end{enumerate}
 We  performed a number of numerical experiments in order to validate our approach and to test the performance of the different elicitation strategies. %Our experiments are described by topic here below. 
 We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 Having picked a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we randomly generate an “oracle”, representing the true preferences of the agents (i.e. the linear orders) and the weights associated with the chair's scoring rule. 
@@ -438,8 +431,7 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 
 We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents or the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test, as described above. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting MMR and the standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
-\paragraph{Comparison of strategies}
-\begin{figure}[ht]
+\begin{figure}[t]
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
 	\begin{tikzpicture}
@@ -502,7 +494,7 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 		\bottomrule
 	\end{tabular}
 \end{table}
-\begin{table}
+\begin{table}[t]
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
 	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
@@ -519,6 +511,7 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 		\bottomrule
 	\end{tabular}
 \end{table}
+\paragraph{Comparison of strategies}
 Our first experiment concerns small size situations.
 \Cref{fig:smallSize} compares some of our strategies in the case $m = 5, n = 10$ (variations around this size yield similar conclusions), where the results are averaged over $200$ runs.
 %(The figure also displays the performance of the Elitist strategy, to which we will come back.)
@@ -529,8 +522,6 @@ We also see that Pessimistic performs slightly better than Extended pessimistic,
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
 %\subsection{Absolute evaluation of Pessimistic strategy}
-\paragraph{In-depth evaluation of Pessimistic}
-\label{sec:lowRegret}
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
@@ -548,6 +539,8 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 	\end{tabular}
 \end{table}
 
+\paragraph{In-depth evaluation of Pessimistic}
+\label{sec:lowRegret}
 While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
@@ -568,9 +561,9 @@ For the experiments we performed, we see that the number of questions required t
 %\end{table}
 
 %\subsection{Decrease in MMR values}
-\paragraph{Decrease in MMR values}
 
-\begin{figure}[ht]
+
+\begin{figure}[t]
 	\caption{Average MMR (normalized on the number of voters $n$) after $k$ questions with Pessimistic strategy for different problem sizes.}
 	\label{fig:linearity}
 	\begin{tikzpicture}
@@ -698,6 +691,7 @@ For the experiments we performed, we see that the number of questions required t
 %	\includegraphics[width=.45\textwidth]{linearity.png}
 %\end{figure}
 
+\paragraph{Decrease in MMR values}
 We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
 that, on average, halving the number of questions will only reduce the gain in regret by less than half. \commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
 
