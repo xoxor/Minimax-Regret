@@ -321,19 +321,19 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 \end{proposition}
 
 \begin{example*}
-	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. In other words, we want to relate the difference between the weights of the second and third positions with the double of the difference between the weights of the third and fourth positions. We can rewrite this inequality in the form $w_{2} + 2 w_{4} ≥ 3 w_{3}$, and we can translate the original question in one of the form "is $a$ better than $b$?" where $a$ is an alternative ranked once in second position and twice in fourth position, and $b$ is ranked three times in third position. In order to do so, we construct a profile $P$ such that $a$ and $b$ respect these constraints and all the other alternative are strictly worse than them. 
+	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. 
+	We then show the following profile to the chair and ask who should win (each column is a preference of a voter).
 	\begin{center}
 		$
-		\begin{array}{ccccc}
-			\#\text{voters} \quad &w_1&w_2&w_3&w_4\\
-			\mathbf{1} \quad &c&a&b&d\\
-			\mathbf{2} \quad &d&c&b&a\\
-			\mathbf{3} \quad &a&b&c&d\\
-			\mathbf{3} \quad &b&a&d&c\\
+		\begin{array}{ccccccccc}
+			c&d&d&a&a&a&b&b&b\\
+			a&c&c&b&b&b&a&a&a\\
+			b&b&b&c&c&c&d&d&d\\
+			d&a&a&d&d&d&c&c&c\\
 		\end{array}.
 		$
 	\end{center}
-	The score of the alternatives are $s(a)=3w_1+3w_2+w_2+2w_4$, $s(b)=3w_1+3w_2+3w_3$, $s(c)=w_1+2w_2+3w_3+3w_4$, $s(d)=2w_1+3w_3+4w_4$. Since the weights are convex $s(a)>s(c)$, $s(a)>s(d)$, $s(b)>s(c)$ and $s(b)>s(d)$. Therefore, if the committee picks $a$ in $P$, the answer to the original question is yes, the converse if $b$ is picked.
+	Both $a$ and $b$ have scores higher than $c$ and $d$ for all convex weights, thus either $a$ or $b$ will be picked under our hypothesis; and $s(a) ≥ s(b) ⇔ w_2 + 2 w_4 ≥ 3 w_3$.
 \end{example*}
 
 At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
