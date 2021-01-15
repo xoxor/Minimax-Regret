@@ -397,24 +397,25 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 	\label{fig:smallSize}
 	\begin{tikzpicture}
 		\begin{axis}[
-			y=10,
+			y=8,
 			xlabel=Number of Questions,
 			ylabel=Avg. Regret,
-			ytick={0,2,4,6,8,10,12},
+			ytick={0,2,4,6,8,10},
 			xtick distance=10,
 			ytick distance=2,
 			xtick pos=left,
 			ymajorgrids=true,
 			ytick style={draw=none},
 			ymin=0,
-			ymax=12,
+			ymax=11,
 			xmin=0,
 			xmax=100,
-			yticklabels={0,2,4,6,8,10,12}]
-			\addlegendimage{mark=*,teal,mark size=2}
-			\addlegendimage{mark=triangle*,orange,mark size=2}
-			\addlegendimage{mark=square*,blue,mark size=2}
-			\addlegendimage{mark=diamond*,red,mark size=2}
+			yticklabels={0,2,4,6,8,10},
+			legend style={font=\scriptsize}]
+			\addlegendimage{mark=*,teal,mark size=1.5}
+			\addlegendimage{mark=triangle*,orange,mark size=1.5}
+			\addlegendimage{mark=square*,blue,mark size=1.5}
+			\addlegendimage{mark=diamond*,red,mark size=1.5}
 			
 			\addplot[thick, mark=*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=Pes.]{data/comparison.dat};
 			\addlegendentry{Pes.}
@@ -436,25 +437,6 @@ We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$
 %	\includegraphics[width=.45\textwidth]{comparison.png}
 %\end{figure}
 \sisetup{table-number-alignment = center, table-figures-integer=2, table-figures-decimal=1, table-auto-round}
-\begin{table}
-	\caption{Average MMR in problems of size $(10, 20)$ after $k$ questions.}
-	\label{tab:biggerSize}
-	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
-		\toprule
-		{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Eli.} & {sd} \\
-		\midrule
-		0 &20.0 & 0.0 & 20.0 & 0.0&  20.0 & 0.0 \\
-		50 & 19.82 & 0.04 &	15.59 &0.56	&17.38& 0.7\\
-		100 & 19.12	& 0.26&	11.91&	1.26 &15.23& 0.73\\
-		150 & 18.06	& 0.47&	8.92&	1.53 &13.38& 1.11\\
-		200 & 16.89	& 0.62&6.24&2.02&11.76& 1.03\\
-		250 & 15.63 & 0.84&	4.64&1.72&10.56& 0.89\\
-		300 & 14.72	& 0.94&	3.01& 1.35 &10.48& 0.87\\
-		350 & 13.41	& 1.15& 1.76& 0.95&10.48& 0.86\\
-		400 & 11.98	& 0.68&	0.62&0.56 &10.48& 0.86\\
-		\bottomrule
-	\end{tabular}
-\end{table}
 \begin{table}[t]
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
@@ -482,25 +464,10 @@ We also see that Pessimistic performs slightly better than Extended pessimistic,
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
-%\subsection{Absolute evaluation of Pessimistic strategy}
-\begin{table}
-	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
-	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
-		\toprule
-		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
-		\midrule
-		5 & 10 & 1 & 60 \\
-		5 & 15 & 1.5 & 80 \\
-		5 & 20 & 2 & 110 \\
-		10 & 20 & 2 & 340 \\
-		10 & 30 & 3 & 527 \\
-		15 & 30 & 3 & 951 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
 
-\paragraph{In-depth evaluation of Pessimistic}
+
+
+\paragraph{Evaluation of Pessimistic Strategy}
 \label{sec:lowRegret}
 While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. Here, we consider a low level to be a tenth of the number of agents ($n/10$): such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
@@ -525,7 +492,7 @@ For the experiments we performed, we see that the number of questions required t
 
 
 \begin{figure}[t]
-	\caption{Average MMR (normalized on the number of voters $n$) after $k$ questions with Pessimistic strategy for different problem sizes.}
+	\caption{Average MMR (normalized by $n$) after $k$ questions with Pessimistic strategy for different data-sets.}
 	\label{fig:linearity}
 	\begin{tikzpicture}
 		\pgfplotsset{
@@ -535,7 +502,7 @@ For the experiments we performed, we see that the number of questions required t
 			},
 		}
 		\begin{axis}[
-			y=100,
+			y=80,
 			legend columns=3,
 			xlabel=Number of Questions,
 			ylabel=MMR/n,
@@ -548,7 +515,8 @@ For the experiments we performed, we see that the number of questions required t
 			ymax=1,
 			xmin=0,
 			xmax=1000,
-			yticklabels={0,0.5,1}]
+			yticklabels={0,0.5,1},
+			legend style={font=\scriptsize}]
 			
 			\addlegendimage{mark=triangle*,teal,mark size=2}
 %			\addlegendimage{mark=*,violet,mark size=2}
@@ -586,73 +554,6 @@ For the experiments we performed, we see that the number of questions required t
 	\end{tikzpicture}
 \end{figure}
 
-%\begin{figure}
-%	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
-%	\label{fig:linearity}
-%	\begin{tikzpicture}
-%		\pgfplotsset{
-%			every axis legend/.append style={
-%				at={(0.5,1.03)},
-%				anchor=south
-%			},
-%		}
-%		\begin{axis}[
-%			y=3.5,
-%			legend columns=3,
-%			xlabel=Number of Questions,
-%			ylabel=Avg. Regret,
-%			ytick={0,5,10,15,20,25,30},
-%			xtick distance=100,
-%			ytick distance=5,
-%			xtick pos=left,
-%			ymajorgrids=true,
-%			ytick style={draw=none},
-%			ymin=0,
-%			ymax=31,
-%			xmin=0,
-%			xmax=1000,
-%			yticklabels={0,5,10,15,20,25,30}]
-%			
-%			\addlegendimage{mark=triangle*,teal,mark size=2}
-%			\addlegendimage{mark=*,violet,mark size=2}
-%			\addlegendimage{mark=square*,green,mark size=2}
-%			\addlegendimage{mark=diamond*,red,mark size=2}
-%			\addlegendimage{mark=halfsquare left*,blue,mark size=2}
-%			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
-%			\addlegendimage{mark=pentagon*,cyan,mark size=2}
-%			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
-%			
-%			
-%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/linearity.dat};
-%			\addlegendentry{m=5, n=10}
-%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/linearity.dat};
-%			\addlegendentry{m=5, n=15}
-%			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/linearity.dat};
-%			\addlegendentry{m=5, n=20}
-%			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity.dat};
-%			\addlegendentry{m=10, n=20}
-%			\addplot[thick, mark=halfquare left*, mark size = {2}, mark indices = {60}, blue] table [x=k, y=14.9]{data/linearity.dat};
-%			\addlegendentry{m=14, n=9}
-%			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/linearity.dat};
-%			\addlegendentry{skate m14n9}
-%			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/linearity.dat};
-%			\addlegendentry{m=10, n=30}
-%			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
-%			\addlegendentry{m=15, n=30}
-%			
-%		\end{axis}
-%	\end{tikzpicture}
-%\end{figure}
-
-
-%\begin{figure}
-%	\caption{Average MMR after $k$ questions with Pessimistic strategy for different problem sizes.}
-%
-%	%\Description{Graph showing that the MMR decreases very approximately linearly, and is convex, as a function of the number of questions.}
-%	\includegraphics[width=.45\textwidth]{linearity.png}
-%\end{figure}
-
-\paragraph{Decrease in MMR values}
 We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level. Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. \Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
 that, on average, halving the number of questions will only reduce the gain in regret by less than half. \commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
 
@@ -730,7 +631,6 @@ Finally, an important direction of extension aims at studying how to elicit pref
 %\bibliography{biblio}
 
 \newpage
-
 \bibliographystyle{named}
 \bibliography{biblio}
 
@@ -778,6 +678,44 @@ Finally, an important direction of extension aims at studying how to elicit pref
 	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
 	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
 \end{proof*}
+
+\begin{table}[ht]
+	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
+	\label{tab:lowRegret}
+	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
+		\toprule
+		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
+		\midrule
+		5 & 10 & 1 & 60 \\
+		5 & 15 & 1.5 & 80 \\
+		5 & 20 & 2 & 110 \\
+		10 & 20 & 2 & 340 \\
+		10 & 30 & 3 & 527 \\
+		15 & 30 & 3 & 951 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\sisetup{table-number-alignment = center, table-figures-integer=2, table-figures-decimal=1, table-auto-round}
+\begin{table}[ht]
+	\caption{Average MMR in problems of size $(10, 20)$ after $k$ questions.}
+	\label{tab:biggerSize}
+	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left]}
+		\toprule
+		{k} & {Rnd.} & {sd} & {Pes.} & {sd} & {Eli.} & {sd} \\
+		\midrule
+		0 &20.0 & 0.0 & 20.0 & 0.0&  20.0 & 0.0 \\
+		50 & 19.82 & 0.04 &	15.59 &0.56	&17.38& 0.7\\
+		100 & 19.12	& 0.26&	11.91&	1.26 &15.23& 0.73\\
+		150 & 18.06	& 0.47&	8.92&	1.53 &13.38& 1.11\\
+		200 & 16.89	& 0.62&6.24&2.02&11.76& 1.03\\
+		250 & 15.63 & 0.84&	4.64&1.72&10.56& 0.89\\
+		300 & 14.72	& 0.94&	3.01& 1.35 &10.48& 0.87\\
+		350 & 13.41	& 1.15& 1.76& 0.95&10.48& 0.86\\
+		400 & 11.98	& 0.68&	0.62&0.56 &10.48& 0.86\\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \end{document}
 
