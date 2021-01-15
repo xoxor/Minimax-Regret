@@ -25,7 +25,6 @@
 	/TemplateVersion (IJCAI.2021.0)
 }
 
-
 %I find these settings useful in draft mode. Should be removed for final versions.
 	%Which line breaks are chosen: accept worse lines, therefore reducing risk of overfull lines. Default = 200.
 		\tolerance=2000
@@ -158,16 +157,16 @@ A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(
 Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold Cartesian product of the linear orders over the alternatives).
 A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
 Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$, also known as the {\em scoring vector}.
+Let $\alpha^{x}_r$ be the number of times that alternative $x$ was ranked in the $r$-th position.
 An alternative obtains a score that depends on the rank obtained in each of the preference orders:
 \begin{align}
 	\label{eq:srule}
 	s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 	= \sum_{r=1}^{m} \alpha^{x}_r w_r 
 \end{align}
-where $\alpha^{x}_r$ is the number of times that alternative $x$ was ranked in the $r$-th position.
 The winners are the alternatives with the highest score.
 
-In this work we assume fixed, but unknown to us, a profile $\profile^*$ representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$, representing the preferences of the chair. We want to reason about partial preference information concerning those objects.
+In this work we assume fixed, but unknown to us, a profile $\profile^*$ representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$ representing the preferences of the chair. We will reason about partial preference information concerning those objects.
 At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
 In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
@@ -178,12 +177,7 @@ Then $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ is the set of compl
 
 We also assume that the weights of the scoring rule are only partially specified.
 Therefore, the vector $(w_1,\ldots,w_m)$  is not known but we are given a set of constraints restraining the possible values that weights can take.
-We consider a decreasing sequence of weights:
-\begin{align}
-	1=w_{1} ≥ w_{2} ≥ \ldots ≥ w_{m}=0. \label{eq:monotone}
-\end{align}
-This is a natural assumption, as it is better to be ranked first than second, second than third, etc. 
-Without loss of generality, we consider that $w_1=1$ and $w_m=0$. 
+We consider a decreasing sequence of weights $1 = w_1 ≥ w_2 ≥ … ≥ w_m = 0$, a natural assumption, as it is better to be ranked first than second, second than third, etc. 
 
 The weights of a scoring rule can model different preferences of the chair. 
 For instance, the weights can control the inclination to favor ``extreme'' alternatives (often at either the top or the bottom of the input rankings) at the expenses of ``moderate'' alternatives (that are more consistently in the middle part of the input rankings). 
@@ -206,13 +200,13 @@ showing a complete profile of a small synthetic election and asking who should b
 
 \section{Robust winner determination}
 \label{sec:mmr}
-In this paper, we consider a setting where both the agent preferences and the preferences of the chair about the voting rule are incomplete.
+In this paper, we consider that both the agent preferences and the preferences of the chair about the voting rule are incomplete.
 As reviewed in \cref{sec:related}, some authors have considered possible and necessary winners assuming 
 either a partial profile or assuming an incompletely specified scoring rule.
 
 Notice that often there are no necessary winners and too many possible winners; it is therefore useful to declare a winner given partial information.
-As a decision criterion to determine a winner, we propose to use minimax regret. 
-Minimax regret \citep{Savage1954} is a decision criterion that has been used for robust optimization under data uncertainty \citep{Kouvelis1997} as well as in decision-making with uncertain utility values \citep{Salo2001,Boutilier2006}.
+As a decision criterion to determine a winner, we propose to use minimax regret \citep{Savage1954}. 
+This decision criterion has been used for robust optimization under data uncertainty \citep{Kouvelis1997} as well as in decision-making with uncertain utility values \citep{Salo2001,Boutilier2006}.
 In particular, \citet{Lu2011} have adopted minimax regret for winner determination in social choice where
 the preferences of agents that are only partially known, while the social choice function is predetermined and known.
 
@@ -222,28 +216,11 @@ Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from th
 
 The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
 We formalize the notion of minimax regret in multiple steps.
-First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$:
-\begin{align} 
-	\Regret(x; \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).
-\end{align}
+First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$: $\Regret(x; \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$.
 The pairwise maximum regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
-\begin{align}
-	\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).
-\end{align}
-
-The maximum regret $\MaxR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$:
-\begin{align}
-	\MaxR(x; \pprofile, W) & = \max_{y \in A} \PMR(x,y; \pprofile, W)\\
-	& = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w).
-\end{align}
-
-Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$:
-
-\begin{align}
-	\MMR(\pprofile,W) & = \min_{x \in A} \MaxR(x;\pprofile,W); \\
-	A^*_{\pprofile, W} & = \argmin_{x \in A} \MaxR(x;\pprofile,W).
-\end{align}
+is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights: $\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$.
+The maximum regret $\MaxR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$: $\MaxR(x; \pprofile, W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$.
+Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$: $\MMR(\pprofile,W) & = \min_{x \in A} \MaxR(x;\pprofile,W)$ and $A^*_{\pprofile, W} & = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
 By picking as consensus choice
 an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agent preferences and the weights used in the aggregation). 
 In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
@@ -259,15 +236,7 @@ In order to compute pairwise maximum regret, and therefore minimax regret, we de
 The setting is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see \cref{eq:srule}).
-Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as
-\[
-s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)},
-\]
-and we can rewrite $\PMR$ as follows:
-\begin{align}
-	& \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] \\
-	& =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]. \\
-\end{align}
+Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we can rewrite $\PMR$ as $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
 Note that in general the inner max depends on the weights chosen by the outer max.
 
 We are interested in computing $\PMR(x, y; \pprofile, W)$. This represents the “worst” difference of score, thus the difference of score between $y$ and $x$ under the worst case preferences compatible with $\pprofile$ and $W$, where the worst case is the one that maximizes this difference of score.
@@ -305,10 +274,10 @@ Recall that the preferences of the chair are encoded with linear constraints $\C
 The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions:
 \begin{align}
 	\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}\\
-	\text{ s.t. } & \text{\cref{eq:monotone}} \text{ and } \text{\cref{eq:convexity}} \text{ and } \Co_W.
+	\text{ s.t. } & w_1 = 1, w_m = 0, \text{\cref{eq:convexity}} \text{ and } \Co_W.
 \end{align}
-Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
-(we leave $w_{1}$ and $w_{m}$ in the LP just for clarity of presentation).
+%Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
+%(we leave $w_{1}$ and $w_{m}$ in the LP just for clarity of presentation).
 
 The max regret $\MaxR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
 Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
@@ -336,11 +305,7 @@ If agent $j$ answers a comparison query stating that alternative $a$ is preferre
 
 A bit more discussion is needed about {\em questions asked to the chair}.
 Such questions aim at refining our knowledge about the scoring rule; a response gives us a constraint on the weight vector $\w$.
-In particular, we want to obtain constraints of the type
-\begin{align}
-	w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})
-\end{align}
-for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of ranks $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
+In particular, we want to obtain constraints of the type $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$ for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of ranks $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
 
 \paragraph{Building concrete questions for the chair}
 As we assume that the weights constitute the utility components of the chair, it might be reasonable to assume that the chair is able to answer such abstract questions in our setting. However, it is important to make sure that a question can also, in principle, be asked in a more concrete way, in terms of winners of example profiles. This permits to test how the chair understands the question and to relate the preference of the chair to her choice behavior in the economic sense. 
