@@ -218,9 +218,9 @@ The maximum regret is considered by assuming that an adversary can both 1) exten
 We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$: $\Regret(x; \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$.
 The pairwise maximum regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights: $\PMR(x,y; \pprofile, W) & = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$.
+is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights: $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$.
 The maximum regret $\MaxR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$: $\MaxR(x; \pprofile, W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$.
-Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$: $\MMR(\pprofile,W) & = \min_{x \in A} \MaxR(x;\pprofile,W)$ and $A^*_{\pprofile, W} & = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
+Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$: $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ and $A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
 By picking as consensus choice
 an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agent preferences and the weights used in the aggregation). 
 In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
@@ -308,13 +308,8 @@ Such questions aim at refining our knowledge about the scoring rule; a response 
 In particular, we want to obtain constraints of the type $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$ for $r \in \{1,\ldots,m-2\}$, relating the difference between the importance of ranks $r$ and $r+1$ with the difference between ranks $r+1$ and $r+2$.
 
 \paragraph{Building concrete questions for the chair}
-As we assume that the weights constitute the utility components of the chair, it might be reasonable to assume that the chair is able to answer such abstract questions in our setting. However, it is important to make sure that a question can also, in principle, be asked in a more concrete way, in terms of winners of example profiles. This permits to test how the chair understands the question and to relate the preference of the chair to her choice behavior in the economic sense. 
+The chair might be considered able to answer such abstract questions in our setting; but we consider it important to make sure that these questions can also be asked in a more concrete way, in terms of winners of example profiles: such questions have precise semantics whose understanding can be assumed to be shared by the chair, contrary to abstract questions about weights. Our approach is analogous to that of decision theorists with preference elicitation: a large stream of research considers more meaningful to ask direct choice questions ("please choose either a or b") than to question the decision maker about the shape of its utility function. The former are considered "observable": acts of choice are translated to preference statements. In the social choice context, this way of asking questions has been used in experimental settings investigating the feeling of justice of individuals \citep{Giritligil2005}, but, to the best of our knowledge, the use of such questions to systematically guide an elicitation process is novel.
 
-Such questions have precise semantics whose understanding is shared by the chair. This way of asking questions is sufficiently natural that it has been used in experimental settings investigating the feeling of justice of individuals \citep{Giritligil2005}. To the best of our knowledge, the use of such questions to systematically guide an elicitation process is novel.
-
-Our approach is analogous to that of decision theorists with preference elicitation: a large stream of research considers more meaningful to ask direct choice questions ("please choose either a or b") than to question the decision maker about the shape of its utility function. The former are considered "observable": acts of choice are translated to preference statements.
-
-Furthermore this will be necessary for an ordinal extension of our work where the scores would not be considered as cardinal utilities.
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
 \begin{proposition}\label{prop:chairQuestions}
 	Given a rational $\lambda = p/q > 1$ and a rank $r$ between $1$ and $m - 2$, there exists a profile $P$ such that, for any weight vector $\w \in \W$, $a \in f(P)$ iff $w_{r} - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$ and $b \in f(P)$ iff $w_{r} - w_{r+1} ≤ \lambda (w_{r+1} - w_{r+2})$, where $f$ is the PSR parameterized with $\w$.
@@ -335,8 +330,6 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 	\end{center}
 	Both $a$ and $b$ have scores higher than $c$ and $d$ for all convex weights, thus either $a$ or $b$ will be picked under our hypothesis; and $s(a) ≥ s(b) ⇔ w_2 + 2 w_4 ≥ 3 w_3$.
 \end{example*}
-
-At this stage, we are satisfied that a procedure exists to transform our abstract questions to questions about winners of a PSR. Further studies would investigate, for example, what is lost in terms of elicitation efficiency when we are forced to restrain to realistic concrete questions, meaning, questions involving small profiles; or investigate the relationship between our understanding of scores as (cardinal) utility and (ordinal) scores as definition of a PSR.
 
 \paragraph{Elicitation strategies}
 We develop several elicitation strategies for simultaneous elicitation of agent preferences and of the scoring rule.
@@ -364,10 +357,7 @@ The terms $\epsilon_t$ and $\epsilon'_{t}$ are real numbers associated to the ty
 Define similarly $t_2$, $R^{\max}_2$ and $R^{\min}_2$ for a question $q_2$.
 We are now faced with the problem of aggregating these values in order to compare the informative values of the candidate questions. We adopt a pessimistic approach, reported to perform better than optimistic aggregation \citep{Cailloux2014}, although our experiments in this context suggested a weak impact of that choice on the performance of the strategy.
 To avoid the absorption property of the max, we adopt $\leximax$ as an aggregator.
-Pessimistic thus considers question $q_1$ to be better  than $q_2$ iff
-\begin{align}
-	R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2].
-\end{align}
+Pessimistic thus considers question $q_1$ to be better  than $q_2$ iff $R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2]$.
 %This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
 %The motivation for using this operator lies in 
 In other words if the maximal {\em a posteriori} MMR of two questions are (nearly) equal, then it considers the (penalized) minimal MMR values, preferring the question with the lowest value.
