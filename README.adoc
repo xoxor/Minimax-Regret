@@ -6,17 +6,13 @@ Code at https://github.com/oliviercailloux/minimax.
 
 == TODO
 * Reduce the paper to 6+1 pages
-** Put all display math in the text (Olivier)
-** Shorten the example for proposition 4 (Olivier)
-* Merge (and shorten) introduction and related works (Paolo)
 ** Add that asking questions to the committee in term of profile is new and must be stressed more. Also, this is compatible with every rule. If we ask about the weights it works only for scoring rules.
-* Cover letter
-** Add new ID and IJCAI ID (Bea)
-** Add rejected ijcai paper (Bea)
-** Add table of content (Bea)
-* XPs Irish with css (Bea)
-* Similarity measure for preference rankings and use it as an explanation for the performance of the datasets.
+* Keep 1.1+1e-6
+* Table 1 and 3 in appendix, reduce Figures and legends
+* Merge In-depth evaluation of Pessimistic and Decrease in MMR values
+* Remove half a column in Sec 3, half a column in Sec 4, one column in Sec 4
 
+* Similarity measure for preference rankings and use it as an explanation for the performance of the datasets.
 
 * Rephrase the experimental section writing the hypotesis first
 * Using \succeq^p_j(x) to denote the set of alternatives weakly worse than x can be confusing. Please consider using a different notation such as A^(\succeq^p_j,x). 
