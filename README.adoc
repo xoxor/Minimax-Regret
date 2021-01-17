@@ -5,11 +5,13 @@ Code at https://github.com/oliviercailloux/minimax.
 
 
 == TODO
-* Reduce the paper to 6+1 pages
-** Add that asking questions to the committee in term of profile is new and must be stressed more. Also, this is compatible with every rule. If we ask about the weights it works only for scoring rules.
+* Add in the text the references to the appendix
+* Explain and structure the appendix
+* +++<del>+++Reduce the paper to 6+1 pages+++</del>+++
+** +++<del>+++Add that asking questions to the committee in term of profile is new and must be stressed more. Also, this is compatible with every rule. If we ask about the weights it works only for scoring rules.+++</del>+++
 * Keep 1.1+1e-6
-* Table 1 and 3 in appendix, reduce Figures and legends
-* Merge In-depth evaluation of Pessimistic and Decrease in MMR values
+* +++<del>+++Table 1 and 3 in appendix, reduce Figures and legends+++</del>+++
+* +++<del>+++Merge In-depth evaluation of Pessimistic and Decrease in MMR values+++</del>+++
 * Remove half a column in Sec 3, half a column in Sec 4, one column in Sec 4
 
 * Similarity measure for preference rankings and use it as an explanation for the performance of the datasets.
