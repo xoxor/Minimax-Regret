@@ -193,7 +193,7 @@ In particular, \citet{Lu2011} have adopted minimax regret for winner determinati
 the preferences of agents that are partially known, while the social choice function is known.
 
 We consider the simultaneous presence of incomplete knowledge in agent preferences and in the weights of the PSR.
-We use \emph{maximum regret} to quantify the worst-case error, and let the alternatives that minimize this quantity win, providing us with a form of robust optimization.
+We use \emph{maximum regret} to quantify the worst-case error, and let the alternatives that minimize this quantity win, giving some robustness in face of ignorance.
 Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given the current knowledge.
 
 The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
@@ -201,30 +201,26 @@ We formalize the notion of minimax regret in multiple steps.
 First of all, $\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$.
 The pairwise maximum regret $\PMR(x,y;\pprofile,W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
 is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights.
-The maximum regret $\MaxR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$: $\MaxR(x; \pprofile, W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$.
-Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$: $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ and $A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
-By picking as consensus choice
-an alternative associated with minimax regret, we can provide a recommendation that gives worst-case guarantees, giving some robustness in face of uncertainty (due to both not knowing the agent preferences and the weights used in the aggregation). 
-In cases of ties in minimax regret, we can either decide to return all minimax alternatives $A^*_{\pprofile, W}$ as winners or to pick just one of them using some tie-breaking strategy.
+The maximum regret $\MaxR(x;\pprofile,W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
+Finally,  $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
+Picking as consensus choice an alternative associated with minimax regret provides a recommendation that gives worst-case guarantees. 
+In cases of ties in minimax regret, we can return all minimax alternatives $A^*_{\pprofile, W}$ as winners or pick one of them using some tie-breaking strategy.
 
-Observe that if $\MMR(\pprofile, W)\!=\!0$, then any $x^{*}_{\pprofile,W} \in A^*_{\pprofile, W}$ is a necessary co-winner; this means that for any valid completion of the profile and any feasible $w \in W$, $x^{*}_{\pprofile,W}$ obtains the highest score.
+Observe that if $\MMR(\pprofile, W)\!=\!0$, then any $x^{*}_{\pprofile,W} \in A^*_{\pprofile, W}$ is a necessary winner: any valid completion of the profile and choice of $w \in W$ gives to $x^{*}_{\pprofile,W}$ the highest score.
 
 We note that our notion of regret gives some cardinal meaning to the scores: instead of just being used to select winners under the corresponding PSR, their differences are considered as representing the regret of the chair.
 
 % Add some general remarks about using minimax regret
 
 \paragraph{Computation of minimax regret}
-In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the $\PMR$ into the contributions associated to each agent by adapting the reasoning from \citet{Lu2011}.
+In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the PMR into the contributions associated to each agent by adapting the reasoning from \citet{Lu2011} \commentOC{Cite Conitzer}.
 The setting is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see \cref{eq:srule}).
-Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we can rewrite $\PMR$ as $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} [ s(y; \profile,\w) - s(x; \profile,\w) ] =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
-Note that in general the inner max depends on the weights chosen by the outer max.
+Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we obtain $\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
+%Note that in general the inner max depends on the weights chosen by the outer max.
 
-We are interested in computing $\PMR(x, y; \pprofile, W)$. This represents the “worst” difference of score, thus the difference of score between $y$ and $x$ under the worst case preferences compatible with $\pprofile$ and $W$, where the worst case is the one that maximizes this difference of score.
-We consider now a procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering %minimax regret with 
-a fixed weight vector.
-As we will show, this procedure can also be used when the weight vector is not completely known. Let us write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$.
+The following propositions (with proofs in appendix) show that the procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering a fixed weight vector also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing for example ${\pprefeq_j}(x)$ to designate $\set{y \suchthat x \pprefeq_j y}$.
 
 \begin{proposition} \label{claim:completion}
 	There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
@@ -236,12 +232,10 @@ As we will show, this procedure can also be used when the weight vector is not c
 	\end{align} 
 \end{proposition}
 
-Let ${\pprefeq_j}(x)$ designate the set of alternatives known to be considered by $j$ as less good than or equal to $x$, and ${\pprefinv_j}(y)$ be the set of alternatives known to be considered by $j$ as strictly better than $y$.
 \begin{proposition} \label{claim:rankPMR}
 	The rank of $x$ in the PMR-maximizing linear orders of agent $j$ is $\hat{v}_{j}(x) = 1+\card{A}-\card{{\pprefeq_j}(x)}$, and the rank of $y$ is $\hat{v}_{j}(y)=1+\card{{\pprefinv_j}(y)}+\card{\beta}$, where $\card{\beta} = \card{A \setminus ({\pprefeq_j}(x) \cup {\pprefinv_j}(y))}$ if $(x \pprefeq_j y)$ and $\card{\beta} = 0$ otherwise.
 \end{proposition}
 
-The proposition can also be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.
 \begin{proposition}
 	The $\PMR$ can be written as:
 	\begin{align} 
@@ -249,22 +243,23 @@ The proposition can also be understood by observing that in the case $(x \pprefe
 		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
 		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
 	\end{align}
-	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in \cref{claim:rankPMR}. %\ref{claim:completion}.
+	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) has rank $r$ in the complete profile $\hat{\profile}$ defined in \cref{claim:rankPMR}. %\ref{claim:completion}.
 \end{proposition}
+
+(\cref{claim:rankPMR} can be understood by observing that in the case $(x \pprefeq_j y)$, $\beta$ is the number of alternatives incomparable with both $x$ and $y$.)
 The last proposition shows that PMR is linear in the weights.
-Recall that $\pw$ represents the weight vectors compatible with the preferences of the chair stated so far.
-The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions:
+%Recall that $\pw$ represents the weight vectors compatible with the preferences of the chair stated so far.
+The pairwise max regret $\PMR(x,y; \pprofile,W)$ can thus be obtained by solving the following linear program defined on the variables $w_1, …, w_m$:
 \begin{align}
 	\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}\\
-	\text{ s.t. } & w_1 = 1, w_m = 0, \text{\cref{eq:convexity}} \text{ and } w \in \pw.
+	\text{ s.t. } & w_1 = 1 ≥ … ≥ w_m = 0, \text{\cref{eq:convexity}} \text{ and } \w \in \pw.
 \end{align}
 %Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
 %(we leave $w_{1}$ and $w_{m}$ in the LP just for clarity of presentation).
 
-The max regret $\MaxR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$.
-Optimal alternatives w.r.t. minimax regret are the ones with least max regret. 
-Observe that, whenever the $\PMR$ of an alternative $x$ (against some other alternative $y$) exceeds the best MR value found so far, we do not need to further evaluate $x$. 
-This idea can be exploited further by adopting a minimax-search tree \citep{Braziunas2012}.
+The max regret $\MaxR(x; \pprofile, W)$ is determined by considering the pairwise regret of $x$ with all other alternatives in $A$, and the recommended alternatives are the ones with least max regret. 
+Observe that when the $\PMR$ of an alternative $x$ (against some other alternative $y$) exceeds the best MR value found so far, we do not need to further evaluate $x$. 
+This idea can be exploited using a minimax-search tree \citep{Braziunas2012}.
 
 \section{Interactive Elicitation} 
 \label{sec:elicit}
