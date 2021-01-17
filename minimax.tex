@@ -30,8 +30,8 @@
 		\tolerance=2000
 	%Accept overfull hbox up to...
 		\hfuzz=2cm
-	%Reduces verbosity about the bad line breaks.
-		\hbadness 5000
+	%Reduces verbosity about the bad line breaks. TODO reduce
+		\hbadness 10000
 	%Reduces verbosity about the underful vboxes.
 		\vbadness=6000
 
@@ -97,7 +97,7 @@ Consider, as an example, a committee that is about to hire a new employee, whose
 %The information provided can be used to   % to determine their employee of choice.
 
 %This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
-In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings, and we assume that both the agent preferences and the social choice rule are partially specified. 
+In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings. 
 We develop methods, based on the notion of minimax regret, for determining a robust ``winner'' under uncertainty of both the voting rule and the agent preferences.
 %alternative using positional scoring rules and 
 We provide incremental elicitation methods that 
@@ -150,12 +150,12 @@ Finally, we mention works addressing the manipulability of voting rules \citep{E
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, movies, public projects, job candidates, etc.) and a set $\set{1, …, n}$ of agents. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order ${\pref_j}  \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
-Following the social choice nomenclature, we call {\em profile} the association of a preference to each agent, considering a subset of agents from the set $\N$, and denote a profile by $(\pref_1,\ldots,\pref_n)$.
+We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.) and a set $N = \set{1, …, n}$ of agents. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order ${\pref_j}  \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
+A {\em profile} $(\pref_1,\ldots,\pref_n)$ associates to each agent a preference, considering a subset of agents from the set $\N$.
 A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
 
 Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold Cartesian product of the linear orders over the alternatives).
-A social choice function $f : V \rightarrow \powersetz{A}$ associates a profile with a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
+A social choice function $f : V \rightarrow \powersetz{A}$ associates to each profile a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
 Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$, also known as the {\em scoring vector}.
 Let $\alpha^{x}_r$ be the number of times that alternative $x$ was ranked in the $r$-th position.
 An alternative obtains a score that depends on the rank obtained in each of the preference orders:
@@ -166,14 +166,12 @@ An alternative obtains a score that depends on the rank obtained in each of the 
 \end{align}
 The winners are the alternatives with the highest score.
 
-In this work we assume fixed, but unknown to us, a profile $\profile^*$ representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$ representing the preferences of the chair. We will reason about partial preference information concerning those objects.
-At a given time, our knowledge of agent $j$'s preference is encoded by a partial order over the alternatives, thus a transitive and asymmetric binary relation, denoted by $\ppref_j$. 
-In this work we assume that preference information is truthful, i.e. $a \ppref_j b ⇒ a \pref_j^* b$.
+We assume fixed, but unknown to us, a profile $\profile^*$ representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$ representing the preferences of the chair. 
+At a given time, our knowledge of agent $j$'s preference is encoded by a partial order ${\ppref_j} \subseteq {\pref_j^*}$ over the alternatives, thus a transitive and asymmetric binary relation (we assume that preference information is truthful).
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
 An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent to a partial preference.
 
-A completion of $\ppref_j$ is any linear order $\pref$ that extends $\ppref_j$ and we indicate with $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ the set of possible completions of $\ppref_i$.
-Then $C(\pprofile)=C(\ppref_1)\times … \times C(\ppref_n)$ is the set of complete profiles extending $p$. Note that $\profile^* \in C(\pprofile)$.
+Let $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ denote the set of possible completions of $\ppref_i$ and $C(\pprofile) = \prod_{j \in N} C(\ppref_j)$ the set of complete profiles extending $\pprofile$. Note that $\profile^* \in C(\pprofile)$.
 
 We also assume that the weights of the scoring rule are only partially specified.
 Therefore, the vector $(w_1,\ldots,w_m)$  is not known but we are given a set of constraints restraining the possible values that weights can take.
