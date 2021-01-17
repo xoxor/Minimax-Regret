@@ -150,19 +150,18 @@ Finally, we mention works addressing the manipulability of voting rules \citep{E
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.) and a set $N = \set{1, …, n}$ of agents. Each agent $j$ comes from an infinite set $\N$ of potential agents and is associated to her “real” preference order ${\pref_j}  \in \linors$ which is a linear order (a connected, transitive, asymmetric relation) over the alternatives.
-A {\em profile} $(\pref_1,\ldots,\pref_n)$ associates to each agent a preference, considering a subset of agents from the set $\N$.
-A profile is equivalently represented by $\profile=(v_1,\ldots,v_n)$ where $v_j(i) \in \set{1, \ldots, m}$ denotes the rank (position) of alternative $i$ in the preference order $\pref_j$. 
+We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.) and an infinite set $\N$ of potential agents.
+A {\em profile} $(\pref_j, j \in N)$ considers a finite subset of agents $N \subset \N$ and associates to each agent a preference order ${\pref_j}  \in \linors$, a linear order over the alternatives.
+A profile is equivalently represented by $\profile=(v_j, j \in N)$ where $v_j(x) \in \set{1, \ldots, m}$ denotes the rank of alternative $x$ in the preference order $\pref_j$. 
 
-Let $V$ be the set of possible preference profiles (the union, for any integer $n$, of the $n$-fold Cartesian product of the linear orders over the alternatives).
-A social choice function $f : V \rightarrow \powersetz{A}$ associates to each profile a set of winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set (sets are used for tied winners).
+A social choice function $f : \cup_{\emptyset ≠ N \subset \N} \linors^N \rightarrow \powersetz{A}$ associates to each profile a set of (tied) winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set.
 Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$, also known as the {\em scoring vector}.
 Let $\alpha^{x}_r$ be the number of times that alternative $x$ was ranked in the $r$-th position.
-An alternative obtains a score that depends on the rank obtained in each of the preference orders:
+Given $\profile$ and $\w$, an alternative $x \in A$ obtains the score
 \begin{align}
 	\label{eq:srule}
 	s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
-	= \sum_{r=1}^{m} \alpha^{x}_r w_r 
+	= \sum_{r=1}^{m} \alpha^{x}_r w_r\ .
 \end{align}
 The winners are the alternatives with the highest score.
 
