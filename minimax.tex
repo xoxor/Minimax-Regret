@@ -150,12 +150,12 @@ Finally, we mention works addressing the manipulability of voting rules \citep{E
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.) and an infinite set $\N$ of potential agents.
+We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.), an infinite set $\N$ of potential agents and a specific finite set of agents $N^* \subset \N$.
+
 A {\em profile} $(\pref_j, j \in N)$ considers a finite subset of agents $N \subset \N$ and associates to each agent a preference order ${\pref_j}  \in \linors$, a linear order over the alternatives.
 A profile is equivalently represented by $\profile=(v_j, j \in N)$ where $v_j(x) \in \set{1, \ldots, m}$ denotes the rank of alternative $x$ in the preference order $\pref_j$. 
-
 A social choice function $f : \cup_{\emptyset ≠ N \subset \N} \linors^N \rightarrow \powersetz{A}$ associates to each profile a set of (tied) winners, where $\powersetz{A}$ represents the set of subsets of $A$ except for the empty set.
-Among the many possible social choice functions, we consider {\em positional scoring rules (PSR)}, which attach weights to positions according to the vector $(w_1, \ldots, w_m)$, also known as the {\em scoring vector}.
+Among the many possible social choice functions, we consider convex {\em positional scoring rules (PSRs)}. A PSR $f^{\w}$ is parameterized by a \emph{scoring vector} $\w$ associating weights $w_r \in [0, 1]$ to positions, with $1 = w_1 ≥ w_2 ≥ … ≥ w_m = 0$.
 Let $\alpha^{x}_r$ be the number of times that alternative $x$ was ranked in the $r$-th position.
 Given $\profile$ and $\w$, an alternative $x \in A$ obtains the score
 \begin{align}
@@ -163,59 +163,44 @@ Given $\profile$ and $\w$, an alternative $x \in A$ obtains the score
 	s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
 	= \sum_{r=1}^{m} \alpha^{x}_r w_r\ .
 \end{align}
-The winners are the alternatives with the highest score.
+The winners $f^{\w}(\profile)$ are the alternatives with highest score.
 
-We assume fixed, but unknown to us, a profile $\profile^*$ representing the preferences $\pref_j^*$ of the agents, and a weight vector $\w^*$ representing the preferences of the chair. 
-At a given time, our knowledge of agent $j$'s preference is encoded by a partial order ${\ppref_j} \subseteq {\pref_j^*}$ over the alternatives, thus a transitive and asymmetric binary relation (we assume that preference information is truthful).
-%We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
-An incomplete profile $\pprofile = (\ppref_1, \ldots, \ppref_n)$ maps each agent to a partial preference.
-
-Let $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ denote the set of possible completions of $\ppref_i$ and $C(\pprofile) = \prod_{j \in N} C(\ppref_j)$ the set of complete profiles extending $\pprofile$. Note that $\profile^* \in C(\pprofile)$.
-
-We also assume that the weights of the scoring rule are only partially specified.
-Therefore, the vector $(w_1,\ldots,w_m)$  is not known but we are given a set of constraints restraining the possible values that weights can take.
-We consider a decreasing sequence of weights $1 = w_1 ≥ w_2 ≥ … ≥ w_m = 0$, a natural assumption, as it is better to be ranked first than second, second than third, etc. 
-
-The weights of a scoring rule can model different preferences of the chair. 
-For instance, the weights can control the inclination to favor ``extreme'' alternatives (often at either the top or the bottom of the input rankings) at the expenses of ``moderate'' alternatives (that are more consistently in the middle part of the input rankings). 
-
-An important class of scoring rule is the one composed of weights that represent a convex sequence \citep{Stein1994,Llamazares2016}, meaning that the difference between the weight of the first position and the weight of the second position is at least as large as the difference between the weights of the second and third positions, etc.
+An important class of PSRs is the one using convex weights \citep{Stein1994,Llamazares2016}, meaning that the difference between the weight of the first position and the weight of the second position is at least as large as the difference between the weights of the second and third positions, etc.
 \begin{equation} 
 	\label{eq:convexity}
 	\forall r \in \{1,\ldots,m-2\}: w_r - w_{r+1} \geq w_{r+1}-w_{r+2}.
 \end{equation}
-The constraint above is often used when aggregating rankings in sport competitions.
-We use $\W$ to denote the set of convex weight vectors. It is also a natural and common assumption: losing ranks at the top of the ranking is more damaging than losing ranks at the bottom.
+The constraint above is a natural and common assumption, often used when aggregating rankings in sport competitions: losing ranks at the top of the ranking is more damaging than losing ranks at the bottom.
+Let $\W$ denote the set of such convex weight vectors.
 
-In general it can be difficult to set the weights in an appropriate way.
-We assume that, in addition of basic requirements (monotonicity and convexity), the chair is able to specify additional preferences about how the social choice function should behave.
-In this work we assume that the preferences of the chair are encoded with linear constraints about the vector $\w$, relating the value of the weights of different positions, and the set of these constraints is denoted by $\Co_W$. Moreover, we use $\pw \subseteq \W$ to denote the set of weight vectors compatible with the preferences expressed by the chair about the scoring vector.
-Of course it may be difficult for real decision makers to state preferences about the voting rule in such an abstract way.
-We will show in \cref{sec:elicit} that the additional preferences we use can be elicited by 
-%asking questions about concrete profiles, for instance, by 
-showing a complete profile of a small synthetic election and asking who should be elected in this case.
+Let $\profile^* = (\pref_j^*, j \in N^*)$ and $\w^*$ denote the profile and weight vector, unknown to us, that represent the preferences of the agents in $N^*$ and of the chair. 
+
+At a given time, our knowledge of agent $j$'s preference is encoded by a partial order ${\ppref_j} \subseteq {\pref_j^*}$ over the alternatives, a transitive and asymmetric relation (we assume that preference information is truthful).
+%We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
+An incomplete profile $\pprofile = (\ppref_j, j \in N^*)$ maps each agent to a partial preference.
+Let $C(\ppref_j) = \set{{\succ} \in \linors \suchthat {\ppref_j} \subseteq {\succ}}$ denote the set of possible completions of $\ppref_i$ and $C(\pprofile) = \prod_{j \in N} C(\ppref_j)$ the set of complete profiles extending $\pprofile$. Note that $\profile^* \in C(\pprofile)$.
+
+The vector $\w^*$  is also unknown but we assume that the chair is able to specify additional preference information taking the form of linear constraints about $\w^*$. Let $\pw \subseteq \W$ denote the set of weight vectors compatible with the preferences expressed by the chair about the scoring vector.
+%Of course it may be difficult for real decision makers to state preferences about the voting rule in such an abstract way.
+We will show in \cref{sec:elicit} that the additional preferences we use can be elicited by showing a complete profile of a synthetic election and asking who should be elected in this case.
 
 \section{Robust winner determination}
 \label{sec:mmr}
-In this paper, we consider that both the agent preferences and the preferences of the chair about the voting rule are incomplete.
-As reviewed in \cref{sec:related}, some authors have considered possible and necessary winners assuming 
-either a partial profile or assuming an incompletely specified scoring rule.
-
-Notice that often there are no necessary winners and too many possible winners; it is therefore useful to declare a winner given partial information.
+It is desirable in an elicitation protocol such as ours to be able to stop before reaching full knowledge of the agent preferences or of the preferences of the chair about the voting rule. As, often, there are no necessary winners and too many possible winners, it is useful to declare a winner given partial information.
 As a decision criterion to determine a winner, we propose to use minimax regret \citep{Savage1954}. 
 This decision criterion has been used for robust optimization under data uncertainty \citep{Kouvelis1997} as well as in decision-making with uncertain utility values \citep{Salo2001,Boutilier2006}.
 In particular, \citet{Lu2011} have adopted minimax regret for winner determination in social choice where
-the preferences of agents that are only partially known, while the social choice function is predetermined and known.
+the preferences of agents that are partially known, while the social choice function is known.
 
-In this work, we consider the simultaneous presence of uncertainty in agent preferences and in the weights of the scoring rule used as a social choice function.
-Using {\em maximum regret} to quantify the worst-case error, the alternatives that minimize this error are selected as tied winners, providing us with a form of robust optimization.
+We consider the simultaneous presence of incomplete knowledge in agent preferences and in the weights of the PSR.
+We use \emph{maximum regret} to quantify the worst-case error, and let the alternatives that minimize this quantity win, providing us with a form of robust optimization.
 Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from the optimal one in the worst case, given the current knowledge.
 
 The maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$, where $\pprofile$ and $\pw$ represent our knowledge so far.
 We formalize the notion of minimax regret in multiple steps.
-First of all, $\Regret(x, \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$: $\Regret(x; \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$.
-The pairwise maximum regret $\PMR(x,y;\pprofile,W)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights: $\PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$.
+First of all, $\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$.
+The pairwise maximum regret $\PMR(x,y;\pprofile,W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
+is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights.
 The maximum regret $\MaxR(x;\pprofile,W)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$: $\MaxR(x; \pprofile, W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$.
 Finally,  $\MMR(\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W}$: $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ and $A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
 By picking as consensus choice
@@ -267,11 +252,11 @@ The proposition can also be understood by observing that in the case $(x \pprefe
 	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) is at rank $r$ in the complete profile $\hat{\profile}$ as determined in \cref{claim:rankPMR}. %\ref{claim:completion}.
 \end{proposition}
 The last proposition shows that PMR is linear in the weights.
-Recall that the preferences of the chair are encoded with linear constraints $\Co_{W}$.
+Recall that $\pw$ represents the weight vectors compatible with the preferences of the chair stated so far.
 The pairwise max regret $\PMR(x,y; \pprofile,W)$ can be obtained as the solution of the following linear program defined on the variables $w_1, …, w_m$, which represent the weights attached to different positions:
 \begin{align}
 	\max_{\w} & \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_{r}\\
-	\text{ s.t. } & w_1 = 1, w_m = 0, \text{\cref{eq:convexity}} \text{ and } \Co_W.
+	\text{ s.t. } & w_1 = 1, w_m = 0, \text{\cref{eq:convexity}} \text{ and } w \in \pw.
 \end{align}
 %Note that given our choice $w_{1}=1$ and $w_{m}=0$, there are only $m-2$ variables 
 %(we leave $w_{1}$ and $w_{m}$ in the LP just for clarity of presentation).
@@ -588,7 +573,7 @@ suggest that regret-based elicitation is effective and allows to quickly reduce 
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
-An open-source library, allowing to reproduce our experiments, will be made publicly available.\footnote{URL not displayed for anonymity reasons.}
+As part of our contribution, a general open-source library, allowing to reproduce our experiments and perform many more, will be made publicly available (URL not displayed for ensuring anonymity).
 %and serve as a basis for further research
 
 %We mention some directions for future works.
