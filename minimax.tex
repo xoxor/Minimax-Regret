@@ -349,11 +349,11 @@ This strategy can be expected to perform well when the chair assigns a large wei
 
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-We  performed a number of numerical experiments using both real data and generated profiles in order to validate our approach and to test the performance of the different elicitation strategies. %Our experiments are described by topic here below. 
+We  performed a number of numerical experiments using both real data and generated profiles in order to validate our approach and test the performance of our elicitation strategies. %Our experiments are described by topic here below. 
 %We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 
 Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we first create an “oracle”, representing the true preferences of the agents (randomly generated or coming from real data) and the weights associated with the chair’s scoring rule (randomly generated).
-We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times indicated below, for a given $(m, n, k)$, and report the average resulting MMR and the standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
+We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 The oracle is built as follows. 
 For the real preferences, we used the following data sets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}. \textit{T Shirt}: $m = 11$ tee shirt designs voted by $n = 30$ members of the Optimization Research Group at NICTA \commentOC{refs for these data sets?}; \textit{AGH Course Selection}: $m = 9$ courses evaluated by $n = 146$ students of the AGH University; and \emph{Skate}: $m = 14$ skaters evaluated by $n = 9$ judges at the Euros Pairs Short Program.
@@ -428,17 +428,14 @@ Our first experiment concerns small size situations.
 \Cref{fig:smallSize} compares some of our strategies in the case $m = 5, n = 10$ (variations around this size yield similar conclusions), where the results are averaged over $200$ runs.
 %(The figure also displays the performance of the Elitist strategy, to which we will come back.)
 We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
-We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Notice that although they exhibit a close performance, Pessimistic performs consistently better, in the sense that the numbers are systematically in favor of Extended pessimistic when performing the experiment again.
-In \cref{sec:appendix} we provide a problem of larger size.
+We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
+\Cref{sec:appendix} provides a problem of larger size.
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
-
-
-
 \paragraph{Evaluation of Pessimistic Strategy}
 \label{sec:lowRegret}
-While in previous experiments we compared Pessimistic to the other strategies, in this set of experiments, we evaluate the Pessimistic strategy in absolute terms. 
+This set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. We consider a low level to be a tenth of the number of agents: such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{sec:appendix}. 
 For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
