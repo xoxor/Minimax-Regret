@@ -85,14 +85,29 @@ converge quickly to a near-optimal alternative. Finally, we analyze these strate
 \section{Introduction}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice;
-%It is therefore natural to look at methods from social choice and see how they can be adapted for group decision-making in a computerized setting.
-social choice theory can provide foundations for such applications. %Methods from social choice can be adapted for group decision-making in a computerized setting.
+social choice theory can provide foundations for such applications
 
-The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
+%The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
+The traditional approach to social choice assumes that 1) the social choice function and 2) the full preference orderings of the agents are expressed beforehand. These represent two strong hypothesis.
+
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
-This observation has motivated a number of recent works considering social choice with partial preference orders and incremental elicitation of agent preferences. 
+This observation has motivated several works assuming partial preference orders; 
+%and incremental elicitation of agent preferences. 
+%In the context of social choice, several authors have been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences (assuming that the voting rule is known).
+one early work is  by \Citet{Conitzer2005} who studied the complexity of communication when using different voting rules. %determining lower and upper bounds;
+%they showed that, 
+%in the worst case, the agents should send their complete set of preference for several rules. 
+\Citet{Konczak05} studied the computation of possible and necessary winners for various voting rules; %and showed that the problem is hard in the general case.
+\citet{Xia2008} then showed that, while the identification of a necessary co-winner in scoring rules is polynomial,  the determination of possible co-winners is NP-hard;
+% they also  proposed polynomial-time algorithms when using maximin and Bucklin.
+additional complexity results were given by \citet{Walsh2007} and \citet{Pini2007}.
+%\citep{Walsh2007} showed that the general case remains computationally hard even when restricting to single-peaked preferences;  sufficient conditions that ensure tractability were then found \citep{Pini2007}.
 
-Furthermore, it is often difficult for non-expert users to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+Since in many practical situations there would be too many possible winners but no necessary winners,  
+several works addressed the problem of  elicitation of agent preferences \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Dey2016,Dey2016_2}  using a variety of approaches (minimax regret, Bayesian methods, etc.) with the goal of converging to a necessary winner; \citep{Walsh2009,Conitzer2009}  analyzed when to stop the elicitation process.
+
+Furthermore, it is often difficult for non-experts to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+%While most of the focus in the research community has been in dealing with incomplete agent preferences, 
 Consider, as an example, a committee that is about to hire a new employee, whose performances are evaluated by several experts. The members of the committee may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule, but they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
 %The information provided can be used to   % to determine their employee of choice.
 
@@ -102,46 +117,22 @@ We develop methods, based on the notion of minimax regret, for determining a rob
 %alternative using positional scoring rules and 
 We provide incremental elicitation methods that 
 at each step of the elicitation ask a question either to one of the agents or to the chair (the person or organization supervising the voting process) and discuss several heuristics that determine queries that quickly reduce regret. 
-Answers to questions are encoded in terms of constraints; questions to the agents are comparions between pairs of alternatives while
+Answers to questions are encoded in terms of constraints; questions to the agents are comparisons between pairs of alternatives while
 questions to the chair ask  to select who should be the winner in a synthetic profile.
-While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
-Actually, very few works altogether have considered the problem of eliciting a voting rule by asking questions to the chair.
+
+While some previous works have considered partially specified aggregation methods \citep{Stein1994,Llamazares2013,Viappiani2018}, we do not know of any work considering both sources of uncertainty at the same time. 
+%has dealt with %scenarios where it is instead the voting rule that is partially defined. % but the preferences are given. 
+%a  partially defined voting rule.
+%While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
+Actually, very few works altogether have considered the problem of eliciting a voting rule by asking questions to the chair;  we are aware of the work of \Citet{Cailloux2014}, that assumes a different representation for the rule. %we mention the work of \Citet{Cailloux2014} considering elicitation the voting rule by assuming a specific representation.
+
+%A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
+%More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
+% provided an elicitation framework for a different class of rules.
+
 
 Our approach is evaluated experimentally in simulations where the both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
 We compare the effectiveness of several strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind questions to chair and to the agents based on which is estimated to provide more information.
-%Our approach permits to compare experimentally strategies that question the chair, the agents, or both.
-
-%A concrete application of our work might be a committee that is about to hire a new employee, whose performances are evaluated by several experts. The members of the committee may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule, but they might be willing to answer enough questions about selecting winners out of specific profiles to determine their employee of choice.
-
-%We describe informally here a few of the conclusions stemming from these experiments, given a problem involving $m$ alternatives and $n$ agents. First, a good quality recommendation can be reached by asking what can be considered a reasonable number of questions to the chair and agents. For example, in a problem of size $m = 5$, $n = 10$, only $55$ questions in total are required to reach a good quality recommendation, which can be considered reasonable as these questions are to be dispatched over $10$ agents and the chair.
-%Second, the quality of the recommendation increases faster than linearly with the number of questions,  after an initial phase with almost no increase in quality, before slowing down and converging to an optimal recommendation. 
-%Third, we experimentally find out that asking questions only to the agents performs similarly to asking questions both to the agents and the chair, although questions to the chair do have a positive value in terms of quality of the recommendation.
-%Knowing this permits to choose the questioning strategy wisely depending on the estimated cost of each kind of question, which depends on the application. 
-
-%NOTE: the structure of the article is perhaps self evident...
-%The paper is organized as follows. \Cref{sec:related} reviews the works related to our objective and
-%\Cref{sec:background} provides the necessary background. In \cref{sec:mmr} we provide a method for robust winner determination using the minimax criterion. %, a method that selects a winner that minimizes the worst possible regret.
-%In Section \ref{sec:elicit} we provide an interactive elicitation protocol based on minimal regret;  Section \ref{sec:experiments} presents an experimental validation of our approach and some guidelines stemming from these simulations; and Section \ref{sec:conclusions} provides some final thoughts.
-
-\paragraph{Related Work}
-\label{sec:related}
-In the context of social choice, several authors have been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences (assuming that the voting rule is known). One early work is  by \Citet{Conitzer2005} who studied the complexity of communication, using different voting rules; %determining lower and upper bounds;
-%they showed that, 
-in the worst case, the agents should send their complete set of preference for several rules. 
-\Citet{Konczak05} studied the computation of possible and necessary winners in the case of partial knowledge of agent preferences, for various voting rules; %and showed that the problem is hard in the general case.
-\citet{Xia2008} then showed that, while the identification of a necessary co-winner in scoring rules is polynomial,  the determination of possible co-winners is NP-hard; they also  proposed polynomial-time algorithms when using maximin and Bucklin.
-\citep{Walsh2007} showed that the general case remains computationally hard even when restricting to single-peaked preferences \citep{Walsh2007};  sufficient conditions that ensure tractability were then found \citep{Pini2007}.
-
-
-Since in many practical situations there would be too many possible winners but no necessary winners, %several authors proposed elicitation methods of agent preferences. 
-several works addressed the problem of  elicitation of agent preferences \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Dey2016,Dey2016_2}  using a variety of approaches (minimax regret, Bayesian methods, etc.), with the goal of converging to a necessary winners; \citep{Walsh2009,Conitzer2009}  analyzed when to stop the elicitation process.
-
-While most of the focus in the research community has been in dealing with incomplete agent preferences, 
-another line of research \citep{Stein1994,Llamazares2013,Viappiani2018} has dealt with %scenarios where it is instead the voting rule that is partially defined. % but the preferences are given. 
-a  partially defined voting rule.
-%A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
-%More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
-\Citet{Cailloux2014} provided an elicitation framework for a different class of rules.
 
 Finally, we mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019}, and studies of strategic behaviors
 % when agents learn incrementally about other agent preferences
