@@ -90,13 +90,13 @@ In many situations, such as in group recommender systems, the goal is to find a 
 social choice theory can provide foundations for such applications
 
 %The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
-The traditional approach to social choice assumes that 1) the social choice function and 2) the full preference orderings of the agents are expressed beforehand. These represent two strong hypothesis.
+The traditional approach to social choice assumes that 1) the full preference orderings of the agents and 2) the social choice function are expressed beforehand. These represent two strong hypothesis.
 
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
-This observation has motivated several works assuming partial preference orders; 
+This observation has motivated several works assuming partial preference orders: 
 %and incremental elicitation of agent preferences. 
 %In the context of social choice, several authors have been interested in obtaining information about winners with reduced assumptions about the knowledge of the agent preferences (assuming that the voting rule is known).
-one early work is  by \Citet{Conitzer2005} who studied the complexity of communication when using different voting rules. %determining lower and upper bounds;
+one early work is  by \Citet{Conitzer2005} who studied the complexity of communication when using different voting rules; %determining lower and upper bounds;
 %they showed that, 
 %in the worst case, the agents should send their complete set of preference for several rules. 
 \Citet{Konczak05} studied the computation of possible and necessary winners for various voting rules; %and showed that the problem is hard in the general case.
@@ -105,20 +105,20 @@ one early work is  by \Citet{Conitzer2005} who studied the complexity of communi
 additional complexity results were given by \citet{Walsh2007} and \citet{Pini2007}.
 %\citep{Walsh2007} showed that the general case remains computationally hard even when restricting to single-peaked preferences;  sufficient conditions that ensure tractability were then found \citep{Pini2007}.
 
-Since in many practical situations there would be too many possible winners but no necessary winners,  
-several works addressed the problem of  elicitation of agent preferences \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Dey2016,Dey2016_2}  using a variety of approaches (minimax regret, Bayesian methods, etc.) with the goal of converging to a necessary winner; \citep{Walsh2009,Conitzer2009}  analyzed when to stop the elicitation process.
+Since in many practical situations there would be too many possible winners but no necessary winners, several works addressed the problem of agent preferences elicitation using a variety of approaches (minimax regret, Bayesian methods, etc.) with the goal of converging to a necessary winner \citep{Naamani-Dery2015,Kalech2011,Lu2011,Pini2009,Benabbou2016,Dey2016,Dey2016_2}. Among those, \citep{Walsh2009,Conitzer2009} analyzed when to stop the elicitation process.
 
-Furthermore, it is often difficult for non-experts to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. Thus, the first hypothesis should also be relaxed. 
+A second concern is the ability of the chair (the person or organization supervising the voting process) to provide a precise definition of the voting rule, suggesting the relaxation of the second hypothesis. Indeed, it is often difficult for non-experts to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. 
+%Thus, the first hypothesis should also be relaxed. 
 %While most of the focus in the research community has been in dealing with incomplete agent preferences, 
-Consider, as an example, a committee that is about to hire a new employee, whose performances are evaluated by several experts. The members of the committee may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule, but they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
+Consider, as an example, a chair that is about to hire a new employee, whose performances are evaluated by several experts. The members of the chair may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule. However, they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
 %The information provided can be used to   % to determine their employee of choice.
 
 %This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
-In this paper we focus on positional scoring rules, that are a particularly common method used to aggregate rankings. 
+In this paper, we focus on positional scoring rules, that are a particularly common method used to aggregate rankings. 
 We develop methods, based on the notion of minimax regret, for determining a robust ``winner'' under uncertainty of both the voting rule and the agent preferences.
 %alternative using positional scoring rules and 
 We provide incremental elicitation methods that 
-at each step of the elicitation ask a question either to one of the agents or to the chair (the person or organization supervising the voting process) and discuss several heuristics that determine queries that quickly reduce regret. 
+at each step of the elicitation ask a question either to one of the agents or to the chair, and discuss several heuristics that determine queries that quickly reduce regret. 
 Answers to questions are encoded in terms of constraints; questions to the agents are comparisons between pairs of alternatives while
 questions to the chair ask  to select who should be the winner in a synthetic profile.
 
@@ -126,23 +126,22 @@ While some previous works have considered partially specified aggregation method
 %has dealt with %scenarios where it is instead the voting rule that is partially defined. % but the preferences are given. 
 %a  partially defined voting rule.
 %While previous works have considered either partial information about the agent preferences or a partially specified aggregation method, we do not know of any work considering both sources of uncertainty at the same time.
-Actually, very few works altogether have considered the problem of eliciting a voting rule by asking questions to the chair;  we are aware of the work of \Citet{Cailloux2014}, that assumes a different representation for the rule. %we mention the work of \Citet{Cailloux2014} considering elicitation the voting rule by assuming a specific representation.
+Actually, very few works altogether have considered the problem of eliciting a voting rule by asking questions to the chair. We mention the work of \Citet{Cailloux2014} that assumes a different representation for the rule. %we mention the work of \Citet{Cailloux2014} considering elicitation the voting rule by assuming a specific representation.
 
 %A classic paper is the one by \citet{Stein1994} that, considering scoring rules, identified dominance relations between alternatives; these relations allow to determine pairs of alternatives where the first is at least as good as the second no matter which weights are chosen among a generic class of weights (decreasing weighs or convex decreasing weights).
 %More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
 % provided an elicitation framework for a different class of rules.
 
-We also mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019} and 
+Additionally, some works address the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019} and 
 strategic behaviors \citep{Endriss2016,Lev2019,Annemieke2012}.
 
-Our approach is evaluated in simulations where both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
-We compare the effectiveness of several question strategies based on the current knowledge about the rule and preferences.
-To summarize:
+Our approach is evaluated on small scale simulations where both the voting rule and the agent preferences are initially unknown to the system and incrementally revealed through questioning.
+We compare the effectiveness of several questioning strategies based on the current knowledge of the rule and preferences. To summarize our contributions:
 \begin{itemize}
 	\item we provide a novel mechanism for eliciting a voting rule by translating abstract questions about weights to a choice of an alternative given a concrete profile;  
-	\item we show that in small problem sizes, %starting with zero knowledge,
+	\item we show that %in small problem sizes, %starting with zero knowledge,
 	 it is possible to reach a low regret level with a reasonable number of questions;
-	\item we present elicitation strategies that achieve good results within reasonable computation time for small problem sizes;
+	\item we present elicitation strategies that achieve good results within reasonable computation time; %for small problem sizes;
 	\item we show that for the class of rule considered, asking a few questions about the voting rule suffice to reach a low regret level;
 	\item our experiments suggest that low degree of similarity among preferences %rankings 
 	(as in impartial culture) is a more challenging setting than less varied profiles.
@@ -301,7 +300,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 
 \begin{example*}
 	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. 
-	We then show the following profile to the chair and ask who should win (each column is a preference of a voter).
+	We then show the following profile to the chair and ask who should win (each column is a preference of an agent).
 	\begin{center}
 		$
 		\begin{array}{ccccccccc}
@@ -547,8 +546,8 @@ For the experiments we performed, we see that the number of questions required t
 In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering a real data set than a IC generated profile. \commentBN{Add the following:}
 By looking at the data we observe that:
 \begin{itemize}
-	\item \textit{Skate} - the top-2 alternatives are the same for all voters, and 8 out of 9 voters rank the same alternative at position 3;
-	\item \textit{AGH} - all voters rank the same alternative at the top position, different group of voters share the same preference rankings;
+	\item \textit{Skate} - the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3;
+	\item \textit{AGH} - all agents rank the same alternative at the top position, different group of agents share the same preference rankings;
 	\item \textit{T Shirt} - the alternatives are evenly distributed in the preference rankings.
 \end{itemize}
 The experiments suggest that high degree of similarity in the preference rankings helps reducing the regret faster.
@@ -586,7 +585,7 @@ These numbers highlight that it is possible to obtain a good-quality recommendat
 
 \section{Conclusions}  
 \label{sec:conclusions}
-In this paper we have considered a social choice setting with partial information about the agent's preferences and a partially specified voting rule.
+In this paper we have considered a social choice setting with partial information about the agent preferences and a partially specified voting rule.
 In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world data sets 
 suggest that regret-based elicitation is effective and allows to quickly reduce worst-case regret significantly. They also show that, in our setting, good quality (low regret) recommendations can be achieved short of knowing the weights precisely or the profile completely.
@@ -625,7 +624,9 @@ Finally, an important direction of extension aims at studying how to elicit pref
 
 \newpage
 \bibliographystyle{named}
-{\small \bibliography{biblio}}
+%{\small \bibliography{biblio}}
+{\fontsize{9.7}{10.7}\selectfont \bibliography{biblio}}
+
 
 \newpage
 \appendix
@@ -690,7 +691,7 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
 	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
 	
-	Define $P$ as the profile of $3 (p + q)$ voters containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
+	Define $P$ as the profile of $3 (p + q)$ agents containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
 	As a result, $a$ obtains the following ranks: $q$ times $r$, $p$ times $r + 2$, $p + q$ times first, and $p + q$ times second. The alternative $b$ obtains the ranks $r + 1$, $2$ and $1$, each $p + q$ times. Consider any alternative $c \in A \setminus \set{a, b}$. Its score is maximal when it comes first in $>_1$, first in $>_2$ and first in $>$, by convexity of the weights. In that case, $c$ is positioned at the ranks $1$, $3$ and $m$, each $p + q$ times. 
 	
 	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
