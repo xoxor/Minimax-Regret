@@ -18,6 +18,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
 
+\setlist[itemize]{noitemsep, topsep=0pt}
+
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
 
@@ -132,7 +134,15 @@ Actually, very few works altogether have considered the problem of eliciting a v
 
 
 Our approach is evaluated experimentally in simulations where the both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
-We compare the effectiveness of several strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind questions to chair and to the agents based on which is estimated to provide more information.
+We compare the effectiveness of several strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind \commentBN{Is it a real word? The dictionary corrects me with https://dictionary.cambridge.org/it/dizionario/inglese/intertwined} questions to chair and to the agents based on which is estimated to provide more information.
+In this work:
+\begin{itemize}
+	\item we provide a new mechanism for the elicitation of the voting rule which translate abstract questions about weights to direct choice questions about a profile;  
+	\item we show that, starting with zero knowledge, it is possible to reach a reasonable low regret level with a reasonable number of questions;
+	\item we present different elicitation strategies proving that it is possible to achieve good results without sacrificing computation time;
+	\item we show that for the class of rule considered, only few questions about the voting rule are enough to reach a low regret level;
+	\item we show that low degree of similarity among preference rankings (like in the case of impartial culture) is a more challenging setting than less varied profiles.
+\end{itemize}
 
 Finally, we mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019}, and studies of strategic behaviors
 % when agents learn incrementally about other agent preferences
@@ -204,8 +214,9 @@ We note that our notion of regret gives some cardinal meaning to the scores: ins
 % Add some general remarks about using minimax regret
 
 \paragraph{Computation of minimax regret}
-In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the PMR into the contributions associated to each agent by adapting the reasoning from \citet{Lu2011} \commentOC{Cite Conitzer}.
-The setting is however more challenging due to the presence of uncertainty in the weights.
+Given a voting rule and a partially specified profile, \citet{Xia2008} determine necessary winners by showing constructions that attempt to maximize the score difference between a proposed winner and a chosen alternative. This reasoning was later adopted by \citet{Lu2011} who used the considerations on the worse-case completions for computing the minimax regret. 
+
+In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the PMR into the contributions associated to each agent by adapting this same reasoning to our setting. The context is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see \cref{eq:srule}).
 Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we obtain $\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
@@ -347,7 +358,7 @@ Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test,
 We start with empty knowledge ($\pprofile = \emptyset, W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 The oracle is built as follows. 
-For the real preferences, we used the following data sets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}. \textit{T Shirt}: $m = 11$ tee shirt designs voted by $n = 30$ members of the Optimization Research Group at NICTA \commentOC{refs for these data sets?}; \textit{AGH Course Selection}: $m = 9$ courses evaluated by $n = 146$ students of the AGH University; and \emph{Skate}: $m = 14$ skaters evaluated by $n = 9$ judges at the Euros Pairs Short Program.
+For the real preferences, we used the following data sets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}. \textit{T Shirt}: $m = 11$ tee shirt designs voted by $n = 30$ members of the Optimization Research Group at NICTA; \textit{AGH Course Selection}: $m = 9$ courses evaluated by $n = 146$ students of the AGH University; and \emph{Skate}: $m = 14$ skaters evaluated by $n = 9$ judges at the Euros Pairs Short Program.
 %We want to focus on the most critical setting, as there is a wide variety of possible situations to test in such experiments.
 For the generated preferences, we follow an Impartial Culture (IC) assumption: the linear order of each agent is drawn independently and all have the same probability of appearing. We adopt IC because it is a more challenging situation: as can be expected intuitively (and shown in \cref{fig:linearity}), the number of questions to be asked decrease with less varied profiles. 
 To generate the weights of the scoring rule, we first draw $m - 1$ numbers uniformly at random (in the interval $\intvl{0,1}$ representing weight ``differences''), normalize and sort them; a sequence of convex decreasing weight is then obtained by a decumulative sum.
@@ -428,8 +439,27 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. We consider a low level to be a tenth of the number of agents: such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
-The results for various sizes are displayed in \cref{sec:appendix} \commentOC{TODO}. 
+The results for various sizes are displayed in \cref{tab:lowRegret}. 
+
+\commentBN{Replace the following paragraph with real stats on the distribution of questions.}
 For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+
+\begin{table}[ht]
+	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
+	\label{tab:lowRegret}
+	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
+		\toprule
+		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
+		\midrule
+		5 & 10 & 1 & 60 \\
+		5 & 15 & 1.5 & 80 \\
+		5 & 20 & 2 & 110 \\
+		10 & 20 & 2 & 340 \\
+		10 & 30 & 3 & 527 \\
+		15 & 30 & 3 & 951 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 %\begin{table}
 %	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
@@ -508,13 +538,20 @@ For the experiments we performed, we see that the number of questions required t
 	\end{tikzpicture}
 \end{figure}
 
-We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level.
-%Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. 
-\Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
-that, on average, halving the number of questions will only reduce the gain in regret by less than half. %\commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
-At the start of the elicitation, the space of uncertainty is so large that the adversary can attain the maximum possible value of regret; multiple answers are needed to constrain her enough for the MMR to start decreasing. When approaching optimality, the pace of MMR reduction decreases.
+%We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level.
+%%Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. 
+%\Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. We see that this function is convex, apart from the very first few questions, indicating %to users of our approach 
+%that, on average, halving the number of questions will only reduce the gain in regret by less than half. %\commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
+%At the start of the elicitation, the space of uncertainty is so large that the adversary can attain the maximum possible value of regret; multiple answers are needed to constrain her enough for the MMR to start decreasing. When approaching optimality, the pace of MMR reduction decreases.
 
-In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering a real data set than a IC generated profile. \commentBN{Add more?} \commentOC{Strange $m=14, n=9$; t-shirts; and comparison between ts and m10n30 is not clearly in favor of real data. I’d suppress the discussion about speed of reduction.}
+In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering a real data set than a IC generated profile. \commentBN{Add the following:}
+By looking at the data we observe that:
+\begin{itemize}
+	\item \textit{Skate} - the top-2 alternatives are the same for all voters, and 8 out of 9 voters rank the same alternative at position 3;
+	\item \textit{AGH} - all voters rank the same alternative at the top position, different group of voters share the same preference rankings;
+	\item \textit{T Shirt} - the alternatives are evenly distributed in the preference rankings.
+\end{itemize}
+The experiments suggest that high degree of similarity in the preference rankings helps reducing the regret faster.
 % do less harm than halving the gain in regret, on average.
 
 %\subsection{Value of information comparison}
@@ -588,7 +625,7 @@ Finally, an important direction of extension aims at studying how to elicit pref
 
 \newpage
 \bibliographystyle{named}
-\bibliography{biblio}
+{\small \bibliography{biblio}}
 
 \newpage
 \appendix
@@ -682,22 +719,7 @@ The penalty parameters for the Pessimistic and Extended pessimistic strategies a
 \end{table}
 \Cref{tab:biggerSize} shows that the conclusions of \cref{fig:smallSize} also hold for a problem of larger size ($m = 10, n = 20$), except that this table does not feature Extended pessimistic, which is too slow to be run repeatedly on such instance.
 
-\begin{table}[ht]
-	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
-	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
-		\toprule
-		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
-		\midrule
-		5 & 10 & 1 & 60 \\
-		5 & 15 & 1.5 & 80 \\
-		5 & 20 & 2 & 110 \\
-		10 & 20 & 2 & 340 \\
-		10 & 30 & 3 & 527 \\
-		15 & 30 & 3 & 951 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
+
 
 
 
