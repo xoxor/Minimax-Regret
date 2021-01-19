@@ -132,19 +132,20 @@ Actually, very few works altogether have considered the problem of eliciting a v
 %More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
 % provided an elicitation framework for a different class of rules.
 
-Let us also mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019}, and studies of strategic behaviors
-% when agents learn incrementally about other agent preferences
- \citep{Endriss2016,Lev2019,Annemieke2012}.
+We also mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019} and 
+strategic behaviors \citep{Endriss2016,Lev2019,Annemieke2012}.
 
 Our approach is evaluated in simulations where both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
-We compare the effectiveness of several strategies of choosing questions depending on the current knowledge.
-In this work:
+We compare the effectiveness of several question strategies based on the current knowledge about the rule and preferences.
+To summarize:
 \begin{itemize}
-	\item we provide a novel mechanism for elicitating a voting rule by translating abstract questions about weights to direct choice questions about a profile;  
-	\item we show that in small problem sizes, starting with zero knowledge, it is possible to reach a low regret level with a reasonable number of questions;
+	\item we provide a novel mechanism for eliciting a voting rule by translating abstract questions about weights to a choice of an alternative given a concrete profile;  
+	\item we show that in small problem sizes, %starting with zero knowledge,
+	 it is possible to reach a low regret level with a reasonable number of questions;
 	\item we present elicitation strategies that achieve good results within reasonable computation time for small problem sizes;
 	\item we show that for the class of rule considered, asking a few questions about the voting rule suffice to reach a low regret level;
-	\item our experiments suggest that low degree of similarity among preference rankings (like in the case of impartial culture) is a more challenging setting than less varied profiles.
+	\item our experiments suggest that low degree of similarity among preferences %rankings 
+	(as in impartial culture) is a more challenging setting than less varied profiles.
 \end{itemize}
 
 \section{Social choice with partial information}
@@ -592,7 +593,7 @@ suggest that regret-based elicitation is effective and allows to quickly reduce 
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
-As part of our contribution, a general open-source library, allowing to reproduce our experiments and perform many more, will be made publicly available (URL not displayed for ensuring anonymity).
+As part of our contribution, a general open-source library, allowing to reproduce our experiments and perform many more, will be made publicly available.\footnote{URL not displayed for ensuring anonymity.}
 %and serve as a basis for further research
 
 %We mention some directions for future works.
