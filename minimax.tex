@@ -132,21 +132,20 @@ Actually, very few works altogether have considered the problem of eliciting a v
 %More recent articles considered the problem of dealing with unspecified weights in positional scoring rules: \citet{Llamazares2013} proposed a method based on Data Envelopment Analysis (DEA), while \citet{Viappiani2018} proposed to aggregate the uncertainty in weights using criteria used in decision-making under uncertainty (such as minimax regret). 
 % provided an elicitation framework for a different class of rules.
 
-
-Our approach is evaluated experimentally in simulations where the both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
-We compare the effectiveness of several strategies  including strategies that proceed in phases, learning first as much as possible about the voting rule and then focus on eliciting agent's preferences, and as well strategies that interwind \commentBN{Is it a real word? The dictionary corrects me with https://dictionary.cambridge.org/it/dizionario/inglese/intertwined} questions to chair and to the agents based on which is estimated to provide more information.
-In this work:
-\begin{itemize}
-	\item we provide a new mechanism for the elicitation of the voting rule which translate abstract questions about weights to direct choice questions about a profile;  
-	\item we show that, starting with zero knowledge, it is possible to reach a reasonable low regret level with a reasonable number of questions;
-	\item we present different elicitation strategies proving that it is possible to achieve good results without sacrificing computation time;
-	\item we show that for the class of rule considered, only few questions about the voting rule are enough to reach a low regret level;
-	\item we show that low degree of similarity among preference rankings (like in the case of impartial culture) is a more challenging setting than less varied profiles.
-\end{itemize}
-
-Finally, we mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019}, and studies of strategic behaviors
+Let us also mention works addressing the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019}, and studies of strategic behaviors
 % when agents learn incrementally about other agent preferences
  \citep{Endriss2016,Lev2019,Annemieke2012}.
+
+Our approach is evaluated in simulations where both the voting rule and the agent's preferences are initially unknown to the system and incrementally revealed by answering questions.
+We compare the effectiveness of several strategies of choosing questions depending on the current knowledge.
+In this work:
+\begin{itemize}
+	\item we provide a novel mechanism for elicitating a voting rule by translating abstract questions about weights to direct choice questions about a profile;  
+	\item we show that in small problem sizes, starting with zero knowledge, it is possible to reach a low regret level with a reasonable number of questions;
+	\item we present elicitation strategies that achieve good results within reasonable computation time for small problem sizes;
+	\item we show that for the class of rule considered, asking a few questions about the voting rule suffice to reach a low regret level;
+	\item our experiments suggest that low degree of similarity among preference rankings (like in the case of impartial culture) is a more challenging setting than less varied profiles.
+\end{itemize}
 
 \section{Social choice with partial information}
 \label{sec:background}
