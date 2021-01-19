@@ -7,12 +7,23 @@ Code at https://github.com/oliviercailloux/minimax.
 == TODO
 * Add in the text the references to the appendix
 * Explain and structure the appendix
-* +++<del>+++Reduce the paper to 6+1 pages+++</del>+++
-** +++<del>+++Add that asking questions to the committee in term of profile is new and must be stressed more. Also, this is compatible with every rule. If we ask about the weights it works only for scoring rules.+++</del>+++
+* +++<del>+++cite conitzer (Bea)+++</del>+++
+* +++<del>+++put back table 4 (Bea)+++</del>+++
+* +++<del>+++about real data: high degree of similarity helps +++</del>+++
+* m14n9 investigate the curve
+** check with variation on n and m
+* +++<del>+++suppress the discussion about speed of reduction: "We next wonder how fast the regret decreases..." (Bea)+++</del>+++
+* distribution of the questions per voter (Bea)
+** for each xp in Figure 2 how many qst for chair 
+* take away message
+** build profile
+** reasonably low regret with reasonable nb of q
+** pessimistic good in time and results
+** asking q to the chair is not useful
+** IC is harder than real data
+* +++<del>+++ /small references+++</del>+++
+* +++<del>+++ no cit to dataset+++</del>+++
 * Keep 1.1+1e-6
-* +++<del>+++Table 1 and 3 in appendix, reduce Figures and legends+++</del>+++
-* +++<del>+++Merge In-depth evaluation of Pessimistic and Decrease in MMR values+++</del>+++
-* Remove half a column in Sec 3, half a column in Sec 4, one column in Sec 4
 
 * Similarity measure for preference rankings and use it as an explanation for the performance of the datasets.
 
