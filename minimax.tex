@@ -344,7 +344,7 @@ We  performed a number of numerical experiments using both real data and generat
 %We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 
 Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we first create an “oracle”, representing the true preferences of the agents (randomly generated or coming from real data) and the weights associated with the chair’s scoring rule (randomly generated).
-We start with empty knowledge ($\pprofile = (\emptyset, \emptyset, …), W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
+We start with empty knowledge ($\pprofile = \emptyset, W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 The oracle is built as follows. 
 For the real preferences, we used the following data sets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}. \textit{T Shirt}: $m = 11$ tee shirt designs voted by $n = 30$ members of the Optimization Research Group at NICTA \commentOC{refs for these data sets?}; \textit{AGH Course Selection}: $m = 9$ courses evaluated by $n = 146$ students of the AGH University; and \emph{Skate}: $m = 14$ skaters evaluated by $n = 9$ judges at the Euros Pairs Short Program.
@@ -352,7 +352,7 @@ For the real preferences, we used the following data sets from \href{https://www
 For the generated preferences, we follow an Impartial Culture (IC) assumption: the linear order of each agent is drawn independently and all have the same probability of appearing. We adopt IC because it is a more challenging situation: as can be expected intuitively (and shown in \cref{fig:linearity}), the number of questions to be asked decrease with less varied profiles. 
 To generate the weights of the scoring rule, we first draw $m - 1$ numbers uniformly at random (in the interval $\intvl{0,1}$ representing weight ``differences''), normalize and sort them; a sequence of convex decreasing weight is then obtained by a decumulative sum.
 
-\begin{figure}[t]
+\begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
 	\label{fig:smallSize}
 	\begin{tikzpicture}
@@ -397,7 +397,7 @@ To generate the weights of the scoring rule, we first draw $m - 1$ numbers unifo
 %	\includegraphics[width=.45\textwidth]{comparison.png}
 %\end{figure}
 \sisetup{table-number-alignment = center, table-figures-integer=2, table-figures-decimal=1, table-auto-round}
-\begin{table}[t]
+\begin{table}
 	\caption{Average MMR in problems of size $(10, 20)$ and geometric weights after $k$ questions.}
 	\label{tab:geometricWeights}
 	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
@@ -426,10 +426,10 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 
 \paragraph{Evaluation of Pessimistic Strategy}
 \label{sec:lowRegret}
-This set of experiments evaluate the Pessimistic strategy in absolute terms. 
+Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level. We consider a low level to be a tenth of the number of agents: such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
-The results for various sizes are displayed in \cref{sec:appendix}. 
-For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
+The results for various sizes are displayed in \cref{sec:appendix} \commentOC{TODO}. 
+For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
 %\begin{table}
 %	\caption{Number of questions needed by the Pessimistic strategy to elicit the complete preference of one agent.}
@@ -445,10 +445,7 @@ For the experiments we performed, we see that the number of questions required t
 %	\end{tabular}
 %\end{table}
 
-%\subsection{Decrease in MMR values}
-
-
-\begin{figure}[t]
+\begin{figure}
 	\caption{Average MMR (normalized by $n$) after $k$ questions with Pessimistic strategy for different data-sets.}
 	\label{fig:linearity}
 	\begin{tikzpicture}
@@ -517,7 +514,7 @@ We next wonder how fast the regret decreases, measured as a function of the numb
 that, on average, halving the number of questions will only reduce the gain in regret by less than half. %\commentBN{Reviewer: Halving the number of questions reduces the regret by more than 50\%.}
 At the start of the elicitation, the space of uncertainty is so large that the adversary can attain the maximum possible value of regret; multiple answers are needed to constrain her enough for the MMR to start decreasing. When approaching optimality, the pace of MMR reduction decreases.
 
-In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering a real data-set than a IC generated profile. \commentBN{Add more?}
+In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering a real data-set than a IC generated profile. \commentBN{Add more?} \commentOC{Strange $m=14, n=9$; t-shirts; and comparison between ts and m10n30 is not clearly in favor of real data. I’d suppress the discussion about speed of reduction.}
 % do less harm than halving the gain in regret, on average.
 
 %\subsection{Value of information comparison}
