@@ -198,13 +198,21 @@ Intuitively, the quality of a proposed alternative $a$ is how far $a$ is from th
 Given $\pprofile$ and $\pw$ (that represent the current knowledge about agent preferences and the PSR),
 the maximum regret is considered by assuming that an adversary can both 1) extend the partial profile $\pprofile$ into a complete profile, and 2) instantiate the weights choosing among any weight vector in $\pw$. %where $\pprofile$ and $\pw$ represent our knowledge so far.
 We formalize the notion of minimax regret in multiple steps.
-First of all, $\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w)$ is the “regret” of selecting $x$ as a winner instead of choosing the optimal alternative under $\profile$ and $\w$.
-The pairwise maximum regret $\PMR(x,y;\pprofile,W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w)$ of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$
-is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights.
-The maximum regret $\MaxR(x;\pprofile,W) = \max_{y \in A} \PMR(x,y; \pprofile, W) = \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w)$ is the worst-case loss of $x$. That is the loss occurred as the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that together maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
+First of all, $\Regret(x, \profile, \w)$
+is the “regret” of selecting $x$ as a winner instead of the optimal alternative under $\profile$ and $\w$:
+$$\Regret(x, \profile, \w) = \max_{y \in A} s(y; \profile,\w) - s(x; \profile, \w).$$
+ The {\em pairwise maximum regret} of $x$ relative to $y$ given the partial profile $\pprofile$ and the set of weights $W$ is the worst-case loss of choosing $x$ instead of $y$ under all possible realizations of the full profile {\em and} all possible instantiations of the weights:
+$$\PMR(x,y;\pprofile,W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; \profile,\w) - s(x; \profile,\w).$$
+The maximum regret %$\MaxR(x;\pprofile,W)$ 
+is the worst-case loss of $x$:
+\begin{align}
+\MaxR(x;\pprofile,W) & = \max_{y \in A} \PMR(x,y; \pprofile, W) \\ &= \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w).
+\end{align}
+$\MaxR(x;\pprofile,W)$ is the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that jointly maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
 Finally,  $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
 Picking as consensus choice an alternative associated with minimax regret provides a recommendation that gives worst-case guarantees. 
-In cases of ties in minimax regret, we can return all minimax alternatives $A^*_{\pprofile, W}$ as winners or pick one of them using some tie-breaking strategy.
+In cases of ties, %in minimax regret, 
+we can return all minimax alternatives $A^*_{\pprofile, W}$ as winners or pick one of them using some tie-breaking strategy.
 
 Observe that if $\MMR(\pprofile, W)\!=\!0$, then any $x^{*}_{\pprofile,W} \in A^*_{\pprofile, W}$ is a necessary winner: any valid completion of the profile and choice of $w \in W$ gives to $x^{*}_{\pprofile,W}$ the highest score.
 
@@ -242,7 +250,7 @@ Note that in \cref{claim:rankPMR}, in the case $(x \pprefeq_j y)$, $\beta$ is th
 	\begin{align} 
 		\PMR(x,y; \pprofile, W)  
 		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
-		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i. 
+		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i 
 	\end{align}
 	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) has rank $r$ in the complete profile $\hat{\profile}$ defined in \cref{claim:rankPMR}. 
 \end{proposition}
@@ -319,10 +327,10 @@ While it is of course possible to first fully elicit the agent preferences and a
 %Indeed, it can be beneficial to split efforts asking questions to the chair and to agents, depending on which is estimated to be more informative.
 We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question to ask next.
 
-The \strat{Random} strategy gives a baseline for comparison and informs about the difficulty of an elicitation problem. 
+The \strat{Random} strategy is used as a baseline. % and informs about the difficulty of an elicitation problem. 
 It first chooses equiprobably whether to question the chair or the agents. In the first case, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$.
 %The intervals are initialized to $[1, n]$: $\lambda≥1$ by convexity and we assume $\lambda≤n$ wlog, in fact for $\lambda≥n$, the rule coincides with Plurality.
-In the second case, it draws equiprobably among the agents whose preference is not known entirely; draws an alternative $a$ equiprobably among those involved in some incomparabilities in $\ppref_j$; and draws an alternative $b$ equiprobably among those incomparable with $a$ in $\ppref_j$.
+In the second case, it draws equiprobably among the agents whose preference is not known entirely; it then draws an alternative $a$ among those involved in some incomparabilities in $\ppref_j$ and an alternative $b$ among those incomparable with $a$ in $\ppref_j$.
 
 Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $x^{*}$ is the minimax optimal alternative and $\bar{y}, \bar{\profile}, \bar{\w}$ the corresponding adversarial choices. 
 The \strat{Pessimistic} strategy considers a set of $n + (m-2)$ candidate questions: one per agent, and one per rank (excluding the first and the last one which are known).
@@ -348,7 +356,7 @@ The candidate questions to the chair are determined as in the Random strategy.
 	Pessimistic considers question $q_1$ to be better  than $q_2$ iff $R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2]$.
 	%This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
 	%The motivation for using this operator lies in 
-	In other words if the maximal {\em a posteriori} MMR of two questions are (nearly) equal, then it considers the (penalized) minimal MMR values, preferring the question with the lowest value.
+	In other words if the maximal {\em a posteriori} MMR of two questions are (approximately) equal, then it considers the (penalized) minimal MMR values. %, preferring the question with the lowest value.
 	%(Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal MMR values, with a predominant weight given to the maximal one, several order of magnitudes higher than the weight given to the penalized minimal MMR.)
 
 
@@ -380,7 +388,8 @@ We  performed a number of numerical experiments using both real data and generat
 %We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 
 Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we first create an “oracle”, representing the true preferences of the agents (randomly generated or coming from real data) and the weights associated with the chair’s scoring rule (randomly generated).
-We start with empty knowledge ($\pprofile = \emptyset, W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
+We start with empty knowledge ($\pprofile = \emptyset, W = \W$) about the preference orderings of the agents and the weights %differences favored by
+of the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 The oracle is built as follows. 
 For the real preferences, we used three datasets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}: \textit{T Shirt} (researchers voted on tee shirt designs; $m \!=\! 11, n \!=\! 30$),
@@ -466,7 +475,7 @@ Our first experiment concerns small size situations.
 \Cref{fig:smallSize} compares some of our strategies in the case $m = 5, n = 10$ (variations around this size yield similar conclusions), where the results are averaged over $200$ runs.
 %(The figure also displays the performance of the Elitist strategy, to which we will come back.)
 We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR \!=\! 1$) is reached by Pessimistic before having asked 60 questions. This also holds for other problem sizes. For instance, for $m =10$, $n = 20$ and $400$ questions, Random strategy reaches an average regret (over 10 runs) of $12$ (±$ 0.7$) and Pessimistic $0.6$ (±$ 0.5$).
-We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
+We notice that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
