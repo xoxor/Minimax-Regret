@@ -139,7 +139,19 @@ Additionally, some works address the manipulability of voting rules \citep{Elkin
 strategic behaviors \citep{Endriss2016,Lev2019,Annemieke2012}.
 
 Our approach is evaluated on simulations with synthetic and real datasets where both the voting rule and the agent preferences are initially unknown to the system and incrementally revealed through questioning.
-We compare the effectiveness of several questioning strategies based on the current knowledge of the rule and preferences. 
+We compare the effectiveness of several questioning strategies based on the current knowledge of the rule and preferences.
+\commentBN{on small sizes because we assume humans}
+\commentBN{remove bullets and restore PMR}
+\begin{itemize}
+	\item we provide a novel mechanism for eliciting a voting rule by translating abstract questions about weights to a choice of an alternative given a concrete profile;  
+	\item we showed that with our elicitation method %in small problem sizes, %starting with zero knowledge,
+	it is possible to reach low regret with a reasonable number of questions;
+	\item the elicitation strategies that we provide, in particular Pessimistic, achieve good results within reasonable computation time; %for small problem sizes;
+	\item we showed that for the class of rule considered, asking a few questions to the chair suffice to reach low regret;
+	\item our experiments suggest that low degree of similarity among preferences %rankings 
+	(as in impartial culture) is a more challenging setting than less varied profiles.
+\end{itemize}
+
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
@@ -463,7 +475,6 @@ Our first experiment concerns small size situations.
 We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
 We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
 \Cref{sec:appendix} provides a problem of larger size.
-\commentPV{Check problem size displayed in the labels of the two table. The one in the appendix does not seem larger.}
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
@@ -649,17 +660,6 @@ The experiments so far let the strategy target its questions unrestrictively, le
 \Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting.
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair).
 
-We summarize the main observations from the experiments:
-\commentPV{We could save space by 'de-itemizing' this, i.e. by formatting as text with i) bla bla bla.... ii) .... iiii) ....}
-\begin{itemize}
-%	\item we provide a novel mechanism for eliciting a voting rule by translating abstract questions about weights to a choice of an alternative given a concrete profile;  
-	\item we showed that with our elicitation method %in small problem sizes, %starting with zero knowledge,
-	 it is possible to reach low regret with a reasonable number of questions;
-	\item the elicitation strategies that we provide, in particular Pessimistic, achieve good results within reasonable computation time; %for small problem sizes;
-	\item we showed that for the class of rule considered, asking a few questions to the chair suffice to reach  low regret;
-	\item our experiments suggest that low degree of similarity among preferences %rankings 
-	(as in impartial culture) is a more challenging setting than less varied profiles.
-\end{itemize}
 
 
 \section{Conclusions}  
@@ -712,7 +712,7 @@ Finally, an important direction of research  aims at eliciting preferences while
 \section{Appendix}
 \label{sec:appendix}
 \newtheorem*{details*}{Strategy Details}
-
+\commentBN{delete all this}
 \begin{details*}[Pessimistic]
 	Given $j \in N^*$, if $x^*$ and $\bar{y}$ are incomparable in $\ppref_j$, the candidate question concerns the pair $(x^*, \bar{y})$, otherwise, the candidate question concerns the pair $(x^*, z)$ for some $z$ incomparable to $x^*$ (randomly chosen), or if none such $z$ exist, the pair $(\bar{y}, z)$ for some $z$ incomparable to $\bar{y}$, or, if both $x^*$ and $\bar{y}$ are comparable to every alternatives in $\ppref_j$, any incomparable pair is picked at random. 
 %Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
