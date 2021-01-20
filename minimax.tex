@@ -22,6 +22,7 @@
 
 \newcommand{\commentOC}[1]{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
 \newcommand{\commentBN}[1]{\textcolor{red}{\small$\big[$BN: #1$\big]$}}
+\newcommand{\commentPV}[1]{\textcolor{brown}{\small$\big[$PV: #1$\big]$}}
 
 \pdfinfo{
 	/TemplateVersion (IJCAI.2021.0)
@@ -86,6 +87,7 @@ converge quickly to a near-optimal alternative. Finally, we analyze these strate
 
 \section{Introduction}
 \commentOC{Remaining refs to appendix. Describe what is there. data set VS dataset. Figure 2. Footnotes. Comments. Talk about small settings?}
+\commentPV{If we have space (can save by formatting the itemize at the end of experiments as text), show Regret and PMR formulas as displaymath}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice;
 social choice theory can provide foundations for such applications
@@ -136,7 +138,7 @@ Actually, very few works altogether have considered the problem of eliciting a v
 Additionally, some works address the manipulability of voting rules \citep{Elkind2012,Dey2018,Dey2018_2,Conitzer2011,Baumeister2019} and 
 strategic behaviors \citep{Endriss2016,Lev2019,Annemieke2012}.
 
-Our approach is evaluated on small scale simulations where both the voting rule and the agent preferences are initially unknown to the system and incrementally revealed through questioning.
+Our approach is evaluated on simulations with synthetic and real datasets where both the voting rule and the agent preferences are initially unknown to the system and incrementally revealed through questioning.
 We compare the effectiveness of several questioning strategies based on the current knowledge of the rule and preferences. 
 \section{Social choice with partial information}
 \label{sec:background}
@@ -213,7 +215,7 @@ Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents
 Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we obtain $\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
 %Note that in general the inner max depends on the weights chosen by the outer max.
 
-The following propositions (with proofs in appendix) show that the procedure for completing a partial profile that was first proposed by \citet{Lu2011} when considering a fixed weight vector also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing for example ${\pprefeq_j}(x)$ to designate $\set{y \suchthat x \pprefeq_j y}$.
+The following propositions (proofs in appendix) show that the procedure for completing a partial profile,  proposed by \citet{Lu2011} when considering a fixed weight vector, also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing ${\pprefeq_j}(x)$ to designate $\set{y \suchthat x \pprefeq_j y}$.
 
 \begin{proposition} \label{claim:completion}
 	There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
@@ -339,7 +341,9 @@ The strategy selects among these $n + m - 2$ candidate questions one that leads 
 	Pessimistic considers question $q_1$ to be better  than $q_2$ iff $R^{\max}_1 < R^{\max}_2 \text{ or } [R^{\max}_1 = R^{\max}_2 \text{ and } R^{\min}_1 < R^{\min}_2]$.
 	%This comparison gives a way of picking questions among a set of possible questions, by picking one that minimizes this approximate measure of minimax regret {\em a posteriori}. 
 	%The motivation for using this operator lies in 
-	In other words if the maximal {\em a posteriori} MMR of two questions are (nearly) equal, then it considers the (penalized) minimal MMR values, preferring the question with the lowest value.\footnote{In our simulations the parameters for the Pessimistic and Extended pessimistic are set to $\epsilon_{\text{chair}} = 1.1$, $\epsilon'_{\text{chair}} = 10^{-6}$, $\epsilon_{\text{agent}} = 1.0$ and $\epsilon'_{\text{agent}} = 0$.}
+	In other words if the maximal {\em a posteriori} MMR of two questions are (nearly) equal, then it considers the (penalized) minimal MMR values, preferring the question with the lowest value.\footnote{In our tests 
+	%the parameters for Pessimistic and Extended pessimistic are 
+	we set to $\epsilon_{\text{chair}} = 1.1$, $\epsilon'_{\text{chair}} = 10^{-6}$, $\epsilon_{\text{agent}} = 1.0$ and $\epsilon'_{\text{agent}} = 0$.}
 	%(Technically, instead of applying a pure lexicographic aggregation, which is very sensitive to small errors due to floating-point computations, we apply a weighted sum between the maximal and the penalized minimal MMR values, with a predominant weight given to the maximal one, several order of magnitudes higher than the weight given to the penalized minimal MMR.)
 
 
@@ -459,6 +463,7 @@ Our first experiment concerns small size situations.
 We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR$ = 1) is reached by Pessimistic before having asked 60 questions.
 We also see that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
 \Cref{sec:appendix} provides a problem of larger size.
+\commentPV{Check problem size displayed in the labels of the two table. The one in the appendix does not seem larger.}
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
 
@@ -577,6 +582,7 @@ Averaging these data by category of value for $m$, and assuming no questions get
 In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering real datasets rather than a synthetic profile generated according to IC. \commentBN{Add the following:}
 Indeed, in the Skate dataset the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3; in Courses  all agents rank the same alternative at the top position,
 while in \textit{T Shirt}  the alternatives are evenly distributed in the preference rankings.
+\commentPV{If are evenly distributed, then doesn't this goes against our argument?}
 %By looking at the data we observe that:
 %\begin{itemize}
 %	\item \textit{Skate} - the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3;
@@ -614,7 +620,8 @@ The experiments so far let the strategy target its questions unrestrictively, le
 \Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting.
 These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair).
 
-We summarize the main observation  from the experiments:
+We summarize the main observations from the experiments:
+\commentPV{We could save space by 'de-itemizing' this, i.e. by formatting as text with i) bla bla bla.... ii) .... iiii) ....}
 \begin{itemize}
 %	\item we provide a novel mechanism for eliciting a voting rule by translating abstract questions about weights to a choice of an alternative given a concrete profile;  
 	\item we showed that with our elicitation method %in small problem sizes, %starting with zero knowledge,
