@@ -209,7 +209,7 @@ is the worst-case loss of $x$:
 \MaxR(x;\pprofile,W) & = \max_{y \in A} \PMR(x,y; \pprofile, W) \\ &= \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w).
 \end{align}
 $\MaxR(x;\pprofile,W)$ is the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that jointly maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
-Finally,  $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ is the value of minimax regret under $\pprofile$ and $W$, obtained when recommending a minimax optimal alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
+Finally,  $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ is the value of {\em minimax regret} under $\pprofile$ and $W$, obtained when recommending a {\em minimax optimal} alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
 Picking as consensus choice an alternative associated with minimax regret provides a recommendation that gives worst-case guarantees. 
 In cases of ties, %in minimax regret, 
 we can return all minimax alternatives $A^*_{\pprofile, W}$ as winners or pick one of them using some tie-breaking strategy.
