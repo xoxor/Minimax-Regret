@@ -373,7 +373,7 @@ Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test,
 We start with empty knowledge ($\pprofile = \emptyset, W = \W$) about the preference orderings of the agents and the weight differences favored by the chair. We obtain the first question to be asked using the strategy under test. We then use the oracle to answer the question and update the system's knowledge, which is thus used to obtain the next question. This is repeated until $k$ answers have been obtained, computing the resulting MMR values along the way for various values of $k$. We repeat this whole experiment a variable number of times, for a given $(m, n, k)$, and report the average resulting MMR and standard deviation \textit{sd}. The sizes of the considered scenarios are comparable to the ones used by \citet{Cailloux2014}. 
 
 The oracle is built as follows. 
-For the real preferences, we used three datasets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}:\textit{T-Shirt} (researchers voted on tee shirt designs; $m \!=\! 11, n \!=\! 30$),
+For the real preferences, we used three datasets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}:\textit{T Shirt} (researchers voted on T-shirt designs; $m \!=\! 11, n \!=\! 30$),
 \textit{Courses}  (students voted on courses; $m \!=\! 9, n \!=\! 146$)
 and \emph{Skate} (judges vote on skaters at the Euros Pairs Short Program; $m \!=\! 14, n \!=\! 9$).
 % tee shirt designs voted by 
@@ -556,7 +556,8 @@ Averaging these data by category of value for $m$, and assuming no questions get
 			\addlegendentry{tshirts m11n30}
 			\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/normalizedLin.dat};
 			\addlegendentry{courses m9n146}
-			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/normalizedLin.dat};
+			%\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/normalizedLin.dat};
+			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/m14n9.dat};
 			\addlegendentry{m=14, n=9}
 			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/normalizedLin.dat};
 			\addlegendentry{skate m14n9}
@@ -574,7 +575,7 @@ Averaging these data by category of value for $m$, and assuming no questions get
 
 In \cref{fig:linearity} we can also observe, as expected, that given a problem size the number of questions needed to reach a given MMR is lower when considering real datasets rather than a synthetic profile generated according to IC. \commentBN{Add the following:}
 Indeed, in the Skate dataset the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3; in Courses  all agents rank the same alternative at the top position,
-while in \textit{T-Shirt}  the alternatives are evenly distributed in the preference rankings.
+while in \textit{T Shirt}  the alternatives are evenly distributed in the preference rankings.
 %By looking at the data we observe that:
 %\begin{itemize}
 %	\item \textit{Skate} - the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3;
