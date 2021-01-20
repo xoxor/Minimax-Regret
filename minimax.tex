@@ -85,7 +85,7 @@ converge quickly to a near-optimal alternative. Finally, we analyze these strate
 \end{abstract}
 
 \section{Introduction}
-\commentOC{Remaining refs to appendix. Describe what is there. data set VS dataset.}
+\commentOC{Remaining refs to appendix. Describe what is there. data set VS dataset. Figure 2. Footnotes. Comments. Talk about small settings?}
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice;
 social choice theory can provide foundations for such applications
@@ -473,7 +473,7 @@ The results for various sizes are displayed in \cref{tab:lowRegret}.
 %For the experiments we performed, we see that the number of questions required to reach a low regret level grows approximately linearly with the number of agents and grows less fast than the square of the number of alternatives. 
 Averaging these data by category of value for $m$, and assuming no questions get asked to the chair, we see that in order to reach a low regret level, each agent will have to answer $5.6$ questions for $m = 5$, $17.2$ questions for $m = 10$ and $27.1$ questions for $m = 15$. These numbers have to be contrasted with the estimated number of questions required to elicit the full preference of an agent which are $6.6$ for $m=5$, $24.8$ for $m=10$ and $48.4$ for $m=15$. To obtain these data, we constrained the Pessimistic strategy to ask questions to the agents only, and ran it on a single agent problem, with various values for $m$.
 
-\begin{table}[ht]
+\begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
 	\label{tab:lowRegret}
 	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
