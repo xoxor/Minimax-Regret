@@ -1,0 +1,92 @@
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+% The file ijcai21.sty is NOT the same than previous years'
+\usepackage{ijcai21}
+\usepackage{times}
+\usepackage{soul}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+\usepackage{amsthm}
+\usepackage{xr}
+\externaldocument{minimax}
+%%% Load required packages here (note that many are included already).
+\input{preamble/packages}
+\input{preamble/math}
+%for appendix
+\usepackage{import}
+\usepackage{algorithm, algpseudocode}
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\begin{document}
+
+\appendix
+\section{Appendix}
+\label{sec:appendix}
+\newtheorem*{details*}{Strategy Details}
+This appendix provides proofs for the propositions presented in the paper together with an additional table of experimental results.
+\begin{sketch*}[\cref{claim:completion}]
+	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
+	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
+	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
+	Furthermore, the first objective must take priority over the second one: when an alternative should go above $x$ according to the first objective (because $¬(x \pprefeq_j a)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$), then $a$ should be put above $x$ (irrespective of whether $a \pprefeq_j y$), which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
+	This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
+\end{sketch*}
+
+\begin{proof*}[\cref{claim:rankPMR}]
+	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
+	\begin{equation}
+		\label{eq:betteryinter}
+		(a \neq y) ∧ [(a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))],
+	\end{equation} 
+	or equivalently, if and only if
+	\begin{equation}
+		\label{eq:bettery}
+		%a \pref_j y ⇔ 
+		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
+	\end{equation} 
+	Indeed, \eqref{eq:betteryinter} $⇒$ \eqref{eq:bettery}, and \eqref{eq:bettery} $⇒$ \eqref{eq:betteryinter} because $(x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ⇒ a ≠ y$ (as when $a = y$, $(x \pprefeq_j y)$ and $¬(x \pprefeq_j a)$ are opposite claims). Suffices now to rewrite \cref{eq:bettery} to let the two disjuncts designate disjoint sets:
+	\begin{equation}
+		\label{eq:betteryfinal}
+		a \pref_j y ⇔ 
+		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
+	\end{equation}
+\end{proof*}
+
+\begin{proof*}[\cref{prop:chairQuestions}]
+	\label{proof:chairQuestions}
+	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
+	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
+	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
+	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
+	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
+	
+	Define $P$ as the profile of $3 (p + q)$ agents containing $q$ times $>_1$, $p$ times $>_2$, and $>_3$ and $>_4$ each $p + q$ times.
+	As a result, $a$ obtains the following ranks: $q$ times $r$, $p$ times $r + 2$, $p + q$ times first, and $p + q$ times second. The alternative $b$ obtains the ranks $r + 1$, $2$ and $1$, each $p + q$ times. Consider any alternative $c \in A \setminus \set{a, b}$. Its score is maximal when it comes first in $>_1$, first in $>_2$ and first in $>$, by convexity of the weights. In that case, $c$ is positioned at the ranks $1$, $3$ and $m$, each $p + q$ times. 
+	
+	Letting $s(x)$ denote the score of $x$ at $P$, we obtain $s(a) = q w_r + p w_{r + 2} + (p + q) w_1 + (p + q) w_2$, thus, $s(a) ≥ (p + q) w_m + (p + q) w_1 + (p + q) w_2$; $s(b) = (p + q) w_{r + 1} + (p + q) w_2 + (p + q) w_1$; and, $\forall c \in A \setminus \set{a, b}$, 
+	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
+\end{proof*}
+
+\begin{table}[ht]
+	\caption{Average number of questions asked to the chair ($q_{c}$) and to the agents (\textit{$q_{v}$}) by Pessimistic strategy to reach zero regret on the datasets of \cref{fig:linearity}.}
+	\label{tab:questions}
+	\begin{tabular}{cS[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=2]}
+		\toprule
+		{dataset} & {$q_{c}$} & {sd} & {$q_{v}$} & {sd} \\
+		\midrule
+		m5n10 	&	8.4		& 2.67 		& 61		& 6.25\\
+		m5n20 	&	13.6	& 6.38		& 118.9		& 14.4\\
+		m10n20 	&	48.5	& 6			& 362.4		& 47.6	\\
+		m10n30 	&	56.3	& 11.18		& 598.1 	& 75.19	\\
+		m15n30 	&	24.5	& 8.77		& 775.5		& 8.77	\\
+		m14n9 	&	58.3	& 33.66		& 370.9		& 40.54	\\
+		m14n9-2 &	56.2	& 34.11		& 368.7		& 53.07 \\
+		skate 	&	0		& 0			& 103.3		& 2.21	\\
+		tshirt  &	30.0	& 5.87		& 961.2		& 23.04	\\
+		courses & 0			& 0			& 950		& 5.08	\\	
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\end{document}
