@@ -569,9 +569,38 @@ Averaging these data by category of value for $m$, and assuming no questions get
 			\addlegendentry{skate m14n9}
 			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/normalizedLin.dat};
 			\addlegendentry{m=15, n=30}
+			
+			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, orange] table [x=k, y=14.10]{data/new.dat};
+			\addlegendentry{m=14, n=10}
+			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, black] table [x=k, y=15.10]{data/new.dat};
+			\addlegendentry{m=15, n=10}
+			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, yellow] table [x=k, y=15.9]{data/new.dat};
+			\addlegendentry{m=15, n=9}
 		\end{axis}
 	\end{tikzpicture}
 \end{figure}
+
+%\begin{table}
+%	\caption{Average number of questions asked to the chair (\textit{qstC}) and to the agents (\textit{qstV}) by Pessimistic strategy to reach zero regret on the data sets of \cref{fig:linearity}.}
+%	\label{tab:questions}
+%	\begin{tabular}{S[table-text-alignment=right] S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
+%		\toprule
+%		{data set} & {qstC} & {sd} & {qstV} & {sd} \\
+%		\midrule
+%		m5n10 &		8.4		& 2.67 		& 61		& 6.25\\
+%		m5n20 &		13.6	& 6.38		& 118.9		& 14.4\\
+%		m10n20 &	48.5	 & 6		& 362.4		& 47.6	\\
+%		m10n30 &	56.3	&	11.18	&598.1 		&75.19	\\
+%		m15n30 &	24.5	&8.77		&	775.5	&	8.77	\\
+%		m14n9 &		58.3	&33.66		&370.9		&40.54	\\
+%		m14n9-2 &	56.2	&34.11		&368.7		&	53.07 \\
+%		skate &	0		& 0			&103.3		&2.21	\\
+%		tshirt &	30.0	&	15.87	&	961.2	&	23.04	\\
+%		courses & 0		& 0		&950		&5.08	\\
+%		
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
 
 %We next wonder how fast the regret decreases, measured as a function of the number of questions asked. This is important practically because it may be impossible or undesirable to ask sufficient questions to reach a low regret level.
 %%Knowing the speed of decrease permits to know which trade-offs can be achieved between the quality of the resulting recommendation and the number of questions that participants have to answer. 
