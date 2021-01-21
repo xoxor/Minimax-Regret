@@ -20,8 +20,8 @@
 \pgfplotsset{compat=1.16}
 \begin{document}
 
-\appendix
-\section{Appendix}
+
+\section*{Appendix}
 \label{sec:appendix}
 \newtheorem*{details*}{Strategy Details}
 This appendix provides proofs for the propositions presented in the paper together with an additional table of experimental results.
@@ -34,7 +34,7 @@ This appendix provides proofs for the propositions presented in the paper togeth
 \end{sketch*}
 
 \begin{proof*}[\cref{claim:rankPMR}]
-	The rank of $x$ is directly obtained from \cref{eq:complx}. The rank of $y$ is obtained by complementing \cref{eq:comply}, obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
+	The rank of $x$ is directly obtained from Eq.(\ref{eq:complx}). The rank of $y$ is obtained by complementing Eq.(\ref{eq:comply}), obtaining $a \prefeq_j y ⇔ (a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))$, and, observing that $a \pref_j y ⇔ a ≠ y ∧ a \prefeq_j y$, obtaining that $a \pref_j y$ if and only if
 	\begin{equation}
 		\label{eq:betteryinter}
 		(a \neq y) ∧ [(a \pprefeq_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a))],

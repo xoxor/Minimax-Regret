@@ -229,16 +229,22 @@ Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents
 Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we obtain $\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}]$.
 %Note that in general the inner max depends on the weights chosen by the outer max.
 
-The following propositions (with proofs in appendix) show that the procedure for completing a partial profile,  proposed by \citet{Lu2011} when considering a fixed weight vector, also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing ${\pprefeq_j}(x)$ for $\set{y \suchthat x \pprefeq_j y}$.
+The following propositions (with proofs in Appendix) show that the procedure for completing a partial profile,  proposed by \citet{Lu2011} when considering a fixed weight vector, also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing ${\pprefeq_j}(x)$ for $\set{y \suchthat x \pprefeq_j y}$.
 
 \begin{proposition} \label{claim:completion}
 	There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that $\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
-	\begin{align} 
+	\begin{eqnarray}
 		\label{eq:complx}
-		a \pref_j x &⇔ ¬(x \pprefeq_j a)\\
+		a \pref_j x &⇔& \lnot(x \pprefeq_j a);\\
 		\label{eq:comply}
-		y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
-	\end{align} 
+		y \pref_j a &⇔& \lnot(a \pprefeq_j y) ∧ \lnot((x \pprefeq_j y) ∧ \lnot(x \pprefeq_j a)).
+	\end{eqnarray}
+%	\begin{align} 
+%		\label{eq:complx}
+%		a \pref_j x &⇔ ¬(x \pprefeq_j a)\\
+%		\label{eq:comply}
+%		y \pref_j a &⇔ ¬(a \pprefeq_j y) ∧ ¬((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a)).
+%	\end{align} 
 \end{proposition}
 
 \begin{proposition} \label{claim:rankPMR}
@@ -318,7 +324,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 		$
 	\end{center}
 	Both $a$ and $b$ have scores higher than $c$ and $d$ for all convex weights, thus either $a$ or $b$ will be picked under our hypothesis; and $s(a) ≥ s(b) ⇔ w_2 + 2 w_4 ≥ 3 w_3$.
-	(\cref{proof:chairQuestions} presents the general method of constructing such profile.)
+	(the proof in Appendix presents the general method of constructing such profile.)
 \end{example*}
 
 \paragraph{Elicitation strategies}
@@ -484,7 +490,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to reach a low regret level, fixed at $n / 10$: such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
 The results for various sizes are displayed in \cref{tab:lowRegret}. 
-Another interesting measure is the average number of questions asked to each participant before reaching zero regret. For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:questions} in \cref{sec:appendix} provides more data).
+Another interesting measure is the average number of questions asked to each participant before reaching zero regret. For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:questions} in Appendix provides more data).
 
 \begin{table}
 	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
@@ -530,35 +536,40 @@ Another interesting measure is the average number of questions asked to each par
 			yticklabels={0,0.5,1},
 			legend style={font=\footnotesize}]
 			
-			\addlegendimage{mark=triangle*,teal,mark size=2}
+			
 %			\addlegendimage{mark=*,violet,mark size=2}
-			\addlegendimage{mark=square*,green,mark size=2}
+			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
 			\addlegendimage{mark=diamond*,red,mark size=2}
 			\addlegendimage{mark=pentagon*,cyan,mark size=2}
 			\addlegendimage{mark=halfcircle*,violet,mark size=2}
 			\addlegendimage{mark=*,pink,mark size=2}
+			\addlegendimage{mark=triangle*,green,mark size=2}
 			\addlegendimage{mark=halfsquare left*,blue,mark size=2}
-			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
+			\addlegendimage{mark=square*,teal,mark size=2}
 			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
 			
 			
-			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/normalizedLin.dat};
-			\addlegendentry{m=5, n=10}
+%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/normalizedLin.dat};
+%			\addlegendentry{m=5, n=10}
 %			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/normalizedLin.dat};
 %			\addlegendentry{m=5, n=15}
-			\addplot[thick, mark=square*, mark size = {2}, mark indices = {90}, green] table [x=k, y=5.20]{data/normalizedLin.dat};
+			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {120}, brown] table [x=k, y=5.20]{data/normalizedLin.dat};
 			\addlegendentry{m=5, n=20}
 			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/normalizedLin.dat};
 			\addlegendentry{m=10, n=20}
-			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/normalizedLin.dat};
-			\addlegendentry{m=10, n=30}
+%			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/normalizedLin.dat};
+%			\addlegendentry{m=10, n=30}
+			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {240}, cyan] table [x=k, y=11.30]{data/normalizedLin.dat};
+			\addlegendentry{m=11, n=30}
 			\addplot[thick, mark=halfcircle*, mark size = {2}, mark indices = {400}, violet] table [x=k, y=tshirt]{data/normalizedLin.dat};
 			\addlegendentry{tshirts m11n30}
 			\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/normalizedLin.dat};
 			\addlegendentry{courses m9n146}
+			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {400}, green] table [x=k, y=9.146]{data/normalizedLin.dat};
+			\addlegendentry{m=9, n=146}
 			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/normalizedLin.dat};
 			\addlegendentry{m=14, n=9}
-			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {60}, brown] table [x=k, y=skate]{data/normalizedLin.dat};
+			\addplot[thick, mark=square*, mark size = {2}, mark indices = {60}, teal] table [x=k, y=skate]{data/normalizedLin.dat};
 			\addlegendentry{skate m14n9}
 			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/normalizedLin.dat};
 			\addlegendentry{m=15, n=30}
@@ -595,27 +606,29 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 	\end{tabular}
 \end{table}
 
-The experiments so far let the strategy target its questions unrestrictively, leaving open the possibility of questioning either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly. %, as these types of questions differ in nature. 
+The experiments so far let the strategy free to question either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly. %, as these types of questions differ in nature. 
 
 \Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting.
-These numbers highlight that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule and that the weights are convex, which is our basic hypothesis (corresponding to the line $q_c = 0$, where no question is asked to the chair).
+The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permits to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
 
 \section{Conclusions}  
 \label{sec:conclusions}
-In this paper we have considered a social choice setting with partial information about the agent preferences and a partially specified voting rule.
-In this setting, we have proposed the use of minimax regret both as a means of robust winner determination as well as a guide to the process of simultaneous elicitation of preferences and voting rule.
+In this paper we have considered a social choice setting with partial information about the agent preferences and voting rule.
+We have proposed the use of minimax regret both as a means of robust winner determination and as a guide to the process of simultaneous elicitation of preferences and voting rule.
 Our experimental results %on randomly generated and real world datasets 
-suggest that regret-based elicitation is effective and allows to quickly reduce worst-case regret significantly. They also show that, in our setting, good quality (low regret) recommendations can be achieved short of knowing the weights precisely or the profile completely.
+suggest that regret-based elicitation is effective and allows to quickly reduce worst-case regret significantly. They also show that, in our setting, good quality (low regret) recommendations can be achieved short of having full knowledge of weights or profile.
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
-As part of our contribution, a general open-source library, allowing to reproduce our experiments and perform many more, will be made publicly available. (URL not displayed for ensuring anonymity.)
+As part of our contribution, an open-source library, to reproduce our experiments and perform many more, will be made publicly available. (URL not displayed for anonymity.)
 %and serve as a basis for further research
 
+Some directions for future works include developing new elicitation strategies, considering alternative heuristics; extending the elicitation to voting rules beyond scoring rules; eliciting preferences while restraining to concrete and easy questions.
+
 %We mention some directions for future works.
-Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
-Second, elicitation could be extended to voting rules beyond scoring rules. 
-Finally, an important direction of research  aims at eliciting preferences while restraining to concrete and easy questions.
+%Further development of elicitation strategies, considering alternative heuristics, is an important direction. 
+%Second, elicitation could be extended to voting rules beyond scoring rules. 
+%Finally, an important direction of research  aims at eliciting preferences while restraining to concrete and easy questions.
 % Acknowledgments: We thank the reviewers for comments helping to improve the paper. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
