@@ -341,7 +341,7 @@ In the second case, it draws equiprobably among the agents whose preference is n
 Let $(x^{*},\bar{y}, \bar{\profile}, \bar{\w})$ be the current solution of the minimax regret, where $x^{*}$ is the minimax optimal alternative and $\bar{y}, \bar{\profile}, \bar{\w}$ the corresponding adversarial choices. 
 The \strat{Pessimistic} strategy considers a set of $n + (m-2)$ candidate questions: one per agent, and one per rank (excluding the first and the last one which are known).
 
-The candidate questions to the agents are chosen by extending the idea of \citet{Lu2011}, that priviledge learning about the relationship of $x^*$ and $\bar{y}$ to the other alternatives if possible.
+The candidate questions to the agents are chosen by extending the idea of \citet{Lu2011}, that privilege learning about the relationship of $x^*$ and $\bar{y}$ to the other alternatives if possible.
 	Given $j \in N^*$, if $x^*$ and $\bar{y}$ are incomparable in $\ppref_j$, the candidate question concerns the pair $(x^*, \bar{y})$, otherwise, %the candidate question
 	it concerns the pair $(x^*, z)$ for some $z$ incomparable to $x^*$ (randomly chosen), or if none such $z$ exist, the pair $(\bar{y}, z)$ for some $z$ incomparable to $\bar{y}$, or, if both $x^*$ and $\bar{y}$ are comparable to every alternatives in $\ppref_j$, any incomparable pair is picked at random. 
 %Responses to questions involving $x^*$ or $\bar{y}$ constrain the ability of the adversary to complete the profile in such manner, possibly reducing minimax regret.
@@ -399,7 +399,7 @@ of the chair. We obtain the first question to be asked using the strategy under 
 
 The oracle is built as follows. 
 For the real preferences, we used three datasets from \href{https://www.preflib.org/}{PrefLib} \citep{PrefLib}: \textit{T Shirt} (researchers voted on tee shirt designs; $m \!=\! 11, n \!=\! 30$),
-\textit{Courses}  (students voted on courses; $m \!=\! 9, n \!=\! 146$)
+\textit{Courses}  (students voted on courses; $m \!=\! 9, n \!=\! 146$; referred to as AGH on PrefLib)
 and \emph{Skate} (judges vote on skaters at the Euros Pairs Short Program; $m \!=\! 14, n \!=\! 9$).
 % tee shirt designs voted by 
 %$n \!=\! 30$ 
@@ -488,8 +488,9 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \paragraph{Evaluation of Pessimistic Strategy}
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
-We first wonder how many questions should be asked in order to reach a low regret level, fixed at $n / 10$: such a regret is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where ten percent of the agents rank $x$ last instead of first.
-The results for various sizes are displayed in \cref{tab:lowRegret}. 
+We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first.
+\cref{tab:lowRegret} shows results for various sizes. 
+%The results for various sizes are displayed in \cref{tab:lowRegret}. 
 Another interesting measure is the average number of questions asked to each participant before reaching zero regret. For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:questions} in Appendix provides more data).
 
 \begin{table}
@@ -577,8 +578,8 @@ Another interesting measure is the average number of questions asked to each par
 	\end{tikzpicture}
 \end{figure}
 
-\Cref{fig:linearity} shows graphically the decrease in MMR according to the number of questions asked for various problem sizes. In particular, this shows important differences between some real data sets and the problems generated using IC.
-In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than $100$ questions, while the IC case of the same size ($m = 14, n = 9$) requires more than $200$ questions to reach that value. But comparing \textit{T Shirt} with similar IC cases do not reveal any important differences in terms of decrease of regret. This can be explained by the high degree of similarity in the preference rankings of the \textit{Skate} problem, which helps reducing the regret faster: in that dataset the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3. By contrast, in \textit{T Shirt}, the alternatives are evenly distributed in the preference rankings. 
+\Cref{fig:linearity} shows the decrease in MMR according to the number of questions asked for various problem sizes. In particular, this shows important differences between some real datasets and the problems generated using IC.
+In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than $100$ questions, while the IC case of the same size ($m = 14, n = 9$) requires more than $200$ questions to reach that value. This reasoning also applies to the \textit{Courses} dataset but not to the \textit{T Shirt} dataset. This can be explained by the high degree of similarity in the preference rankings of the \textit{Skate} and the \textit{Courses} problems, which helps reducing the regret faster. For example, in \textit{Skate} the top-2 alternatives are the same for all agents, and 8 out of 9 agents rank the same alternative at position 3. By contrast, in \textit{T Shirt}, the alternatives are evenly distributed in the preference rankings. 
 % in \textit{Courses} all agents rank the same alternative at the top position,
  
 %\subsection{Value of information comparison}
@@ -609,7 +610,7 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 The experiments so far let the strategy free to question either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly. %, as these types of questions differ in nature. 
 
 \Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting.
-The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permits to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
+The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permit to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
 
 \section{Conclusions}  
 \label{sec:conclusions}
