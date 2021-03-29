@@ -36,7 +36,8 @@
 %Working around the censorship.
 \addtocounter{pagecount}{-4}
 
-	We thank the reviewers for their comments. We specify that the questions reported are not verbatim for lack of space and focus on factual errors. 
+	We thank the reviewers for their comments. We focus on factual errors and on the “questions for the authors”. 
+
 \paragraph{Review $\#$2 writes as a weakness that “the method proposed here is not compared with others”.}
 We believe it is erroneous to consider the lack of comparison a weakness. The simultaneous elicitation of both the voting rule and the agents preferences is a novel setting and, as far as we know, there is no competitor from the state-of-the-art to compare with. 
 We are not aware of any method that elicits the voting rule we could compare with – the work by Cailloux and Endriss [2014] does not consider PSRs. Nevertheless, the Two Phases strategy was designed to challenge our interleaving approach by comparing it with a more classical sequential method, which (when first eliciting the rule and then the agents preferences) coincides with the method of Lu and Boutilier [2011] for preferences elicitation with a fixed voting rule.
@@ -70,20 +71,17 @@ Also, it is a classical assumption in political science that the chair could del
 %-Why is Figure 2 shown for only Pessimistic, not all the approaches? Were all approaches tested on all data sets? Or were all approaches only tested on synthetic data?
 Yes, when we do not specify the name of the dataset we mean data generated following the procedure described in Sec 5. Regarding the real datasets, we only tested the Pessimistic strategy for the following reasons: $1)$ Random was considered only as a baseline in the first experiment, which shows that Pessimistic performs much better; $2)$ Extended Pessimistic is too computationally costly to run on larger instances (as pointed out in Sec 4); $3)$ Elitist was designed with the only purpose of challenging our best strategy (Pessimistic) in extreme cases tailored to favor the former. Testing this strategy in other settings does not yield interesting information; $4)$ Two Phases was designed to compare our interleaving approach to a more classical linear method. We thought that the most challenging situation (Impartial Culture) was the best setting to perform this test. \commentOC{What does the last sentence answer?}\commentBN{To why we didn't test Two Phases with real datasets.}
 
-
-
-\paragraph{Review $\#$56: Can you clarify better the rationale behind the assumptions you make on questions to the chair?}
-The question is asked by showing a profile and asking who should win; the response is encoded as a constraint and added to the system’s knowledge. Phrasing questions in terms of winners out of profiles is arguably the most fundamental and natural view of what a social choice function is (as pointed out in our response to reviewer $\#$32). We adapt a mechanism used in a real life experiment by Giritligil et al. [2005] in a novel way for the elicitation of PSRs.
-%Note that we want to ask an informative query: the elicitation strategy decides which question to be asked, and, if it is of the “chair” type, the strategy decides the linear constraint to check; this is then translated to a profile.
-
 \paragraph{Review $\#$56: “If the chair does not know the weight vector, he can’t answer the questions.”}
 This is untrue, as indicated above as a reply to Review \#32.
 
-\paragraph{Review $\#$56 writes that we “assume the human chair will answer hundreds of questions”. \commentOC{Beatrice, please check the exact quote.}}
+\paragraph{Review $\#$56: “Can you clarify better the rationale behind the assumptions you make on questions to the chair?”}
+The question is asked by showing a profile and asking who should win; the response is encoded as a constraint and added to the system’s knowledge. Phrasing questions in terms of winners out of profiles is arguably the most fundamental and natural view of what a social choice function is (as pointed out in our response to reviewer $\#$32). We adapt a mechanism used in a real life experiment by Giritligil et al. [2005] in a novel way for the elicitation of PSRs.
+%Note that we want to ask an informative query: the elicitation strategy decides which question to be asked, and, if it is of the “chair” type, the strategy decides the linear constraint to check; this is then translated to a profile.
+
+\paragraph{Review $\#$56: “You say that you assume the chair to be human, yet you think he will answer hundreds of questions..?”}
 %We assume the chair to be human and, as discussed in the paragraph “Building concrete questions for the chair“ on page 3, we view questions “what is the winner of this profile” to be easier to answer than directly asking the weights (in the same way as, for the problem of elicitation an utility function, one would ask comparison queries rather than asking directly utility values). 
 We do not assume this. We plot the total number of questions in order to have a simple way to compare the total elicitation cost. 
-\commentOC{I’d remove this first sentence and rephrase the next one.}
-Table 1 of Appendix shows that the number of questions posed to the chair (and each agent) is usually small. Our experiments also show efficiency decreases slowly when diminishing the number of questions to the chair and distributing them to the voters instead.
+Table 1 of Appendix shows that the number of questions posed to the chair (and each agent) is usually small. Our experiments also show that efficiency decreases only slowly when diminishing the number of questions to the chair and distributing them to the voters instead.
 %When the profile is quite homogeneous (see the lines corresponding to real datasets) this number is very low or even zero in case of clear winner. We also mention that the process could be terminated early: after a fixed number of questions (the “approximate winner” is the alternative with lowest regret); or after reaching a "low enough" regret.
 %In fact the number of questions asked to the chair using the Pessimistic strategy (as shown in the appendix) is often quite small  (e.g. zero in skate and "courses", 8.4 in m5n10, 13 in m5n20, 30 in tshirt,...), this is because the strategy does a good job of asking the question that gives more information, and often only “sparse” information about the voting rule is enough. Similarly, the average number of questions asked to a voter is also reasonable (e.g questions per agent 6.5 in courses, 6.1 in m5n10,  )
 %: X.X in Experiment YY, for instance. In Table 2, the (10,20) example shows that to reach a “low” regret -that we define as n/10- we need to ask 340 questions. This number should be divided among the voters and the chair, resulting in ~ 10 questions per voter, which we consider a reasonable amount. The fact that asking too many questions to the chair is not worth it isworth is also displayed in Table 3 in the main text.
