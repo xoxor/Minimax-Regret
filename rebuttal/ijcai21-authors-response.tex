@@ -36,7 +36,7 @@
 %Working around the censorship.
 \addtocounter{pagecount}{-4}
 
-	We thank the reviewers for their comments. We address factual errors ($\#$2) and both factual errors and direct questions ($\#$32 and $\#$56).
+	We thank the reviewers for their comments. We address factual errors (Review $\#$2) and both factual errors and direct questions (Reviews $\#$32 and $\#$56).
 	
 \paragraph{Review $\#$2 writes as a weakness that “the method proposed here is not compared with others”.}
 We believe it is erroneous to consider the lack of comparison a weakness. The simultaneous elicitation of both the voting rule and the agents preferences is a novel setting and, as far as we know, there is no competitor from the state-of-the-art to compare with. 
@@ -45,7 +45,7 @@ We are not aware of any method that elicits the voting rule we could compare wit
 %\commentOC{Isn’t this a bit arguable that Elitist is very different rather than a variant?}
 The Elitist strategy has a very different approach than the Pessimistic one and does not use the regret to question the voters. It was conceived to challenge our best strategy (Pessimistic) in extreme cases tailored to favor Elitist.
 
-\paragraph{Review $\#$2: “the voting rule has to be defined independently of the preferences of the voters. And probably not by the chairpersonn who may influence the result by choosing the weights”.}
+\paragraph{Review $\#$2: “the voting rule has to be defined independently of the preferences of the voters. And probably not by the chairperson who may influence the result by choosing the weights”.}
 It is not true that any decision process involving preference aggregation requires a voting rule defined beforehand, nor that it is necessarily a bad idea to let a chair decide on the voting rule. The interest of considering incomplete knowledge in the voting rule has been advocated in a recent survey paper of a leading researcher in Computational Social Choice [Lang 2020, \href{https://doi.org/10.24963/ijcai.2020/680}{doi: 10.24963/ijcai.2020/680}]. The case of IJCAI aggregation process of reviews illustrates the point: reviewers provide their preferences despite ignoring how these will be aggregated. The Introduction section of our article provides another example.
 
 \paragraph{Review $\#$32 suggests that it is hard to find “any real setting where a third party decides who wins a vote, not the chair. (…) Can the authors give an example? (…) Why would voters participate in a voting rule that is not public or common knowledge? (…) If the chair can compute winners over and over for every elicitation for arbitrary size profiles, why wouldn't the chair just compute the real winner himself or herself, rather the delegate to the third party? (…) Why is this easier than reflecting on the relative weights?”}
@@ -81,7 +81,7 @@ This is untrue, as indicated above as a reply to Review \#32.
 The question is asked by showing a profile and asking who should win; the response is encoded as a constraint and added to the system’s knowledge. Phrasing questions in terms of winners out of profiles is arguably the most fundamental and natural view of what a social choice function is (as pointed out in our response to reviewer $\#$32). We adapt a mechanism used in a real life experiment by Giritligil et al. [2005] in a novel way for the elicitation of PSRs.
 %Note that we want to ask an informative query: the elicitation strategy decides which question to be asked, and, if it is of the “chair” type, the strategy decides the linear constraint to check; this is then translated to a profile.
 
-\paragraph{Review $\#$56: “You say that you assume the chair to be human, yet you think he will answer hundreds of questions..?”}
+\paragraph{Review $\#$56: “You say that you assume the chair (…) will answer hundreds of questions”}
 %We assume the chair to be human and, as discussed in the paragraph “Building concrete questions for the chair“ on page 3, we view questions “what is the winner of this profile” to be easier to answer than directly asking the weights (in the same way as, for the problem of elicitation an utility function, one would ask comparison queries rather than asking directly utility values). 
 We do not assume this. We plot the total number of questions in order to have a simple way to compare the total elicitation cost. 
 Table 1 of Appendix shows that the number of questions posed to the chair (and each agent) is usually small. Our experiments also show that efficiency decreases only slowly when diminishing the number of questions to the chair and distributing them to the voters instead.
