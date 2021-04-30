@@ -5,25 +5,17 @@ Code at https://github.com/oliviercailloux/minimax.
 
 
 == TODO
-* Add in the text the references to the appendix
-* Explain and structure the appendix
-* +++<del>+++cite conitzer (Bea)+++</del>+++
-* +++<del>+++put back table 4 (Bea)+++</del>+++
-* +++<del>+++about real data: high degree of similarity helps +++</del>+++
-* m14n9 investigate the curve
-** check with variation on n and m
-* +++<del>+++suppress the discussion about speed of reduction: "We next wonder how fast the regret decreases..." (Bea)+++</del>+++
-* distribution of the questions per voter (Bea)
-** for each xp in Figure 2 how many qst for chair 
-* take away message
-** build profile
-** reasonably low regret with reasonable nb of q
-** pessimistic good in time and results
-** asking q to the chair is not useful
-** IC is harder than real data
-* +++<del>+++ /small references+++</del>+++
-* +++<del>+++ no cit to dataset+++</del>+++
-* Keep 1.1+1e-6
+* +++<del>+++convert format+++</del>+++
+* add back in the text the table about the number of questions asked to chair/agents (Table 1 from Appendix)
+** Added, maybe we can add few comments though (p. 10 Evaluation of Pessimistic Strategy)
+* add back the proofs for propositions 1,2,4
+* add the example we provided in the rebuttal about the reviewing process of a conference
+* redo all tables and figures with the new data
+* discuss whether the profile asked to the chair could be simplified into "frequency of arrival" (a was ranked 3 times first etc)
+* solve issues pointed out in IJCAI reviews
+* restore the inline formulas?
+
+=== Previous TODO
 
 * Similarity measure for preference rankings and use it as an explanation for the performance of the datasets.
 
