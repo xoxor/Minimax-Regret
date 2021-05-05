@@ -7,7 +7,7 @@ Code at https://github.com/oliviercailloux/minimax.
 == TODO
 * +++<del>+++convert format+++</del>+++
 * add back in the text the table about the number of questions asked to chair/agents (Table 1 from Appendix)
-** Added, maybe we can add few comments though (p. 10 Evaluation of Pessimistic Strategy)
+** Added, maybe we can add few comments though (p. 12 Evaluation of Pessimistic Strategy)
 * add back the proofs for propositions 1,2,4
 ** Added, but do we keep them? Do we shorten them?
 * +++<del>+++redo all tables and figures with the new data+++</del>+++
