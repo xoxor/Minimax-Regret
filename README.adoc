@@ -9,10 +9,18 @@ Code at https://github.com/oliviercailloux/minimax.
 * add back in the text the table about the number of questions asked to chair/agents (Table 1 from Appendix)
 ** Added, maybe we can add few comments though (p. 10 Evaluation of Pessimistic Strategy)
 * add back the proofs for propositions 1,2,4
-* add the example we provided in the rebuttal about the reviewing process of a conference
-* redo all tables and figures with the new data
-* discuss whether the profile asked to the chair could be simplified into "frequency of arrival" (a was ranked 3 times first etc)
+** Added, but do we keep them? Do we shorten them?
+* +++<del>+++redo all tables and figures with the new data+++</del>+++
 * solve issues pointed out in IJCAI reviews
+** p.2, “a social choice function ... associates to each profile a set of (tied) winners”: according to what I understand, a social choice function maps a tuple of profiles of arbitrary size to a set of winners. So you should state that it associates a finite sequence of profiles to a (tied) set of winners. [I'm not sure what he/she means with sequence of profiles, maybe he misunderstood the concept of profile and pref orders?] Moreover, I suppose that the sets N in the subscript of the union operator are finite? [We state that N is finite]
+** p.2, “alternative x ∈ A obtains the score”: in this formulation, do you suppose that N is the set of 1 to n? [I think it's clear enough]
+** p.3, Prop 1: shouldn’t it be “there exists a completion ... of profile p” ? [Yes, indeed. Double check with Olivier and Paolo tho]
+** p.3, Prop 1: I understand that the chosen profile puts x at the lowest possible position and y at the highest possible position (except in the case where x is necessarily better than y). [Ok...]
+** +++<del>+++two strong hypothesis >>two strong hypotheses+++</del>+++
+** +++<del>+++for the class of rule —> for the class of rules+++</del>+++
+* add the example we provided in the rebuttal about the reviewing process of a conference
+* do we separate again Introduction and Related work?
+* discuss whether the profile asked to the chair could be simplified into "frequency of arrival" (a was ranked 3 times first etc)
 * restore the inline formulas?
 
 === Previous TODO
