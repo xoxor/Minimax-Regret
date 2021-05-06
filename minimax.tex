@@ -218,7 +218,7 @@ The following propositions show that the procedure for completing a partial prof
 	\begin{sloppypar}
 		There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that ${\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]}$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
 	\end{sloppypar}
-	
+	\vspace{-0.5cm}
 	\begin{eqnarray}
 		\label{eq:complx}
 		a \pref_j x &⇔& \lnot(x \pprefeq_j a);\\
@@ -236,9 +236,9 @@ The following propositions show that the procedure for completing a partial prof
 \begin{proof}[Proof Sketch]
 	Consider our knowledge $\pprefeq_j$ about the preference of the agent $j$. 
 	The adversary's goal is to make the score of $y$ as high as possible and the score of $x$ as low as possible. 
-	To do this, he should complete $\ppref_j$ to $\pref_j$ by putting above $x$ as many alternatives as he can, that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
+	To do this, he should complete $\ppref_j$ to $\pref_j$ by placing above $x$ as many alternatives as possible; that is, all the alternatives except those that are known to be worse than $x$ (those $a$ such that $x \pprefeq_j a$); and similarly, he should put below $y$ all the alternatives he can. Two conditions must be excluded for $a$ to go below $y$. The alternatives such that $a \pprefeq_j y$ can’t be put below $y$.
 	Furthermore, the first objective must take priority over the second one: when an alternative should go above $x$ according to the first objective (because $¬(x \pprefeq_j a)$), and $x$ is known to be better than $y$ (thus $x \pprefeq_j y$), then $a$ should be put above $x$ (irrespective of whether $a \pprefeq_j y$), which will move both $x$ and $y$ one rank lower than if $a$ had been put below $y$. 
-	This maximizes the adversary’s interests: because the weight vector is convex, the difference of scores will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the point of view of the adversary.
+	This maximizes the adversary’s interests: because the weight vector is convex, the score difference will be lower when both alternatives are ranked lower (Equation \ref{eq:convexity}), and that difference of scores is in favor of $x$ when $x \ppref_j y$, thus to be minimized from the the adversary's point of view.
 \end{proof}
 
 
@@ -266,6 +266,7 @@ The following propositions show that the procedure for completing a partial prof
 		a \pref_j y ⇔ 
 		(a \ppref_j y) ∨ ((x \pprefeq_j y) ∧ ¬(x \pprefeq_j a) ∧ ¬(a \ppref_j y)).
 	\end{equation}
+\vspace{-0.5cm}
 \end{proof}
 
 
@@ -332,7 +333,8 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 \begin{proof}[Proof]
 	\label{proof:chairQuestions}
 	Define a linear order $>_1$ over $A$ as placing $a$ at rank $r$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily. 
-	Define a linear order $>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
+	Define %a linear order 
+	$>_2$ over $A$ as placing $a$ at rank $r + 2$, $b$ at rank $r + 1$, and the remaining alternatives arbitrarily.
 	Define an arbitrary linear ordering $>$ over $A \setminus \set{a, b}$. 
 	Define a linear order $>_3$ as placing $a$ first, $b$ second, and following the order of $>$ for the remaining positions.
 	Finally, define a linear order $>_4$ as placing $b$ first, $a$ second, and following the \emph{inverse} order of $>$ for the remaining positions.
@@ -365,7 +367,8 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 We develop several strategies for simultaneous elicitation of agent preferences and of the PSR.
 While it is of course possible to first fully elicit the agent preferences and afterwards elicit weights, we want to investigate approaches that are able to recommend winning alternatives before obtaining complete knowledge of the profile or the rule.
 %Indeed, it can be beneficial to split efforts asking questions to the chair and to agents, depending on which is estimated to be more informative.
-We define here the various strategies we tested experimentally. A strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question to ask next.
+We define here various strategies; %we tested experimentally. 
+a strategy tells us, given the current partial knowledge $(\pprofile, W)$, which question to ask next.
 
 The \strat{Random} strategy is used as a baseline. % and informs about the difficulty of an elicitation problem. 
 It first chooses equiprobably whether to question the chair or the agents. In the first case, it draws one rank in $1 ≤ r ≤ m-2$ equiprobably, takes the middle of the interval of values for $\lambda$ that are still possible considering our knowledge so far, and asks whether $w_r - w_{r+1} ≥ \lambda (w_{r+1} - w_{r+2})$.
@@ -424,7 +427,7 @@ This strategy can be expected to perform well when the chair assigns a large wei
 
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-We  performed a number of numerical experiments using both real data and generated profiles in order to validate our approach and test the performance of our elicitation strategies. %Our experiments are described by topic here below. 
+We  performed a number of numerical experiments using both real data and randomly generated profiles in order to validate our approach and test the performance of our elicitation strategies. %Our experiments are described by topic here below. 
 %We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 
 Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we first create an “oracle”, representing the true preferences of the agents (randomly generated or coming from real data) and the weights associated with the chair’s scoring rule (randomly generated).
@@ -446,7 +449,7 @@ For the synthetic datasets, we follow an Impartial Culture (IC) assumption: the 
 %independently and all have the same probability of appearing. 
 We believe IC to be a challenging situation and expect the number of questions to ask, in order to reach a certain level of regret, to decrease with less varied profiles.
 %We adopt IC because it is a more challenging situation: as can be expected intuitively , the number of questions to be asked decrease with less varied profiles. 
-To generate the weights of the scoring rule, we first draw $m \!-\! 1$ numbers uniformly at random (in the interval $\intvl{0,1}$ representing weight ``differences''), normalize and sort them; a sequence of convex decreasing weight is then obtained by a decumulative sum. The penalty parameters for the Pessimistic and Extended pessimistic strategies are set to  $\epsilon_{\text{chair}} = 1.1$, $\epsilon'_{\text{chair}} = 10^{-6}$, $\epsilon_{\text{agent}} = 1.0$ and $\epsilon'_{\text{agent}} = 0$.
+To generate the scoring rule weights, we first draw $m \!-\! 1$ numbers uniformly at random (in the interval $\intvl{0,1}$ representing weight ``differences''), normalize and sort them; a sequence of convex decreasing weightx is then obtained by a decumulative sum. The penalty parameters for the Pessimistic and Extended pessimistic strategies are  $\epsilon_{\text{chair}} = 1.1$, $\epsilon'_{\text{chair}} = 10^{-6}$, $\epsilon_{\text{agent}} = 1.0$ and $\epsilon'_{\text{agent}} = 0$.
 
 \begin{figure}
 	\caption{Average MMR in problems of size $(5, 10)$ after $k$ questions.}
