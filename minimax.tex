@@ -22,6 +22,15 @@
 \pgfplotsset{compat=1.16}
 
 \usepackage[hypertexnames=false]{hyperref} 
+
+\NewDocumentCommand{\commentOC}{m}{\textcolor{blue}{\small$\big[$OC: #1$\big]$}}
+\NewDocumentCommand{\commentBN}{m}{\textcolor{magenta}{\small$\big[$BN: #1$\big]$}}
+\NewDocumentCommand{\commentPV}{m}{\textcolor{red}{\small$\big[$PV: #1$\big]$}}
+
+\theoremstyle{remark}
+\newtheorem*{example*}{Example}
+
+
 %\usepackage{cleveref}
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
@@ -39,25 +48,23 @@
 % an abbreviated paper title here
 %
 
-%\author{Submission 15}
-%\institute{}
+\author{Submission 15}
+\institute{}
 
-\author{Beatrice Napolitano\inst{1}\orcidID{0000-0002-3887-6206} \and
-Olivier Cailloux\inst{1}\and
-Paolo Viappiani\inst{2}}
-%
-\authorrunning{B. Napolitano et al.}
-% First names are abbreviated in the running head.
-% If there are more than two authors, 'et al.' is used.
-%
-\institute{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE \and
-LIP6, UMR 7606, CNRS and Sorbonne Universit\'e \\
-\email{\{beatrice.napolitano, olivier.cailloux\}@dauphine.fr}\\
-%\url{http://www.springer.com/gp/computer-science/lncs} \and
-%ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
-\email{paolo.viappiani@lip6.fr}}
+%\author{Beatrice Napolitano\inst{1}\orcidID{0000-0002-3887-6206} \and
+%Olivier Cailloux\inst{1}\and
+%Paolo Viappiani\inst{2}}
+%%
+%\authorrunning{B. Napolitano et al.}
+%% First names are abbreviated in the running head.
+%% If there are more than two authors, 'et al.' is used.
+%%
+%\institute{Université Paris-Dauphine, Université PSL, CNRS, LAMSADE \and
+%LIP6, UMR 7606, CNRS and Sorbonne Universit\'e \\
+%\email{beatrice.napolitano@dauphine.fr}}
 
 \maketitle              % typeset the header of the contribution
+\vspace{4em}
 %
 \begin{abstract}
 %The abstract should briefly summarize the contents of the paper in
@@ -94,7 +101,9 @@ Since in many practical situations there would be too many possible winners but 
 A second concern is the ability of the chair (the person or organization supervising the voting process) to provide a precise definition of the voting rule, suggesting the relaxation of the second hypothesis. Indeed, it is often difficult for non-experts to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. 
 %Thus, the first hypothesis should also be relaxed. 
 %While most of the focus in the research community has been in dealing with incomplete agent preferences, 
+\commentBN{here are two examples of situations. (divide in two par)}
 Consider, as an example, a chair that is about to hire a new employee, whose performances are evaluated by several experts. The members of the chair may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule. However, they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
+
 %The information provided can be used to   % to determine their employee of choice.
 
 %This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
@@ -131,17 +140,17 @@ Our approach is evaluated on simulations with synthetic and real datasets where 
 \section{Social choice with partial information}
 \label{sec:background}
 We now introduce some basic concepts.
-We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.), an infinite set $\N$ of potential agents and a specific finite set of agents $N^* \subset \N$.
+We consider a set $A$ of $m$ alternatives (products, restaurants, public projects, job candidates, etc.), an infinite set $\N$ of potential agents.
 
 A {\em profile} $(\pref_j, j \in N)$ considers a finite subset of agents $N \subset \N$ and associates to each agent a preference order ${\pref_j}  \in \linors$, a linear order over the alternatives.
 A profile is equivalently represented by $\profile=(v_j, j \in N)$ where $v_j(x) \in \set{1, \ldots, m}$ denotes the rank of alternative $x$ in the preference order $\pref_j$. 
-A social choice function $f : \cup_{\emptyset ≠ N \subset \N} \linors^N \rightarrow \powersetz{A}$ associates to each profile a set of (tied) winners, where $\powersetz{A}$ is the powerset of $A$ excluding the empty set.
+A social choice function $f : \cup_{\emptyset ≠ N \subset \N, N \text{finite}} \linors^N \rightarrow \powersetz{A}$ associates to each profile a set of (tied) winners, where $\powersetz{A}$ is the powerset of $A$ excluding the empty set.
 Among the many possible social choice functions, we consider convex {\em positional scoring rules (PSRs)}. A PSR $f^{\w}$ is parameterized by a \emph{scoring vector} $\w$ associating weights $w_r \in [0, 1]$ to positions, with $1 = w_1 ≥ w_2 ≥ … ≥ w_m = 0$.
 Let $\alpha^{x}_r$ be the number of times that alternative $x$ was ranked in the $r$-th position.
 Given $\profile$ and $\w$, an alternative $x \in A$ obtains the score
 \begin{align}
 	\label{eq:srule}
-	s(x; \profile, \w) = \sum_{j=1}^{n} w_{v_j(x)}
+	s(x; \profile, \w) = \sum_{j\in N} w_{v_j(x)}
 	= \sum_{r=1}^{m} \alpha^{x}_r w_r\ .
 \end{align}
 The winners $f^{\w}(\profile)$ are the alternatives with highest score.
@@ -154,7 +163,7 @@ An important class of PSRs is the one using convex weights \cite{Stein1994,Llama
 The constraint above is a natural and common assumption, often used when aggregating rankings in sport competitions (such as F1 racing, alpine skiing world cup); losing ranks at the top  is more damaging than losing ranks at the bottom.
 Let $\W$ denote the set of such convex weight vectors.
 
-Let $\profile^* = (\pref_j^*, j \in N^*)$ and $\w^*$ denote the profile and weight vector, unknown to us, that represent the preferences of the agents in $N^*$ and of the chair. 
+Consider a specific finite set of agents $N^* \subset \N$, let $\profile^* = (\pref_j^*, j \in N^*)$ and $\w^*$ denote the profile and weight vector, unknown to us, that represent the preferences of the agents in $N^*$ and of the chair. 
 
 At a given time, our knowledge of agent $j$'s preference is encoded by a partial order ${\ppref_j} \subseteq {\pref_j^*}$ over the alternatives, a transitive and asymmetric relation (we assume that preference information is truthful).
 %We use $\prefinc$ to denote incomparability, that is $a \prefinc_{j} b$ iff $a \nppref_j b \wedge b \nppref_j a$.
@@ -208,7 +217,7 @@ Given a voting rule and a partially specified profile, Xia and Conitzer \cite{Xi
 In order to compute pairwise maximum regret, and therefore minimax regret, we decompose the PMR into the contributions associated to each agent by adapting this same reasoning to our setting. The context is however more challenging due to the presence of uncertainty in the weights.
 
 Recall that, in the computation of $s(x; \profile, \w)$, $w_{v_j(x)}$ represents the score that $x$ obtains in the ranking $v_j$ (see \cref{eq:srule}).
-Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j=1}^n w_{v_j(y)} - w_{v_j(x)}$, and we obtain \[\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j=1}^{n} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}].\]
+Since scoring rules are additively decomposable, we can consider separately the contribution of each agent to the total score. Thus, we can write the actual regret of choosing $x$ instead of $y$ as $s(y; \profile,\w) - s(x; \profile, \w) = \sum_{j \in N} w_{v_j(y)} - w_{v_j(x)}$, and we obtain \[\PMR(x,y; \pprofile, W) =  \max_{\w \in W} \sum_{j \in N} \max_{v_j \in C(\succ_j^p)} [w_{v_j(y)} - w_{v_j(x)}].\]
 %Note that in general the inner max depends on the weights chosen by the outer max.
 
 The following propositions show that the procedure for completing a partial profile,  proposed by Lu and Boutilier \cite{Lu2011} when considering a fixed weight vector, also applies in our setting. We write $a \pprefeq_j b$ iff $a \ppref_j b \lor a = b$ and adopt the canonical notation when considering a relation as a function, writing ${\pprefeq_j}(x)$ for $\set{y \suchthat x \pprefeq_j y}$.
@@ -216,7 +225,7 @@ The following propositions show that the procedure for completing a partial prof
 
 \begin{proposition} \label{claim:completion}
 	\begin{sloppypar}
-		There exists a completion $\hat{\profile} \in C(\pprofile)$ of the profile $\profile$ such that ${\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]}$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
+		There exists a completion $\hat{\profile} \in C(\pprofile)$ of the partial profile $\pprofile$ such that ${\PMR(x,y; \pprofile, W) = \max_{\w \in W} [ s(y; \hat{\profile}, \w) - s(x; \hat{\profile}, \w) ]}$ and such that the linear order $\hat{v}_{j}$ of each agent $j$ satisfies:
 	\end{sloppypar}
 	\vspace{-0.5cm}
 	\begin{eqnarray}
@@ -275,7 +284,7 @@ Note that in \cref{claim:rankPMR}, in the case $(x \pprefeq_j y)$, $\beta$ is th
 	The $\PMR$ can be written as:
 	\begin{align} 
 		\PMR(x,y; \pprofile, W)  
-		& = \max_{w \in W} \sum_{j=1}^n w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
+		& = \max_{w \in W} \sum_{j \in N} w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
 		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i 
 	\end{align}
 	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) has rank $r$ in the complete profile $\hat{\profile}$ defined in \cref{claim:rankPMR}. 
@@ -346,7 +355,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 	$s(c) ≤ (p + q) w_1 + (p + q) w_3 + (p + q) w_m$. It follows that $a$ or $b$ maximize $s$ (as $s(a) ≥ s(c)$). We conclude by observing that $a \in f(P) ⇔ s(a) ≥ s(b) ⇔ q w_r + p w_{r + 2} ≥ (p + q) w_{r + 1} ⇔ w_r - w_{r + 1} ≥ (p / q) (w_{r + 1} - w_{r + 2})$, and similarly for $b \in f(P)$.
 \end{proof}
 
-\begin{example}
+\begin{example*}
 	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. 
 	We then show the following profile to the chair and ask who should win (each column is a preference of an agent).
 	\begin{center}
@@ -360,8 +369,20 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 		$
 	\end{center}
 	Both $a$ and $b$ have scores higher than $c$ and $d$ for all convex weights, thus either $a$ or $b$ will be picked under our hypothesis; and $s(a) ≥ s(b) ⇔ w_2 + 2 w_4 ≥ 3 w_3$.
-	(the proof in Appendix presents the general method of constructing such profile.)
-\end{example}
+	Note that we can compress this profile by grouping agents with the same preference orders. In the proof, in fact, we show how to construct a profile where only four linear orders are possible. Each column of the new profile represent now the preference of a group of agents:
+	\begin{center}
+		$
+		\begin{array}{cccc}
+			\mathbf{1}&\mathbf{2}&\mathbf{3}&\mathbf{3} \\
+			c&d&a&b\\
+			a&c&b&a\\
+			b&b&c&d\\
+			d&a&d&c\\
+		\end{array}.
+		$
+	\end{center} 
+\end{example*}
+
 
 \paragraph{Elicitation strategies}
 We develop several strategies for simultaneous elicitation of agent preferences and of the PSR.
@@ -591,74 +612,6 @@ Another interesting measure is the average number of questions asked to each par
 			%			\addlegendentry{m=5, n=10}
 			%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/normalizedLin.dat};
 			%			\addlegendentry{m=5, n=15}
-			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {120}, brown] table [x=k, y=5.20]{data/normalizedLin.dat};
-			\addlegendentry{m=5, n=20}
-			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/normalizedLin.dat};
-			\addlegendentry{m=10, n=20}
-			%			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {300}, cyan] table [x=k, y=10.30]{data/normalizedLin.dat};
-			%			\addlegendentry{m=10, n=30}
-			\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {240}, cyan] table [x=k, y=11.30]{data/normalizedLin.dat};
-			\addlegendentry{m=11, n=30}
-			\addplot[thick, mark=halfcircle*, mark size = {2}, mark indices = {400}, violet] table [x=k, y=tshirt]{data/normalizedLin.dat};
-			\addlegendentry{tshirts m11n30}
-			\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/normalizedLin.dat};
-			\addlegendentry{courses m9n146}
-			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {400}, green] table [x=k, y=9.146]{data/normalizedLin.dat};
-			\addlegendentry{m=9, n=146}
-			\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/normalizedLin.dat};
-			\addlegendentry{m=14, n=9}
-			\addplot[thick, mark=square*, mark size = {2}, mark indices = {60}, teal] table [x=k, y=skate]{data/normalizedLin.dat};
-			\addlegendentry{skate m14n9}
-			\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/normalizedLin.dat};
-			\addlegendentry{m=15, n=30}
-		\end{axis}
-	\end{tikzpicture}
-\end{figure}
-
-\begin{figure}
-	\caption{Average MMR (normalized by $n$) after $k$ questions with Pessimistic strategy for different datasets. (20 runs)}
-	\label{fig:linearity2}
-	\begin{tikzpicture}
-		\pgfplotsset{
-			every axis legend/.append style={
-				at={(0.5,1.1)},
-				anchor=south
-			},
-		}
-		\begin{axis}[
-			y=80,
-			legend columns=3,
-			xlabel=Number of Questions,
-			ylabel=MMR/n,
-			ytick={0,0.5,1},
-			xtick distance=100,
-			xtick pos=left,
-			ymajorgrids=true,
-			ytick style={draw=none},
-			ymin=0,
-			ymax=1,
-			xmin=0,
-			xmax=1000,
-			yticklabels={0,0.5,1},
-			legend style={font=\footnotesize}]
-			
-			
-			%			\addlegendimage{mark=*,violet,mark size=2}
-			\addlegendimage{mark=halfsquare right*,brown,mark size=2}
-			\addlegendimage{mark=diamond*,red,mark size=2}
-			\addlegendimage{mark=pentagon*,cyan,mark size=2}
-			\addlegendimage{mark=halfcircle*,violet,mark size=2}
-			\addlegendimage{mark=*,pink,mark size=2}
-			\addlegendimage{mark=triangle*,green,mark size=2}
-			\addlegendimage{mark=halfsquare left*,blue,mark size=2}
-			\addlegendimage{mark=square*,teal,mark size=2}
-			\addlegendimage{mark=halfsquare*,magenta,mark size=2}
-			
-			
-			%			\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {35}, teal] table [x=k, y=5.10]{data/normalizedLin.dat};
-			%			\addlegendentry{m=5, n=10}
-			%			\addplot[thick, mark=*, mark size = {2}, mark indices = {45}, violet] table [x=k, y=5.15]{data/normalizedLin.dat};
-			%			\addlegendentry{m=5, n=15}
 			\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {120}, brown] table [x=k, y=5.20]{data/linearity_redone.dat};
 			\addlegendentry{m=5, n=20}
 			\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity_redone.dat};
@@ -718,38 +671,16 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 		\toprule
 		{$q_c$} & {2 ph.\ ca} & {sd} & {2 ph.\ ac} & {sd} \\
 		\midrule
-		0 & 0.66 & 0.67 & 0.65 & 0.65  \\
-		15 & 0.71 & 0.73 & 0.67	& 0.64 \\
-		30 & 0.62 & 0.5 & 0.8 & 0.62 \\
-		50 & 1.23 & 1.46 & 0.8 & 0.79 \\
-		100 & 2.03 & 1.56 & 1.88 & 1.02  \\
-		%		150 & 3.41 & 1.79 & 4.07 & 1.51 \\
-		200 & 4.61	& 1.35  & 6.53 & 2.0  \\
-		%		250 & 8.4 & 1.86 & 	7.69 & 1.24 \\
-		300 &11.07 & 0.86& 11.87 & 1.25 \\
-		%		350 &15.06 & 0.68&15.59 & 0.6 \\
-		400 &20.0 & 0.0 & 20.0 & 0.0 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-\begin{table}
-	\caption{Average MMR in problems of size $(10, 20)$ after $400$ questions, among which $q_c$ to the chair. (20 runs redone with penalty)}
-	\label{tab:twoP4002}
-	\begin{tabular}{S[table-figures-integer=3, table-figures-decimal=0]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]S[table-number-alignment = right]@{ ± }S[table-number-alignment = left, table-figures-integer=1]}
-		\toprule
-		{$q_c$} & {2 ph.\ ca} & {sd} & {2 ph.\ ac} & {sd} \\
-		\midrule
 		0 & 0.86 & 0.72 & 0.73 & 0.67 \\
 		15 & 0.92 & 0.82 & 0.93	& 0.96  \\
 		30 & 0.9 & 0.97 & 0.72	& 0.7 \\
 		50 & 1.36 & 1.29 & 1.38	& 1.17 \\
 		100 & 1.9 & 1.72 & 2.5	& 1.46  \\
-		150 & 4.4 & 2.09 & 4.23 & 1.53 \\
+		%150 & 4.4 & 2.09 & 4.23 & 1.53 \\
 		200 & 6.05	& 1.53  & 6.06 & 1.61 \\
-		250 & 8.27	& 1.54& 8.86 & 1.38 \\
+		%250 & 8.27	& 1.54& 8.86 & 1.38 \\
 		300 &11.54	& 1.07& 11.82 &1.25 \\
-		350 &15.39	& 0.61 &15.54	&0.73 \\
+		%350 &15.39	& 0.61 &15.54	&0.73 \\
 		400 &20.0 & 0.0 & 20.0 & 0.0 \\
 		\bottomrule
 	\end{tabular}
