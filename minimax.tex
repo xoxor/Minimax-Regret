@@ -197,7 +197,8 @@ $$\PMR(x,y;\pprofile,W) = \max_{\w \in W} \max_{\profile \in C(\pprofile)} s(y; 
 The maximum regret %$\MaxR(x;\pprofile,W)$ 
 is the worst-case loss of $x$:
 \begin{align}
-	\MaxR(x;\pprofile,W) & = \max_{y \in A} \PMR(x,y; \pprofile, W) \\ &= \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w).
+	\MaxR(x;\pprofile,W) & = \max_{y \in A} \PMR(x,y; \pprofile, W) %\\ &
+	= \max_{\w \in W} \max_{\profile \in C(\profile)} \Regret(x; \profile, \w).
 \end{align}
 $\MaxR(x;\pprofile,W)$ is the result of an adversarial selection of the complete profile $\profile \in C(\pprofile)$ and of the scoring vector $\w \in W$ that jointly maximize the loss between $x$ and the true winner under $\profile$ and $\w$.
 Finally,  $\MMR(\pprofile,W) = \min_{x \in A} \MaxR(x;\pprofile,W)$ is the value of {\em minimax regret} under $\pprofile$ and $W$, obtained when recommending a {\em minimax optimal} alternative $x^*_{\pprofile, W} \in A^*_{\pprofile, W} = \argmin_{x \in A} \MaxR(x;\pprofile,W)$.
@@ -205,7 +206,7 @@ Picking as consensus choice an alternative associated with minimax regret provid
 In cases of ties, %in minimax regret, 
 we can return all minimax alternatives $A^*_{\pprofile, W}$ as winners or pick one of them using some tie-breaking strategy.
 
-Observe that if $\MMR(\pprofile, W)\!=\!0$, then any $x^{*}_{\pprofile,W} \in A^*_{\pprofile, W}$ is a necessary winner: any valid completion of the profile and choice of $w \in W$ gives to $x^{*}_{\pprofile,W}$ the highest score.
+Observe that if $\MMR(\pprofile, W)\!=\!0$, then any $x^{*}_{\pprofile,W} \in A^*_{\pprofile, W}$ is a necessary winner: any valid completion of $\pprofile$ and any choice of $w \in W$ gives to $x^{*}_{\pprofile,W}$ the highest score.
 
 We note that our notion of regret gives some cardinal meaning to the scores: instead of just being used to select winners under the corresponding PSR, their differences are considered as representing the regret of the chair.
 
@@ -284,8 +285,8 @@ Note that in \cref{claim:rankPMR}, in the case $(x \pprefeq_j y)$, $\beta$ is th
 	The $\PMR$ can be written as:
 	\begin{align} 
 		\PMR(x,y; \pprofile, W)  
-		& = \max_{w \in W} \sum_{j \in N} w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} \\ 
-		& = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i 
+		& = \max_{w \in W} \sum_{j \in N} w_{\hat{v}_j(y)} - w_{\hat{v}_j(x)} %\\ &
+		 = \max_{w \in W} \sum_{r=1}^m (\hat{\alpha}_{r}^{y} - \hat{\alpha}_{r}^{x}) w_i 
 	\end{align}
 	where $\hat{\alpha}_{r}^{y}$ (resp. $\hat{\alpha}_{r}^{x}$)  is the number of times $y$ (resp. $x$) has rank $r$ in the complete profile $\hat{\profile}$ defined in \cref{claim:rankPMR}. 
 \end{proposition}
