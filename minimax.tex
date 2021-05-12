@@ -101,9 +101,11 @@ Since in many practical situations there would be too many possible winners but 
 A second concern is the ability of the chair (the person or organization supervising the voting process) to provide a precise definition of the voting rule, suggesting the relaxation of the second hypothesis. Indeed, it is often difficult for non-experts to formalize a voting rule on the basis of some generic preferences over a desired aggregation method. 
 %Thus, the first hypothesis should also be relaxed. 
 %While most of the focus in the research community has been in dealing with incomplete agent preferences, 
-\commentBN{here are two examples of situations. (divide in two par)}
-Consider, as an example, a chair that is about to hire a new employee, whose performances are evaluated by several experts. The members of the chair may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule. However, they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
+Here we provide two examples of such situations.
 
+Consider, as a first example, a chair that is about to hire a new employee whose performances are evaluated by several experts. The members of the chair may not have a voting rule in mind at the start of the process, and might not wish to agree on a specific voting rule. However, they might be willing to answer a few questions requiring to select who should be the winner out of specific profiles. 
+
+Consider, as a second example, the reviewing process of a conference where the best paper must be elected. The agents express their preferences on the papers they reviewed, but they are not aware of the voting rule the Program Chair will apply when aggregating them. Nonetheless, reviewers are still willing to participate in the process. Also, the PC may not have a specific voting rule in mind, and she will find it hard to provide a precise scoring vector if asked. Maybe she strongly believes that being ranked once in the first position is “much more” valuable than being ranked two times second, but does not know exactly how much more (though she can judge example cases).
 %The information provided can be used to   % to determine their employee of choice.
 
 %This paper considers both sources of uncertainty at the same time, and proposes a method able to recommend a consensus choice without requiring full knowledge of either.
@@ -333,6 +335,7 @@ Even if the chair might be considered able to answer directly such abstract ques
 Moreover, this way of questioning the chair is independent of the voting rule that is being elicited. Questions about weights only make sense when considering PSRs.
 Asking who should win in specific profiles has been used in experimental settings investigating the feeling of justice of individuals \cite{Giritligil2005}, but, to the best of our knowledge, the use of such questions to systematically guide an elicitation process about voting rules is novel. 
 This is similar to favor, in decision theory, direct choice questions ("please choose either a or b") compared to, say, questioning the decision maker about the shape of her utility function. The former are considered “observable”: acts of choice are translated to preference statements \cite[Ch.\ 1]{colell_microeconomic_1995}. 
+\commentBN{In the rebuttal we add: There is no a priori reason to believe that questioning the chair in terms of this different parametric space would yield logically equivalent answers: research in experimental psychology shows that participants’ answers differ widely when changing the phrasing of preference-related questions [Lichtenstein and Slovic,	2012, doi: 10.1017/CBO9780511618031]. To get out of such conundrums, we need a language considered “fundamental”. Questions of the form “In this profile, who should win?” arguably provides such a natural language.}
 
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
 \begin{proposition}\label{prop:chairQuestions}
@@ -357,7 +360,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 
 \begin{example*}
 	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. 
-	We then show the following profile to the chair and ask who should win (each column is a preference of an agent).
+	We show the following profile to the chair and ask who should win (each column is a preference of an agent).
 	\begin{center}
 		$
 		\begin{array}{ccccccccc}
@@ -448,7 +451,7 @@ This strategy can be expected to perform well when the chair assigns a large wei
 
 \section{Empirical Evaluation} 
 \label{sec:experiments}
-We  performed a number of numerical experiments using both real data and randomly generated profiles in order to validate our approach and test the performance of our elicitation strategies. %Our experiments are described by topic here below. 
+We  performed several numerical experiments using both real data and randomly generated profiles in order to validate our approach and test the performance of our elicitation strategies. %Our experiments are described by topic here below. 
 %We start by describing the general protocol of experimentation. %use the following protocol, deviations are indicated below for each experiment.
 
 Given a problem size $(m, n)$, a number of questions $k$ and a strategy to test, we first create an “oracle”, representing the true preferences of the agents (randomly generated or coming from real data) and the weights associated with the chair’s scoring rule (randomly generated).
@@ -458,7 +461,7 @@ of the chair. We obtain the first question to be asked using the strategy under 
 The oracle is built as follows. 
 For the real preferences, we used three datasets from \href{https://www.preflib.org/}{PrefLib} \cite{PrefLib}: \textit{T Shirt} (researchers voted on tee shirt designs; $m \!=\! 11, n \!=\! 30$),
 \textit{Courses}  (students voted on courses; $m \!=\! 9, n \!=\! 146$; referred to as AGH on PrefLib)
-and \emph{Skate} (judges vote on skaters at the Euros Pairs Short Program; $m \!=\! 14, n \!=\! 9$).
+and \emph{Skate} (judges voted on skaters at the Euros Pairs Short Program; $m \!=\! 14, n \!=\! 9$).
 % tee shirt designs voted by 
 %$n \!=\! 30$ 
 %members of the Optimization Research Group at NICTA;
@@ -546,27 +549,25 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \paragraph{Evaluation of Pessimistic Strategy}
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
-We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first.
-\cref{tab:lowRegret} shows results for various sizes. 
-%The results for various sizes are displayed in \cref{tab:lowRegret}. 
-Another interesting measure is the average number of questions asked to each participant before reaching zero regret. For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
+We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first. Another interesting measure is the average number of questions asked to each participant before reaching zero regret. The results for various sizes are displayed in \cref{tab:questions}. 
+%For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
 
-\begin{table}
-	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
-	\label{tab:lowRegret}
-	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
-		\toprule
-		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
-		\midrule
-		5 & 10 & 1 & 60 \\
-		5 & 15 & 1.5 & 80 \\
-		5 & 20 & 2 & 110 \\
-		10 & 20 & 2 & 340 \\
-		10 & 30 & 3 & 527 \\
-		15 & 30 & 3 & 951 \\
-		\bottomrule
-	\end{tabular}
-\end{table}
+%\begin{table}
+%	\caption{Number of questions needed by Pessimistic strategy to reach an MMR of $\frac{n}{10}$ (represented by $k_{\MMR}$), by size.}
+%	\label{tab:lowRegret}
+%	\begin{tabular}{S[table-figures-decimal=0]S[table-figures-decimal=0]SS[table-figures-integer=3, table-figures-decimal=0]}
+%		\toprule
+%		{m} & {n} & {$\frac{n}{10}$} & {$k_{\MMR}$} \\
+%		\midrule
+%		5 & 10 & 1 & 60 \\
+%		5 & 15 & 1.5 & 80 \\
+%		5 & 20 & 2 & 110 \\
+%		10 & 20 & 2 & 340 \\
+%		10 & 30 & 3 & 527 \\
+%		15 & 30 & 3 & 951 \\
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
 
 \begin{figure}
 	\caption{Average MMR (normalized by $n$) after $k$ questions with Pessimistic strategy for different datasets.}
@@ -636,23 +637,45 @@ Another interesting measure is the average number of questions asked to each par
 	\end{tikzpicture}
 \end{figure}
 
+%\begin{table}[ht]
+%	\caption{Average number of questions asked to the chair ($q_{c}$) and to the agents (\textit{$q_{v}$}) by Pessimistic strategy to reach zero regret on the datasets of \cref{fig:linearity}.}
+%	\label{tab:Numquestions}
+%	\begin{tabular}{cS[table-number-alignment = right, table-figures-integer=4]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-number-alignment = right, table-figures-integer=4]@{ ± }S[table-number-alignment = left, table-figures-integer=2]}
+%		\toprule
+%		{dataset} & {$q_{c}$} & {sd} & {$q_{v}$} & {sd} \\
+%		\midrule
+%		m5n10 	&	8.4		& 2.67 		& 61		& 6.25\\
+%		m5n20 	&	13.6	& 6.38		& 118.9		& 14.4\\
+%		m10n20 	&	48.5	& 6			& 362.4		& 47.6	\\
+%		m10n30 	&	56.3	& 11.18		& 598.1 	& 75.19	\\
+%		m15n30 	&	24.5	& 8.77		& 775.5		& 8.77	\\
+%		m14n9 	&	58.3	& 33.66		& 370.9		& 40.54	\\
+%		m14n9-2 &	56.2	& 34.11		& 368.7		& 53.07 \\
+%		skate 	&	0		& 0			& 103.3		& 2.21	\\
+%		tshirt  &	30.0	& 5.87		& 961.2		& 23.04	\\
+%		courses & 0			& 0			& 950		& 5.08	\\	
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
+
+
 \begin{table}[ht]
-	\caption{Average number of questions asked to the chair ($q_{c}$) and to the agents (\textit{$q_{v}$}) by Pessimistic strategy to reach zero regret on the datasets of \cref{fig:linearity}.}
-	\label{tab:Numquestions}
-	\begin{tabular}{cS[table-number-alignment = right, table-figures-integer=4]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-number-alignment = right, table-figures-integer=4]@{ ± }S[table-number-alignment = left, table-figures-integer=2]}
+	\caption{Analysis of the questions asked by Pessimistic strategy on the datasets of \cref{fig:linearity}. The column $q_{c TR}$ ($q_{c ZR}$) indicates the average number of questions asked to the chair to reach a threshold regret of $\frac{n}{10}$ (zero regret). The column $[Q1_{v} | M_{v} | Q3_{v}]_{TR}$ ($[Q1_{v} | M_{v} | Q3_{v}]_{ZR}$) represents the average of the quartiles of the questions asked to the voters to reach $\frac{n}{10}$ regret (zero regret).}
+	\label{tab:questions}
+	\begin{tabular}{cccS[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2]cS[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2]c}
 		\toprule
-		{dataset} & {$q_{c}$} & {sd} & {$q_{v}$} & {sd} \\
+		{dataset} & m & n &{$q_{c TR}$} & {sd} & {$[Q1_{v} | M_{v} | Q3_{v}]_{TR}$} & {$q_{c ZR}$} & {sd} & {$[Q1_{v} | M_{v} | Q3_{v}]_{ZR}$} \\
 		\midrule
-		m5n10 	&	8.4		& 2.67 		& 61		& 6.25\\
-		m5n20 	&	13.6	& 6.38		& 118.9		& 14.4\\
-		m10n20 	&	48.5	& 6			& 362.4		& 47.6	\\
-		m10n30 	&	56.3	& 11.18		& 598.1 	& 75.19	\\
-		m15n30 	&	24.5	& 8.77		& 775.5		& 8.77	\\
-		m14n9 	&	58.3	& 33.66		& 370.9		& 40.54	\\
-		m14n9-2 &	56.2	& 34.11		& 368.7		& 53.07 \\
-		skate 	&	0		& 0			& 103.3		& 2.21	\\
-		tshirt  &	30.0	& 5.87		& 961.2		& 23.04	\\
-		courses & 0			& 0			& 950		& 5.08	\\	
+		m5n20 & 5&20&0&0&[4.3 | 4.95 | 5.84 ]&5.25&9.59&[5.36 | 6.15 | 7.21]\\
+		m10n20&10&20&0&0&[13.85 | 16.1| 18.41]&31.95&26.62&[19.66 | 21.78 | 24.7]\\
+		m11n30&11&30&0&0&[16.55|19|22.26]&45.15&40.14&[23.07|25.7|28.89]\\
+		tshirts&11&30&0&0&[12.92 | 16.17 |19.3]&\textendash&\textendash&\textendash\\
+		courses&9&146&0&0&[6.35 |7 |7]&0&0&[6.8 | 7 |7]\\
+		%m9n146&9&146&0&0&[1.94 |8 |9.25]&999.3&0.47&0&0&[1.94|8|9.25]&999.3&0.47\\
+		m14n9&14&9&5.4&9.49&[30.3|33.45|36.65]&64.05&40.37&[37.55|40.5|44.3]\\
+		skate&14&9&0&0&[11.35|11.8|12.25]&0&0&[11.5|11.9|12.7] \\
+		m15n30&15&30&0&0&[24.95|29.5|33.68]&\textendash&\textendash&\textendash \\
+			
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -688,7 +711,7 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 
 The experiments so far let the strategy free to question either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly. %, as these types of questions differ in nature. 
 
-\Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting.
+\Cref{tab:twoP400} shows the MMR value reached in problems of size $m = 10, n = 20$ after $400$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 400 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting. \commentBN{This is not true anymore, after 400 questions it reaches $0.9$ with 0 questions to the chair, after 500 questions it reaches $0.4$ with $11.05$ question to the chair ($\sigma=12.34$). The data in Table 2 is after 582 questions.}
 The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permit to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
 
 \section{Conclusions}  
