@@ -332,10 +332,11 @@ In particular, we want to obtain constraints of the type $w_{r} - w_{r+1} \geq \
 
 \paragraph{Building concrete questions for the chair}
 Even if the chair might be considered able to answer directly such abstract questions, we want to ensure that these questions can also, in principle, be asked in a more concrete way: in terms of winners of example profiles. Such questions have clear semantics whose understanding can be assumed to be shared by the chair, contrary to abstract questions about weights. 
-Moreover, this way of questioning the chair is independent of the voting rule that is being elicited. Questions about weights only make sense when considering PSRs.
+Moreover, this way of questioning the chair is independent of the voting rule that is being elicited; whereas questions about weights only make sense when considering PSRs.
 Asking who should win in specific profiles has been used in experimental settings investigating the feeling of justice of individuals \cite{Giritligil2005}, but, to the best of our knowledge, the use of such questions to systematically guide an elicitation process about voting rules is novel. 
 This is similar to favor, in decision theory, direct choice questions ("please choose either a or b") compared to, say, questioning the decision maker about the shape of her utility function. The former are considered “observable”: acts of choice are translated to preference statements \cite[Ch.\ 1]{colell_microeconomic_1995}. 
-\commentBN{In the rebuttal we add: There is no a priori reason to believe that questioning the chair in terms of this different parametric space would yield logically equivalent answers: research in experimental psychology shows that participants’ answers differ widely when changing the phrasing of preference-related questions [Lichtenstein and Slovic,	2012, doi: 10.1017/CBO9780511618031]. To get out of such conundrums, we need a language considered “fundamental”. Questions of the form “In this profile, who should win?” arguably provides such a natural language.}
+
+Although questioning in terms of profiles and in terms of weights is logically equivalent in our setting, there is no a priori certainty that questioning the chair using different phrasing would yield logically equivalent answers: research in experimental psychology shows that participants’ answers differ widely when changing the phrasing of preference-related questions [Lichtenstein and Slovic,	2012, doi: 10.1017/CBO9780511618031]. To get out of such conundrums, we need a language considered “fundamental”. Questions of the form “In this profile, who should win?” arguably provides such a natural language.
 
 Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a way that the set of (tied) winners picked by the chair reveals whether $w_{r} - w_{r+1} \geq \lambda (w_{r+1} - w_{r+2})$.
 \begin{proposition}\label{prop:chairQuestions}
@@ -360,7 +361,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 
 \begin{example*}
 	Suppose we want to ask the following question to the chair: $w_{2} - w_{3} ≥ 2 (w_{3} - w_{4})$. 
-	We show the following profile to the chair and ask who should win (each column is a preference of an agent).
+	We show the profile in Figure xx, left, to the chair and ask who should win (each column is a preference of an agent).
 	\begin{center}
 		$
 		\begin{array}{ccccccccc}
@@ -372,7 +373,7 @@ Thus, our task is to build a profile, given $\lambda$ and $r ≤ m-2$, in such a
 		$
 	\end{center}
 	Both $a$ and $b$ have scores higher than $c$ and $d$ for all convex weights, thus either $a$ or $b$ will be picked under our hypothesis; and $s(a) ≥ s(b) ⇔ w_2 + 2 w_4 ≥ 3 w_3$.
-	Note that we can compress this profile by grouping agents with the same preference orders. In the proof, in fact, we show how to construct a profile where only four linear orders are possible. Each column of the new profile represent now the preference of a group of agents:
+	Figure xx, right, shows the same profile using a compressed view, the numbers in bold indicating the number of voters (agents?) having the preference in the corresponding column. As the proof shows, constructed profiles require only four different linear orders.
 	\begin{center}
 		$
 		\begin{array}{cccc}
@@ -723,7 +724,7 @@ suggest that regret-based elicitation is effective and allows to quickly reduce 
 %regret, but they also show that starting with zero knowledge became a pretentious approach really quickly when increasing the size of the problem. Future works will therefore include the test of these strategies on partial specified profiles, ideally on real datasets. An other important direction is the extension to voting rules beyond scoring rules.
 %Regret-based elicitation allows to determine near-optimal winners using only few information about the agent preferences.
 
-As part of our contribution, an open-source library, to reproduce our experiments and perform many more, will be made publicly available. (URL not displayed for anonymity.)
+As part of our contribution, an open-source library, to reproduce our experiments and perform many more, will be made publicly available. (URL not displayed for reasons of anonymity.)
 %and serve as a basis for further research
 
 Some directions for future works include developing new elicitation strategies, considering alternative heuristics; extending the elicitation to voting rules beyond scoring rules; eliciting preferences while restraining to concrete and easy questions.
