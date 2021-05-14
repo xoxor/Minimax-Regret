@@ -562,6 +562,7 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first. Another interesting measure is the average number of questions asked to each participant before reaching zero regret. The results for various sizes are displayed in \cref{tab:questions}. The notation $q_{c {\scriptscriptstyle \MMR}≤ x}$ indicates the number of questions asked to the committee to reach a threshold regret $x$, averaged on $20$ runs. We use a similar notation for the questions to the voters $q_{v {\scriptscriptstyle \MMR}≤ x}$, but in this case we display the quartiles ([Q1|M|Q3]) of the number of questions asked to the voters, averaged on $20$ runs. It is important to mention that we stop our computation at $1000$ questions, the empty cells in \cref{tab:questions} indicate, thus, that the Pessimistic strategy applied to that dataset did not reach zero regret in $1000$ questions.
+
 %For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
 
 \begin{table}[ht]
