@@ -84,7 +84,7 @@ Social choice deals with the problem of determining a consensus choice from the 
 Aggregation of preference information is a central task in many computer systems (recommender systems, search engines, etc).
 In many situations, such as in group recommender systems, the goal is to find a consensus choice;
 social choice theory can provide foundations for such applications.
-%The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (voters) are expressed beforehand. These represent two strong hypothesis.
+%The traditional approach to social choice assumes that both the social choice function and the full preference orderings of the agents (agents) are expressed beforehand. These represent two strong hypothesis.
 The traditional approach to social choice assumes that 1) the full preference orderings of the agents and 2) the social choice function are expressed beforehand. These represent two strong hypotheses.
 Requiring agents to express full preference orderings can be prohibitively costly (in terms of cognitive and communication cost).
 This observation has motivated several works assuming partial preference orders: 
@@ -570,19 +570,17 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first.
-Table 2, first five columns, contain the result: it displays, for each dataset, the number of questions asked to the committee, and the quartiles of the number of questions asked to the voters, averaged over $20$ runs. It is interesting to note that about twenty or thirty questions per voter on average suffice to reach a low regret in those instances. We find also noteworthy that the Pessimistic strategy chooses to ask zero questions to the chair but still achieves low regret, in most of those instances.
+Table 2, first five columns, contain the result: it displays, for each dataset, the number of questions asked to the chair ($q_{c \scriptscriptstyle{\MMR} ≤ n/10}$), and the quartiles of the number of questions asked to the agents ($q_{a \scriptscriptstyle{\MMR} ≤ n/10}$), averaged over $20$ runs. It is interesting to note that about twenty or thirty questions per agent on average suffice to reach a low regret in those instances. We find also noteworthy that the Pessimistic strategy chooses to ask zero questions to the chair but still achieves low regret, in most of those instances.
 
-Another interesting measure is the average number of questions asked to each participant before reaching zero regret. The results for various sizes are displayed in the last two columns of \cref{tab:questions}. Here, we see that the Pessimistic strategy does choose to question the chair when reaching low enough regret values. The tshirts and m15n30 datasets did not reach zero regret in $1000$ questions.
-
-\commentOC{Need to drop the explanation in Table 2 as this is now explained in the text; change qcMMR=n/10 to qcMMR=0, and add in the text the explanation about qxMMR=; change hyphens to blanks in the table.}
+Another interesting measure is the average number of questions asked to the chair ($q_{c \scriptscriptstyle{\MMR} = 0}$) and to the agents ($q_{a \scriptscriptstyle{\MMR} = 0}$) before reaching zero regret. The results for various sizes are displayed in the last two columns of \cref{tab:questions}. Here, we see that the Pessimistic strategy does choose to question the chair when reaching low enough regret values. The tshirts and m15n30 datasets did not reach zero regret in $1000$ questions.
 %For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
 \vspace{-0.6cm}
 \begin{table}
-	\caption{Questions asked by Pessimistic strategy on several datasets. The column $q_{c \scriptscriptstyle{\MMR} ≤ n/10}$ ($q_{c \scriptscriptstyle{\MMR} = 0}$) indicates the avg number of questions asked to the chair to reach a threshold regret of $\frac{n}{10}$ (zero regret). The column $q_{v \scriptscriptstyle{\MMR} ≤ n/10}$ ($q_{v \scriptscriptstyle{\MMR} = 0}$) represents the avg of the quartiles of the questions asked to the voters to reach $\frac{n}{10}$ regret (zero regret).}
+	\caption{Questions asked by Pessimistic strategy on several datasets to reach $\frac{n}{10}$ regret, columns 4 and 5, and zero regret, last two columns.}
 	\label{tab:questions}
 	\begin{tabular}{cccS[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2] S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]} S[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]}}
 		\toprule
-		{dataset} & m & n &{$q_{c \scriptscriptstyle{\MMR} ≤ n/10}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c \scriptscriptstyle{\MMR} = 0}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} = 0}$} \\
+		{dataset} & m & n &{$q_{c \scriptscriptstyle{\MMR} ≤ n/10}$} & {sd} & \multicolumn{3}{c}{$q_{a \scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c \scriptscriptstyle{\MMR} = 0}$} & {sd} & \multicolumn{3}{c}{$q_{a \scriptscriptstyle{\MMR} = 0}$} \\
 		\midrule
 		m5n20 & 5&20&0.0&0.0&[4.3 &4.95 & 5.84 &5.25&9.59&[ \ 5.36 & 6.15 & 7.21\\
 		m10n20&10&20&0.0&0.0&[13.85 & 16.1& 18.41&31.95&26.62&[19.66 & 21.78 & 24.7\\
@@ -698,7 +696,7 @@ The experiments so far let the strategy free to question either the chair or an 
 
 \Cref{tab:twoP500} shows the MMR value reached in problems of size $m = 10, n = 20$ after $500$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 500 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.7$; the Pessimistic strategy asks on average $13$ (± $13$) questions to the chair in this setting. 
 %\commentBN{This is not true anymore, after 400 questions it reaches $0.9$ with 0 questions to the chair, after 500 questions it reaches $0.47$ ($\sigma = 0.51$) with $11.05$ question to the chair ($\sigma=12.34$). The data in Table 2 is after 582 questions.}\commentBN{Even this comment is not entirely true. We should take the data after 500 questions on the same datasets as the one used in Table3. On the first 3 runs, after 500 questions the regret is $0.62$ ($\sigma = 0.42$) and the number of questions to the chair is $14.33$ ($\sigma = 13.58$). On the first 7 runs, after 500 questions the regret is $0.67$ ($\sigma = 0.45$) and the number of questions to the chair is $13.29$ ($\sigma = 13.11$).}
-The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permit to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
+The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permit to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the agents but never reaches zero.
 
 \section{Conclusions}  
 \label{sec:conclusions}
