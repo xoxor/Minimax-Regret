@@ -561,7 +561,7 @@ To generate the scoring rule weights, we first draw $m \!-\! 1$ numbers uniforml
 Our first experiment concerns small size situations.
 \Cref{fig:smallSize} compares some of our strategies in the case $m = 5, n = 10$ (variations around this size yield similar conclusions), where the results are averaged over $200$ runs.
 %(The figure also displays the performance of the Elitist strategy, to which we will come back.)
-We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR \!=\! 1$) is reached by Pessimistic before having asked 60 questions. This also holds for other problem sizes. For instance, for $m =10$, $n = 20$ and $400$ questions, Random strategy reaches an average regret (over 10 runs) of $12$ (±$ 0.7$) and Pessimistic $0.6$ (±$ 0.5$).
+We see that asking random questions does not allow to reach a low regret level even after having asked 100 questions, whereas a low regret level ($\MMR \!=\! 1$) is reached by Pessimistic before having asked 60 questions. This also holds for other problem sizes. For instance, for $m =10$, $n = 20$ and $500$ questions, Random strategy reaches an average regret (over 20 runs) of $9.3$ (±$ 0.7$) and Pessimistic $0.5$ (±$ 0.5$).
 We notice that Pessimistic performs slightly better than Extended pessimistic, showing that Pessimistic chooses candidate questions wisely; this is good news since Pessimistic is much faster: it takes on average only $16$s for a complete elicitation session (for $m = 5$, $n = 10$ and $100$ questions), while Extended pessimistic takes $50$s. Although their performance is close, Pessimistic performs systematically better in multiple runs of the experiment.
 
 We also compared the Pessimistic strategy against Elitist in a situation specifically tailored to advantage Elitist. For that experiment specifically, instead of drawing the weights of the oracle randomly, we fix it to a “geometric” weight vector, such that $w_r - w_{r + 1} = 2(w_{r + 1} - w_{r + 2})$, for all $r ≤ m - 2$, so as to dramatically increase the importance of the weights associated to the top ranks. Even in that case, we see in \cref{tab:geometricWeights} that Pessimistic performs better than Elitist.
@@ -574,7 +574,7 @@ Table 2, first five columns, contain the result: it displays, for each dataset, 
 
 Another interesting measure is the average number of questions asked to each participant before reaching zero regret. The results for various sizes are displayed in the last two columns of \cref{tab:questions}. 
 
- It is important to mention that we stop our computation at $1000$ questions, the empty cells in \cref{tab:questions} indicate, thus, that the Pessimistic strategy applied to that dataset did not reach zero regret in $1000$ questions.
+It is important to mention that we stop our computation at $1000$ questions, the empty cells in \cref{tab:questions} indicate, thus, that the Pessimistic strategy applied to that dataset did not reach zero regret in $1000$ questions.
 \commentOC{Need to drop the explanation in Table 2 as this is now explained in the text; change qcMMR=n/10 to qcMMR=0, and add in the text the explanation about qxMMR=; change hyphens to blanks in the table,= I suppose.}
 %For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
 \vspace{-0.6cm}
@@ -583,7 +583,7 @@ Another interesting measure is the average number of questions asked to each par
 	\label{tab:questions}
 	\begin{tabular}{cccS[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2] S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]} S[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]}}
 		\toprule
-		{dataset} & m & n &{$q_{c \scriptscriptstyle{\MMR} ≤ n/10}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c \scriptscriptstyle{\MMR} = n/10}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} = 0}$} \\
+		{dataset} & m & n &{$q_{c \scriptscriptstyle{\MMR} ≤ n/10}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c \scriptscriptstyle{\MMR} = 0}$} & {sd} & \multicolumn{3}{c}{$q_{v \scriptscriptstyle{\MMR} = 0}$} \\
 		\midrule
 		m5n20 & 5&20&0.0&0.0&[4.3 &4.95 & 5.84 &5.25&9.59&[ \ 5.36 & 6.15 & 7.21\\
 		m10n20&10&20&0.0&0.0&[13.85 & 16.1& 18.41&31.95&26.62&[19.66 & 21.78 & 24.7\\
@@ -593,7 +593,7 @@ Another interesting measure is the average number of questions asked to each par
 		%m9n146&9&146&0&0&[1.94 &8 &9.25&999.3&0.47&0&0&[1.94&8&9.25&999.3&0.47\\
 		m14n9&14&9&5.4&9.49&[30.3&33.45&36.65&64.05&40.37&[37.55&40.5&44.3\\
 		skate&14&9&0.0&0.0&[11.35&11.8&12.25&0.0&0.0&[11.5&11.9&12.7 \\
-		m15n30&15&30&0.0&0.0&[24.95&29.5&33.68&\multicolumn{2}{c}{---}&\multicolumn{3}{c}{---} \\
+		m15n30&15&30&0.0&0.0&[24.95&29.5&33.68 \\
 			
 		\bottomrule
 	\end{tabular}
@@ -697,7 +697,7 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 
 The experiments so far let the strategy free to question either the chair or an agent at each step. One may wonder what is lost in terms of regret by asking different proportions of questions to the chair and the agents. Such restrictions may be useful because of (partial) unavailability of the chair, or because the estimated cognitive costs may differ sensibly. %, as these types of questions differ in nature. 
 
-\Cref{tab:twoP500} shows the MMR value reached in problems of size $m = 10, n = 20$ after $500$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 500 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.6$; the Pessimistic strategy asks on average $48$ questions to the chair in this setting. 
+\Cref{tab:twoP500} shows the MMR value reached in problems of size $m = 10, n = 20$ after $500$ questions, using the Two phases strategy, in the “ca” (chair then agents) and in the “ac” (agents then chair) variants. These numbers are to be compared with the MMR value reached after 500 questions with the Pessimistic strategy (displayed in \cref{fig:linearity}), which is $0.7$; the Pessimistic strategy asks on average $13$ (± $13$) questions to the chair in this setting. 
 %\commentBN{This is not true anymore, after 400 questions it reaches $0.9$ with 0 questions to the chair, after 500 questions it reaches $0.47$ ($\sigma = 0.51$) with $11.05$ question to the chair ($\sigma=12.34$). The data in Table 2 is after 582 questions.}\commentBN{Even this comment is not entirely true. We should take the data after 500 questions on the same datasets as the one used in Table3. On the first 3 runs, after 500 questions the regret is $0.62$ ($\sigma = 0.42$) and the number of questions to the chair is $14.33$ ($\sigma = 13.58$). On the first 7 runs, after 500 questions the regret is $0.67$ ($\sigma = 0.45$) and the number of questions to the chair is $13.29$ ($\sigma = 13.11$).}
 The line $q_c = 0$, where no question is asked to the chair, suggest that it is possible to obtain a good-quality recommendation while knowing only that the voting rule is a scoring rule with convex weights, which is our basic hypothesis. However, we observe that asking no questions to the chair does not permit to reach $\MMR\!=\!0$. The strategy, indeed, obtains full knowledge of the profile after an average of 500 questions to the voters but never reaches zero.
 
