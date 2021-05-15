@@ -570,27 +570,27 @@ We also compared the Pessimistic strategy against Elitist in a situation specifi
 \label{sec:lowRegret}
 Our next set of experiments evaluate the Pessimistic strategy in absolute terms. 
 We first wonder how many questions should be asked in order to achieve low regret, fixed at $n / 10$: this is equivalent to the difference of score of an alternative $x$ that results from switching from a profile $P$ to a profile $P'$ where a tenth of the agents rank $x$ last instead of first.
-\cref{tab:questions}, first five columns, contains the result: it displays, for each dataset, the number of questions asked to the chair ($q_{c \scriptscriptstyle{\MMR} ≤ n/10}$), and the quartiles of the number of questions asked to the agents ($q_{a \scriptscriptstyle{\MMR} ≤ n/10}$), averaged over $20$ runs. It is interesting to note that about twenty or thirty questions per agent on average suffice to reach a low regret in those instances. We find also noteworthy that the Pessimistic strategy chooses to ask zero questions to the chair but still achieves low regret, in most of those instances.
+\cref{tab:questions}, first five columns, contains the result: it displays, for each dataset, the number of questions asked to the chair ($q_{c}^{\scriptscriptstyle{\MMR} ≤ n/10}$), and the quartiles of the number of questions asked to the agents ($q_{a}^{\scriptscriptstyle{\MMR} ≤ n/10}$), averaged over $20$ runs. It is interesting to note that about twenty or thirty questions per agent on average suffice to reach a low regret in those instances. We find also noteworthy that the Pessimistic strategy chooses to ask zero questions to the chair but still achieves low regret, in most of those instances.
 
-Another interesting measure is the average number of questions asked to the chair ($q_{c \scriptscriptstyle{\MMR} = 0}$) and to the agents ($q_{a \scriptscriptstyle{\MMR} = 0}$) before reaching zero regret. The results for various sizes are displayed in the last two columns of \cref{tab:questions}. Here, we see that the Pessimistic strategy does choose to question the chair when reaching low enough regret values. The tshirts and m15n30 datasets did not reach zero regret in $1000$ questions.
+Another interesting measure is the average number of questions asked to the chair ($q_{c}^{\scriptscriptstyle{\MMR} = 0}$) and to the agents ($q_{a}^{\scriptscriptstyle{\MMR} = 0}$) before reaching zero regret. The results for various sizes are displayed in the last two columns of \cref{tab:questions}. Here, we see that the Pessimistic strategy does choose to question the chair when reaching low enough regret values. The m15n30 dataset did not reach zero regret in $1000$ questions.
 %For example, in the case $m = 10, n = 20$, Pessimistic asks on average $49$ questions to the chair and $18$ questions to each agent (\cref{tab:Numquestions} provides more data).
 \vspace{-0.6cm}
 \begin{table}
 	\caption{Questions asked by Pessimistic strategy on several datasets to reach $\frac{n}{10}$ regret, columns 4 and 5, and zero regret, last two columns.}
 	\label{tab:questions}
-	\begin{tabular}{cccS[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2] S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]} S[table-number-alignment = right, table-figures-integer=2]@{ ± }S[table-number-alignment = left, table-figures-integer=2]S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]}}
+	\begin{tabular}{cccS[table-number-alignment = center, table-figures-integer=2] S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]} S[table-number-alignment = center, table-figures-integer=2]S[table-figures-integer=3, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ | }S[table-figures-integer=2, table-figures-decimal=1]@{ ]}}
 		\toprule
-		{dataset} & m & n &{$q_{c \scriptscriptstyle{\MMR} ≤ n/10}$} & {sd} & \multicolumn{3}{c}{$q_{a \scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c \scriptscriptstyle{\MMR} = 0}$} & {sd} & \multicolumn{3}{c}{$q_{a \scriptscriptstyle{\MMR} = 0}$} \\
+		{dataset} & m & n &{$q_{c}^{\scriptscriptstyle{\MMR} ≤ n/10}$} & \multicolumn{3}{c}{$q_{a}^{\scriptscriptstyle{\MMR} ≤ n/10}$} & {$q_{c}^{ \scriptscriptstyle{\MMR} = 0}$} & \multicolumn{3}{c}{$q_{a}^{ \scriptscriptstyle{\MMR} = 0}$} \\
 		\midrule
-		m5n20 & 5&20&0.0&0.0&[4.3 &4.95 & 5.84 &5.25&9.59&[ \ 5.36 & 6.15 & 7.21\\
-		m10n20&10&20&0.0&0.0&[13.85 & 16.1& 18.41&31.95&26.62&[19.66 & 21.78 & 24.7\\
-		m11n30&11&30&0.0&0.0&[16.55&19.0&22.26&45.15&40.14&[23.07&25.7&28.89\\
-		tshirts&11&30&0.0&0.0&[12.92 & 16.17 &19.3& 44.8 &12.24&[28.0 &	31.5 &34.9\\
-		courses&9&146&0.0&0.0&[6.35 &7.0 &7.0&0.0&0.0&[6.8 & 7.0 &7.0\\
+		m5n20 & 5&20&0.0&[4.3 &4.95 & 5.84 &5.25&[ \ 5.36 & 6.15 & 7.21\\
+		m10n20&10&20&0.0&[13.85 & 16.1& 18.41&31.95&[19.66 & 21.78 & 24.7\\
+		m11n30&11&30&0.0&[16.55&19.0&22.26&45.15&[23.07&25.7&28.89\\
+		tshirts&11&30&0.0&[12.92 & 16.17 &19.3& 44.8 &[28.0 &	31.5 &34.9\\
+		courses&9&146&0.0&[6.35 &7.0 &7.0&0.0&[6.8 & 7.0 &7.0\\
 		%m9n146&9&146&0&0&[1.94 &8 &9.25&999.3&0.47&0&0&[1.94&8&9.25&999.3&0.47\\
-		m14n9&14&9&5.4&9.49&[30.3&33.45&36.65&64.05&40.37&[37.55&40.5&44.3\\
-		skate&14&9&0.0&0.0&[11.35&11.8&12.25&0.0&0.0&[11.5&11.9&12.7 \\
-		m15n30&15&30&0.0&0.0&[24.95&29.5&33.68 \\
+		m14n9&14&9&5.4&[30.3&33.45&36.65&64.05&[37.55&40.5&44.3\\
+		skate&14&9&0.0&[11.35&11.8&12.25&0.0&[11.5&11.9&12.7 \\
+		m15n30&15&30&0.0&[24.95&29.5&33.68 \\
 			
 		\bottomrule
 	\end{tabular}
