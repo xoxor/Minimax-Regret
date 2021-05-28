@@ -585,11 +585,11 @@ Another interesting measure is the average number of questions asked to the chai
 		m5n20 & 5&20&0.0&[4.3 &4.95 & 5.84 &5.25&[ \ 5.36 & 6.15 & 7.21\\
 		m10n20&10&20&0.0&[13.85 & 16.1& 18.41&31.95&[19.66 & 21.78 & 24.7\\
 		m11n30&11&30&0.0&[16.55&19.0&22.26&45.15&[23.07&25.7&28.89\\
-		tshirts&11&30&0.0&[12.92 & 16.17 &19.3& 44.8 &[28.0 &	31.5 &34.9\\
-		courses&9&146&0.0&[6.35 &7.0 &7.0&0.0&[6.8 & 7.0 &7.0\\
+		tshirts&11&30&0.0&[13.08&16.6&19.58& 43.15 &[28.22&31.98 &35.62\\
+		courses&9&146&0.0&[6.03 &7.0 &7.0&0.0&[6.81 & 7.0 &7.0\\
 		%m9n146&9&146&0&0&[1.94 &8 &9.25&999.3&0.47&0&0&[1.94&8&9.25&999.3&0.47\\
 		m14n9&14&9&5.4&[30.3&33.45&36.65&64.05&[37.55&40.5&44.3\\
-		skate&14&9&0.0&[11.35&11.8&12.25&0.0&[11.5&11.9&12.7 \\
+		skate&14&9&0.0&[11.35&11.6&12.3&0.0&[11.5&11.8&12.75 \\
 		m15n30&15&30&0.0&[24.95&29.5&33.68 \\
 			
 		\bottomrule
@@ -641,23 +641,23 @@ In the \textit{Skate} problem, the value $\MMR\!=\!1$ is reached after less than
 				\addlegendimage{mark=halfsquare*,magenta,mark size=2}
 				
 				
-				\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {120}, brown] table [x=k, y=5.20]{data/linearity_redone.dat};
+				\addplot[thick, mark=halfsquare right*, mark size = {2}, mark indices = {120}, brown] table [x=k, y=5.20]{data/linearity.dat};
 				\addlegendentry{m=5, n=20}
-				\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity_redone.dat};
+				\addplot[thick, mark=diamond*, mark size = {2}, mark indices = {150}, red] table [x=k, y=10.20]{data/linearity.dat};
 				\addlegendentry{m=10, n=20}
-				\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {240}, cyan] table [x=k, y=11.30]{data/linearity_redone.dat};
+				\addplot[thick, mark=pentagon*, mark size = {2}, mark indices = {240}, cyan] table [x=k, y=11.30]{data/linearity.dat};
 				\addlegendentry{m=11, n=30}
-				\addplot[thick, mark=halfcircle*, mark size = {2}, mark indices = {400}, violet] table [x=k, y=tshirts]{data/linearity_redone.dat};
+				\addplot[thick, mark=halfcircle*, mark size = {2}, mark indices = {400}, violet] table [x=k, y=tshirts]{data/linearity.dat};
 				\addlegendentry{tshirts m11n30}
-				\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/linearity_redone.dat};
+				\addplot[thick, mark=*, mark size = {2}, mark indices = {400}, pink] table [x=k, y=courses]{data/linearity.dat};
 				\addlegendentry{courses m9n146}
-				\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {400}, green] table [x=k, y=9.146]{data/linearity_redone.dat};
+				\addplot[thick, mark=triangle*, mark size = {2}, mark indices = {400}, green] table [x=k, y=9.146]{data/linearity.dat};
 				\addlegendentry{m=9, n=146}
-				\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/linearity_redone.dat};
+				\addplot[thick, mark=halfsquare left*, mark size = {2}, mark indices = {200}, blue] table [x=k, y=14.9]{data/linearity.dat};
 				\addlegendentry{m=14, n=9}
-				\addplot[thick, mark=square*, mark size = {2}, mark indices = {60}, teal] table [x=k, y=skate]{data/linearity_redone.dat};
+				\addplot[thick, mark=square*, mark size = {2}, mark indices = {60}, teal] table [x=k, y=skate]{data/linearity.dat};
 				\addlegendentry{skate m14n9}
-				\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity_redone.dat};
+				\addplot[thick, mark=halfsquare*, mark size = {2}, mark indices = {400}, magenta] table [x=k, y=15.30]{data/linearity.dat};
 				\addlegendentry{m=15, n=30}
 			\end{axis}
 		\end{tikzpicture}
